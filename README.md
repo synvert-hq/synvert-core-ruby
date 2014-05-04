@@ -24,6 +24,7 @@ Or install it yourself as:
 ## Documentation
 
 [Website][1]
+
 [RDoc][2]
 
 ## Contributing
