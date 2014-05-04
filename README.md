@@ -1,6 +1,10 @@
 # Synvert::Core
 
-TODO: Write a gem description
+[![Build Status](https://secure.travis-ci.org/xinminlabs/synvert-core.png)](http://travis-ci.org/xinminlabs/synvert-core)
+[![Coverage Status](https://coveralls.io/repos/xinminlabs/synvert-core/badge.png?branch=master)](https://coveralls.io/r/xinminlabs/synvert-core)
+[![Gem Version](https://badge.fury.io/rb/synvert-core.png)](http://badge.fury.io/rb/synvert-core)
+
+synvert-core provides a dsl to convert ruby source code.
 
 ## Installation
 
@@ -16,9 +20,11 @@ Or install it yourself as:
 
     $ gem install synvert-core
 
-## Usage
 
-TODO: Write usage instructions here
+## Documentation
+
+[Website][1]
+[RDoc][2]
 
 ## Contributing
 
@@ -27,3 +33,6 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+[1]: http://xinminlabs.github.io/synvert/
+[2]: http://rubydoc.info/github/xinminlabs/synvert-core/master/frames
