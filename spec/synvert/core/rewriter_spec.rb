@@ -143,10 +143,16 @@ module Synvert::Core
         Rewriter.call 'rewriter'
       end
 
-      it 'registers and lists all available rewriters' do
-        rewriter1 = Rewriter.new 'rewriter1'
-        rewriter2 = Rewriter.new 'rewriter2'
-        expect(Rewriter.availables).to eq [rewriter1, rewriter2]
+      context "available" do
+        it 'lists empty rewriters' do
+          expect(Rewriter.availables).to eq []
+        end
+
+        it 'registers and lists all available rewriters' do
+          rewriter1 = Rewriter.new 'rewriter1'
+          rewriter2 = Rewriter.new 'rewriter2'
+          expect(Rewriter.availables).to eq [rewriter1, rewriter2]
+        end
       end
     end
   end

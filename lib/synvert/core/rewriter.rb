@@ -70,7 +70,7 @@ module Synvert::Core
       #
       # @return [Array<Synvert::Core::Rewriter>]
       def availables
-        @rewriters.values
+        @rewriters ? @rewriters.values : []
       end
 
       # Clear all registered rewriters.
