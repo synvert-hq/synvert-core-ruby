@@ -169,6 +169,15 @@ module Synvert::Core
       end
     end
 
+    # Parses remove_file dsl, it removes a file.
+    #
+    # @param filename [String] file name.
+    def remove_file(filename)
+      return if @sandbox
+
+      File.delete(filename)
+    end
+
     # Parse add_snippet dsl, it calls anther rewriter.
     #
     # @param name [String] name of another rewriter.

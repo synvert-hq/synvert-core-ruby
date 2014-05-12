@@ -77,6 +77,27 @@ module Synvert::Core
       end
     end
 
+    describe 'parses remove_file' do
+      it 'removes a file' do
+        FileUtils.touch './foo.bar'
+        rewriter = Rewriter.new 'rewriter2' do
+          remove_file './foo.bar'
+        end
+        rewriter.process
+        expect(File.exist? './foo.bar').to be_false
+      end
+
+      it 'does nothing in sandbox mode' do
+        FileUtils.touch './foo.bar'
+        rewriter = Rewriter.new 'rewriter2' do
+          add_file './foo.bar', 'FooBar'
+        end
+        rewriter.process_with_sandbox
+        expect(File.exist?('./foo.bar')).to be_true
+        FileUtils.rm './foo.bar'
+      end
+    end
+
     describe 'parses add_snippet' do
       it 'processes the rewritter' do
         rewriter1 = Rewriter.new 'rewriter1'
