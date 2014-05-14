@@ -2,7 +2,10 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::Instance do
-    let(:instance) { Rewriter::Instance.new('file pattern') }
+    let(:instance) {
+      rewriter = Rewriter.new('foobar')
+      Rewriter::Instance.new(rewriter, 'file pattern')
+    }
 
     it 'parses within_node' do
       scope = double()
@@ -69,11 +72,17 @@ module Synvert::Core
       instance.remove
     end
 
+    it 'parses warn' do
+      expect(Rewriter::Warning).to receive(:new).with(instance, 'foobar')
+      instance.warn 'foobar'
+    end
+
     describe '#process' do
       before { Configuration.instance.set :path, '.' }
+      let(:rewriter) { Rewriter.new('foobar') }
 
       it 'FactoryGirl uses short syntax' do
-        instance = Rewriter::Instance.new 'spec/**/*_spec.rb' do
+        instance = Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do
           with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
             replace_with 'create {{arguments}}'
           end
@@ -99,7 +108,7 @@ end
       end
 
       it 'includes FactoryGirl::Syntax::Methods' do
-        instance = Rewriter::Instance.new 'spec/spec_helper.rb'  do
+        instance = Rewriter::Instance.new rewriter, 'spec/spec_helper.rb'  do
           with_node type: 'block', caller: {receiver: 'RSpec', message: 'configure'} do
             unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
               insert "{{arguments.first}}.include FactoryGirl::Syntax::Methods"
@@ -122,7 +131,7 @@ end
       end
 
       it 'does not include FactoryGirl::Syntax::Methods' do
-        instance = Rewriter::Instance.new 'spec/spec_helper.rb' do
+        instance = Rewriter::Instance.new rewriter, 'spec/spec_helper.rb' do
           with_node type: 'block', caller: {receiver: 'RSpec', message: 'configure'} do
             unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
               insert "{{arguments.first}}.include FactoryGirl::Syntax::Methods"
@@ -146,7 +155,7 @@ end
       end
 
       it 'process nested send nodes' do
-        instance = Rewriter::Instance.new 'config/*.rb'  do
+        instance = Rewriter::Instance.new rewriter, 'config/*.rb'  do
           with_node type: 'send', receiver: {type: 'send', receiver: {type: 'send', message: 'config'}, message: 'active_record'}, message: 'identity_map=' do
             remove
           end

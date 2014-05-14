@@ -16,13 +16,16 @@ module Synvert::Core
 
     # Initialize an instance.
     #
+    # @param rewriter [Synvert::Core::Rewriter]
     # @param file_pattern [String] pattern to find files, e.g. spec/**/*_spec.rb
     # @param block [Block] block code to find nodes, match conditions and rewrite code.
     # @return [Synvert::Core::Rewriter::Instance]
-    def initialize(file_pattern, &block)
+    def initialize(rewriter, file_pattern, &block)
+      @rewriter = rewriter
       @actions = []
       @file_pattern = file_pattern
       @block = block
+      rewriter.helpers.each { |helper| self.singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 
     # Process the instance.
@@ -146,6 +149,13 @@ module Synvert::Core
     # Parse remove dsl, it creates a [Synvert::Core::Rewriter::RemoveAction] to current node.
     def remove
       @actions << Rewriter::RemoveAction.new(self)
+    end
+
+    # Parse warn dsl, it creates a [Synvert::Core::Rewriter::Warning] to save warning message.
+    #
+    # @param message [String] warning message.
+    def warn(message)
+      @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
   private

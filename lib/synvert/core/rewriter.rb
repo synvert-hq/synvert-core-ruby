@@ -23,6 +23,8 @@ module Synvert::Core
     autoload :ReplaceWithAction, 'synvert/core/rewriter/action'
     autoload :RemoveAction, 'synvert/core/rewriter/action'
 
+    autoload :Warning, 'synvert/core/rewriter/warning'
+
     autoload :Instance, 'synvert/core/rewriter/instance'
 
     autoload :Scope, 'synvert/core/rewriter/scope'
@@ -83,7 +85,11 @@ module Synvert::Core
     #   @return [String] the unique name of rewriter
     # @!attribute [r] sub_snippets
     #   @return [Array<Synvert::Core::Rewriter>] all rewriters this rewiter calls.
-    attr_reader :name, :sub_snippets
+    # @!attribute [r] helper
+    #   @return [Array] helper methods.
+    # @!attribute [r] warnings
+    #   @return [Array<Synvert::Core::Rewriter::Warning>] warning messages.
+    attr_reader :name, :sub_snippets, :helpers, :warnings
 
     # Initialize a rewriter.
     # When a rewriter is initialized, it is also registered.
@@ -96,6 +102,7 @@ module Synvert::Core
       @block = block
       @helpers = []
       @sub_snippets = []
+      @warnings = []
       self.class.register(@name, self)
     end
 
@@ -111,6 +118,13 @@ module Synvert::Core
       @sandbox = true
       self.process
       @sandbox = false
+    end
+
+    # Add a warning.
+    #
+    # @param warning [Synvert::Core::Rewriter::Warning]
+    def add_warning(warning)
+      @warnings << warning
     end
 
     #######
@@ -148,9 +162,7 @@ module Synvert::Core
       return if @sandbox
 
       if !@gem_spec || @gem_spec.match?
-        instance = Rewriter::Instance.new(file_pattern, &block)
-        @helpers.each { |helper| instance.singleton_class.send(:define_method, helper[:name], &helper[:block]) }
-        instance.process
+        Rewriter::Instance.new(self, file_pattern, &block).process
       end
     end
 
