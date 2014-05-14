@@ -76,8 +76,8 @@ class Parser::AST::Node
     case self.type
     when :begin
       self.children
-    when :block
-      :begin == self.children[2].type ? self.children[2].children : [self.children[2]]
+    when :def, :block
+      :begin == self.children[2].type ? self.children[2].body : self.children[2..-1]
     else
       raise Synvert::Core::MethodNotSupported.new "body is not handled for #{self.inspect}"
     end

@@ -81,6 +81,11 @@ describe Parser::AST::Node do
       node = parse('foo; bar')
       expect(node.body).to eq [parse('foo'), parse('bar')]
     end
+
+    it 'gets for def node' do
+      node = parse('def test; foo; bar; end')
+      expect(node.body).to eq [parse('foo'), parse('bar')]
+    end
   end
 
   describe "#keys" do
@@ -147,7 +152,10 @@ describe Parser::AST::Node do
   end
 
   describe '#match?' do
-    let(:instance) { Synvert::Core::Rewriter::Instance.new('file pattern') }
+    let(:instance) {
+      rewriter = Synvert::Core::Rewriter.new('foobar')
+      Synvert::Core::Rewriter::Instance.new(rewriter, 'file pattern')
+    }
 
     it 'matches class name' do
       source = 'class Synvert; end'
