@@ -13,7 +13,7 @@ module Synvert::Core
       @node = @instance.current_node
     end
 
-    # Line number of the node.
+    # Line number of current node.
     #
     # @return [Integer] line number.
     def line

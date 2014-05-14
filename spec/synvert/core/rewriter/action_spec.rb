@@ -1,12 +1,25 @@
 require 'spec_helper'
 
 module Synvert::Core
+  describe Rewriter::Action do
+    subject {
+      source = "before_save do\n  return false\nend"
+      block_node = Parser::CurrentRuby.parse(source).body.first
+      instance = double(current_node: block_node)
+      Rewriter::Action.new(instance, source)
+    }
+
+    it 'gets line' do
+      expect(subject.line).to eq 2
+    end
+  end
+
   describe Rewriter::ReplaceWithAction do
     context "replace with single line" do
       subject {
         source = "post = FactoryGirl.create_list :post, 2"
         send_node = Parser::CurrentRuby.parse(source).children[1]
-        instance = double(:current_node => send_node)
+        instance = double(current_node: send_node)
         Rewriter::ReplaceWithAction.new(instance, 'create_list {{arguments}}')
       }
 
@@ -27,7 +40,7 @@ module Synvert::Core
       subject {
         source = "  its(:size) { should == 1 }"
         send_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => send_node)
+        instance = double(current_node: send_node)
         Rewriter::ReplaceWithAction.new(instance, """describe '#size' do
   subject { super().size }
   it { {{body}} }
@@ -56,7 +69,7 @@ end""")
       subject do
         source = "class User\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => class_node)
+        instance = double(current_node: class_node)
         Rewriter::AppendAction.new(instance, "def as_json\n  super\nend")
       end
 
@@ -77,7 +90,7 @@ end""")
       subject do
         source = "gem 'rails'\ngem 'mysql2'"
         begin_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => begin_node)
+        instance = double(current_node: begin_node)
         Rewriter::AppendAction.new(instance, "gem 'twitter'")
       end
 
@@ -100,7 +113,7 @@ end""")
       subject {
         source = "Synvert::Application.configure do\nend"
         block_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => block_node)
+        instance = double(current_node: block_node)
         Rewriter::InsertAction.new(instance, 'config.eager_load = true')
       }
 
@@ -121,7 +134,7 @@ end""")
       subject {
         source = "RSpec.configure do |config|\nend"
         block_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => block_node)
+        instance = double(current_node: block_node)
         Rewriter::InsertAction.new(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
       }
 
@@ -142,7 +155,7 @@ end""")
       subject {
         source = "class User\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => class_node)
+        instance = double(current_node: class_node)
         Rewriter::InsertAction.new(instance, 'include Deletable')
       }
 
@@ -163,7 +176,7 @@ end""")
       subject {
         source = "class User < ActiveRecord::Base\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
-        instance = double(:current_node => class_node)
+        instance = double(current_node: class_node)
         Rewriter::InsertAction.new(instance, 'include Deletable')
       }
 
@@ -185,7 +198,7 @@ end""")
     subject {
       source = "  include Foo"
       node = Parser::CurrentRuby.parse(source)
-      instance = double(:current_node => node)
+      instance = double(current_node: node)
       Rewriter::InsertAfterAction.new(instance, 'include Bar')
     }
 
@@ -206,7 +219,7 @@ end""")
     subject {
       source = "user = User.new params[:user]\nuser.save\nrender\n"
       send_node = Parser::CurrentRuby.parse(source).children[1]
-      instance = double(:current_node => send_node)
+      instance = double(current_node: send_node)
       Rewriter::RemoveAction.new(instance)
     }
 
