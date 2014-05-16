@@ -176,7 +176,7 @@ module Synvert::Core
     def add_file(filename, content)
       return if @sandbox
 
-      File.open filename, 'w' do |file|
+      File.open File.join(Configuration.instance.get(:path), filename), 'w' do |file|
         file.write content
       end
     end
@@ -187,7 +187,8 @@ module Synvert::Core
     def remove_file(filename)
       return if @sandbox
 
-      File.delete(filename)
+      file_path = File.join(Configuration.instance.get(:path), filename)
+      File.delete(file_path) if File.exist?(file_path)
     end
 
     # Parse add_snippet dsl, it calls anther rewriter.

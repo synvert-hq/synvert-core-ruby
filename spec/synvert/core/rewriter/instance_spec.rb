@@ -78,7 +78,6 @@ module Synvert::Core
     end
 
     describe '#process' do
-      before { Configuration.instance.set :path, '.' }
       let(:rewriter) { Rewriter.new('foobar') }
 
       it 'FactoryGirl uses short syntax' do

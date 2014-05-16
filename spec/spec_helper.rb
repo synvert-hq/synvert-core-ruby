@@ -19,6 +19,7 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before do
+    Synvert::Core::Configuration.instance.set :path, '.'
     Synvert::Core::Configuration.instance.set :skip_files, []
   end
 end

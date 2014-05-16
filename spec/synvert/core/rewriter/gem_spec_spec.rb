@@ -2,7 +2,6 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::GemSpec do
-    before { Configuration.instance.set :path, '.' }
     let(:gemfile_lock_content) { """
 GEM
   remote: https://rubygems.org/
