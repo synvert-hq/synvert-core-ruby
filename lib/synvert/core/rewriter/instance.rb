@@ -164,12 +164,14 @@ module Synvert::Core
     # So if there is an overlap between two actions, it removes the conflict actions and operate them in the next loop.
     def check_conflict_actions
       i = @actions.length - 1
+      j = i - 1
       @conflict_actions = []
-      while i > 0
-        if @actions[i].begin_pos <= @actions[i - 1].end_pos
-          @conflict_actions << @actions.delete_at(i)
+      while j > -1
+        if @actions[i].begin_pos <= @actions[j].end_pos
+          @conflict_actions << @actions.delete_at(j)
         end
-        i -= 1
+        i = j
+        j -= 1
       end
       @conflict_actions
     end
