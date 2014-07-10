@@ -91,28 +91,52 @@ describe Parser::AST::Node do
   describe "#keys" do
     it 'gets for hash node' do
       node = parse("{:foo => :bar, 'foo' => 'bar'}")
-      expect(node.keys).to eq [Parser::CurrentRuby.parse(':foo'), Parser::CurrentRuby.parse("'foo'")]
+      expect(node.keys).to eq [parse(':foo'), parse("'foo'")]
     end
   end
 
   describe "#values" do
     it 'gets for hash node' do
       node = parse("{:foo => :bar, 'foo' => 'bar'}")
-      expect(node.values).to eq [Parser::CurrentRuby.parse(':bar'), Parser::CurrentRuby.parse("'bar'")]
+      expect(node.values).to eq [parse(':bar'), parse("'bar'")]
+    end
+  end
+
+  describe "#has_key?" do
+    it "gets true if key exists" do
+      node = parse("{:foo => :bar}")
+      expect(node.has_key?(:foo)).to be_true
+    end
+
+    it "gets false if key does not exist" do
+      node = parse("{:foo => :bar}")
+      expect(node.has_key?('foo')).to be_false
+    end
+  end
+
+  describe "#hash_value" do
+    it "gets value of specified key" do
+      node = parse("{:foo => :bar}")
+      expect(node.hash_value(:foo)).to eq parse(':bar')
+    end
+
+    it "gets nil if key does not exist" do
+      node = parse("{:foo => :bar}")
+      expect(node.hash_value(:bar)).to be_nil
     end
   end
 
   describe "#key" do
     it 'gets for pair node' do
       node = parse("{:foo => 'bar'}").children[0]
-      expect(node.key).to eq Parser::CurrentRuby.parse(':foo')
+      expect(node.key).to eq parse(':foo')
     end
   end
 
   describe "#value" do
     it 'gets for hash node' do
       node = parse("{:foo => 'bar'}").children[0]
-      expect(node.value).to eq Parser::CurrentRuby.parse("'bar'")
+      expect(node.value).to eq parse("'bar'")
     end
   end
 
@@ -120,6 +144,23 @@ describe Parser::AST::Node do
     it 'gets for if node' do
       node = parse('if defined?(Bundler); end')
       expect(node.condition).to eq parse('defined?(Bundler)')
+    end
+  end
+
+  describe "#to_value" do
+    it 'gets for string' do
+      node = parse("'str'")
+      expect(node.to_value).to eq "str"
+    end
+
+    it 'gets for symbol' do
+      node = parse(":str")
+      expect(node.to_value).to eq :str
+    end
+
+    it 'gets for array' do
+      node = parse("['str', :str]")
+      expect(node.to_value).to eq ['str', :str]
     end
   end
 

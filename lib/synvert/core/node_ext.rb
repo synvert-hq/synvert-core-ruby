@@ -119,6 +119,33 @@ class Parser::AST::Node
     end
   end
 
+  # Test if hash node contains specified key.
+  #
+  # @param [Object] key value.
+  # @return [Boolean] true if specified key exists.
+  # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+  def has_key?(key)
+    if :hash == self.type
+      self.children.any? { |pair_node| pair_node.key.to_value == key }
+    else
+      raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{self.inspect}"
+    end
+  end
+
+  # Get hash value node according to specified key.
+  #
+  # @param [Object] key value.
+  # @return [Parser::AST::Node] value node.
+  # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+  def hash_value(key)
+    if :hash == self.type
+      value_node = self.children.find { |pair_node| pair_node.key.to_value == key }
+      value_node ? value_node.value : nil
+    else
+      raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{self.inspect}"
+    end
+  end
+
   # Get key node of hash :pair node.
   #
   # @return [Parser::AST::Node] key node.
@@ -140,6 +167,21 @@ class Parser::AST::Node
       self.children.last
     else
       raise Synvert::Core::MethodNotSupported.new "value is not handled for #{self.inspect}"
+    end
+  end
+
+  # Return the exact value.
+  #
+  # @return [Object] exact value.
+  # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+  def to_value
+    case self.type
+    when :str, :sym
+      self.children.last
+    when :array
+      self.children.map(&:to_value)
+    else
+      raise Synvert::Core::MethodNotSupported.new "to_value is not handled for #{self.inspect}"
     end
   end
 
