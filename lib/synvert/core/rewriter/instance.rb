@@ -6,6 +6,10 @@ module Synvert::Core
   #
   # One instance can contains one or many [Synvert::Core::Rewriter::Scope] and [Synvert::Rewriter::Condition].
   class Rewriter::Instance
+    class <<self
+      attr_accessor :current
+    end
+
     # @!attribute [rw] current_node
     #   @return current parsing node
     # @!attribute [rw] current_source
@@ -32,6 +36,8 @@ module Synvert::Core
     # It finds all files, for each file, it executes the block code, gets all rewrite actions,
     # and rewrite source code back to original file.
     def process
+      self.class.current = self
+
       parser = Parser::CurrentRuby.new
       file_pattern = File.join(Configuration.instance.get(:path), @file_pattern)
       Dir.glob(file_pattern).each do |file_path|
@@ -169,8 +175,9 @@ module Synvert::Core
       while j > -1
         if @actions[i].begin_pos <= @actions[j].end_pos
           @conflict_actions << @actions.delete_at(j)
+        else
+          i = j
         end
-        i = j
         j -= 1
       end
       @conflict_actions

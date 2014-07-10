@@ -18,6 +18,7 @@ end
     }
     let(:node) { Parser::CurrentRuby.parse(source) }
     let(:instance) { double(:current_node => node, :current_node= => node, :current_source => source) }
+    before { Rewriter::Instance.current = instance }
 
     describe '#process' do
       it 'not call block if no matching node' do

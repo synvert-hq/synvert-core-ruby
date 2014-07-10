@@ -187,9 +187,9 @@ class Parser::AST::Node
 
   # Get the source code of current node.
   #
-  # @param instance [Synvert::Core::Rewriter::Instance]
   # @return [String] source code.
-  def source(instance)
+  def to_source
+    instance = Synvert::Rewriter::Instance.current
     if self.loc.expression
       instance.current_source[self.loc.expression.begin_pos...self.loc.expression.end_pos]
     end
@@ -217,23 +217,22 @@ class Parser::AST::Node
 
   # Match current node with rules.
   #
-  # @param instance [Synvert::Core::Rewriter::Instance] used to get crrent source code.
   # @param rules [Hash] rules to match.
   # @return true if matches.
-  def match?(instance, rules)
+  def match?(rules)
     flat_hash(rules).keys.all? do |multi_keys|
       if multi_keys.last == :any
-        actual_values = actual_value(self, instance, multi_keys[0...-1])
+        actual_values = actual_value(self, multi_keys[0...-1])
         expected = expected_value(rules, multi_keys)
-        actual_values.any? { |actual| match_value?(instance, actual, expected) }
+        actual_values.any? { |actual| match_value?(actual, expected) }
       elsif multi_keys.last == :not
-        actual = actual_value(self, instance, multi_keys[0...-1])
+        actual = actual_value(self, multi_keys[0...-1])
         expected = expected_value(rules, multi_keys)
-        !match_value?(instance, actual, expected)
+        !match_value?(actual, expected)
       else
-        actual = actual_value(self, instance, multi_keys)
+        actual = actual_value(self, multi_keys)
         expected = expected_value(rules, multi_keys)
-        match_value?(instance, actual, expected)
+        match_value?(actual, expected)
       end
     end
   end
@@ -271,33 +270,32 @@ private
 
   # Compare actual value with expected value.
   #
-  # @param instance [Synvert::Core::Rewriter::Instance] used to get source code.
   # @param actual [Object] actual value.
   # @param expected [Object] expected value.
   # @return [Integer] -1, 0 or 1.
   # @raise [Synvert::Core::MethodNotSupported] if expected class is not supported.
-  def match_value?(instance, actual, expected)
+  def match_value?(actual, expected)
     case expected
     when Symbol
       if Parser::AST::Node === actual
-        actual.source(instance) == ":#{expected}"
+        actual.to_source == ":#{expected}"
       else
         actual.to_sym == expected
       end
     when String
       if Parser::AST::Node === actual
-        actual.source(instance) == expected || actual.source(instance)[1...-1] == expected
+        actual.to_source == expected || actual.to_source[1...-1] == expected
       else
         actual.to_s == expected
       end
     when Regexp
       if Parser::AST::Node === actual
-        actual.source(instance) =~ Regexp.new(expected.to_s, Regexp::MULTILINE)
+        actual.to_source =~ Regexp.new(expected.to_s, Regexp::MULTILINE)
       else
         actual.to_s =~ Regexp.new(expected.to_s, Regexp::MULTILINE)
       end
     when Array
-      actual.zip(expected).all? { |a, e| match_value?(instance, a, e) }
+      actual.zip(expected).all? { |a, e| match_value?(a, e) }
     when NilClass
       actual.nil?
     when Numeric
@@ -339,13 +337,12 @@ private
   # Get actual value from the node.
   #
   # @param node [Parser::AST::Node]
-  # @param instance [Synvert::Core::Rewriter::Instance]
   # @param multi_keys [Array<Symbol>]
   # @return [Object] actual value.
-  def actual_value(node, instance, multi_keys)
+  def actual_value(node, multi_keys)
     multi_keys.inject(node) { |n, key|
       if n
-        key == :source ? n.send(key, instance) : n.send(key)
+        key == :source ? n.send(key) : n.send(key)
       end
     }
   end

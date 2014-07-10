@@ -27,7 +27,7 @@ module Synvert::Core
     def match?
       match = false
       @instance.current_node.recursive_children do |child_node|
-        match = match || (child_node && child_node.match?(@instance, @rules))
+        match = match || (child_node && child_node.match?(@rules))
       end
       match
     end
@@ -39,7 +39,7 @@ module Synvert::Core
     def match?
       match = false
       @instance.current_node.recursive_children do |child_node|
-        match = match || (child_node && child_node.match?(@instance, @rules))
+        match = match || (child_node && child_node.match?(@rules))
       end
       !match
     end
@@ -50,7 +50,7 @@ module Synvert::Core
     # check if only have one child node and the child node matches rules.
     def match?
       @instance.current_node.body.size == 1 &&
-        @instance.current_node.body.first.match?(@instance, @rules)
+        @instance.current_node.body.first.match?(@rules)
     end
   end
 end
