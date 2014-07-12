@@ -172,11 +172,15 @@ module Synvert::Core
       i = @actions.length - 1
       j = i - 1
       @conflict_actions = []
+      return if i < 0
+
+      begin_pos = @actions[i].begin_pos
       while j > -1
-        if @actions[i].begin_pos <= @actions[j].end_pos
+        if begin_pos <= @actions[j].end_pos
           @conflict_actions << @actions.delete_at(j)
         else
           i = j
+          begin_pos = @actions[i].begin_pos
         end
         j -= 1
       end

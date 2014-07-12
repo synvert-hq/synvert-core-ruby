@@ -166,6 +166,30 @@ end
         expect(File).to receive(:write).with('config/environments/production.rb', output)
         instance.process
       end
+
+      describe "#check_conflict_actions" do
+        it "has no conflict" do
+          action1 = double(begin_pos: 10, end_pos: 20)
+          action2 = double(begin_pos: 30, end_pos: 40)
+          action3 = double(begin_pos: 50, end_pos: 60)
+          instance = Rewriter::Instance.new rewriter, 'spec/spec_helper.rb'
+          instance.instance_variable_set :@actions, [action1, action2, action3]
+          instance.send(:check_conflict_actions)
+          expect(instance.instance_variable_get :@conflict_actions).to eq []
+          expect(instance.instance_variable_get :@actions).to eq [action1, action2, action3]
+        end
+
+        it "has no conflict" do
+          action1 = double(begin_pos: 30, end_pos: 40)
+          action2 = double(begin_pos: 50, end_pos: 60)
+          action3 = double(begin_pos: 10, end_pos: 20)
+          instance = Rewriter::Instance.new rewriter, 'spec/spec_helper.rb'
+          instance.instance_variable_set :@actions, [action1, action2, action3]
+          instance.send(:check_conflict_actions)
+          expect(instance.instance_variable_get :@conflict_actions).to eq [action2, action1]
+          expect(instance.instance_variable_get :@actions).to eq [action3]
+        end
+      end
     end
   end
 end
