@@ -27,7 +27,7 @@ end
           run = true
         end
         scope.process
-        expect(run).to be_false
+        expect(run).to be_falsey
       end
 
       it 'call block if there is matching node' do
@@ -36,7 +36,7 @@ end
           run = true
         end
         scope.process
-        expect(run).to be_true
+        expect(run).to be_truthy
       end
     end
   end

@@ -73,7 +73,7 @@ module Synvert::Core
           add_file 'foo.bar', 'FooBar'
         end
         rewriter.process_with_sandbox
-        expect(File.exist?('./foo.bar')).to be_false
+        expect(File.exist?('./foo.bar')).to be_falsey
       end
     end
 
@@ -84,7 +84,7 @@ module Synvert::Core
           remove_file 'foo.bar'
         end
         rewriter.process
-        expect(File.exist? './foo.bar').to be_false
+        expect(File.exist? './foo.bar').to be_falsey
       end
 
       it 'does nothing if file not exist' do
@@ -92,7 +92,7 @@ module Synvert::Core
           remove_file 'foo.bar'
         end
         rewriter.process
-        expect(File.exist? './foo.bar').to be_false
+        expect(File.exist? './foo.bar').to be_falsey
       end
 
       it 'does nothing in sandbox mode' do
@@ -101,7 +101,7 @@ module Synvert::Core
           add_file 'foo.bar', 'FooBar'
         end
         rewriter.process_with_sandbox
-        expect(File.exist?('./foo.bar')).to be_true
+        expect(File.exist?('./foo.bar')).to be_truthy
         FileUtils.rm './foo.bar'
       end
     end

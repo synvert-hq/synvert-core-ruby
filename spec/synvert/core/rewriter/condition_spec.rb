@@ -22,7 +22,7 @@ module Synvert::Core
             run = true
           end
           condition.process
-          expect(run).to be_true
+          expect(run).to be_truthy
         end
 
         it 'not call block if not match anything' do
@@ -31,7 +31,7 @@ module Synvert::Core
             run = true
           end
           condition.process
-          expect(run).to be_false
+          expect(run).to be_falsey
         end
       end
     end
@@ -44,7 +44,7 @@ module Synvert::Core
             run = true
           end
           condition.process
-          expect(run).to be_true
+          expect(run).to be_truthy
         end
 
         it 'not call block if not match anything' do
@@ -53,7 +53,7 @@ module Synvert::Core
             run = true
           end
           condition.process
-          expect(run).to be_false
+          expect(run).to be_falsey
         end
       end
     end
@@ -74,7 +74,7 @@ module Synvert::Core
             run = true
           end
           condition.process
-          expect(run).to be_true
+          expect(run).to be_truthy
         end
 
         it 'not call block if does not match' do
@@ -83,7 +83,7 @@ module Synvert::Core
             run = true
           end
           condition.process
-          expect(run).to be_false
+          expect(run).to be_falsey
         end
       end
     end
