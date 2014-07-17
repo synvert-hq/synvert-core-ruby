@@ -10,7 +10,7 @@ module Synvert::Core
       class <<self
         # convert erb to ruby code.
         #
-        # @param [String] erb source code.
+        # @param source [String] erb source code.
         # @return [String] ruby source code.
         def encode(source)
           Erubis.new(source.gsub("-%>", "%>"), :escape => false, :trim => false).src
@@ -18,7 +18,7 @@ module Synvert::Core
 
         # convert ruby code to erb.
         #
-        # @param [String] ruby source code.
+        # @param source [String] ruby source code.
         # @return [String] erb source code.
         def decode(source)
           source = decode_ruby_stmt(source)

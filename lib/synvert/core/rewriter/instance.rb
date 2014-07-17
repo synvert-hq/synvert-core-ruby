@@ -44,7 +44,7 @@ module Synvert::Core
         unless Configuration.instance.get(:skip_files).include? file_path
           begin
             source = File.read(file_path)
-            source = Erb.encode(source) if file_path =~ /\.erb$/
+            source = Engine::ERB.encode(source) if file_path =~ /\.erb$/
             buffer = Parser::Source::Buffer.new file_path
             buffer.source = source
 
@@ -65,7 +65,7 @@ module Synvert::Core
             end
             @actions = []
 
-            source = Erb.decode(source) if file_path =~ /\.erb/
+            source = Engine::ERB.decode(source) if file_path =~ /\.erb/
             File.write file_path, source
           end while !@conflict_actions.empty?
         end
@@ -152,6 +152,12 @@ module Synvert::Core
     # @param code [String] code need to be replaced with.
     def replace_with(code)
       @actions << Rewriter::ReplaceWithAction.new(self, code)
+    end
+
+    # Parse replace_erb_stmt_with_expr dsl, it creates a [Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction] to
+    # replace erb stmt code to expr code.
+    def replace_erb_stmt_with_expr
+      @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self)
     end
 
     # Parse remove dsl, it creates a [Synvert::Core::Rewriter::RemoveAction] to current node.

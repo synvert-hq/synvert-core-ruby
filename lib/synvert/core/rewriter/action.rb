@@ -221,4 +221,42 @@ module Synvert::Core
       ''
     end
   end
+
+  # ReplaceErbStmtWithExprAction to replace erb stmt code to expr,
+  #   e.g. <% form_for ... %> => <%= form_for ... %>.
+  class Rewriter::ReplaceErbStmtWithExprAction < Rewriter::Action
+    def initialize(instance, code=nil)
+      super
+    end
+
+    # Begin position of code to replace.
+    #
+    # @return [Integer] begin position.
+    def begin_pos
+      node_begin_pos = @node.loc.expression.begin_pos
+      while @instance.current_source[node_begin_pos -= 1] == ' '
+      end
+      node_begin_pos - Engine::ERUBY_STMT_SPLITTER.length + 1
+    end
+
+    # End position of code to replace.
+    #
+    # @return [Integer] end position.
+    def end_pos
+      node_begin_pos = @node.loc.expression.begin_pos
+      node_end_pos = @node.loc.expression.end_pos
+      node_begin_pos += @instance.current_source[node_begin_pos..node_end_pos].index "do"
+      while @instance.current_source[node_begin_pos += 1] != '@'
+      end
+      node_begin_pos
+    end
+
+    # The rewritten erb expr code.
+    #
+    # @return [String] rewritten code.
+    def rewritten_code
+      @instance.current_source[begin_pos...end_pos].sub(Engine::ERUBY_STMT_SPLITTER, "@output_buffer.append= ")
+        .sub(Engine::ERUBY_STMT_SPLITTER, Engine::ERUBY_EXPR_SPLITTER)
+    end
+  end
 end

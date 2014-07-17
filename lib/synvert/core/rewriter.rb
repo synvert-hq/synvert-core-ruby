@@ -21,6 +21,7 @@ module Synvert::Core
     autoload :InsertAction, 'synvert/core/rewriter/action'
     autoload :InsertAfterAction, 'synvert/core/rewriter/action'
     autoload :ReplaceWithAction, 'synvert/core/rewriter/action'
+    autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action'
     autoload :RemoveAction, 'synvert/core/rewriter/action'
 
     autoload :Warning, 'synvert/core/rewriter/warning'
