@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "parser"
   spec.add_runtime_dependency "activesupport"
+  spec.add_runtime_dependency "erubis"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"

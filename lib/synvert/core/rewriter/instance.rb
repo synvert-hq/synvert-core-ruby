@@ -44,6 +44,7 @@ module Synvert::Core
         unless Configuration.instance.get(:skip_files).include? file_path
           begin
             source = File.read(file_path)
+            source = Erb.encode(source) if file_path =~ /\.erb$/
             buffer = Parser::Source::Buffer.new file_path
             buffer.source = source
 
@@ -64,6 +65,7 @@ module Synvert::Core
             end
             @actions = []
 
+            source = Erb.decode(source) if file_path =~ /\.erb/
             File.write file_path, source
           end while !@conflict_actions.empty?
         end

@@ -7,12 +7,14 @@ require 'parser'
 require 'parser/current'
 require 'ast'
 require 'active_support/inflector'
+require 'erubis'
 require 'synvert/core/node_ext'
 
 module Synvert
   module Core
     autoload :Configuration, 'synvert/core/configuration'
     autoload :Rewriter, 'synvert/core/rewriter'
+    autoload :Engine, 'synvert/core/engine'
     autoload :RewriterNotFound, 'synvert/core/exceptions'
     autoload :GemfileLockNotFound, 'synvert/core/exceptions'
     autoload :MethodNotSupported, 'synvert/core/exceptions'
