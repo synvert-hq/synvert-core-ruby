@@ -178,6 +178,10 @@ class Parser::AST::Node
     case self.type
     when :str, :sym
       self.children.last
+    when :true
+      true
+    when :false
+      false
     when :array
       self.children.map(&:to_value)
     else
@@ -295,6 +299,7 @@ private
         actual.to_s =~ Regexp.new(expected.to_s, Regexp::MULTILINE)
       end
     when Array
+      return false unless expected.length == actual.length
       actual.zip(expected).all? { |a, e| match_value?(a, e) }
     when NilClass
       actual.nil?

@@ -159,6 +159,13 @@ describe Parser::AST::Node do
       expect(node.to_value).to eq :str
     end
 
+    it 'get for boolean' do
+      node = parse("true")
+      expect(node.to_value).to be_truthy
+      node = parse("false")
+      expect(node.to_value).to be_falsey
+    end
+
     it 'gets for array' do
       node = parse("['str', :str]")
       expect(node.to_value).to eq ['str', :str]
