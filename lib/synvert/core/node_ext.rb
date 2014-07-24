@@ -176,7 +176,7 @@ class Parser::AST::Node
   # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
   def to_value
     case self.type
-    when :str, :sym
+    when :int, :str, :sym
       self.children.last
     when :true
       true
@@ -184,6 +184,10 @@ class Parser::AST::Node
       false
     when :array
       self.children.map(&:to_value)
+    when :irange
+      (self.children.first.to_value..self.children.last.to_value)
+    when :begin
+      self.children.first.to_value
     else
       raise Synvert::Core::MethodNotSupported.new "to_value is not handled for #{self.inspect}"
     end
