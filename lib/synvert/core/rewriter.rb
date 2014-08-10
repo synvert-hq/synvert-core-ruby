@@ -35,6 +35,8 @@ module Synvert::Core
     autoload :UnlessExistCondition, 'synvert/core/rewriter/condition'
     autoload :IfOnlyExistCondition, 'synvert/core/rewriter/condition'
 
+    autoload :Helper, 'synvert/core/rewriter/helper'
+
     autoload :GemSpec, 'synvert/core/rewriter/gem_spec'
 
     class <<self

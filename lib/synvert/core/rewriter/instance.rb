@@ -6,6 +6,8 @@ module Synvert::Core
   #
   # One instance can contains one or many [Synvert::Core::Rewriter::Scope] and [Synvert::Rewriter::Condition].
   class Rewriter::Instance
+    include Rewriter::Helper
+
     class <<self
       attr_accessor :current
     end
