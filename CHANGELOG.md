@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.1
+
+* add Rewriter::Helper module to provide common helper methods.
+
 ## 0.4.0 (2014-07-26)
 
 * Add erb support
