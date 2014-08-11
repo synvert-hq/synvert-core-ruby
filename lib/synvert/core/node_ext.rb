@@ -254,22 +254,27 @@ class Parser::AST::Node
   # @raise [Synvert::Core::MethodNotSupported] if string in block {{ }} does not support.
   def rewritten_source(code)
     code.gsub(/{{(.*?)}}/m) do
-      evaluated = self.instance_eval $1
-      case evaluated
-      when Parser::AST::Node
-        source = evaluated.loc.expression.source_buffer.source
-        source[evaluated.loc.expression.begin_pos...evaluated.loc.expression.end_pos]
-      when Array
-        if evaluated.size > 0
-          source = evaluated.first.loc.expression.source_buffer.source
-          source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
+      old_code = $1
+      if self.respond_to? old_code.split(/\.|\[/).first
+        evaluated = self.instance_eval old_code
+        case evaluated
+        when Parser::AST::Node
+          source = evaluated.loc.expression.source_buffer.source
+          source[evaluated.loc.expression.begin_pos...evaluated.loc.expression.end_pos]
+        when Array
+          if evaluated.size > 0
+            source = evaluated.first.loc.expression.source_buffer.source
+            source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
+          end
+        when String
+          evaluated
+        when NilClass
+          'nil'
+        else
+          raise Synvert::Core::MethodNotSupported.new "rewritten_source is not handled for #{evaluated.inspect}"
         end
-      when String
-        evaluated
-      when NilClass
-        'nil'
       else
-        raise Synvert::Core::MethodNotSupported.new "rewritten_source is not handled for #{evaluated.inspect}"
+        $1
       end
     end
   end
