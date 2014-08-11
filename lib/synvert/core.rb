@@ -7,6 +7,7 @@ require 'parser'
 require 'parser/current'
 require 'ast'
 require 'active_support/inflector'
+require 'active_support/core_ext/object'
 require 'erubis'
 require 'synvert/core/node_ext'
 
