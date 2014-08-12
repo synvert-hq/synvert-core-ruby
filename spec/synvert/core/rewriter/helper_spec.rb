@@ -9,7 +9,7 @@ module Synvert::Core
         let(:node) { parse("User.save(false)") }
 
         it "adds reciever" do
-          dummy_instance.stubs(:node).returns(node)
+          allow(dummy_instance).to receive(:node).and_return(node)
           expect(dummy_instance.add_receiver_if_necessary("save(validate: false)")).to eq "{{receiver}}.save(validate: false)"
         end
       end
@@ -18,7 +18,7 @@ module Synvert::Core
         let(:node) { parse("save(false)") }
 
         it "doesn't add reciever" do
-          dummy_instance.stubs(:node).returns(node)
+          allow(dummy_instance).to receive(:node).and_return(node)
           expect(dummy_instance.add_receiver_if_necessary("save(validate: false)")).to eq "save(validate: false)"
         end
       end
