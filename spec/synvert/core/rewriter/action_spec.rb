@@ -56,7 +56,7 @@ end""")
       end
 
       it 'gets rewritten_code' do
-        expect(subject.rewritten_code).to eq """\n\n  describe '#size' do
+        expect(subject.rewritten_code).to eq """describe '#size' do
     subject { super().size }
     it { should == 1 }
   end"""

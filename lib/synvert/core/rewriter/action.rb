@@ -70,9 +70,11 @@ module Synvert::Core
     # @return [String] rewritten code.
     def rewritten_code
       if rewritten_source.split("\n").length > 1
-        "\n\n" + rewritten_source.split("\n").map { |line|
-          indent(@node) + line
-        }.join("\n")
+        new_code = []
+        rewritten_source.split("\n").each_with_index { |line, index|
+          new_code << (index == 0 ? line : indent(@node) + line)
+        }
+        new_code.join("\n")
       else
         rewritten_source
       end

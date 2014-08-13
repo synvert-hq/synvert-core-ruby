@@ -274,7 +274,7 @@ class Parser::AST::Node
           raise Synvert::Core::MethodNotSupported.new "rewritten_source is not handled for #{evaluated.inspect}"
         end
       else
-        $1
+        "{{#{old_code}}}"
       end
     end
   end
