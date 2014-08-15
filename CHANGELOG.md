@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.4.2
+
+* do not rewrite code in {{ }} in synvert can't rewrite it
+* fix indent for replace_with action
+
 ## 0.4.1
 
 * add Rewriter::Helper module to provide common helper methods.
