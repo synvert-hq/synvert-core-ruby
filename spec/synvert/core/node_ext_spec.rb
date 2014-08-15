@@ -267,4 +267,26 @@ describe Parser::AST::Node do
       expect(node).not_to be_match(type: 'class', name: {not: 'Synvert'})
     end
   end
+
+  describe '#rewritten_source' do
+    let(:instance) {
+      rewriter = Synvert::Rewriter.new('foobar')
+      Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
+    }
+    before { Synvert::Rewriter::Instance.current = instance }
+
+    it 'does not rewrite with unknown method' do
+      source = 'class Synvert; end'
+      instance.current_source = source
+      node = parse(source)
+      expect(node.rewritten_source('{{foobar}}')).to eq '{{foobar}}'
+    end
+
+    it 'rewrites with node known method' do
+      source = 'class Synvert; end'
+      instance.current_source = source
+      node = parse(source)
+      expect(node.rewritten_source('{{name}}')).to eq 'Synvert'
+    end
+  end
 end
