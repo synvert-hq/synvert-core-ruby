@@ -278,7 +278,7 @@ class Parser::AST::Node
             source = evaluated.first.loc.expression.source_buffer.source
             source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
           end
-        when String
+        when String, Symbol
           evaluated
         when NilClass
           'nil'
