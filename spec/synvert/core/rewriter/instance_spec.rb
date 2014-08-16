@@ -206,5 +206,22 @@ end
         expect(instance.current_node).to eq node1
       end
     end
+
+    describe '#process_with_other_node' do
+      let(:rewriter) { Rewriter.new('foobar') }
+
+      it 'resets current_node' do
+        instance = Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do; end
+        node1 = double()
+        node2 = double()
+        node3 = double()
+        instance.current_node = node1
+        instance.process_with_other_node(node2) do
+          instance.current_node = node3
+          expect(instance.current_node).to eq node3
+        end
+        expect(instance.current_node).to eq node1
+      end
+    end
   end
 end
