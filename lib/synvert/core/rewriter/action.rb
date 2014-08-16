@@ -100,7 +100,7 @@ module Synvert::Core
       if :begin == @node.type
         @node.loc.expression.end_pos
       else
-        @node.loc.expression.end_pos - 4
+        @node.loc.expression.end_pos - @node.indent - 4
       end
     end
 
