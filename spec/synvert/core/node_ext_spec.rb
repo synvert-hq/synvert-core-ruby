@@ -26,6 +26,13 @@ describe Parser::AST::Node do
     end
   end
 
+  describe '#parent_class' do
+    it 'gets for class node' do
+      node = parse('class Post < ActiveRecord::Base; end')
+      expect(node.parent_class).to eq parse('ActiveRecord::Base')
+    end
+  end
+
   describe '#receiver' do
     it 'gets for send node' do
       node = parse('FactoryGirl.create :post')

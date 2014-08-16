@@ -15,6 +15,18 @@ class Parser::AST::Node
     end
   end
 
+  # Get parent_class node of :class node.
+  #
+  # @return [Parser::AST::Node] parent_class node.
+  # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+  def parent_class
+    if :class == self.type
+      self.children[1]
+    else
+      raise Synvert::Core::MethodNotSupported.new "parent_class is not handled for #{self.inspect}"
+    end
+  end
+
   # Get receiver node of :send node.
   #
   # @return [Parser::AST::Node] receiver node.
