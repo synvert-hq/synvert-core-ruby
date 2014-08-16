@@ -55,9 +55,9 @@ module Synvert::Core
 
             @current_file = file_path
             @current_source = source
-            @current_node = ast
-            instance_eval &@block
-            @current_node = ast
+            self.process_with_node ast do
+              instance_eval &@block
+            end
 
             @actions.sort!
             check_conflict_actions
@@ -172,6 +172,14 @@ module Synvert::Core
     # @param message [String] warning message.
     def warn(message)
       @rewriter.add_warning Rewriter::Warning.new(self, message)
+    end
+
+    # Set current node properly and process.
+    # @param node [Parser::AST::Node] current node to set
+    def process_with_node(node)
+      self.current_node = node
+      yield
+      self.current_node = node
     end
 
   private
