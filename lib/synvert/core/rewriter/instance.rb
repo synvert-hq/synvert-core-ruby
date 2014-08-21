@@ -93,8 +93,8 @@ module Synvert::Core
       file_pattern = File.join(Configuration.instance.get(:path), @file_pattern)
       Dir.glob(file_pattern).each do |file_path|
         unless Configuration.instance.get(:skip_files).include? file_path
-          conflict_actions = []
           begin
+            conflict_actions = []
             source = self.class.file_source(file_path)
             ast = self.class.file_ast(file_path)
 
