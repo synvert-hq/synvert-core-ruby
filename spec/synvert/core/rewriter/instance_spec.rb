@@ -3,7 +3,7 @@ require 'spec_helper'
 module Synvert::Core
   describe Rewriter::Instance do
     let(:instance) {
-      rewriter = Rewriter.new('foobar')
+      rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
 
@@ -78,7 +78,7 @@ module Synvert::Core
     end
 
     describe '#process' do
-      let(:rewriter) { Rewriter.new('foobar') }
+      let(:rewriter) { Rewriter.new('foo', 'bar') }
 
       it 'FactoryGirl uses short syntax' do
         instance = Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do
@@ -193,7 +193,7 @@ end
     end
 
     describe '#process_with_node' do
-      let(:rewriter) { Rewriter.new('foobar') }
+      let(:rewriter) { Rewriter.new('foo', 'bar') }
 
       it 'resets current_node' do
         instance = Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do; end
@@ -208,7 +208,7 @@ end
     end
 
     describe '#process_with_other_node' do
-      let(:rewriter) { Rewriter.new('foobar') }
+      let(:rewriter) { Rewriter.new('foo', 'bar') }
 
       it 'resets current_node' do
         instance = Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do; end

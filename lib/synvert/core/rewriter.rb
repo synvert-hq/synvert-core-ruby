@@ -40,42 +40,46 @@ module Synvert::Core
     autoload :GemSpec, 'synvert/core/rewriter/gem_spec'
 
     class <<self
-      # Register a rewriter with its name.
+      # Register a rewriter with its group and name.
       #
+      # @param group [String] the rewriter group.
       # @param name [String] the unique rewriter name.
       # @param rewriter [Synvert::Core::Rewriter] the rewriter to register.
-      def register(name, rewriter)
+      def register(group, name, rewriter)
         @rewriters ||= {}
-        @rewriters[name] = rewriter
+        @rewriters[group] ||= {}
+        @rewriters[group][name] = rewriter
       end
 
-      # Fetch a rewriter by name.
+      # Fetch a rewriter by group and name.
       #
+      # @param group [String] rewrtier group.
       # @param name [String] rewrtier name.
       # @return [Synvert::Core::Rewriter] the matching rewriter.
-      def fetch(name)
-        @rewriters[name]
+      def fetch(group, name)
+        @rewriters[group][name]
       end
 
-      # Get a registered rewriter by name and process that rewriter.
+      # Get a registered rewriter by group and name, then process that rewriter.
       #
+      # @param group [String] the rewriter group.
       # @param name [String] the rewriter name.
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(name)
-        if (rewriter = @rewriters[name])
+      def call(group, name)
+        if (rewriter = @rewriters[group][name])
           rewriter.process
           rewriter
         else
-          raise RewriterNotFound.new "Rewriter #{name} not found"
+          raise RewriterNotFound.new "Rewriter #{group} #{name} not found"
         end
       end
 
       # Get all available rewriters
       #
-      # @return [Array<Synvert::Core::Rewriter>]
+      # @return [Hash<String, Hash<String, Rewriter>>]
       def availables
-        @rewriters ? @rewriters.values : []
+        @rewriters
       end
 
       # Clear all registered rewriters.
@@ -84,6 +88,8 @@ module Synvert::Core
       end
     end
 
+    # @!attribute [r] group
+    #   @return [String] the group of rewriter
     # @!attribute [r] name
     #   @return [String] the unique name of rewriter
     # @!attribute [r] sub_snippets
@@ -92,21 +98,23 @@ module Synvert::Core
     #   @return [Array] helper methods.
     # @!attribute [r] warnings
     #   @return [Array<Synvert::Core::Rewriter::Warning>] warning messages.
-    attr_reader :name, :sub_snippets, :helpers, :warnings
+    attr_reader :group, :name, :sub_snippets, :helpers, :warnings
 
     # Initialize a rewriter.
     # When a rewriter is initialized, it is also registered.
     #
+    # @param group [String] group of the rewriter.
     # @param name [String] name of the rewriter.
     # @param block [Block] a block defines the behaviors of the rewriter, block code won't be called when initialization.
     # @return [Synvert::Core::Rewriter]
-    def initialize(name, &block)
-      @name = name.to_s
+    def initialize(group, name, &block)
+      @group = group
+      @name = name
       @block = block
       @helpers = []
       @sub_snippets = []
       @warnings = []
-      self.class.register(@name, self)
+      self.class.register(@group, @name, self)
     end
 
     # Process the rewriter.
@@ -196,9 +204,10 @@ module Synvert::Core
 
     # Parse add_snippet dsl, it calls anther rewriter.
     #
+    # @param group [String] group of another rewriter.
     # @param name [String] name of another rewriter.
-    def add_snippet(name)
-      @sub_snippets << self.class.call(name.to_s)
+    def add_snippet(group, name)
+      @sub_snippets << self.class.call(group.to_s, name.to_s)
     end
 
     # Parse helper_method dsl, it defines helper method for [Synvert::Core::Rewriter::Instance].

@@ -220,7 +220,7 @@ describe Parser::AST::Node do
 
   describe '#match?' do
     let(:instance) {
-      rewriter = Synvert::Rewriter.new('foobar')
+      rewriter = Synvert::Rewriter.new('foo', 'bar')
       Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
     }
     before { Synvert::Rewriter::Instance.current = instance }
@@ -277,7 +277,7 @@ describe Parser::AST::Node do
 
   describe '#rewritten_source' do
     let(:instance) {
-      rewriter = Synvert::Rewriter.new('foobar')
+      rewriter = Synvert::Rewriter.new('foo', 'bar')
       Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
     }
     before { Synvert::Rewriter::Instance.current = instance }
