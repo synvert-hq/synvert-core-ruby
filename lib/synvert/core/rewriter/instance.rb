@@ -221,23 +221,6 @@ module Synvert::Core
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
-    # Set current_node to node and process.
-    # @param node [Parser::AST::Node] node set to current_node
-    def process_with_node(node)
-      self.current_node = node
-      yield
-      self.current_node = node
-    end
-
-    # Set current_node properly, process and set current_node back to original current_node.
-    # @param node [Parser::AST::Node] node set to current_node
-    def process_with_other_node(node)
-      original_node = self.current_node
-      self.current_node = node
-      yield
-      self.current_node = original_node
-    end
-
   private
 
     # It changes source code from bottom to top, and it can change source code twice at the same time,
