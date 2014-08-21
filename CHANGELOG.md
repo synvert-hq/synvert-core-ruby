@@ -1,20 +1,12 @@
 # CHANGELOG
 
-## 0.4.3
+## 0.5.0 (2014-08-21)
 
+* Add group to rewriter
 * Add parent_class for :class node
-* Move process_with_node to instance
-* Add Instance#process_with_other_node
-* Fix indent for append action
-
-## 0.4.2
-
-* Do not rewrite code in {{ }} in synvert can't rewrite it
-* Fix indent for replace_with action
-
-## 0.4.1
-
 * Add Rewriter::Helper module to provide common helper methods.
+* Fix indent for append and replace_with action
+* Cache file source and ast
 
 ## 0.4.0 (2014-07-26)
 
