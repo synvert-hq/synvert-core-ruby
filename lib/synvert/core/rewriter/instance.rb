@@ -9,7 +9,57 @@ module Synvert::Core
     include Rewriter::Helper
 
     class <<self
+      # @!attribute [rw] current
+      #   @return current instance
       attr_accessor :current
+
+      # Cached file source.
+      #
+      # @param file_path [String] file path
+      # @return [String] file source
+      def file_source(file_path)
+        @file_source ||= {}
+        @file_source[file_path] ||=
+          begin
+            source = File.read(file_path)
+            source = Engine::ERB.encode(source) if file_path =~ /\.erb$/
+            source
+          end
+      end
+
+      # Cached file ast.
+      #
+      # @param file_path [String] file path
+      # @return [String] ast node for file
+      def file_ast(file_path)
+        @file_ast ||= {}
+        @file_ast[file_path] ||=
+          begin
+            buffer = Parser::Source::Buffer.new file_path
+            buffer.source = file_source(file_path)
+
+            parser = Parser::CurrentRuby.new
+            parser.reset
+            parser.parse buffer
+          end
+      end
+
+      # Write source to file and remove cached file source and ast.
+      #
+      # @param file_path [String] file path
+      # @param source [String] file source
+      def write_file(file_path, source)
+        source = Engine::ERB.decode(source) if file_path =~ /\.erb/
+        File.write file_path, source
+        @file_source[file_path] = nil
+        @file_ast[file_path] = nil
+      end
+
+      # Reset cached file source and ast.
+      def reset
+        @file_source = {}
+        @file_ast = {}
+      end
     end
 
     # @!attribute [rw] current_node
@@ -40,36 +90,33 @@ module Synvert::Core
     def process
       self.class.current = self
 
-      parser = Parser::CurrentRuby.new
       file_pattern = File.join(Configuration.instance.get(:path), @file_pattern)
       Dir.glob(file_pattern).each do |file_path|
         unless Configuration.instance.get(:skip_files).include? file_path
+          conflict_actions = []
           begin
-            source = File.read(file_path)
-            source = Engine::ERB.encode(source) if file_path =~ /\.erb$/
-            buffer = Parser::Source::Buffer.new file_path
-            buffer.source = source
-
-            parser.reset
-            ast = parser.parse buffer
+            source = self.class.file_source(file_path)
+            ast = self.class.file_ast(file_path)
 
             @current_file = file_path
             @current_source = source
+
             self.process_with_node ast do
               instance_eval &@block
             end
 
-            @actions.sort!
-            check_conflict_actions
-            @actions.reverse.each do |action|
-              source[action.begin_pos...action.end_pos] = action.rewritten_code
-              source = remove_code_or_whole_line(source, action.line)
-            end
-            @actions = []
+            if @actions.length > 0
+              @actions.sort!
+              conflict_actions = get_conflict_actions
+              @actions.reverse.each do |action|
+                source[action.begin_pos...action.end_pos] = action.rewritten_code
+                source = remove_code_or_whole_line(source, action.line)
+              end
+              @actions = []
 
-            source = Engine::ERB.decode(source) if file_path =~ /\.erb/
-            File.write file_path, source
-          end while !@conflict_actions.empty?
+              self.class.write_file(file_path, source)
+            end
+          end while !conflict_actions.empty?
         end
       end
     end
@@ -193,25 +240,25 @@ module Synvert::Core
 
   private
 
-    # It changes source code from bottom to top, and it can change source code twice at the same time.
+    # It changes source code from bottom to top, and it can change source code twice at the same time,
     # So if there is an overlap between two actions, it removes the conflict actions and operate them in the next loop.
-    def check_conflict_actions
+    def get_conflict_actions
       i = @actions.length - 1
       j = i - 1
-      @conflict_actions = []
+      conflict_actions = []
       return if i < 0
 
       begin_pos = @actions[i].begin_pos
       while j > -1
         if begin_pos <= @actions[j].end_pos
-          @conflict_actions << @actions.delete_at(j)
+          conflict_actions << @actions.delete_at(j)
         else
           i = j
           begin_pos = @actions[i].begin_pos
         end
         j -= 1
       end
-      @conflict_actions
+      conflict_actions
     end
 
     # It checks if code is removed and that line is empty.
