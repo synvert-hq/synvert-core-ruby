@@ -56,8 +56,6 @@ describe Parser::AST::Node do
     it 'gets for block node' do
       source = 'RSpec.configure do |config|; end'
       node = parse(source)
-      instance = double(current_source: source)
-      Synvert::Rewriter::Instance.current = instance
       expect(node.arguments.map { |argument| argument.to_source }).to eq ['config']
     end
 
@@ -192,8 +190,6 @@ describe Parser::AST::Node do
   describe '#to_source' do
     it 'gets for node' do
       source = 'params[:user][:email]'
-      instance = double(current_source: source)
-      Synvert::Rewriter::Instance.current = instance
       node = parse(source)
       expect(node.to_source).to eq 'params[:user][:email]'
     end
@@ -223,53 +219,45 @@ describe Parser::AST::Node do
       rewriter = Synvert::Rewriter.new('foo', 'bar')
       Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
     }
-    before { Synvert::Rewriter::Instance.current = instance }
 
     it 'matches class name' do
       source = 'class Synvert; end'
-      instance.current_source = source
       node = parse(source)
       expect(node).to be_match(type: 'class', name: 'Synvert')
     end
 
     it 'matches message with regexp' do
       source = 'User.find_by_login(login)'
-      instance.current_source = source
       node = parse(source)
       expect(node).to be_match(type: 'send', message: /^find_by_/)
     end
 
     it 'matches arguments with symbol' do
       source = 'params[:user]'
-      instance.current_source = source
       node = parse(source)
       expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: [:user])
     end
 
     it 'matches assign number' do
       source = 'at_least(0)'
-      instance.current_source = source
       node = parse(source)
       expect(node).to be_match(type: 'send', arguments: [0])
     end
 
     it 'matches arguments with string' do
       source = 'params["user"]'
-      instance.current_source = source
       node = parse(source)
       expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: ['user'])
     end
 
     it 'matches arguments any' do
       source = 'config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false'
-      instance.current_source = source
       node = parse(source)
       expect(node).to be_match(type: 'send', arguments: {any: 'Lifo::Cache'})
     end
 
     it 'matches not' do
       source = 'class Synvert; end'
-      instance.current_source = source
       node = parse(source)
       expect(node).not_to be_match(type: 'class', name: {not: 'Synvert'})
     end
@@ -280,18 +268,15 @@ describe Parser::AST::Node do
       rewriter = Synvert::Rewriter.new('foo', 'bar')
       Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
     }
-    before { Synvert::Rewriter::Instance.current = instance }
 
     it 'does not rewrite with unknown method' do
       source = 'class Synvert; end'
-      instance.current_source = source
       node = parse(source)
       expect(node.rewritten_source('{{foobar}}')).to eq '{{foobar}}'
     end
 
     it 'rewrites with node known method' do
       source = 'class Synvert; end'
-      instance.current_source = source
       node = parse(source)
       expect(node.rewritten_source('{{name}}')).to eq 'Synvert'
     end

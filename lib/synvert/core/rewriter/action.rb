@@ -236,7 +236,7 @@ module Synvert::Core
     # @return [Integer] begin position.
     def begin_pos
       node_begin_pos = @node.loc.expression.begin_pos
-      while @instance.current_source[node_begin_pos -= 1] == ' '
+      while @node.loc.expression.source_buffer.source[node_begin_pos -= 1] == ' '
       end
       node_begin_pos - Engine::ERUBY_STMT_SPLITTER.length + 1
     end
@@ -246,9 +246,8 @@ module Synvert::Core
     # @return [Integer] end position.
     def end_pos
       node_begin_pos = @node.loc.expression.begin_pos
-      node_end_pos = @node.loc.expression.end_pos
-      node_begin_pos += @instance.current_source[node_begin_pos..node_end_pos].index "do"
-      while @instance.current_source[node_begin_pos += 1] != '@'
+      node_begin_pos += @node.loc.expression.source.index "do"
+      while @node.loc.expression.source_buffer.source[node_begin_pos += 1] != '@'
       end
       node_begin_pos
     end
@@ -257,7 +256,7 @@ module Synvert::Core
     #
     # @return [String] rewritten code.
     def rewritten_code
-      @instance.current_source[begin_pos...end_pos].sub(Engine::ERUBY_STMT_SPLITTER, "@output_buffer.append= ")
+      @node.loc.expression.source_buffer.source[begin_pos...end_pos].sub(Engine::ERUBY_STMT_SPLITTER, "@output_buffer.append= ")
         .sub(Engine::ERUBY_STMT_SPLITTER, Engine::ERUBY_EXPR_SPLITTER)
     end
   end

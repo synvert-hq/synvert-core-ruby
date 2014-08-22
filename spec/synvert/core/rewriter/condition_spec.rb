@@ -11,7 +11,7 @@ module Synvert::Core
       """
     }
     let(:node) { Parser::CurrentRuby.parse(source) }
-    let(:instance) { double(:current_node => node, :current_source => source) }
+    let(:instance) { double(:current_node => node) }
     before { Rewriter::Instance.current = instance }
 
     describe Rewriter::IfExistCondition do
@@ -67,7 +67,7 @@ module Synvert::Core
             end
           """
           node = Parser::CurrentRuby.parse(source)
-          instance = double(:current_node => node, :current_source => source)
+          instance = double(:current_node => node)
           Rewriter::Instance.current = instance
           run = false
           condition = Rewriter::IfOnlyExistCondition.new instance, type: 'send', message: 'include', arguments: ['EmailSpec::Helpers'] do

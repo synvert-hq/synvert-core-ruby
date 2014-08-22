@@ -209,9 +209,8 @@ class Parser::AST::Node
   #
   # @return [String] source code.
   def to_source
-    instance = Synvert::Rewriter::Instance.current
     if self.loc.expression
-      instance.current_source[self.loc.expression.begin_pos...self.loc.expression.end_pos]
+      self.loc.expression.source
     end
   end
 
@@ -271,8 +270,7 @@ class Parser::AST::Node
         evaluated = self.instance_eval old_code
         case evaluated
         when Parser::AST::Node
-          source = evaluated.loc.expression.source_buffer.source
-          source[evaluated.loc.expression.begin_pos...evaluated.loc.expression.end_pos]
+          evaluated.loc.expression.source
         when Array
           if evaluated.size > 0
             source = evaluated.first.loc.expression.source_buffer.source

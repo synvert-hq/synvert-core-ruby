@@ -64,11 +64,9 @@ module Synvert::Core
 
     # @!attribute [rw] current_node
     #   @return current parsing node
-    # @!attribute [rw] current_source
-    #   @return current source code of file
     # @!attribute [rw] current_file
     #   @return current filename
-    attr_accessor :current_node, :current_source, :current_file
+    attr_accessor :current_node, :current_file
 
     # Initialize an instance.
     #
@@ -99,7 +97,6 @@ module Synvert::Core
             ast = self.class.file_ast(file_path)
 
             @current_file = file_path
-            @current_source = source
 
             self.process_with_node ast do
               instance_eval &@block

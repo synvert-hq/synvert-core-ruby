@@ -17,7 +17,7 @@ end
 """
     }
     let(:node) { Parser::CurrentRuby.parse(source) }
-    let(:instance) { double(:current_node => node, :current_node= => node, :current_source => source) }
+    let(:instance) { double(:current_node => node, :current_node= => node) }
     before do
       allow(instance).to receive(:process_with_node).and_yield
       Rewriter::Instance.current = instance
