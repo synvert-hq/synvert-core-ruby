@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.1
+
+* Remove Rewriter::Instance class methods current and current_source
+
 ## 0.5.0 (2014-08-21)
 
 * Add group to rewriter
