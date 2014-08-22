@@ -9,10 +9,6 @@ module Synvert::Core
     include Rewriter::Helper
 
     class <<self
-      # @!attribute [rw] current
-      #   @return current instance
-      attr_accessor :current
-
       # Cached file source.
       #
       # @param file_path [String] file path
@@ -86,8 +82,6 @@ module Synvert::Core
     # It finds all files, for each file, it executes the block code, gets all rewrite actions,
     # and rewrite source code back to original file.
     def process
-      self.class.current = self
-
       file_pattern = File.join(Configuration.instance.get(:path), @file_pattern)
       Dir.glob(file_pattern).each do |file_path|
         unless Configuration.instance.get(:skip_files).include? file_path
