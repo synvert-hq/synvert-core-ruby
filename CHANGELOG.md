@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.2
+
+* Add body for :defs node
+
 ## 0.5.1
 
 * Remove Rewriter::Instance class methods current and current_source
