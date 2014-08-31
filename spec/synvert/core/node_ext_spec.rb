@@ -92,6 +92,11 @@ describe Parser::AST::Node do
       node = parse('def test; foo; bar; end')
       expect(node.body).to eq [parse('foo'), parse('bar')]
     end
+
+    it 'gets for defs node' do
+      node = parse('def self.test; foo; bar; end')
+      expect(node.body).to eq [parse('foo'), parse('bar')]
+    end
   end
 
   describe "#keys" do
