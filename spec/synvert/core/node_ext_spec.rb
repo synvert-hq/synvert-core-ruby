@@ -93,9 +93,19 @@ describe Parser::AST::Node do
       expect(node.body).to eq [parse('foo'), parse('bar')]
     end
 
+    it 'gets for def node with empty body' do
+      node = parse('def test; end')
+      expect(node.body).to eq []
+    end
+
     it 'gets for defs node' do
       node = parse('def self.test; foo; bar; end')
       expect(node.body).to eq [parse('foo'), parse('bar')]
+    end
+
+    it 'gets for def node with empty body' do
+      node = parse('def self.test; end')
+      expect(node.body).to eq []
     end
   end
 
