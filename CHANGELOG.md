@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.6.1
+## 0.6.2
 
 * Support ArgumentsNode in rewritten_source
 * Remove trailing whitespaces in rewritten code
