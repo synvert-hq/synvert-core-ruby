@@ -46,7 +46,7 @@ module Synvert::Core
       # @param source [String] file source
       def write_file(file_path, source)
         source = Engine::ERB.decode(source) if file_path =~ /\.erb/
-        File.write file_path, source.gsub(/\s+\n/, "\n")
+        File.write file_path, source.gsub(/ +\n/, "\n")
         @file_source[file_path] = nil
         @file_ast[file_path] = nil
       end
