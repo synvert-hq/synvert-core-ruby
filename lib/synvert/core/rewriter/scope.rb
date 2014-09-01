@@ -56,7 +56,7 @@ module Synvert::Core
       current_node = @instance.current_node
       return unless current_node
       child_node = current_node.send @child_node_name
-      @instance.process_with_node child_node do
+      @instance.process_with_other_node child_node do
         @instance.instance_eval &@block
       end
     end
