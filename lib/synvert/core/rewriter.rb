@@ -29,6 +29,8 @@ module Synvert::Core
     autoload :Instance, 'synvert/core/rewriter/instance'
 
     autoload :Scope, 'synvert/core/rewriter/scope'
+    autoload :WithinScope, 'synvert/core/rewriter/scope'
+    autoload :GotoScope, 'synvert/core/rewriter/scope'
 
     autoload :Condition, 'synvert/core/rewriter/condition'
     autoload :IfExistCondition, 'synvert/core/rewriter/condition'

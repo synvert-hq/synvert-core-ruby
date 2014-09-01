@@ -12,7 +12,7 @@ module Synvert::Core
     it 'parses within_node' do
       scope = double()
       block = Proc.new {}
-      expect(Rewriter::Scope).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(scope)
+      expect(Rewriter::WithinScope).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.within_node(type: 'send', message: 'create', &block)
     end
@@ -20,9 +20,17 @@ module Synvert::Core
     it 'parses with_node' do
       scope = double()
       block = Proc.new {}
-      expect(Rewriter::Scope).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(scope)
+      expect(Rewriter::WithinScope).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.with_node(type: 'send', message: 'create', &block)
+    end
+
+    it 'parses goto_node' do
+      scope = double()
+      block = Proc.new {}
+      expect(Rewriter::GotoScope).to receive(:new).with(instance, :caller, &block).and_return(scope)
+      expect(scope).to receive(:process)
+      instance.goto_node(:caller, &block)
     end
 
     it 'parses if_exist_node' do

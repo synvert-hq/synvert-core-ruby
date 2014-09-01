@@ -123,13 +123,22 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse within_node dsl, it creates a [Synvert::Core::Rewriter::Scope] to find matching ast nodes,
+    # Parse within_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find matching ast nodes,
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
     def within_node(rules, &block)
-      Rewriter::Scope.new(self, rules, &block).process
+      Rewriter::WithinScope.new(self, rules, &block).process
+    end
+
+    # Parse goto_node dsl, it creates a [Synvert::Core::Rewriter::GotoScope] to go to a child node,
+    # then continue operating on the child node.
+    #
+    # @param child_node_name [String] the name of the child node.
+    # @param block [Block] block code to continue operating on the matching nodes.
+    def goto_node(child_node_name, &block)
+      Rewriter::GotoScope.new(self, child_node_name, &block).process
     end
 
     alias with_node within_node
