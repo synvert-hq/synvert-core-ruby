@@ -1,15 +1,11 @@
 # CHANGELOG
 
-## 0.5.3
+## 0.6.0 (2014-09-01)
 
-* Raise RewriterNotFound if rewriter not found
-
-## 0.5.2
-
+* Add goto_node dsl
+* Add ArgumentsNode to handle args both as a node and as an array
 * Add body for :defs node
-
-## 0.5.1
-
+* Raise RewriterNotFound if rewriter not found
 * Remove Rewriter::Instance class methods current and current_source
 
 ## 0.5.0 (2014-08-21)
