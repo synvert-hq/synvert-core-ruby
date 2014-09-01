@@ -46,6 +46,7 @@ module Synvert::Core
       # @param name [String] the unique rewriter name.
       # @param rewriter [Synvert::Core::Rewriter] the rewriter to register.
       def register(group, name, rewriter)
+        group, name = group.to_s, name.to_s
         @rewriters ||= {}
         @rewriters[group] ||= {}
         @rewriters[group][name] = rewriter
@@ -56,8 +57,14 @@ module Synvert::Core
       # @param group [String] rewrtier group.
       # @param name [String] rewrtier name.
       # @return [Synvert::Core::Rewriter] the matching rewriter.
+      # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def fetch(group, name)
-        @rewriters[group][name]
+        group, name = group.to_s, name.to_s
+        if exist? group, name
+          @rewriters[group][name]
+        else
+          raise RewriterNotFound.new "Rewriter #{group} #{name} not found"
+        end
       end
 
       # Get a registered rewriter by group and name, then process that rewriter.
@@ -67,11 +74,27 @@ module Synvert::Core
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def call(group, name)
-        if (rewriter = @rewriters[group][name])
+        group, name = group.to_s, name.to_s
+        if exist? group, name
+          rewriter = @rewriters[group][name]
           rewriter.process
           rewriter
         else
-          raise RewriterNotFound.new "Rewriter #{group} #{name} not found"
+          raise RewriterNotFound.new "Rewriter #{group}/#{name} not found"
+        end
+      end
+
+      # Check if one rewriter exist.
+      #
+      # @param group [String] the rewriter group.
+      # @param name [String] the rewriter name.
+      # @return [Boolean] true if the rewriter exist.
+      def exist?(group, name)
+        group, name = group.to_s, name.to_s
+        if @rewriters && @rewriters[group] && @rewriters[group][name]
+          true
+        else
+          false
         end
       end
 
@@ -84,7 +107,7 @@ module Synvert::Core
 
       # Clear all registered rewriters.
       def clear
-        @rewriters.clear
+        @rewriters.clear if @rewriters
       end
     end
 
