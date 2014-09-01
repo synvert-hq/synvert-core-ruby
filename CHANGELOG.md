@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.3
+
+* Raise RewriterNotFound if rewriter not found
+
 ## 0.5.2
 
 * Add body for :defs node
