@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.6.1
+
+* Support ArgumentsNode in rewritten_source
+* Remove trailing whitespaces in rewritten code
+
 ## 0.6.0 (2014-09-01)
 
 * Add goto_node dsl
