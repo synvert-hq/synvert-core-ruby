@@ -295,5 +295,11 @@ describe Parser::AST::Node do
       node = parse(source)
       expect(node.rewritten_source('{{name}}')).to eq 'Synvert'
     end
+
+    it 'rewrites for ArgumentsNode' do
+      source = 'test { |a, b| }'
+      node = parse(source)
+      expect(node.rewritten_source('{{arguments}}')).to eq %(a, b)
+    end
   end
 end

@@ -299,7 +299,7 @@ module Parser::AST
           case evaluated
           when Parser::AST::Node
             evaluated.loc.expression.source
-          when Array
+          when Array, ArgumentsNode
             if evaluated.size > 0
               source = evaluated.first.loc.expression.source_buffer.source
               source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
