@@ -45,31 +45,5 @@ module Synvert::Core
         expect(dummy_instance.strip_brackets("(123]")).to eq "(123]"
       end
     end
-
-    describe '#process_with_node' do
-      it 'resets current_node' do
-        node1 = double()
-        node2 = double()
-        instance.process_with_node(node1) do
-          instance.current_node = node2
-          expect(instance.current_node).to eq node2
-        end
-        expect(instance.current_node).to eq node1
-      end
-    end
-
-    describe '#process_with_other_node' do
-      it 'resets current_node' do
-        node1 = double()
-        node2 = double()
-        node3 = double()
-        instance.current_node = node1
-        instance.process_with_other_node(node2) do
-          instance.current_node = node3
-          expect(instance.current_node).to eq node3
-        end
-        expect(instance.current_node).to eq node1
-      end
-    end
   end
 end
