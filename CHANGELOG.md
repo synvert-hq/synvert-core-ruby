@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.3
+
+* Rewriter.available always returns a hash
+
 ## 0.6.2
 
 * Support ArgumentsNode in rewritten_source
