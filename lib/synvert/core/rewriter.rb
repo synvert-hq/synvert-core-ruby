@@ -49,9 +49,8 @@ module Synvert::Core
       # @param rewriter [Synvert::Core::Rewriter] the rewriter to register.
       def register(group, name, rewriter)
         group, name = group.to_s, name.to_s
-        @rewriters ||= {}
-        @rewriters[group] ||= {}
-        @rewriters[group][name] = rewriter
+        rewriters[group] ||= {}
+        rewriters[group][name] = rewriter
       end
 
       # Fetch a rewriter by group and name.
@@ -63,7 +62,7 @@ module Synvert::Core
       def fetch(group, name)
         group, name = group.to_s, name.to_s
         if exist? group, name
-          @rewriters[group][name]
+          rewriters[group][name]
         else
           raise RewriterNotFound.new "Rewriter #{group} #{name} not found"
         end
@@ -78,7 +77,7 @@ module Synvert::Core
       def call(group, name)
         group, name = group.to_s, name.to_s
         if exist? group, name
-          rewriter = @rewriters[group][name]
+          rewriter = rewriters[group][name]
           rewriter.process
           rewriter
         else
@@ -93,7 +92,7 @@ module Synvert::Core
       # @return [Boolean] true if the rewriter exist.
       def exist?(group, name)
         group, name = group.to_s, name.to_s
-        if @rewriters && @rewriters[group] && @rewriters[group][name]
+        if rewriters[group] && rewriters[group][name]
           true
         else
           false
@@ -104,12 +103,18 @@ module Synvert::Core
       #
       # @return [Hash<String, Hash<String, Rewriter>>]
       def availables
-        @rewriters
+        rewriters
       end
 
       # Clear all registered rewriters.
       def clear
-        @rewriters.clear if @rewriters
+        rewriters.clear
+      end
+
+    private
+
+      def rewriters
+        @rewriters ||= {}
       end
     end
 
