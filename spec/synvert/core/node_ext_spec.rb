@@ -48,15 +48,24 @@ describe Parser::AST::Node do
   end
 
   describe '#arguments' do
-    it 'gets for send node' do
-      node = parse("FactoryGirl.create :post, title: 'post'")
-      expect(node.arguments).to eq parse("[:post, title: 'post']").children
+    it 'gets for def node' do
+      node = parse("def test(foo, bar); foo + bar; end")
+      expect(node.arguments.map { |argument| argument.to_source }).to eq ['foo', 'bar']
+    end
+
+    it 'gets for defs node' do
+      node = parse("def self.test(foo, bar); foo + bar; end")
+      expect(node.arguments.map { |argument| argument.to_source }).to eq ['foo', 'bar']
     end
 
     it 'gets for block node' do
-      source = 'RSpec.configure do |config|; end'
-      node = parse(source)
+      node = parse('RSpec.configure do |config|; end')
       expect(node.arguments.map { |argument| argument.to_source }).to eq ['config']
+    end
+
+    it 'gets for send node' do
+      node = parse("FactoryGirl.create :post, title: 'post'")
+      expect(node.arguments).to eq parse("[:post, title: 'post']").children
     end
 
     it 'gets for defined? node' do

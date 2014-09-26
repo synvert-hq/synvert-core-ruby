@@ -81,10 +81,12 @@ module Parser::AST
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def arguments
       case self.type
+      when :def, :block
+        ArgumentsNode.new self.children[1]
+      when :defs
+        ArgumentsNode.new self.children[2]
       when :send
         self.children[2..-1]
-      when :block
-        ArgumentsNode.new self.children[1]
       when :defined?
         self.children
       else
