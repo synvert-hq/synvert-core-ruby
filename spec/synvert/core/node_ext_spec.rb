@@ -24,6 +24,16 @@ describe Parser::AST::Node do
       node = parse('def self.current_node; end')
       expect(node.name).to eq :current_node
     end
+
+    it 'gets for arg node' do
+      node = parse('def test(foo); end')
+      expect(node.arguments.first.name).to eq :foo
+    end
+
+    it 'gets for blockarg node' do
+      node = parse('def test(&block); end')
+      expect(node.arguments.first.name).to eq :block
+    end
   end
 
   describe '#parent_class' do
