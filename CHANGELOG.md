@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.6.4
+
+* Add arguments for def and defs nodes
+* Add name for arg and blockarg nodes
+
 ## 0.6.3
 
 * Rewriter.available always returns a hash
