@@ -187,6 +187,40 @@ describe Parser::AST::Node do
     end
   end
 
+  describe "#left_value" do
+    it 'gets for masgn' do
+      node = parse("a, b = 1, 2")
+      expect(node.left_value.map(&:to_source)).to eq ['a', 'b']
+    end
+
+    it 'gets for lvasgn' do
+      node = parse("a = 1")
+      expect(node.left_value).to eq :a
+    end
+
+    it 'gets for ivasgn' do
+      node = parse("@a = 1")
+      expect(node.left_value).to eq :@a
+    end
+  end
+
+  describe "#right_value" do
+    it 'gets for masgn' do
+      node = parse("a, b = 1, 2")
+      expect(node.right_value).to eq [parse("1"), parse("2")]
+    end
+
+    it 'gets for lvasgn' do
+      node = parse("a = 1")
+      expect(node.right_value).to eq parse("1")
+    end
+
+    it 'gets for ivasgn' do
+      node = parse("@a = 1")
+      expect(node.right_value).to eq parse("1")
+    end
+  end
+
   describe "#to_value" do
     it 'gets for int' do
       node = parse("1")
