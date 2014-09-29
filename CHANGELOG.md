@@ -1,22 +1,14 @@
 # CHANGELOG
 
-## 0.6.5
+## 0.7.0 (2014-09-29)
 
+* Add debug info for MethodNotSupported error.
 * Add left_value and right_vaue ext to ast node
-
-## 0.6.4
-
 * Add arguments for def and defs nodes
 * Add name for arg and blockarg nodes
-
-## 0.6.3
-
-* Rewriter.available always returns a hash
-
-## 0.6.2
-
-* Support ArgumentsNode in rewritten_source
 * Remove trailing whitespaces in rewritten code
+* Rewriter.available always returns a hash
+* Support ArgumentsNode in rewritten_source
 
 ## 0.6.0 (2014-09-01)
 
