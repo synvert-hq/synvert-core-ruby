@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.5
+
+* Add left_value and right_vaue ext to ast node
+
 ## 0.6.4
 
 * Add arguments for def and defs nodes
