@@ -270,7 +270,7 @@ module Parser::AST
         "file: #{self.loc.expression.source_buffer.name}",
         "line: #{self.loc.expression.line}",
         "source: #{self.to_source}",
-        "node: #{self.debug_info}"
+        "node: #{self.inspect}"
       ].join("\n")
     end
 
