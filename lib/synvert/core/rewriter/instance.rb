@@ -93,7 +93,12 @@ module Synvert::Core
             @current_file = file_path
 
             self.process_with_node ast do
-              instance_eval &@block
+              begin
+                instance_eval &@block
+              rescue NoMethodError
+                puts @current_node.debug_info
+                raise
+              end
             end
 
             if @actions.length > 0
