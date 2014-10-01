@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.7.2
+
+* Rescue NoMethodError and output node debug info
+
+## 0.7.1
+
+* Hotfix a typo
+
 ## 0.7.0 (2014-09-29)
 
 * Add debug info for MethodNotSupported error.
