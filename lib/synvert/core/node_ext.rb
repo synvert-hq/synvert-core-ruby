@@ -342,8 +342,18 @@ module Parser::AST
             evaluated.loc.expression.source
           when Array, ArgumentsNode
             if evaluated.size > 0
-              source = evaluated.first.loc.expression.source_buffer.source
-              source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
+              file_source = evaluated.first.loc.expression.source_buffer.source
+              source = file_source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
+              lines = source.split "\n"
+              if lines.length > 1
+                new_code = []
+                lines.each_with_index { |line, index|
+                  new_code << (index == 0 ? line : line[evaluated.first.indent-2..-1])
+                }
+                new_code.join("\n")
+              else
+                source
+              end
             end
           when String, Symbol
             evaluated
