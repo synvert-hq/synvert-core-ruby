@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.7.3
+
+* Handle indent for node array source
+* Add line method to ast node
+
 ## 0.7.2
 
 * Rescue NoMethodError and output node debug info
