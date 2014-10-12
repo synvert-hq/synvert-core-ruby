@@ -270,6 +270,13 @@ describe Parser::AST::Node do
     end
   end
 
+  describe '#line' do
+    it 'gets line number' do
+      node = parse('foobar')
+      expect(node.line).to eq 1
+    end
+  end
+
   describe '#recursive_children' do
     it 'iterates all children recursively' do
       node = parse('class Synvert; def current_node; @node; end; end')

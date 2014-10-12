@@ -290,6 +290,13 @@ module Parser::AST
       self.loc.expression.column
     end
 
+    # Get the line of current node.
+    #
+    # @return [Integer] line.
+    def line
+      self.loc.expression.line
+    end
+
     # Recursively iterate all child nodes of current node.
     #
     # @yield [child] Gives a child node.
