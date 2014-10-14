@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.7.5
+
+* Fix left_value and right_value node attribute
+
 ## 0.7.4
 
 * Add add_arguments_with_parenthesis_if_necessary helper method
