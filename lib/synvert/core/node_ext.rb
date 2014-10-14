@@ -214,13 +214,10 @@ module Parser::AST
 
     # Return the left value.
     #
-    # @return [Array<Parser::AST::Node>] variable nodes.
+    # @return [Parser::AST::Node] variable nodes.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def left_value
-      case self.type
-      when :masgn
-        self.children[0].children
-      when :lvasgn, :ivasgn
+      if [:masgn, :lvasgn, :ivasgn].include? self.type
         self.children[0]
       else
         raise Synvert::Core::MethodNotSupported.new "left_value is not handled for #{self.debug_info}"
@@ -232,10 +229,7 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] variable nodes.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def right_value
-      case self.type
-      when :masgn
-        self.children[1].children
-      when :lvasgn, :ivasgn
+      if [:masgn, :lvasgn, :ivasgn].include? self.type
         self.children[1]
       else
         raise Synvert::Core::MethodNotSupported.new "right_value is not handled for #{self.debug_info}"

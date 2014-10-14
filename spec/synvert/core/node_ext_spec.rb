@@ -190,7 +190,7 @@ describe Parser::AST::Node do
   describe "#left_value" do
     it 'gets for masgn' do
       node = parse("a, b = 1, 2")
-      expect(node.left_value.map(&:to_source)).to eq ['a', 'b']
+      expect(node.left_value.to_source).to eq 'a, b'
     end
 
     it 'gets for lvasgn' do
@@ -207,7 +207,12 @@ describe Parser::AST::Node do
   describe "#right_value" do
     it 'gets for masgn' do
       node = parse("a, b = 1, 2")
-      expect(node.right_value).to eq [parse("1"), parse("2")]
+      expect(node.right_value).to eq parse('[1, 2]')
+    end
+
+    it 'gets for masgn' do
+      node = parse("a, b = params")
+      expect(node.right_value).to eq parse("params")
     end
 
     it 'gets for lvasgn' do
