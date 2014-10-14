@@ -22,6 +22,24 @@ module Synvert::Core
       end
     end
 
+    # Add arguments with parenthesis if necessary.
+    #
+    # @return [String] return `({{arguments}})` if node.arguments present, otherwise return nothing.
+    #
+    # @example
+    #
+    #   add_arguments_with_parenthesis_if_necessary
+    #
+    #   if current_node doesn't have an argument, it returns ""
+    #   if current_node has argument, it returns "({{arguments}})"
+    def add_arguments_with_parenthesis_if_necessary
+      if node.arguments.size > 0
+        "({{arguments}})"
+      else
+        ""
+      end
+    end
+
     # Remove leading and trailing brackets.
     #
     # @param code [String] old code

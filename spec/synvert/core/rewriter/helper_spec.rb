@@ -28,6 +28,26 @@ module Synvert::Core
       end
     end
 
+    describe "add_arguments_with_parenthesis_if_necessary" do
+      context "with arguments" do
+        let(:node) { parse("user.save(false)") }
+
+        it "gets arguments with parenthesis" do
+          allow(dummy_instance).to receive(:node).and_return(node)
+          expect(dummy_instance.add_arguments_with_parenthesis_if_necessary).to eq "({{arguments}})"
+        end
+      end
+
+      context "without argument" do
+        let(:node) { parse("user.save") }
+
+        it "gets nothing" do
+          allow(dummy_instance).to receive(:node).and_return(node)
+          expect(dummy_instance.add_arguments_with_parenthesis_if_necessary).to eq ""
+        end
+      end
+    end
+
     describe "strip_brackets" do
       it "strip ()" do
         expect(dummy_instance.strip_brackets("(123)")).to eq "123"
