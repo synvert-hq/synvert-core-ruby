@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.7.4
+
+* Add add_arguments_with_parenthesis_if_necessary helper method
+
 ## 0.7.3
 
 * Handle indent for node array source
