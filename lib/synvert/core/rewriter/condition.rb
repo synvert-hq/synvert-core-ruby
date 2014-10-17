@@ -20,37 +20,4 @@ module Synvert::Core
       @instance.instance_eval &@block if match?
     end
   end
-
-  # IfExistCondition checks if matching node exists in the node children.
-  class Rewriter::IfExistCondition < Rewriter::Condition
-    # check if any child node matches the rules.
-    def match?
-      match = false
-      @instance.current_node.recursive_children do |child_node|
-        match = match || (child_node && child_node.match?(@rules))
-      end
-      match
-    end
-  end
-
-  # UnlessExistCondition checks if matching node doesn't exist in the node children.
-  class Rewriter::UnlessExistCondition < Rewriter::Condition
-    # check if none of child node matches the rules.
-    def match?
-      match = false
-      @instance.current_node.recursive_children do |child_node|
-        match = match || (child_node && child_node.match?(@rules))
-      end
-      !match
-    end
-  end
-
-  # IfExistCondition checks if node has only one child node and the child node matches rules.
-  class Rewriter::IfOnlyExistCondition < Rewriter::Condition
-    # check if only have one child node and the child node matches rules.
-    def match?
-      @instance.current_node.body.size == 1 &&
-        @instance.current_node.body.first.match?(@rules)
-    end
-  end
 end
