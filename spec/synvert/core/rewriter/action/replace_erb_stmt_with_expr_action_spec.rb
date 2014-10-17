@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 module Synvert::Core
-  describe Rewriter::Condition do
+  describe Rewriter::ReplaceErbStmtWithExprAction do
   end
 end

@@ -17,25 +17,25 @@ module Synvert::Core
   #   end
   class Rewriter
     autoload :Action, 'synvert/core/rewriter/action'
-    autoload :AppendAction, 'synvert/core/rewriter/action'
-    autoload :InsertAction, 'synvert/core/rewriter/action'
-    autoload :InsertAfterAction, 'synvert/core/rewriter/action'
-    autoload :ReplaceWithAction, 'synvert/core/rewriter/action'
-    autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action'
-    autoload :RemoveAction, 'synvert/core/rewriter/action'
+    autoload :AppendAction, 'synvert/core/rewriter/action/append_action'
+    autoload :InsertAction, 'synvert/core/rewriter/action/insert_action'
+    autoload :InsertAfterAction, 'synvert/core/rewriter/action/insert_after_action'
+    autoload :ReplaceWithAction, 'synvert/core/rewriter/action/replace_with_action'
+    autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
+    autoload :RemoveAction, 'synvert/core/rewriter/action/remove_action'
 
     autoload :Warning, 'synvert/core/rewriter/warning'
 
     autoload :Instance, 'synvert/core/rewriter/instance'
 
     autoload :Scope, 'synvert/core/rewriter/scope'
-    autoload :WithinScope, 'synvert/core/rewriter/scope'
-    autoload :GotoScope, 'synvert/core/rewriter/scope'
+    autoload :WithinScope, 'synvert/core/rewriter/scope/within_scope'
+    autoload :GotoScope, 'synvert/core/rewriter/scope/goto_scope'
 
     autoload :Condition, 'synvert/core/rewriter/condition'
-    autoload :IfExistCondition, 'synvert/core/rewriter/condition'
-    autoload :UnlessExistCondition, 'synvert/core/rewriter/condition'
-    autoload :IfOnlyExistCondition, 'synvert/core/rewriter/condition'
+    autoload :IfExistCondition, 'synvert/core/rewriter/condition/if_exist_condition'
+    autoload :UnlessExistCondition, 'synvert/core/rewriter/condition/unless_exist_condition'
+    autoload :IfOnlyExistCondition, 'synvert/core/rewriter/condition/if_only_exist_condition'
 
     autoload :Helper, 'synvert/core/rewriter/helper'
 
