@@ -112,6 +112,8 @@ module Synvert::Core
 
               self.class.write_file(file_path, source)
             end
+          rescue Syntax::SyntaxError
+            # do nothing, iterate next file
           end while !conflict_actions.empty?
         end
       end
