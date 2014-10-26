@@ -112,7 +112,8 @@ module Synvert::Core
 
               self.class.write_file(file_path, source)
             end
-          rescue Syntax::SyntaxError
+          rescue Parser::SyntaxError
+            puts "[Warn] file #{file_path} was not parsed correctly."
             # do nothing, iterate next file
           end while !conflict_actions.empty?
         end
