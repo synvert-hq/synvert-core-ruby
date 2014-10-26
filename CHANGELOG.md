@@ -1,25 +1,13 @@
 # CHANGELOG
 
-## 0.7.5
+## 0.8.0 (2014-10-26)
 
-* Fix left_value and right_value node attribute
-
-## 0.7.4
-
-* Add add_arguments_with_parenthesis_if_necessary helper method
-
-## 0.7.3
-
-* Handle indent for node array source
 * Add line method to ast node
-
-## 0.7.2
-
+* Add add_arguments_with_parenthesis_if_necessary helper method
+* Fix left_value and right_value node attribute
+* Print warn when file was not parsed correctly
+* Handle indent for node array source
 * Rescue NoMethodError and output node debug info
-
-## 0.7.1
-
-* Hotfix a typo
 
 ## 0.7.0 (2014-09-29)
 
