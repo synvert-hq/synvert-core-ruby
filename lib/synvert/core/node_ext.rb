@@ -387,7 +387,9 @@ module Parser::AST
         end
       when String
         if Parser::AST::Node === actual
-          actual.to_source == expected || actual.to_source[1...-1] == expected
+          actual.to_source == expected ||
+            (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
+            actual.to_source[1...-1] == expected
         else
           actual.to_s == expected
         end
