@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.8.1
+
+* Fix match_value between symbol and string
+
 ## 0.8.0 (2014-10-26)
 
 * Add line method to ast node
