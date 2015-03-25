@@ -366,5 +366,23 @@ describe Parser::AST::Node do
       node = parse(source)
       expect(node.rewritten_source('{{arguments}}')).to eq %(a, b)
     end
+
+    it 'rewrites array with multi line given as argument for method'do
+      source = <<-EOS.strip
+long_name_method([
+  1,
+  2,
+  3
+])
+      EOS
+      node = parse(source)
+      expect(node.rewritten_source('{{arguments}}')).to eq <<-EOS.strip
+[
+  1,
+  2,
+  3
+]
+      EOS
+    end
   end
 end
