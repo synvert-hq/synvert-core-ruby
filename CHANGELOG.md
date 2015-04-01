@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.8.2
+
+* Fix rewritten indent when number of lines and arguments are equal
+
 ## 0.8.1
 
 * Fix match_value between symbol and string
