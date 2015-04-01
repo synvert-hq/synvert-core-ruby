@@ -346,7 +346,8 @@ module Parser::AST
               file_source = evaluated.first.loc.expression.source_buffer.source
               source = file_source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
               lines = source.split "\n"
-              if lines.length > 1
+              lines_count = lines.length
+              if lines_count > 1 && lines_count == evaluated.size
                 new_code = []
                 lines.each_with_index { |line, index|
                   new_code << (index == 0 ? line : line[evaluated.first.indent-2..-1])
