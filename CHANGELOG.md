@@ -1,11 +1,9 @@
 # CHANGELOG
 
-## 0.8.2
+## 0.9.0 (2015-12-23)
 
+* Add if_ruby dsl
 * Fix rewritten indent when number of lines and arguments are equal
-
-## 0.8.1
-
 * Fix match_value between symbol and string
 
 ## 0.8.0 (2014-10-26)
