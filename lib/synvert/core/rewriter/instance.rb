@@ -170,7 +170,7 @@ module Synvert::Core
       Rewriter::GotoScope.new(self, child_node_name, &block).process
     end
 
-    alias with_node within_node
+    alias_method :with_node, :within_node
 
     # Parse if_exist_node dsl, it creates a [Synvert::Core::Rewriter::IfExistCondition] to check
     # if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.

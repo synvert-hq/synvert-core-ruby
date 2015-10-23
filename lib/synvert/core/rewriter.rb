@@ -217,7 +217,7 @@ module Synvert::Core
     end
 
     # Parse within_file dsl, it finds a specifiled file.
-    alias within_file within_files
+    alias_method :within_file, :within_files
 
     # Parses add_file dsl, it adds a new file.
     #
