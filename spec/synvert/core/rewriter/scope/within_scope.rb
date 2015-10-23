@@ -12,7 +12,8 @@ describe Post do
     FactoryGirl.create :post
   end
 end
-    """}
+    """
+    }
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do
       Rewriter::Instance.reset

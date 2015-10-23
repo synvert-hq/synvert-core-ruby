@@ -9,7 +9,8 @@ module Synvert::Core
     let(:source) {'''
 Factory.define :user do |user|
 end
-    '''}
+    '''
+    }
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do
       Rewriter::Instance.reset
