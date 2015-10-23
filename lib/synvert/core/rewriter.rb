@@ -39,6 +39,7 @@ module Synvert::Core
 
     autoload :Helper, 'synvert/core/rewriter/helper'
 
+    autoload :RubyVersion, 'synvert/core/rewriter/ruby_version'
     autoload :GemSpec, 'synvert/core/rewriter/gem_spec'
 
     class <<self
@@ -185,6 +186,13 @@ module Synvert::Core
       end
     end
 
+    # Parse if_ruby dal, it checks if ruby version if greater than or equal to the specified ruby version.
+    #
+    # @param version, [String] specified ruby version.
+    def if_ruby(version)
+      @ruby_version = Rewriter::RubyVersion.new(version)
+    end
+
     # Parse if_gem dsl, it compares version of the specified gem.
     #
     # @param name [String] gem name.
@@ -202,7 +210,8 @@ module Synvert::Core
     def within_files(file_pattern, &block)
       return if @sandbox
 
-      if !@gem_spec || @gem_spec.match?
+      if (!@ruby_version || @ruby_version.match?) &&
+        (!@gem_spec || @gem_spec.match?)
         Rewriter::Instance.new(self, file_pattern, &block).process
       end
     end

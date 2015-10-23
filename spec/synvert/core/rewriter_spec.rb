@@ -10,6 +10,14 @@ module Synvert::Core
       expect(rewriter.description).to eq 'rewriter description'
     end
 
+    it 'parses if_ruby' do
+      #stub_const("RUBY_VERSION", '2.0.0')
+      rewriter = Rewriter.new 'group', 'name' do
+        if_ruby '2.0.0'
+      end
+      rewriter.process
+    end
+
     it 'parses if_gem' do
       expect(Rewriter::GemSpec).to receive(:new).with('synvert', {gte: '1.0.0'})
       rewriter = Rewriter.new 'group', 'name' do
@@ -19,19 +27,31 @@ module Synvert::Core
     end
 
     describe 'parses within_file' do
-      it 'does nothing if if_gem not match' do
-        expect_any_instance_of(Rewriter::GemSpec).to receive(:match?).and_return(false)
+      it 'does nothing if if_ruby does not match' do
+        stub_const('RUBY_VERSION', '2.0.0')
         expect_any_instance_of(Rewriter::Instance).not_to receive(:process)
         rewriter = Rewriter.new 'group', 'name' do
-          if_gem 'synvert', '1.0.0'
+          if_ruby '2.2.3'
           within_file 'config/routes.rb' do; end
         end
         rewriter.process
       end
 
-      it 'delegates process to instances if if_gem not exist' do
+      it 'delegates process to instances if if_ruby matches' do
+        stub_const('RUBY_VERSION', '2.0.0')
         expect_any_instance_of(Rewriter::Instance).to receive(:process)
         rewriter = Rewriter.new 'group', 'name' do
+          if_ruby '1.9.3'
+          within_file 'config/routes.rb' do; end
+        end
+        rewriter.process
+      end
+
+      it 'does nothing if if_gem does not match' do
+        expect_any_instance_of(Rewriter::GemSpec).to receive(:match?).and_return(false)
+        expect_any_instance_of(Rewriter::Instance).not_to receive(:process)
+        rewriter = Rewriter.new 'group', 'name' do
+          if_gem 'synvert', '1.0.0'
           within_file 'config/routes.rb' do; end
         end
         rewriter.process
@@ -42,6 +62,14 @@ module Synvert::Core
         expect_any_instance_of(Rewriter::Instance).to receive(:process)
         rewriter = Rewriter.new 'group', 'name' do
           if_gem 'synvert', '1.0.0'
+          within_file 'config/routes.rb' do; end
+        end
+        rewriter.process
+      end
+
+      it 'delegates process to instances if if_ruby and if_gem do not exist' do
+        expect_any_instance_of(Rewriter::Instance).to receive(:process)
+        rewriter = Rewriter.new 'group', 'name' do
           within_file 'config/routes.rb' do; end
         end
         rewriter.process
