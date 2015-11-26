@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.1
+
+* Use parser 2.3.0.pre.4
+
 ## 0.9.0 (2015-12-23)
 
 * Add if_ruby dsl
