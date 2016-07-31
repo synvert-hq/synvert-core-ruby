@@ -11,7 +11,7 @@ module Synvert::Core
       end
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "calss User\n  has_many :posts".length
+        expect(subject.begin_pos).to eq "class User\n  has_many :posts".length
       end
 
       it 'gets end_pos' do

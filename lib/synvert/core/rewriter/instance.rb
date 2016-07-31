@@ -204,32 +204,36 @@ module Synvert::Core
     # append the code to the bottom of current node body.
     #
     # @param code [String] code need to be appended.
-    def append(code)
-      @actions << Rewriter::AppendAction.new(self, code)
+    # @param options [Hash] action options.
+    def append(code, options={})
+      @actions << Rewriter::AppendAction.new(self, code, options)
     end
 
     # Parse insert dsl, it creates a [Synvert::Core::Rewriter::InsertAction] to
     # insert the code to the top of current node body.
     #
     # @param code [String] code need to be inserted.
-    def insert(code)
-      @actions << Rewriter::InsertAction.new(self, code)
+    # @param options [Hash] action options.
+    def insert(code, options={})
+      @actions << Rewriter::InsertAction.new(self, code, options)
     end
 
     # Parse insert_after dsl, it creates a [Synvert::Core::Rewriter::InsertAfterAction] to
     # insert the code next to the current node.
     #
     # @param code [String] code need to be inserted.
-    def insert_after(node)
-      @actions << Rewriter::InsertAfterAction.new(self, node)
+    # @param options [Hash] action options.
+    def insert_after(node, options={})
+      @actions << Rewriter::InsertAfterAction.new(self, node, options)
     end
 
     # Parse replace_with dsl, it creates a [Synvert::Core::Rewriter::ReplaceWithAction] to
     # replace current node with code.
     #
     # @param code [String] code need to be replaced with.
-    def replace_with(code)
-      @actions << Rewriter::ReplaceWithAction.new(self, code)
+    # @param options [Hash] action options.
+    def replace_with(code, options={})
+      @actions << Rewriter::ReplaceWithAction.new(self, code, options)
     end
 
     # Parse replace_erb_stmt_with_expr dsl, it creates a [Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction] to

@@ -58,22 +58,22 @@ module Synvert::Core
     end
 
     it 'parses append' do
-      expect(Rewriter::AppendAction).to receive(:new).with(instance, 'include FactoryGirl::Syntax::Methods')
+      expect(Rewriter::AppendAction).to receive(:new).with(instance, 'include FactoryGirl::Syntax::Methods', {})
       instance.append "include FactoryGirl::Syntax::Methods"
     end
 
     it 'parses insert' do
-      expect(Rewriter::InsertAction).to receive(:new).with(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
+      expect(Rewriter::InsertAction).to receive(:new).with(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods', {})
       instance.insert "{{arguments.first}}.include FactoryGirl::Syntax::Methods"
     end
 
     it 'parses insert_after' do
-      expect(Rewriter::InsertAfterAction).to receive(:new).with(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
+      expect(Rewriter::InsertAfterAction).to receive(:new).with(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods', {})
       instance.insert_after "{{arguments.first}}.include FactoryGirl::Syntax::Methods"
     end
 
     it 'parses replace_with' do
-      expect(Rewriter::ReplaceWithAction).to receive(:new).with(instance, 'create {{arguments}}')
+      expect(Rewriter::ReplaceWithAction).to receive(:new).with(instance, 'create {{arguments}}', {})
       instance.replace_with 'create {{arguments}}'
     end
 

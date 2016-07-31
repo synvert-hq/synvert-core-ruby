@@ -6,10 +6,12 @@ module Synvert::Core
     # Initialize an action.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param code {String] new code to add, replace or remove.
-    def initialize(instance, code)
+    # @param code [String] new code to add, replace or remove.
+    # @param options [Hash] action options, it includes :autoindent.
+    def initialize(instance, code, options={})
       @instance = instance
       @code = code
+      @options = default_options.merge(options)
       @node = @instance.current_node
     end
 
@@ -46,6 +48,12 @@ module Synvert::Core
     # @return [Integer] -1, 0 or 1
     def <=>(action)
       self.begin_pos <=> action.begin_pos
+    end
+
+    private
+
+    def default_options
+      { autoindent: true }
     end
   end
 end

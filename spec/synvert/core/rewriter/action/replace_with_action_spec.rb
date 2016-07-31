@@ -31,7 +31,7 @@ module Synvert::Core
         Rewriter::ReplaceWithAction.new(instance, """describe '#size' do
   subject { super().size }
   it { {{body}} }
-end""")
+end""", autoindent: false)
       }
 
       it 'gets begin_pos' do
@@ -44,9 +44,9 @@ end""")
 
       it 'gets rewritten_code' do
         expect(subject.rewritten_code).to eq """describe '#size' do
-    subject { super().size }
-    it { should == 1 }
-  end"""
+  subject { super().size }
+  it { should == 1 }
+end"""
       end
     end
   end
