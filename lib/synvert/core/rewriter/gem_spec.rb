@@ -8,7 +8,7 @@ module Synvert::Core
     # Initialize a gem_spec.
     #
     # @param name [String] gem name
-    # @param comparator [Hash] comparator to gem version, e.g. {eg: '2.0.0'},
+    # @param comparator [Hash] comparator to gem version, e.g. {eq: '2.0.0'},
     #   comparator key can be eq, lt, gt, lte, gte or ne.
     def initialize(name, comparator)
       @name = name
