@@ -1,10 +1,15 @@
 # CHANGELOG
 
+## 0.11.0 (2016-07-31)
+
+* Add options to Rewriter::Instance
+* Add sort_by option to Rewriter::Instance
+
 ## 0.10.0 (2016-07-31)
 
 * Use parser 2.3.1.2
 * Add options to Rewriter::Action
-* Add autoindent option
+* Add autoindent option to Rewriter::Action
 
 ## 0.9.0 (2015-12-23)
 
