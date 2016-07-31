@@ -1,8 +1,10 @@
 # CHANGELOG
 
-## 0.9.1
+## 0.10.0 (2016-07-31)
 
-* Use parser 2.3.0.pre.4
+* Use parser 2.3.1.2
+* Add options to Rewriter::Action
+* Add autoindent option
 
 ## 0.9.0 (2015-12-23)
 
