@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.11.1
+
+* Warning if add_file already exists and make sure directory exists for add_file
+
 ## 0.11.0 (2016-07-31)
 
 * Add options to Rewriter::Instance
