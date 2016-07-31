@@ -227,7 +227,14 @@ module Synvert::Core
     def add_file(filename, content)
       return if @sandbox
 
-      File.open File.join(Configuration.instance.get(:path), filename), 'w' do |file|
+      filepath = File.join(Configuration.instance.get(:path), filename)
+      if File.exist?(filepath)
+        puts "File #{filepath} already exists."
+        return
+      end
+
+      FileUtils.mkdir_p File.dirname(filepath)
+      File.open filepath, 'w' do |file|
         file.write content
       end
     end
