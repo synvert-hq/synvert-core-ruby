@@ -3,6 +3,8 @@
 module Synvert::Core
   # Action defines rewriter action, add, replace or remove code.
   class Rewriter::Action
+    DEFAULT_OPTIONS = { autoindent: true }
+
     # Initialize an action.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
@@ -11,7 +13,7 @@ module Synvert::Core
     def initialize(instance, code, options={})
       @instance = instance
       @code = code
-      @options = default_options.merge(options)
+      @options = DEFAULT_OPTIONS.merge(options)
       @node = @instance.current_node
     end
 
@@ -40,20 +42,6 @@ module Synvert::Core
     # @return [String] rewritten source code.
     def rewritten_source
       @rewritten_source ||= @node.rewritten_source(@code)
-    end
-
-    # Compare actions by begin position.
-    #
-    # @param action [Synvert::Core::Rewriter::Action]
-    # @return [Integer] -1, 0 or 1
-    def <=>(action)
-      self.begin_pos <=> action.begin_pos
-    end
-
-    private
-
-    def default_options
-      { autoindent: true }
     end
   end
 end
