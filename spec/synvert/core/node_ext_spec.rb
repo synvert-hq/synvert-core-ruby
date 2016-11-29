@@ -34,6 +34,12 @@ describe Parser::AST::Node do
       node = parse('def test(&block); end')
       expect(node.arguments.first.name).to eq :block
     end
+
+    it 'gets for const node' do
+      node = parse('Synvert')
+      expect(node.name).to eq :Synvert
+    end
+
   end
 
   describe '#parent_class' do
@@ -54,6 +60,23 @@ describe Parser::AST::Node do
     it 'gets for send node' do
       node = parse('FactoryGirl.create :post')
       expect(node.message).to eq :create
+    end
+  end
+
+  describe '#parent_const' do
+    it 'gets for const node' do
+      node = parse('Synvert::Node')
+      expect(node.parent_const).to eq parse('Synvert')
+    end
+
+    it 'gets for const node at the root' do
+      node = parse('::Node')
+      expect(node.parent_const.type).to eq :cbase
+    end
+
+    it 'gets for const node with no parent' do
+      node = parse('Node')
+      expect(node.parent_const).to eq nil
     end
   end
 

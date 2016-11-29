@@ -24,7 +24,7 @@ module Parser::AST
 
   # Parser::AST::Node monkey patch.
   class Node
-    # Get name node of :class, :module, :def and :defs node.
+    # Get name node of :class, :module, :const, :def and :defs node.
     #
     # @return [Parser::AST::Node] name node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
@@ -32,7 +32,7 @@ module Parser::AST
       case self.type
       when :class, :module, :def, :arg, :blockarg
         self.children[0]
-      when :defs
+      when :defs, :const
         self.children[1]
       else
         raise Synvert::Core::MethodNotSupported.new "name is not handled for #{self.debug_info}"
@@ -48,6 +48,18 @@ module Parser::AST
         self.children[1]
       else
         raise Synvert::Core::MethodNotSupported.new "parent_class is not handled for #{self.debug_info}"
+      end
+    end
+
+    # Get parent constant node of :const node.
+    #
+    # @return [Parser::AST::Node] parent const node.
+    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+    def parent_const
+      if :const == self.type
+        self.children[0]
+      else
+        raise Synvert::Core::MethodNotSupported.new "parent_const is not handled for #{self.debug_info}"
       end
     end
 
