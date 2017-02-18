@@ -1,7 +1,9 @@
 # CHANGELOG
 
-## 0.11.1
+## 0.12.0
 
+* Use parser 2.4.0.0
+* Add parent_const accessor for constant nodes with a namespace
 * Warning if add_file already exists and make sure directory exists for add_file
 
 ## 0.11.0 (2016-07-31)
