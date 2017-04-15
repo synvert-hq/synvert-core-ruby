@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## 0.12.0
+## 0.13.0 (2017-04-15)
+
+* Add message for super node
+* Add name and to_s for mlhs node
+
+## 0.12.0 (2017-02-18)
 
 * Use parser 2.4.0.0
 * Add parent_const accessor for constant nodes with a namespace
