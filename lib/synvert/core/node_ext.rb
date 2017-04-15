@@ -24,7 +24,7 @@ module Parser::AST
 
   # Parser::AST::Node monkey patch.
   class Node
-    # Get name node of :class, :module, :const, :def and :defs node.
+    # Get name node of :class, :module, :const, :mlhs, :def and :defs node.
     #
     # @return [Parser::AST::Node] name node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
@@ -34,6 +34,8 @@ module Parser::AST
         self.children[0]
       when :defs, :const
         self.children[1]
+      when :mlhs
+        self
       else
         raise Synvert::Core::MethodNotSupported.new "name is not handled for #{self.debug_info}"
       end
@@ -271,6 +273,12 @@ module Parser::AST
         self.children.first.to_value
       else
         raise Synvert::Core::MethodNotSupported.new "to_value is not handled for #{self.debug_info}"
+      end
+    end
+
+    def to_s
+      if :mlhs == self.type
+        "(#{self.children.map(&:name).join(', ')})"
       end
     end
 

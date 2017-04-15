@@ -40,6 +40,10 @@ describe Parser::AST::Node do
       expect(node.name).to eq :Synvert
     end
 
+    it 'gets for mlhs node' do
+      node = parse('var.each { |(param1, param2)| }')
+      expect(node.arguments.first.name).to eq node.arguments.first
+    end
   end
 
   describe '#parent_class' do
@@ -285,6 +289,13 @@ describe Parser::AST::Node do
     it 'gets for array' do
       node = parse("['str', :str]")
       expect(node.to_value).to eq ['str', :str]
+    end
+  end
+
+  describe '#to_s' do
+    it 'gets for mlhs node' do
+      node = parse('var.each { |(param1, param2)| }')
+      expect(node.arguments.first.to_s).to eq '(param1, param2)'
     end
   end
 
