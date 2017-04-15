@@ -61,6 +61,11 @@ describe Parser::AST::Node do
       node = parse('FactoryGirl.create :post')
       expect(node.message).to eq :create
     end
+
+    it 'gets for super node' do
+      node = parse('super(params)')
+      expect(node.message).to eq :super
+    end
   end
 
   describe '#parent_const' do

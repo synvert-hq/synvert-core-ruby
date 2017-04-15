@@ -75,12 +75,15 @@ module Parser::AST
       end
     end
 
-    # Get message node of :send node.
+    # Get message node of :super or :send node.
     #
     # @return [Parser::AST::Node] mesage node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def message
-      if :send == self.type
+      case self.type
+      when :super
+        :super
+      when :send
         self.children[1]
       else
         raise Synvert::Core::MethodNotSupported.new "message is not handled for #{self.debug_info}"
