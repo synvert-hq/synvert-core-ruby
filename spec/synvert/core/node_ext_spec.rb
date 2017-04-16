@@ -70,6 +70,11 @@ describe Parser::AST::Node do
       node = parse('super(params)')
       expect(node.message).to eq :super
     end
+
+    it 'gets for zuper node' do
+      node = parse('super do; end')
+      expect(node.caller.message).to eq :super
+    end
   end
 
   describe '#parent_const' do

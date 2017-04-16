@@ -83,7 +83,7 @@ module Parser::AST
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def message
       case self.type
-      when :super
+      when :super, :zsuper
         :super
       when :send
         self.children[1]
