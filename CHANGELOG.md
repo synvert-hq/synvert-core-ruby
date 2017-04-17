@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.1
+
+* Add message for zsuper node
+
 ## 0.13.0 (2017-04-15)
 
 * Add message for super node
