@@ -30,7 +30,7 @@ module Parser::AST
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def name
       case self.type
-      when :class, :module, :def, :arg, :blockarg
+      when :class, :module, :def, :arg, :blockarg, :restarg
         self.children[0]
       when :defs, :const
         self.children[1]

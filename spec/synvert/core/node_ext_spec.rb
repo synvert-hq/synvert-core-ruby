@@ -44,6 +44,11 @@ describe Parser::AST::Node do
       node = parse('var.each { |(param1, param2)| }')
       expect(node.arguments.first.name).to eq node.arguments.first
     end
+
+    it 'gets for restarg node' do
+      node = parse('object.each { |*entry| }')
+      expect(node.arguments.first.name).to eq :entry
+    end
   end
 
   describe '#parent_class' do
