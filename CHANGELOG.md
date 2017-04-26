@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.2
+
+* Add name for restarg node
+
 ## 0.13.1
 
 * Add message for zsuper node
