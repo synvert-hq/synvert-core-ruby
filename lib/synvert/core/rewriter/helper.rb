@@ -40,6 +40,22 @@ module Synvert::Core
       end
     end
 
+    # Add curly brackets to code if necessary.
+    #
+    # @param code [String] old code
+    # @return [String] new code
+    #
+    # @example
+    #
+    #   add_curly_brackets_if_necessary("{{arguments}}")
+    def add_curly_brackets_if_necessary(code)
+      if code.start_with?('{') && code.end_with?('}')
+        code
+      else
+        "{ #{code} }"
+      end
+    end
+
     # Remove leading and trailing brackets.
     #
     # @param code [String] old code

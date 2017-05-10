@@ -48,6 +48,16 @@ module Synvert::Core
       end
     end
 
+    describe "add_curly_brackets_if_necessary" do
+      it "add {} if code does not have" do
+        expect(dummy_instance.add_curly_brackets_if_necessary("foo: bar")).to eq "{ foo: bar }"
+      end
+
+      it "doesn't add {} if code already has" do
+        expect(dummy_instance.add_curly_brackets_if_necessary("{foo: bar}")).to eq "{foo: bar}"
+      end
+    end
+
     describe "strip_brackets" do
       it "strip ()" do
         expect(dummy_instance.strip_brackets("(123)")).to eq "123"
