@@ -1,11 +1,9 @@
 # CHANGELOG
 
-## 0.13.2
+## 0.14.0 (2017-05-10)
 
+* Add helper add_curly_brackets_if_necessary
 * Add name for restarg node
-
-## 0.13.1
-
 * Add message for zsuper node
 
 ## 0.13.0 (2017-04-15)
