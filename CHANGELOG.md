@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.15.0 (2018-05-23)
+
+* Use parser 2.5.1.1
+
 ## 0.14.0 (2017-05-10)
 
 * Add helper add_curly_brackets_if_necessary
