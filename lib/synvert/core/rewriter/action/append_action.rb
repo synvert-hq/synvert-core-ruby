@@ -2,16 +2,14 @@
 
 module Synvert::Core
   # AppendWithAction to append code to the bottom of node body.
+
+  # Begin position to append code.
+  #
+  # @return [Integer] begin position.
+
   class Rewriter::AppendAction < Rewriter::Action
-    # Begin position to append code.
-    #
-    # @return [Integer] begin position.
     def begin_pos
-      if :begin == @node.type
-        @node.loc.expression.end_pos
-      else
-        @node.loc.expression.end_pos - @node.indent - 4
-      end
+      :begin == @node.type ? @node.loc.expression.end_pos : @node.loc.expression.end_pos - @node.indent - 4
     end
 
     # End position, always same to begin position.
@@ -21,18 +19,14 @@ module Synvert::Core
       begin_pos
     end
 
-  private
+    private
 
     # Indent of the node.
     #
     # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
     def indent(node)
-      if [:block, :class].include? node.type
-        ' ' * (node.indent + 2)
-      else
-        ' ' * node.indent
-      end
+      %i[block class].include? node.type ? ' ' * (node.indent + 2) : ' ' * node.indent
     end
   end
 end

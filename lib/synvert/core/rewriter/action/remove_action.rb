@@ -3,7 +3,7 @@
 module Synvert::Core
   # RemoveAction to remove code.
   class Rewriter::RemoveAction < Rewriter::Action
-    def initialize(instance, code=nil)
+    def initialize(instance, code = nil)
       super
     end
 

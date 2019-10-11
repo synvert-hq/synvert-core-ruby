@@ -22,9 +22,7 @@ module Synvert::Core
       @instance.process_with_node current_node do
         matching_nodes = []
         matching_nodes << current_node if current_node.match? @rules
-        current_node.recursive_children do |child_node|
-          matching_nodes << child_node if child_node.match? @rules
-        end
+        current_node.recursive_children { |child_node| matching_nodes << child_node if child_node.match? @rules }
         matching_nodes.each do |matching_node|
           @instance.process_with_node matching_node do
             @instance.instance_eval &@block
