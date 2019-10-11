@@ -133,9 +133,11 @@ module Parser::AST
         self.children
       when :def, :block
         return [] if self.children[2].nil?
+
         :begin == self.children[2].type ? self.children[2].body : self.children[2..-1]
       when :defs
         return [] if self.children[3].nil?
+
         :begin == self.children[3].type ? self.children[3].body : self.children[3..-1]
       else
         raise Synvert::Core::MethodNotSupported.new "body is not handled for #{self.debug_info}"
@@ -425,6 +427,7 @@ module Parser::AST
         end
       when Array
         return false unless expected.length == actual.length
+
         actual.zip(expected).all? { |a, e| match_value?(a, e) }
       when NilClass
         actual.nil?

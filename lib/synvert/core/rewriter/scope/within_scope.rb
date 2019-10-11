@@ -19,6 +19,7 @@ module Synvert::Core
     def process
       current_node = @instance.current_node
       return unless current_node
+
       @instance.process_with_node current_node do
         matching_nodes = []
         matching_nodes << current_node if current_node.match? @rules
