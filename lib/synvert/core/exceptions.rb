@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Synvert::Core
   # Rewriter not found exception.
   class RewriterNotFound < Exception; end

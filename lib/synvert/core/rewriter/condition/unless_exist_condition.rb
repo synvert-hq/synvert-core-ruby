@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 module Synvert::Core
   # UnlessExistCondition checks if matching node doesn't exist in the node children.

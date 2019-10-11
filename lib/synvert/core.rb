@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'synvert/core/version'
 
 # coding: utf-8

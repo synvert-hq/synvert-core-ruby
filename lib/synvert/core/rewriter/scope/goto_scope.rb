@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 module Synvert::Core
   # Go to and change its scope to a child node.
