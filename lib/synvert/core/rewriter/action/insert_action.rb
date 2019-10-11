@@ -2,10 +2,12 @@
 
 module Synvert::Core
   # InsertAction to insert code to the top of node body.
+
+  # Begin position to insert code.
+  #
+  # @return [Integer] begin position.
+
   class Rewriter::InsertAction < Rewriter::Action
-    # Begin position to insert code.
-    #
-    # @return [Integer] begin position.
     def begin_pos
       insert_position(@node)
     end
@@ -17,7 +19,7 @@ module Synvert::Core
       begin_pos
     end
 
-  private
+    private
 
     # Insert position.
     #
@@ -25,7 +27,11 @@ module Synvert::Core
     def insert_position(node)
       case node.type
       when :block
-        node.children[1].children.empty? ? node.children[0].loc.expression.end_pos + 3 : node.children[1].loc.expression.end_pos
+        if node.children[1].children.empty?
+          node.children[0].loc.expression.end_pos + 3
+        else
+          node.children[1].loc.expression.end_pos
+        end
       when :class
         node.children[1] ? node.children[1].loc.expression.end_pos : node.children[0].loc.expression.end_pos
       else
@@ -38,11 +44,7 @@ module Synvert::Core
     # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
     def indent(node)
-      if [:block, :class].include? node.type
-        ' ' * (node.indent + 2)
-      else
-        ' ' * node.indent
-      end
+      %i[block class].include? node.type ? ' ' * (node.indent + 2) : ' ' * node.indent
     end
   end
 end

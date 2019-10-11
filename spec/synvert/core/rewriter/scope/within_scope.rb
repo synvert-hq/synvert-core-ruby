@@ -2,18 +2,21 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::WithinScope do
-    let(:instance) {
+    let(:instance) do
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
-    }
-    let(:source) {"""
+    end
+    let(:source) do
+      '' \
+        "
 describe Post do
   it 'gets post' do
     FactoryGirl.create :post
   end
 end
-    """
-    }
+    " \
+        ''
+    end
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do
       Rewriter::Instance.reset
@@ -23,9 +26,10 @@ end
     describe '#process' do
       it 'not call block if no matching node' do
         run = false
-        scope = Rewriter::WithinScope.new instance, type: 'send', message: 'missing' do
-          run = true
-        end
+        scope =
+          Rewriter::WithinScope.new instance, type: 'send', message: 'missing' do
+            run = true
+          end
         scope.process
         expect(run).to be_falsey
       end
@@ -33,10 +37,12 @@ end
       it 'call block if there is matching node' do
         run = false
         type_in_scope = nil
-        scope = Rewriter::WithinScope.new instance, type: 'send', receiver: 'FactoryGirl', message: 'create', arguments: [':post'] do
-          run = true
-          type_in_scope = node.type
-        end
+        scope =
+          Rewriter::WithinScope.new instance,
+                                    type: 'send', receiver: 'FactoryGirl', message: 'create', arguments: %w[:post] do
+            run = true
+            type_in_scope = node.type
+          end
         scope.process
         expect(run).to be_truthy
         expect(type_in_scope).to eq :send

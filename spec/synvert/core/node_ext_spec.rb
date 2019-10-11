@@ -101,18 +101,18 @@ describe Parser::AST::Node do
 
   describe '#arguments' do
     it 'gets for def node' do
-      node = parse("def test(foo, bar); foo + bar; end")
-      expect(node.arguments.map { |argument| argument.to_source }).to eq ['foo', 'bar']
+      node = parse('def test(foo, bar); foo + bar; end')
+      expect(node.arguments.map(&:to_source)).to eq %w[foo bar]
     end
 
     it 'gets for defs node' do
-      node = parse("def self.test(foo, bar); foo + bar; end")
-      expect(node.arguments.map { |argument| argument.to_source }).to eq ['foo', 'bar']
+      node = parse('def self.test(foo, bar); foo + bar; end')
+      expect(node.arguments.map(&:to_source)).to eq %w[foo bar]
     end
 
     it 'gets for block node' do
       node = parse('RSpec.configure do |config|; end')
-      expect(node.arguments.map { |argument| argument.to_source }).to eq ['config']
+      expect(node.arguments.map(&:to_source)).to eq %w[config]
     end
 
     it 'gets for send node' do
@@ -170,129 +170,129 @@ describe Parser::AST::Node do
     end
   end
 
-  describe "#keys" do
+  describe '#keys' do
     it 'gets for hash node' do
       node = parse("{:foo => :bar, 'foo' => 'bar'}")
       expect(node.keys).to eq [parse(':foo'), parse("'foo'")]
     end
   end
 
-  describe "#values" do
+  describe '#values' do
     it 'gets for hash node' do
       node = parse("{:foo => :bar, 'foo' => 'bar'}")
       expect(node.values).to eq [parse(':bar'), parse("'bar'")]
     end
   end
 
-  describe "#has_key?" do
-    it "gets true if key exists" do
-      node = parse("{:foo => :bar}")
+  describe '#has_key?' do
+    it 'gets true if key exists' do
+      node = parse('{:foo => :bar}')
       expect(node.has_key?(:foo)).to be_truthy
     end
 
-    it "gets false if key does not exist" do
-      node = parse("{:foo => :bar}")
+    it 'gets false if key does not exist' do
+      node = parse('{:foo => :bar}')
       expect(node.has_key?('foo')).to be_falsey
     end
   end
 
-  describe "#hash_value" do
-    it "gets value of specified key" do
-      node = parse("{:foo => :bar}")
+  describe '#hash_value' do
+    it 'gets value of specified key' do
+      node = parse('{:foo => :bar}')
       expect(node.hash_value(:foo)).to eq parse(':bar')
     end
 
-    it "gets nil if key does not exist" do
-      node = parse("{:foo => :bar}")
+    it 'gets nil if key does not exist' do
+      node = parse('{:foo => :bar}')
       expect(node.hash_value(:bar)).to be_nil
     end
   end
 
-  describe "#key" do
+  describe '#key' do
     it 'gets for pair node' do
       node = parse("{:foo => 'bar'}").children[0]
       expect(node.key).to eq parse(':foo')
     end
   end
 
-  describe "#value" do
+  describe '#value' do
     it 'gets for hash node' do
       node = parse("{:foo => 'bar'}").children[0]
       expect(node.value).to eq parse("'bar'")
     end
   end
 
-  describe "#condition" do
+  describe '#condition' do
     it 'gets for if node' do
       node = parse('if defined?(Bundler); end')
       expect(node.condition).to eq parse('defined?(Bundler)')
     end
   end
 
-  describe "#left_value" do
+  describe '#left_value' do
     it 'gets for masgn' do
-      node = parse("a, b = 1, 2")
+      node = parse('a, b = 1, 2')
       expect(node.left_value.to_source).to eq 'a, b'
     end
 
     it 'gets for lvasgn' do
-      node = parse("a = 1")
+      node = parse('a = 1')
       expect(node.left_value).to eq :a
     end
 
     it 'gets for ivasgn' do
-      node = parse("@a = 1")
+      node = parse('@a = 1')
       expect(node.left_value).to eq :@a
     end
   end
 
-  describe "#right_value" do
+  describe '#right_value' do
     it 'gets for masgn' do
-      node = parse("a, b = 1, 2")
+      node = parse('a, b = 1, 2')
       expect(node.right_value).to eq parse('[1, 2]')
     end
 
     it 'gets for masgn' do
-      node = parse("a, b = params")
-      expect(node.right_value).to eq parse("params")
+      node = parse('a, b = params')
+      expect(node.right_value).to eq parse('params')
     end
 
     it 'gets for lvasgn' do
-      node = parse("a = 1")
-      expect(node.right_value).to eq parse("1")
+      node = parse('a = 1')
+      expect(node.right_value).to eq parse('1')
     end
 
     it 'gets for ivasgn' do
-      node = parse("@a = 1")
-      expect(node.right_value).to eq parse("1")
+      node = parse('@a = 1')
+      expect(node.right_value).to eq parse('1')
     end
   end
 
-  describe "#to_value" do
+  describe '#to_value' do
     it 'gets for int' do
-      node = parse("1")
+      node = parse('1')
       expect(node.to_value).to eq 1
     end
 
     it 'gets for string' do
       node = parse("'str'")
-      expect(node.to_value).to eq "str"
+      expect(node.to_value).to eq 'str'
     end
 
     it 'gets for symbol' do
-      node = parse(":str")
+      node = parse(':str')
       expect(node.to_value).to eq :str
     end
 
     it 'get for boolean' do
-      node = parse("true")
+      node = parse('true')
       expect(node.to_value).to be_truthy
-      node = parse("false")
+      node = parse('false')
       expect(node.to_value).to be_falsey
     end
 
     it 'get for range' do
-      node = parse("(1..10)")
+      node = parse('(1..10)')
       expect(node.to_value).to eq (1..10)
     end
 
@@ -344,10 +344,10 @@ describe Parser::AST::Node do
   end
 
   describe '#match?' do
-    let(:instance) {
+    let(:instance) do
       rewriter = Synvert::Rewriter.new('foo', 'bar')
       Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
-    }
+    end
 
     it 'matches class name' do
       source = 'class Synvert; end'
@@ -364,7 +364,7 @@ describe Parser::AST::Node do
     it 'matches arguments with symbol' do
       source = 'params[:user]'
       node = parse(source)
-      expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: [:user])
+      expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: %i[user])
     end
 
     it 'matches assign number' do
@@ -376,27 +376,27 @@ describe Parser::AST::Node do
     it 'matches arguments with string' do
       source = 'params["user"]'
       node = parse(source)
-      expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: ['user'])
+      expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: %w[user])
     end
 
     it 'matches arguments any' do
       source = 'config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false'
       node = parse(source)
-      expect(node).to be_match(type: 'send', arguments: {any: 'Lifo::Cache'})
+      expect(node).to be_match(type: 'send', arguments: { any: 'Lifo::Cache' })
     end
 
     it 'matches not' do
       source = 'class Synvert; end'
       node = parse(source)
-      expect(node).not_to be_match(type: 'class', name: {not: 'Synvert'})
+      expect(node).not_to be_match(type: 'class', name: { not: 'Synvert' })
     end
   end
 
   describe '#rewritten_source' do
-    let(:instance) {
+    let(:instance) do
       rewriter = Synvert::Rewriter.new('foo', 'bar')
       Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
-    }
+    end
 
     it 'does not rewrite with unknown method' do
       source = 'class Synvert; end'
@@ -413,25 +413,27 @@ describe Parser::AST::Node do
     it 'rewrites for ArgumentsNode' do
       source = 'test { |a, b| }'
       node = parse(source)
-      expect(node.rewritten_source('{{arguments}}')).to eq %(a, b)
+      expect(node.rewritten_source('{{arguments}}')).to eq 'a, b'
     end
 
-    it 'rewrites array with multi line given as argument for method'do
-      source = <<-EOS.strip
+    it 'rewrites array with multi line given as argument for method' do
+      source = <<-EOS
 long_name_method([
   1,
   2,
   3
 ])
       EOS
+        .strip
       node = parse(source)
-      expect(node.rewritten_source('{{arguments}}')).to eq <<-EOS.strip
+      expect(node.rewritten_source('{{arguments}}')).to eq <<-EOS
 [
   1,
   2,
   3
 ]
       EOS
+           .strip
     end
   end
 end

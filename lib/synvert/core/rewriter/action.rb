@@ -10,7 +10,7 @@ module Synvert::Core
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param code [String] new code to add, replace or remove.
     # @param options [Hash] action options, it includes :autoindent.
-    def initialize(instance, code, options={})
+    def initialize(instance, code, options = {})
       @instance = instance
       @code = code
       @options = DEFAULT_OPTIONS.merge(options)
@@ -29,9 +29,7 @@ module Synvert::Core
     # @return [String] rewritten code.
     def rewritten_code
       if rewritten_source.split("\n").length > 1
-        "\n\n" + rewritten_source.split("\n").map { |line|
-          indent(@node) + line
-        }.join("\n")
+        "\n\n" + rewritten_source.split("\n").map { |line| indent(@node) + line }.join("\n")
       else
         "\n" + indent(@node) + rewritten_source
       end
@@ -45,4 +43,3 @@ module Synvert::Core
     end
   end
 end
-
