@@ -108,7 +108,7 @@ module Synvert::Core
             add_file 'foo.bar', 'FooBar'
           end
         rewriter.process
-        expect(File.read './foo.bar').to eq 'FooBar'
+        expect(File.read('./foo.bar')).to eq 'FooBar'
         FileUtils.rm './foo.bar'
       end
 
@@ -130,7 +130,7 @@ module Synvert::Core
             remove_file 'foo.bar'
           end
         rewriter.process
-        expect(File.exist? './foo.bar').to be_falsey
+        expect(File.exist?('./foo.bar')).to be_falsey
       end
 
       it 'does nothing if file not exist' do
@@ -139,7 +139,7 @@ module Synvert::Core
             remove_file 'foo.bar'
           end
         rewriter.process
-        expect(File.exist? './foo.bar').to be_falsey
+        expect(File.exist?('./foo.bar')).to be_falsey
       end
 
       it 'does nothing in sandbox mode' do
@@ -229,11 +229,11 @@ module Synvert::Core
       context 'exist?' do
         it 'returns true if rewriter exists' do
           Rewriter.new 'group', 'rewriter'
-          expect(Rewriter.exist? 'group', 'rewriter').to be_truthy
+          expect(Rewriter.exist?('group', 'rewriter')).to be_truthy
         end
 
         it 'returns false if rewriter does not exist' do
-          expect(Rewriter.exist? 'group', 'rewriter').to be_falsey
+          expect(Rewriter.exist?('group', 'rewriter')).to be_falsey
         end
       end
 
