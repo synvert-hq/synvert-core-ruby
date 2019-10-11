@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "parser", "~> 2.5.0"
+  spec.add_runtime_dependency "parser", "~> 2.6.5"
   spec.add_runtime_dependency "activesupport"
   spec.add_runtime_dependency "erubis"
 
