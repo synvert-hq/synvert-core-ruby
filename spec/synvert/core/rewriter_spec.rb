@@ -13,7 +13,7 @@ module Synvert::Core
     end
 
     it 'parses if_ruby' do
-      #stub_const("RUBY_VERSION", '2.0.0')
+      # stub_const("RUBY_VERSION", '2.0.0')
       rewriter = Rewriter.new 'group', 'name' do
         if_ruby '2.0.0'
       end
