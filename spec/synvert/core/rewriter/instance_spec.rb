@@ -205,7 +205,7 @@ end
         instance.instance_variable_set :@actions, [action1, action2, action3]
         conflict_actions = instance.send(:get_conflict_actions)
         expect(conflict_actions).to eq []
-        expect(instance.instance_variable_get :@actions).to eq [action1, action2, action3]
+        expect(instance.instance_variable_get(:@actions)).to eq [action1, action2, action3]
       end
 
       it "has no conflict" do
@@ -216,7 +216,7 @@ end
         instance.instance_variable_set :@actions, [action1, action2, action3]
         conflict_actions = instance.send(:get_conflict_actions)
         expect(conflict_actions).to eq [action2, action1]
-        expect(instance.instance_variable_get :@actions).to eq [action3]
+        expect(instance.instance_variable_get(:@actions)).to eq [action3]
       end
     end
 
