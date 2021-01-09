@@ -30,7 +30,7 @@ module Synvert::Core
     # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
     def indent(node)
-      if [:block, :class].include? node.type
+      if %i[block class].include? node.type
         ' ' * (node.indent + DEFAULT_INDENT)
       else
         ' ' * node.indent

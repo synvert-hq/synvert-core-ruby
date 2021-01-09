@@ -102,12 +102,12 @@ describe Parser::AST::Node do
   describe '#arguments' do
     it 'gets for def node' do
       node = parse("def test(foo, bar); foo + bar; end")
-      expect(node.arguments.map { |argument| argument.to_source }).to eq ['foo', 'bar']
+      expect(node.arguments.map { |argument| argument.to_source }).to eq %w[foo bar]
     end
 
     it 'gets for defs node' do
       node = parse("def self.test(foo, bar); foo + bar; end")
-      expect(node.arguments.map { |argument| argument.to_source }).to eq ['foo', 'bar']
+      expect(node.arguments.map { |argument| argument.to_source }).to eq %w[foo bar]
     end
 
     it 'gets for block node' do
