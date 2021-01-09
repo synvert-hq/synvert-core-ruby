@@ -80,7 +80,7 @@ module Synvert::Core
       @file_pattern = file_pattern
       @options = DEFAULT_OPTIONS.merge(options)
       @block = block
-      rewriter.helpers.each { |helper| self.singleton_class.send(:define_method, helper[:name], &helper[:block]) }
+      rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 
     # Process the instance.
@@ -97,7 +97,7 @@ module Synvert::Core
 
             @current_file = file_path
 
-            self.process_with_node ast do
+            process_with_node ast do
               begin
                 instance_eval &@block
               rescue NoMethodError
@@ -147,7 +147,7 @@ module Synvert::Core
     # @param node [Parser::AST::Node] node set to current_node
     # @yield process
     def process_with_other_node(node)
-      original_node = self.current_node
+      original_node = current_node
       self.current_node = node
       yield
       self.current_node = original_node
