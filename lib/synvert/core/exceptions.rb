@@ -1,13 +1,13 @@
 module Synvert::Core
   # Rewriter not found exception.
-  class RewriterNotFound < Exception
+  class RewriterNotFound < RuntimeError
   end
 
   # Gemfile.lock not found exception.
-  class GemfileLockNotFound < Exception
+  class GemfileLockNotFound < RuntimeError
   end
 
   # Method not supported exception.
-  class MethodNotSupported < Exception
+  class MethodNotSupported < RuntimeError
   end
 end
