@@ -3,8 +3,8 @@ require 'erubis'
 
 module Synvert::Core
   module Engine
-    ERUBY_EXPR_SPLITTER = ";  ;"
-    ERUBY_STMT_SPLITTER = ";   ;"
+    ERUBY_EXPR_SPLITTER = ";  ;".freeze
+    ERUBY_STMT_SPLITTER = ";   ;".freeze
 
     class ERB
       class <<self
