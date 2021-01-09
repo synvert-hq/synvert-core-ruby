@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Engine::ERB do
-    it "encodes / decodes" do
-      source =<<-EOF
+    it 'encodes / decodes' do
+      source = <<-EOF
 <%content_for :head do%>
   <style>
     body {
@@ -33,7 +33,7 @@ module Synvert::Core
 <% end %>
       EOF
       encoded_source = Engine::ERB.encode(source)
-      buffer = Parser::Source::Buffer.new "(test)"
+      buffer = Parser::Source::Buffer.new '(test)'
       buffer.source = encoded_source
       parser = Parser::CurrentRuby.new
       parser.reset

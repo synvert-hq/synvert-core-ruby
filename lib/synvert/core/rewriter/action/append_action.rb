@@ -2,6 +2,7 @@
 
 module Synvert::Core
   # AppendAction to append code to the bottom of node body.
+
   class Rewriter::AppendAction < Rewriter::Action
     END_LENGTH = "\nend".length
 
@@ -23,7 +24,7 @@ module Synvert::Core
       begin_pos
     end
 
-  private
+    private
 
     # Indent of the node.
     #
