@@ -32,18 +32,18 @@ module Synvert::Core
       private
 
         def decode_ruby_stmt(source)
-          source.gsub(/#{ERUBY_STMT_SPLITTER}(.+?)#{ERUBY_STMT_SPLITTER}/m) { "<%#{$1}%>" }
+          source.gsub(/#{ERUBY_STMT_SPLITTER}(.+?)#{ERUBY_STMT_SPLITTER}/mo) { "<%#{$1}%>" }
         end
 
         def decode_ruby_output(source)
-          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { "<%=#{$1}%>" }
-            .gsub(/@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m) { |m| "<%=#{m.sub("@output_buffer.append= ", "").sub(ERUBY_EXPR_SPLITTER, "")}%>" }
+          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/mo) { "<%=#{$1}%>" }
+            .gsub(/@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/mo) { |m| "<%=#{m.sub("@output_buffer.append= ", "").sub(ERUBY_EXPR_SPLITTER, "")}%>" }
         end
 
         def decode_html_output(source)
           source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text($1) }
-            .gsub(/@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { reverse_escape_text($1) }
-            .gsub(/@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m) { reverse_escape_text($1) }
+            .gsub(/@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/mo) { reverse_escape_text($1) }
+            .gsub(/@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/mo) { reverse_escape_text($1) }
         end
 
         def remove_erubis_buf(source)
