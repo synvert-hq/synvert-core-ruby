@@ -49,7 +49,8 @@ module Synvert::Core
       # @param name [String] the unique rewriter name.
       # @param rewriter [Synvert::Core::Rewriter] the rewriter to register.
       def register(group, name, rewriter)
-        group, name = group.to_s, name.to_s
+        group = group.to_s
+        name = name.to_s
         rewriters[group] ||= {}
         rewriters[group][name] = rewriter
       end
@@ -61,7 +62,8 @@ module Synvert::Core
       # @return [Synvert::Core::Rewriter] the matching rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def fetch(group, name)
-        group, name = group.to_s, name.to_s
+        group = group.to_s
+        name = name.to_s
         if exist? group, name
           rewriters[group][name]
         else
@@ -76,7 +78,8 @@ module Synvert::Core
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def call(group, name)
-        group, name = group.to_s, name.to_s
+        group = group.to_s
+        name = name.to_s
         if exist? group, name
           rewriter = rewriters[group][name]
           rewriter.process
@@ -92,7 +95,8 @@ module Synvert::Core
       # @param name [String] the rewriter name.
       # @return [Boolean] true if the rewriter exist.
       def exist?(group, name)
-        group, name = group.to_s, name.to_s
+        group = group.to_s
+        name = name.to_s
         if rewriters[group] && rewriters[group][name]
           true
         else
