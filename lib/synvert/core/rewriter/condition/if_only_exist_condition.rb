@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 module Synvert::Core
   # IfExistCondition checks if node has only one child node and the child node matches rules.

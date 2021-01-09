@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Parser::AST
   # ArgumentsNode allows to handle all args as one node or handle all args as an array.
   class ArgumentsNode
