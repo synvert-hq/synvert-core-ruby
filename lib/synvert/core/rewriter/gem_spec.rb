@@ -4,7 +4,7 @@
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::GemSpec
-    OPERATORS = {eq: '==', lt: '<', gt: '>', lte: '<=', gte: '>=', ne: '!='}
+    OPERATORS = {eq: '==', lt: '<', gt: '>', lte: '<=', gte: '>=', ne: '!='}.freeze
 
     # Initialize a gem_spec.
     #

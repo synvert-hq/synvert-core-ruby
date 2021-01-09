@@ -65,7 +65,7 @@ module Synvert::Core
     #   @return current filename
     attr_accessor :current_node, :current_file
 
-    DEFAULT_OPTIONS = { sort_by: 'begin_pos' }
+    DEFAULT_OPTIONS = { sort_by: 'begin_pos' }.freeze
 
     # Initialize an instance.
     #

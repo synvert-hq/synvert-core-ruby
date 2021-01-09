@@ -4,7 +4,7 @@
 module Synvert::Core
   # Action defines rewriter action, add, replace or remove code.
   class Rewriter::Action
-    DEFAULT_OPTIONS = { autoindent: true }
+    DEFAULT_OPTIONS = { autoindent: true }.freeze
     DEFAULT_INDENT = 2
 
     # Initialize an action.
