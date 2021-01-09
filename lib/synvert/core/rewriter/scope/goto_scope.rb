@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Go to and change its scope to a child node.
   class Rewriter::GotoScope < Rewriter::Scope

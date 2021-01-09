@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::RubyVersion

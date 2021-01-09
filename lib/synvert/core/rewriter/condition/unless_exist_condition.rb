@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # UnlessExistCondition checks if matching node doesn't exist in the node children.
   class Rewriter::UnlessExistCondition < Rewriter::Condition

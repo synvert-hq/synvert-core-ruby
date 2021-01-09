@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # IfExistCondition checks if node has only one child node and the child node matches rules.
   class Rewriter::IfOnlyExistCondition < Rewriter::Condition

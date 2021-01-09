@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Condition checks if rules matches.
   class Rewriter::Condition

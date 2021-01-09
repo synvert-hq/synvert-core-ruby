@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # InsertAfterAction to insert code next to the node.
   class Rewriter::InsertAfterAction < Rewriter::Action

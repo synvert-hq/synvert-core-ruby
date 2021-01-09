@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # RemoveAction to remove code.
   class Rewriter::RemoveAction < Rewriter::Action

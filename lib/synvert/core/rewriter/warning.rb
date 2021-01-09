@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Warning is used to save warning message.
   class Rewriter::Warning

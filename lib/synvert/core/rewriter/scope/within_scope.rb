@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # WithinScope finds out nodes which match rules, then change its scope to matching node.
   class Rewriter::WithinScope < Rewriter::Scope

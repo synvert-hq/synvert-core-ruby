@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Instance is an execution unit, it finds specified ast nodes,
   # checks if the nodes match some conditions, then add, replace or remove code.

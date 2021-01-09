@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Action defines rewriter action, add, replace or remove code.
   class Rewriter::Action

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Rewriter::Helper provides some helper methods to make it easier to write a snippet.
   module Rewriter::Helper

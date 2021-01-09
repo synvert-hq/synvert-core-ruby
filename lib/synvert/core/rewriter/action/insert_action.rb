@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # InsertAction to insert code to the top of node body.
   class Rewriter::InsertAction < Rewriter::Action

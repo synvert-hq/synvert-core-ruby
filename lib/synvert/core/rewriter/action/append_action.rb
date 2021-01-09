@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # AppendAction to append code to the bottom of node body.
   class Rewriter::AppendAction < Rewriter::Action

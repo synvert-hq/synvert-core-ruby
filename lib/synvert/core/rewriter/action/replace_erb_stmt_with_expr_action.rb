@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # ReplaceErbStmtWithExprAction to replace erb stmt code to expr,
   #   e.g. <% form_for ... %> => <%= form_for ... %>.

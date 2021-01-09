@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # Rewriter is the top level namespace in a snippet.
   #

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Synvert::Core
   # ReplaceWithAction to replace code.
   class Rewriter::ReplaceWithAction < Rewriter::Action
