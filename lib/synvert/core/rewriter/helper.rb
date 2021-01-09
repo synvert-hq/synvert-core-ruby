@@ -34,9 +34,9 @@ module Synvert::Core
     #   if current_node has argument, it returns "({{arguments}})"
     def add_arguments_with_parenthesis_if_necessary
       if node.arguments.size > 0
-        "({{arguments}})"
+        '({{arguments}})'
       else
-        ""
+        ''
       end
     end
 
@@ -65,9 +65,7 @@ module Synvert::Core
     #
     #   strip_brackets("(1..100)") #=> "1..100"
     def strip_brackets(code)
-      code.sub(/^\((.*)\)$/) { $1 }
-          .sub(/^\[(.*)\]$/) { $1 }
-          .sub(/^{(.*)}$/) { $1 }
+      code.sub(/^\((.*)\)$/) { $1 }.sub(/^\[(.*)\]$/) { $1 }.sub(/^{(.*)}$/) { $1 }
     end
   end
 end

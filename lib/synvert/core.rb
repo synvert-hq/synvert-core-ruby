@@ -1,7 +1,7 @@
-require "synvert/core/version"
+require 'synvert/core/version'
 
 # coding: utf-8
-require "synvert/core/version"
+require 'synvert/core/version'
 require 'bundler'
 require 'parser'
 require 'parser/current'

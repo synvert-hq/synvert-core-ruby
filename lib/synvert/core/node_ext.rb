@@ -23,11 +23,13 @@ module Parser::AST
   end
 
   # Parser::AST::Node monkey patch.
+
   class Node
     # Get name node of :class, :module, :const, :mlhs, :def and :defs node.
     #
     # @return [Parser::AST::Node] name node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+
     def name
       case self.type
       when :class, :module, :def, :arg, :blockarg, :restarg
@@ -96,6 +98,7 @@ module Parser::AST
     #
     # @return [Array<Parser::AST::Node>] arguments node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+
     def arguments
       case self.type
       when :def, :block
@@ -127,6 +130,7 @@ module Parser::AST
     #
     # @return [Array<Parser::AST::Node>] body node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
+
     def body
       case self.type
       when :begin
@@ -285,12 +289,13 @@ module Parser::AST
     end
 
     def debug_info
-      "\n" + [
-        "file: #{self.loc.expression.source_buffer.name}",
-        "line: #{self.loc.expression.line}",
-        "source: #{self.to_source}",
-        "node: #{self.inspect}"
-      ].join("\n")
+      "\n" +
+        [
+          "file: #{self.loc.expression.source_buffer.name}",
+          "line: #{self.loc.expression.line}",
+          "source: #{self.to_source}",
+          "node: #{self.inspect}"
+        ].join("\n")
     end
 
     # Get the source code of current node.
@@ -374,9 +379,9 @@ module Parser::AST
               lines_count = lines.length
               if lines_count > 1 && lines_count == evaluated.size
                 new_code = []
-                lines.each_with_index { |line, index|
-                  new_code << (index == 0 ? line : line[evaluated.first.indent-2..-1])
-                }
+                lines.each_with_index do |line, index|
+                  new_code << (index == 0 ? line : line[evaluated.first.indent - 2..-1])
+                end
                 new_code.join("\n")
               else
                 source
@@ -395,7 +400,7 @@ module Parser::AST
       end
     end
 
-  private
+    private
 
     # Compare actual value with expected value.
     #
@@ -413,8 +418,7 @@ module Parser::AST
         end
       when String
         if Parser::AST::Node === actual
-          actual.to_source == expected ||
-            (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
+          actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
             actual.to_source[1...-1] == expected
         else
           actual.to_s == expected
@@ -473,11 +477,11 @@ module Parser::AST
     # @param multi_keys [Array<Symbol>]
     # @return [Object] actual value.
     def actual_value(node, multi_keys)
-      multi_keys.inject(node) { |n, key|
+      multi_keys.inject(node) do |n, key|
         if n
           key == :source ? n.send(key) : n.send(key)
         end
-      }
+      end
     end
 
     # Get expected value from rules.
