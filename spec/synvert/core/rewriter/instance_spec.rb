@@ -13,7 +13,7 @@ module Synvert::Core
 
     it 'parses within_node' do
       scope = double()
-      block = Proc.new {}
+      block = proc {}
       expect(Rewriter::WithinScope).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.within_node(type: 'send', message: 'create', &block)
@@ -21,7 +21,7 @@ module Synvert::Core
 
     it 'parses with_node' do
       scope = double()
-      block = Proc.new {}
+      block = proc {}
       expect(Rewriter::WithinScope).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.with_node(type: 'send', message: 'create', &block)
@@ -29,7 +29,7 @@ module Synvert::Core
 
     it 'parses goto_node' do
       scope = double()
-      block = Proc.new {}
+      block = proc {}
       expect(Rewriter::GotoScope).to receive(:new).with(instance, :caller, &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.goto_node(:caller, &block)
@@ -37,7 +37,7 @@ module Synvert::Core
 
     it 'parses if_exist_node' do
       condition = double()
-      block = Proc.new {}
+      block = proc {}
       expect(Rewriter::IfExistCondition).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(condition)
       expect(condition).to receive(:process)
       instance.if_exist_node(type: 'send', message: 'create', &block)
@@ -45,7 +45,7 @@ module Synvert::Core
 
     it 'parses unless_exist_node' do
       condition = double()
-      block = Proc.new {}
+      block = proc {}
       expect(Rewriter::UnlessExistCondition).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(condition)
       expect(condition).to receive(:process)
       instance.unless_exist_node(type: 'send', message: 'create', &block)
@@ -53,7 +53,7 @@ module Synvert::Core
 
     it 'parses if_only_exist_node' do
       condition = double()
-      block = Proc.new {}
+      block = proc {}
       expect(Rewriter::IfOnlyExistCondition).to receive(:new).with(instance, type: 'send', message: 'create', &block).and_return(condition)
       expect(condition).to receive(:process)
       instance.if_only_exist_node(type: 'send', message: 'create', &block)
