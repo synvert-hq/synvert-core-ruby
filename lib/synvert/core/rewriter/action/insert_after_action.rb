@@ -18,7 +18,7 @@ module Synvert::Core
       begin_pos
     end
 
-  private
+    private
 
     # Indent of the node.
     #

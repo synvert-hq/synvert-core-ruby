@@ -24,16 +24,16 @@ module Synvert::Core
     def rewritten_code
       if rewritten_source.split("\n").length > 1
         new_code = []
-        rewritten_source.split("\n").each_with_index { |line, index|
+        rewritten_source.split("\n").each_with_index do |line, index|
           new_code << (index == 0 || !@options[:autoindent] ? line : indent(@node) + line)
-        }
+        end
         new_code.join("\n")
       else
         rewritten_source
       end
     end
 
-  private
+    private
 
     # Indent of the node
     #

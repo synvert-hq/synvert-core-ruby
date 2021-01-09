@@ -3,6 +3,5 @@
 
 module Synvert::Core
   # Scope finds out nodes which match rules.
-  class Rewriter::Scope
-  end
+  class Rewriter::Scope; end
 end

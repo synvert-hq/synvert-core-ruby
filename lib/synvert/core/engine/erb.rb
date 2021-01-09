@@ -5,17 +5,17 @@ require 'erubis'
 
 module Synvert::Core
   module Engine
-    ERUBY_EXPR_SPLITTER = ";  ;"
-    ERUBY_STMT_SPLITTER = ";   ;"
+    ERUBY_EXPR_SPLITTER = ';  ;'
+    ERUBY_STMT_SPLITTER = ';   ;'
 
     class ERB
-      class <<self
+      class << self
         # convert erb to ruby code.
         #
         # @param source [String] erb source code.
         # @return [String] ruby source code.
         def encode(source)
-          Erubis.new(source.gsub("-%>", "%>"), :escape => false, :trim => false).src
+          Erubis.new(source.gsub('-%>', '%>'), escape: false, trim: false).src
         end
 
         # convert ruby code to erb.
@@ -29,25 +29,31 @@ module Synvert::Core
           source = remove_erubis_buf(source)
         end
 
-      private
+        private
 
         def decode_ruby_stmt(source)
           source.gsub(/#{ERUBY_STMT_SPLITTER}(.+?)#{ERUBY_STMT_SPLITTER}/m) { "<%#{$1}%>" }
         end
 
         def decode_ruby_output(source)
-          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { "<%=#{$1}%>" }
-            .gsub(/@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m) { |m| "<%=#{m.sub("@output_buffer.append= ", "").sub(ERUBY_EXPR_SPLITTER, "")}%>" }
+          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { "<%=#{$1}%>" }.gsub(
+            /@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m
+          ) { |m| "<%=#{m.sub('@output_buffer.append= ', '').sub(ERUBY_EXPR_SPLITTER, '')}%>" }
         end
 
         def decode_html_output(source)
-          source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text($1) }
-            .gsub(/@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { reverse_escape_text($1) }
-            .gsub(/@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m) { reverse_escape_text($1) }
+          source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text($1) }.gsub(
+            /@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m
+          ) { reverse_escape_text($1) }.gsub(
+            /@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m
+          ) { reverse_escape_text($1) }
         end
 
         def remove_erubis_buf(source)
-          source.sub("@output_buffer = output_buffer || ActionView::OutputBuffer.new;", "").sub("@output_buffer.to_s", "")
+          source.sub('@output_buffer = output_buffer || ActionView::OutputBuffer.new;', '').sub(
+            '@output_buffer.to_s',
+            ''
+          )
         end
 
         def reverse_escape_text(source)
@@ -60,7 +66,7 @@ module Synvert::Core
     class Erubis < ::Erubis::Eruby
       def add_preamble(src)
         @newline_pending = 0
-        src << "@output_buffer = output_buffer || ActionView::OutputBuffer.new;"
+        src << '@output_buffer = output_buffer || ActionView::OutputBuffer.new;'
       end
 
       def add_text(src, text)
@@ -103,22 +109,23 @@ module Synvert::Core
       def add_expr_escaped(src, code)
         flush_newline_if_pending(src)
         if code =~ BLOCK_EXPR
-          src << "@output_buffer.safe_append= " << code << ERUBY_EXPR_SPLITTER
+          src << '@output_buffer.safe_append= ' << code << ERUBY_EXPR_SPLITTER
         else
-          src << "@output_buffer.safe_append=(" << code << ");" << ERUBY_EXPR_SPLITTER
+          src << '@output_buffer.safe_append=(' << code << ');' << ERUBY_EXPR_SPLITTER
         end
       end
 
       def add_stmt(src, code)
         flush_newline_if_pending(src)
-        if code != "\n" && code != ""
-          index = if code =~ /\A(\s*)\r?\n/
-                    $1.length
-                  elsif code =~ /\A(\s+)/
-                    $1.end_with?(' ') ? $1.length - 1 : $1.length
-                  else
-                    0
-                  end
+        if code != "\n" && code != ''
+          index =
+            if code =~ /\A(\s*)\r?\n/
+              $1.length
+            elsif code =~ /\A(\s+)/
+              $1.end_with?(' ') ? $1.length - 1 : $1.length
+            else
+              0
+            end
           code.insert(index, ERUBY_STMT_SPLITTER)
           code.insert(-1, ERUBY_STMT_SPLITTER[0...-1])
         end
