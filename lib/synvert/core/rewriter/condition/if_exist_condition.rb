@@ -7,7 +7,7 @@ module Synvert::Core
     def match?
       match = false
       @instance.current_node.recursive_children do |child_node|
-        match = match || (child_node && child_node.match?(@rules))
+        match ||= (child_node && child_node.match?(@rules))
       end
       match
     end
