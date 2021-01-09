@@ -1,8 +1,10 @@
 # encoding: utf-8
 
 module Synvert::Core
-  # AppendWithAction to append code to the bottom of node body.
+  # AppendAction to append code to the bottom of node body.
   class Rewriter::AppendAction < Rewriter::Action
+    END_LENGTH = "\nend".length
+
     # Begin position to append code.
     #
     # @return [Integer] begin position.
@@ -10,7 +12,7 @@ module Synvert::Core
       if :begin == @node.type
         @node.loc.expression.end_pos
       else
-        @node.loc.expression.end_pos - @node.indent - 4
+        @node.loc.expression.end_pos - @node.indent - END_LENGTH
       end
     end
 
@@ -29,7 +31,7 @@ module Synvert::Core
     # @return [String] n times whitesphace
     def indent(node)
       if [:block, :class].include? node.type
-        ' ' * (node.indent + 2)
+        ' ' * (node.indent + DEFAULT_INDENT)
       else
         ' ' * node.indent
       end

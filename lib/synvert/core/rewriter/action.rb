@@ -4,6 +4,7 @@ module Synvert::Core
   # Action defines rewriter action, add, replace or remove code.
   class Rewriter::Action
     DEFAULT_OPTIONS = { autoindent: true }
+    DEFAULT_INDENT = 2
 
     # Initialize an action.
     #
@@ -45,4 +46,3 @@ module Synvert::Core
     end
   end
 end
-
