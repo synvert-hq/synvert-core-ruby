@@ -112,9 +112,10 @@ module Synvert::Core
       def add_stmt(src, code)
         flush_newline_if_pending(src)
         if code != "\n" && code != ""
-          index = if code =~ /\A(\s*)\r?\n/
+          index = case code
+                  when /\A(\s*)\r?\n/
                     $1.length
-                  elsif code =~ /\A(\s+)/
+                  when /\A(\s+)/
                     $1.end_with?(' ') ? $1.length - 1 : $1.length
                   else
                     0
