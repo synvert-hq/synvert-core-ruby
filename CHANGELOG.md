@@ -1,8 +1,10 @@
 # CHANGELOG
 
-## 0.15.1 (2019-10-11)
+## 0.16.0 (2021-01-17)
 
-* Use parser 2.6.5.0
+* Use parser 3.0.0
+* Fix magic number
+* Add `within_direct_node` scope
 
 ## 0.15.0 (2018-05-23)
 
