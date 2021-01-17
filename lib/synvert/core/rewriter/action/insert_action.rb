@@ -2,8 +2,9 @@
 
 module Synvert::Core
   # InsertAction to insert code to the top of node body.
+
   class Rewriter::InsertAction < Rewriter::Action
-    DO_LENGTH = " do".length
+    DO_LENGTH = ' do'.length
 
     # Begin position to insert code.
     #
@@ -11,7 +12,9 @@ module Synvert::Core
     def begin_pos
       case @node.type
       when :block
-        @node.children[1].children.empty? ? @node.children[0].loc.expression.end_pos + DO_LENGTH : @node.children[1].loc.expression.end_pos
+        @node.children[1].children.empty? ?
+          @node.children[0].loc.expression.end_pos + DO_LENGTH :
+          @node.children[1].loc.expression.end_pos
       when :class
         @node.children[1] ? @node.children[1].loc.expression.end_pos : @node.children[0].loc.expression.end_pos
       else
@@ -26,7 +29,7 @@ module Synvert::Core
       begin_pos
     end
 
-  private
+    private
 
     # Indent of the node.
     #

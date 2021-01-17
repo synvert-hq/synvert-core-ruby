@@ -5,19 +5,19 @@ require 'spec_helper'
 module Synvert::Core
   describe Rewriter::InsertAction do
     describe 'block node without args' do
-      subject {
+      subject do
         source = "Synvert::Application.configure do\nend"
         block_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: block_node)
         Rewriter::InsertAction.new(instance, 'config.eager_load = true')
-      }
+      end
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "Synvert::Application.configure do".length
+        expect(subject.begin_pos).to eq 'Synvert::Application.configure do'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "Synvert::Application.configure do".length
+        expect(subject.end_pos).to eq 'Synvert::Application.configure do'.length
       end
 
       it 'gets rewritten_code' do
@@ -26,19 +26,19 @@ module Synvert::Core
     end
 
     describe 'block node with args' do
-      subject {
+      subject do
         source = "RSpec.configure do |config|\nend"
         block_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: block_node)
         Rewriter::InsertAction.new(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
-      }
+      end
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "RSpec.configure do |config|".length
+        expect(subject.begin_pos).to eq 'RSpec.configure do |config|'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "RSpec.configure do |config|".length
+        expect(subject.end_pos).to eq 'RSpec.configure do |config|'.length
       end
 
       it 'gets rewritten_code' do
@@ -47,19 +47,19 @@ module Synvert::Core
     end
 
     describe 'class node without superclass' do
-      subject {
+      subject do
         source = "class User\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: class_node)
         Rewriter::InsertAction.new(instance, 'include Deletable')
-      }
+      end
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "class User".length
+        expect(subject.begin_pos).to eq 'class User'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "class User".length
+        expect(subject.end_pos).to eq 'class User'.length
       end
 
       it 'gets rewritten_code' do
@@ -68,19 +68,19 @@ module Synvert::Core
     end
 
     describe 'class node with superclass' do
-      subject {
+      subject do
         source = "class User < ActiveRecord::Base\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: class_node)
         Rewriter::InsertAction.new(instance, 'include Deletable')
-      }
+      end
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "class User < ActionRecord::Base".length
+        expect(subject.begin_pos).to eq 'class User < ActionRecord::Base'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "class User < ActionRecord::Base".length
+        expect(subject.end_pos).to eq 'class User < ActionRecord::Base'.length
       end
 
       it 'gets rewritten_code' do
