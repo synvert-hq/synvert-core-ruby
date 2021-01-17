@@ -362,7 +362,7 @@ module Parser::AST
     # @raise [Synvert::Core::MethodNotSupported] if string in block {{ }} does not support.
     def rewritten_source(code)
       code.gsub(/{{(.*?)}}/m) do
-        old_code = $1
+        old_code = Regexp.last_match(1)
         if self.respond_to? old_code.split(/\.|\[/).first
           evaluated = self.instance_eval old_code
           case evaluated
