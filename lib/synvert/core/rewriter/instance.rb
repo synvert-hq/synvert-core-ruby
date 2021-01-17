@@ -165,7 +165,7 @@ module Synvert::Core
       Rewriter::WithinScope.new(self, rules, { recursive: true }, &block).process
     end
 
-    alias_method :with_node, :within_node
+    alias with_node within_node
 
     # Parse within_direct_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find direct matching ast nodes,
     # then continue operating on each matching ast node.
@@ -176,7 +176,7 @@ module Synvert::Core
       Rewriter::WithinScope.new(self, rules, { recursive: false }, &block).process
     end
 
-    alias_method :with_direct_node, :within_direct_node
+    alias with_direct_node within_direct_node
 
     # Parse goto_node dsl, it creates a [Synvert::Core::Rewriter::GotoScope] to go to a child node,
     # then continue operating on the child node.
