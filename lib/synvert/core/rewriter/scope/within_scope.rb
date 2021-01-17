@@ -7,10 +7,12 @@ module Synvert::Core
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param rules [Hash]
+    # @param options [Hash]
     # @param block [Block]
-    def initialize(instance, rules, &block)
+    def initialize(instance, rules, options = { recursive: true }, &block)
       @instance = instance
       @rules = rules
+      @options = options
       @block = block
     end
 
@@ -23,8 +25,14 @@ module Synvert::Core
       @instance.process_with_node current_node do
         matching_nodes = []
         matching_nodes << current_node if current_node.match? @rules
-        current_node.recursive_children do |child_node|
-          matching_nodes << child_node if child_node.match? @rules
+        if @options[:recursive]
+          current_node.recursive_children do |child_node|
+            matching_nodes << child_node if child_node.match? @rules
+          end
+        else
+          current_node.children do |child_node|
+            matching_nodes << child_node if child_node.match? @rules
+          end
         end
         matching_nodes.each do |matching_node|
           @instance.process_with_node matching_node do

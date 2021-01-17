@@ -91,7 +91,7 @@ module Synvert::Core
         unless Configuration.instance.get(:skip_files).include? file_path
           begin
             conflict_actions = []
-            source = self.class.file_source(file_path)
+            source = +self.class.file_source(file_path)
             ast = self.class.file_ast(file_path)
 
             @current_file = file_path
@@ -156,14 +156,27 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse within_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find matching ast nodes,
+    # Parse within_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find recursive matching ast nodes,
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
     def within_node(rules, &block)
-      Rewriter::WithinScope.new(self, rules, &block).process
+      Rewriter::WithinScope.new(self, rules, { recursive: true }, &block).process
     end
+
+    alias_method :with_node, :within_node
+
+    # Parse within_direct_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find direct matching ast nodes,
+    # then continue operating on each matching ast node.
+    #
+    # @param rules [Hash] rules to find mathing ast nodes.
+    # @param block [Block] block code to continue operating on the matching nodes.
+    def within_direct_node(rules, &block)
+      Rewriter::WithinScope.new(self, rules, { recursive: false }, &block).process
+    end
+
+    alias_method :with_direct_node, :within_direct_node
 
     # Parse goto_node dsl, it creates a [Synvert::Core::Rewriter::GotoScope] to go to a child node,
     # then continue operating on the child node.
@@ -173,8 +186,6 @@ module Synvert::Core
     def goto_node(child_node_name, &block)
       Rewriter::GotoScope.new(self, child_node_name, &block).process
     end
-
-    alias_method :with_node, :within_node
 
     # Parse if_exist_node dsl, it creates a [Synvert::Core::Rewriter::IfExistCondition] to check
     # if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.
