@@ -39,7 +39,7 @@ module Parser::AST
       when :mlhs
         self
       else
-        raise Synvert::Core::MethodNotSupported.new "name is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "name is not handled for #{debug_info}"
       end
     end
 
@@ -51,7 +51,7 @@ module Parser::AST
       if :class == type
         children[1]
       else
-        raise Synvert::Core::MethodNotSupported.new "parent_class is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "parent_class is not handled for #{debug_info}"
       end
     end
 
@@ -63,7 +63,7 @@ module Parser::AST
       if :const == type
         children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "parent_const is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "parent_const is not handled for #{debug_info}"
       end
     end
 
@@ -75,7 +75,7 @@ module Parser::AST
       if :send == type
         children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "receiver is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "receiver is not handled for #{debug_info}"
       end
     end
 
@@ -90,7 +90,7 @@ module Parser::AST
       when :send
         children[1]
       else
-        raise Synvert::Core::MethodNotSupported.new "message is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "message is not handled for #{debug_info}"
       end
     end
 
@@ -109,7 +109,7 @@ module Parser::AST
       when :defined?
         children
       else
-        raise Synvert::Core::MethodNotSupported.new "arguments is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "arguments is not handled for #{debug_info}"
       end
     end
 
@@ -121,7 +121,7 @@ module Parser::AST
       if :block == type
         children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "caller is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "caller is not handled for #{debug_info}"
       end
     end
 
@@ -142,7 +142,7 @@ module Parser::AST
 
         :begin == children[3].type ? children[3].body : children[3..-1]
       else
-        raise Synvert::Core::MethodNotSupported.new "body is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "body is not handled for #{debug_info}"
       end
     end
 
@@ -154,7 +154,7 @@ module Parser::AST
       if :if == type
         children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "condition is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "condition is not handled for #{debug_info}"
       end
     end
 
@@ -166,7 +166,7 @@ module Parser::AST
       if :hash == type
         children.map { |child| child.children[0] }
       else
-        raise Synvert::Core::MethodNotSupported.new "keys is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "keys is not handled for #{debug_info}"
       end
     end
 
@@ -178,7 +178,7 @@ module Parser::AST
       if :hash == type
         children.map { |child| child.children[1] }
       else
-        raise Synvert::Core::MethodNotSupported.new "keys is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "keys is not handled for #{debug_info}"
       end
     end
 
@@ -191,7 +191,7 @@ module Parser::AST
       if :hash == type
         children.any? { |pair_node| pair_node.key.to_value == key }
       else
-        raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "has_key? is not handled for #{debug_info}"
       end
     end
 
@@ -205,7 +205,7 @@ module Parser::AST
         value_node = children.find { |pair_node| pair_node.key.to_value == key }
         value_node ? value_node.value : nil
       else
-        raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "has_key? is not handled for #{debug_info}"
       end
     end
 
@@ -217,7 +217,7 @@ module Parser::AST
       if :pair == type
         children.first
       else
-        raise Synvert::Core::MethodNotSupported.new "key is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "key is not handled for #{debug_info}"
       end
     end
 
@@ -229,7 +229,7 @@ module Parser::AST
       if :pair == type
         children.last
       else
-        raise Synvert::Core::MethodNotSupported.new "value is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "value is not handled for #{debug_info}"
       end
     end
 
@@ -241,7 +241,7 @@ module Parser::AST
       if %i[masgn lvasgn ivasgn].include? type
         children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "left_value is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "left_value is not handled for #{debug_info}"
       end
     end
 
@@ -253,7 +253,7 @@ module Parser::AST
       if %i[masgn lvasgn ivasgn].include? type
         children[1]
       else
-        raise Synvert::Core::MethodNotSupported.new "right_value is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "right_value is not handled for #{debug_info}"
       end
     end
 
@@ -276,7 +276,7 @@ module Parser::AST
       when :begin
         children.first.to_value
       else
-        raise Synvert::Core::MethodNotSupported.new "to_value is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "to_value is not handled for #{debug_info}"
       end
     end
 
@@ -387,7 +387,7 @@ module Parser::AST
           when NilClass
             'nil'
           else
-            raise Synvert::Core::MethodNotSupported.new "rewritten_source is not handled for #{evaluated.inspect}"
+            raise Synvert::Core::MethodNotSupported, "rewritten_source is not handled for #{evaluated.inspect}"
           end
         else
           "{{#{old_code}}}"
@@ -444,7 +444,7 @@ module Parser::AST
       when Parser::AST::Node
         actual == expected
       else
-        raise Synvert::Core::MethodNotSupported.new "#{expected.class} is not handled for match_value?"
+        raise Synvert::Core::MethodNotSupported, "#{expected.class} is not handled for match_value?"
       end
     end
 

@@ -35,7 +35,7 @@ module Synvert::Core
           false
         end
       else
-        raise GemfileLockNotFound.new 'Gemfile.lock does not exist'
+        raise GemfileLockNotFound, 'Gemfile.lock does not exist'
       end
     end
   end
