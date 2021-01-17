@@ -8,7 +8,7 @@ module Synvert::Core
   class Rewriter::Instance
     include Rewriter::Helper
 
-    class <<self
+    class << self
       # Cached file source.
       #
       # @param file_path [String] file path
@@ -73,7 +73,7 @@ module Synvert::Core
     # @param options [Hash] instance options, it includes :sort_by.
     # @param block [Block] block code to find nodes, match conditions and rewrite code.
     # @return [Synvert::Core::Rewriter::Instance]
-    def initialize(rewriter, file_pattern, options={}, &block)
+    def initialize(rewriter, file_pattern, options = {}, &block)
       @rewriter = rewriter
       @actions = []
       @file_pattern = file_pattern
@@ -220,7 +220,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be appended.
     # @param options [Hash] action options.
-    def append(code, options={})
+    def append(code, options = {})
       @actions << Rewriter::AppendAction.new(self, code, options)
     end
 
@@ -229,7 +229,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be inserted.
     # @param options [Hash] action options.
-    def insert(code, options={})
+    def insert(code, options = {})
       @actions << Rewriter::InsertAction.new(self, code, options)
     end
 
@@ -238,7 +238,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be inserted.
     # @param options [Hash] action options.
-    def insert_after(node, options={})
+    def insert_after(node, options = {})
       @actions << Rewriter::InsertAfterAction.new(self, node, options)
     end
 
@@ -247,7 +247,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be replaced with.
     # @param options [Hash] action options.
-    def replace_with(code, options={})
+    def replace_with(code, options = {})
       @actions << Rewriter::ReplaceWithAction.new(self, code, options)
     end
 
@@ -269,7 +269,7 @@ module Synvert::Core
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
-  private
+    private
 
     # It changes source code from bottom to top, and it can change source code twice at the same time,
     # So if there is an overlap between two actions, it removes the conflict actions and operate them in the next loop.
@@ -301,7 +301,8 @@ module Synvert::Core
       source_arr = source.split("\n")
       if source_arr[line - 1] && source_arr[line - 1].strip.empty?
         source_arr.delete_at(line - 1)
-        if source_arr[line - 2] && source_arr[line - 2].strip.empty? && source_arr[line - 1] && source_arr[line - 1].strip.empty?
+        if source_arr[line - 2] && source_arr[line - 2].strip.empty? && source_arr[line - 1] &&
+             source_arr[line - 1].strip.empty?
           source_arr.delete_at(line - 1)
         end
         source_arr.join("\n") + (newline_at_end_of_line ? "\n" : '')
