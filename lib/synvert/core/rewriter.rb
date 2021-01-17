@@ -65,7 +65,7 @@ module Synvert::Core
         if exist? group, name
           rewriters[group][name]
         else
-          raise RewriterNotFound.new "Rewriter #{group} #{name} not found"
+          raise RewriterNotFound, "Rewriter #{group} #{name} not found"
         end
       end
 
@@ -82,7 +82,7 @@ module Synvert::Core
           rewriter.process
           rewriter
         else
-          raise RewriterNotFound.new "Rewriter #{group}/#{name} not found"
+          raise RewriterNotFound, "Rewriter #{group}/#{name} not found"
         end
       end
 
