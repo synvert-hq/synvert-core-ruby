@@ -22,23 +22,20 @@ module Synvert::Core
       current_node = @instance.current_node
       return unless current_node
 
-      @instance.process_with_node current_node do
-        matching_nodes = []
-        matching_nodes << current_node if current_node.match? @rules
-        if @options[:recursive]
-          current_node.recursive_children do |child_node|
-            matching_nodes << child_node if child_node.match? @rules
-          end
-        else
-          current_node.children do |child_node|
-            matching_nodes << child_node if child_node.match? @rules
-          end
-        end
-        matching_nodes.each do |matching_node|
-          @instance.process_with_node matching_node do
+      child_nodes = current_node.is_a?(Parser::AST::Node) ? current_node.children : current_node
+      process_with_nodes(child_nodes)
+    end
+
+    private
+
+    def process_with_nodes(nodes)
+      nodes.compact.select { |node| node.is_a?(Parser::AST::Node) }.each do |node|
+        if node.match?(@rules)
+          @instance.process_with_node(node) do
             @instance.instance_eval &@block
           end
         end
+        process_with_nodes(node.children) if @options[:recursive]
       end
     end
   end
