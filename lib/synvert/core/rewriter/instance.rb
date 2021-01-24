@@ -108,7 +108,7 @@ module Synvert::Core
             if @actions.length > 0
               @actions.sort_by! { |action| action.send(@options[:sort_by]) }
               conflict_actions = get_conflict_actions
-              @actions.reverse.each do |action|
+              @actions.reverse_each do |action|
                 source[action.begin_pos...action.end_pos] = action.rewritten_code
                 source = remove_code_or_whole_line(source, action.line)
               end
