@@ -42,7 +42,7 @@ module Synvert::Core
     autoload :RubyVersion, 'synvert/core/rewriter/ruby_version'
     autoload :GemSpec, 'synvert/core/rewriter/gem_spec'
 
-    class <<self
+    class << self
       # Register a rewriter with its group and name.
       #
       # @param group [String] the rewriter group.
@@ -93,11 +93,7 @@ module Synvert::Core
       # @return [Boolean] true if the rewriter exist.
       def exist?(group, name)
         group, name = group.to_s, name.to_s
-        if rewriters[group] && rewriters[group][name]
-          true
-        else
-          false
-        end
+        rewriters[group] && rewriters[group][name] ? true : false
       end
 
       # Get all available rewriters
@@ -112,7 +108,7 @@ module Synvert::Core
         rewriters.clear
       end
 
-    private
+      private
 
       def rewriters
         @rewriters ||= {}
@@ -178,7 +174,7 @@ module Synvert::Core
     #
     # @param description [String] rewriter description.
     # @return rewriter description.
-    def description(description=nil)
+    def description(description = nil)
       if description
         @description = description
       else
@@ -208,11 +204,10 @@ module Synvert::Core
     # @param file_pattern [String] pattern to find files, e.g. spec/**/*_spec.rb
     # @param options [Hash] instance options.
     # @param block [Block] the block to rewrite code in the matching files.
-    def within_files(file_pattern, options={}, &block)
+    def within_files(file_pattern, options = {}, &block)
       return if @sandbox
 
-      if (!@ruby_version || @ruby_version.match?) &&
-        (!@gem_spec || @gem_spec.match?)
+      if (!@ruby_version || @ruby_version.match?) && (!@gem_spec || @gem_spec.match?)
         Rewriter::Instance.new(self, file_pattern, options, &block).process
       end
     end
@@ -262,7 +257,7 @@ module Synvert::Core
     # @param name [String] helper method name.
     # @param block [Block] helper method block.
     def helper_method(name, &block)
-      @helpers << {name: name, block: block}
+      @helpers << { name: name, block: block }
     end
 
     # Parse todo dsl, it sets todo of the rewriter.
@@ -270,7 +265,7 @@ module Synvert::Core
     #
     # @param todo_list [String] rewriter todo.
     # @return [String] rewriter todo.
-    def todo(todo=nil)
+    def todo(todo = nil)
       if todo
         @todo = todo
       else

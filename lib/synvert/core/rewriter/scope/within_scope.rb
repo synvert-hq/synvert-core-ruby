@@ -38,13 +38,9 @@ module Synvert::Core
       matching_nodes = []
       if @options[:recursive]
         matching_nodes << current_node if current_node.match? @rules
-        current_node.recursive_children do |child_node|
-          matching_nodes << child_node if child_node.match? @rules
-        end
+        current_node.recursive_children { |child_node| matching_nodes << child_node if child_node.match? @rules }
       else
-        current_node.each do |child_node|
-          matching_nodes << child_node if child_node.match? @rules
-        end
+        current_node.each { |child_node| matching_nodes << child_node if child_node.match? @rules }
       end
       matching_nodes
     end
