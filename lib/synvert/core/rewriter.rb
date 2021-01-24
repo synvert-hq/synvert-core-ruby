@@ -151,14 +151,14 @@ module Synvert::Core
     # Process the rewriter.
     # It will call the block.
     def process
-      self.instance_eval &@block
+      instance_eval &@block
     end
 
     # Process rewriter with sandbox mode.
     # It will call the block but doesn't change any file.
     def process_with_sandbox
       @sandbox = true
-      self.process
+      process
       @sandbox = false
     end
 
