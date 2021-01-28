@@ -9,11 +9,7 @@ module Synvert::Core
     #
     # @return [Integer] begin position.
     def begin_pos
-      if :begin == @node.type
-        @node.loc.expression.end_pos
-      else
-        @node.loc.expression.end_pos - @node.indent - END_LENGTH
-      end
+      :begin == @node.type ? @node.loc.expression.end_pos : @node.loc.expression.end_pos - @node.indent - END_LENGTH
     end
 
     # End position, always same to begin position.
@@ -23,7 +19,7 @@ module Synvert::Core
       begin_pos
     end
 
-  private
+    private
 
     # Indent of the node.
     #
