@@ -8,7 +8,7 @@ module Synvert::Core
   class Rewriter::Instance
     include Rewriter::Helper
 
-    class <<self
+    class << self
       # Cached file source.
       #
       # @param file_path [String] file path
@@ -46,7 +46,7 @@ module Synvert::Core
       # @param source [String] file source
       def write_file(file_path, source)
         source = Engine::ERB.decode(source) if file_path =~ /\.erb/
-        File.write file_path, source.gsub(/ +\n/, "\n")
+        File.write file_path, source.gsub(%r{ +\n}, "\n")
         @file_source[file_path] = nil
         @file_ast[file_path] = nil
       end
@@ -73,7 +73,7 @@ module Synvert::Core
     # @param options [Hash] instance options, it includes :sort_by.
     # @param block [Block] block code to find nodes, match conditions and rewrite code.
     # @return [Synvert::Core::Rewriter::Instance]
-    def initialize(rewriter, file_pattern, options={}, &block)
+    def initialize(rewriter, file_pattern, options = {}, &block)
       @rewriter = rewriter
       @actions = []
       @file_pattern = file_pattern
@@ -87,41 +87,43 @@ module Synvert::Core
     # and rewrite source code back to original file.
     def process
       file_pattern = File.join(Configuration.instance.get(:path), @file_pattern)
-      Dir.glob(file_pattern).each do |file_path|
-        unless Configuration.instance.get(:skip_files).include? file_path
-          begin
-            conflict_actions = []
-            source = +self.class.file_source(file_path)
-            ast = self.class.file_ast(file_path)
+      Dir
+        .glob(file_pattern)
+        .each do |file_path|
+          unless Configuration.instance.get(:skip_files).include? file_path
+            begin
+              conflict_actions = []
+              source = +self.class.file_source(file_path)
+              ast = self.class.file_ast(file_path)
 
-            @current_file = file_path
+              @current_file = file_path
 
-            self.process_with_node ast do
-              begin
-                instance_eval &@block
-              rescue NoMethodError
-                puts @current_node.debug_info
-                raise
+              self.process_with_node ast do
+                begin
+                  instance_eval &@block
+                rescue NoMethodError
+                  puts @current_node.debug_info
+                  raise
+                end
               end
-            end
 
-            if @actions.length > 0
-              @actions.sort_by! { |action| action.send(@options[:sort_by]) }
-              conflict_actions = get_conflict_actions
-              @actions.reverse_each do |action|
-                source[action.begin_pos...action.end_pos] = action.rewritten_code
-                source = remove_code_or_whole_line(source, action.line)
+              if @actions.length > 0
+                @actions.sort_by! { |action| action.send(@options[:sort_by]) }
+                conflict_actions = get_conflict_actions
+                @actions.reverse_each do |action|
+                  source[action.begin_pos...action.end_pos] = action.rewritten_code
+                  source = remove_code_or_whole_line(source, action.line)
+                end
+                @actions = []
+
+                self.class.write_file(file_path, source)
               end
-              @actions = []
-
-              self.class.write_file(file_path, source)
-            end
-          rescue Parser::SyntaxError
-            puts "[Warn] file #{file_path} was not parsed correctly."
-            # do nothing, iterate next file
-          end while !conflict_actions.empty?
+            rescue Parser::SyntaxError
+              puts "[Warn] file #{file_path} was not parsed correctly."
+              # do nothing, iterate next file
+            end while !conflict_actions.empty?
+          end
         end
-      end
     end
 
     # Gets current node, it allows to get current node in block code.
@@ -220,7 +222,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be appended.
     # @param options [Hash] action options.
-    def append(code, options={})
+    def append(code, options = {})
       @actions << Rewriter::AppendAction.new(self, code, options)
     end
 
@@ -229,7 +231,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be inserted.
     # @param options [Hash] action options.
-    def insert(code, options={})
+    def insert(code, options = {})
       @actions << Rewriter::InsertAction.new(self, code, options)
     end
 
@@ -238,7 +240,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be inserted.
     # @param options [Hash] action options.
-    def insert_after(node, options={})
+    def insert_after(node, options = {})
       @actions << Rewriter::InsertAfterAction.new(self, node, options)
     end
 
@@ -247,7 +249,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be replaced with.
     # @param options [Hash] action options.
-    def replace_with(code, options={})
+    def replace_with(code, options = {})
       @actions << Rewriter::ReplaceWithAction.new(self, code, options)
     end
 
@@ -269,7 +271,7 @@ module Synvert::Core
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
-  private
+    private
 
     # It changes source code from bottom to top, and it can change source code twice at the same time,
     # So if there is an overlap between two actions, it removes the conflict actions and operate them in the next loop.
@@ -301,7 +303,8 @@ module Synvert::Core
       source_arr = source.split("\n")
       if source_arr[line - 1] && source_arr[line - 1].strip.empty?
         source_arr.delete_at(line - 1)
-        if source_arr[line - 2] && source_arr[line - 2].strip.empty? && source_arr[line - 1] && source_arr[line - 1].strip.empty?
+        if source_arr[line - 2] && source_arr[line - 2].strip.empty? && source_arr[line - 1] &&
+             source_arr[line - 1].strip.empty?
           source_arr.delete_at(line - 1)
         end
         source_arr.join("\n") + (newline_at_end_of_line ? "\n" : '')
