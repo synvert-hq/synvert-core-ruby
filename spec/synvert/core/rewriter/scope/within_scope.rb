@@ -8,13 +8,13 @@ module Synvert::Core
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
-    let(:source) {"""
+    let(:source) {"
 describe Post do
   it 'gets post' do
     FactoryGirl.create :post
   end
 end
-    """
+    "
     }
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do

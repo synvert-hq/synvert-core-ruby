@@ -30,10 +30,10 @@ module Synvert::Core
         source = "  its(:size) { should == 1 }"
         send_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: send_node)
-        Rewriter::ReplaceWithAction.new(instance, """describe '#size' do
+        Rewriter::ReplaceWithAction.new(instance, "describe '#size' do
   subject { super().size }
   it { {{body}} }
-end""", autoindent: false)
+end", autoindent: false)
       }
 
       it 'gets begin_pos' do
@@ -45,10 +45,10 @@ end""", autoindent: false)
       end
 
       it 'gets rewritten_code' do
-        expect(subject.rewritten_code).to eq """describe '#size' do
+        expect(subject.rewritten_code).to eq "describe '#size' do
   subject { super().size }
   it { should == 1 }
-end"""
+end"
       end
     end
   end

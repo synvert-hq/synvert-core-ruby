@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::GemSpec do
-    let(:gemfile_lock_content) { """
+    let(:gemfile_lock_content) { "
 GEM
   remote: https://rubygems.org/
   specs:
@@ -14,8 +14,7 @@ GEM
       slop (~> 3.4, >= 3.4.5)
     rake (10.1.1)
     slop (3.4.7)
-      """
-    }
+    "}
 
     it 'returns true if version in Gemfile.lock is greater than definition' do
       expect(File).to receive(:exists?).with('./Gemfile.lock').and_return(true)
