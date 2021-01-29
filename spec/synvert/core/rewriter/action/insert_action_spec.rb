@@ -13,11 +13,11 @@ module Synvert::Core
       }
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "Synvert::Application.configure do".length
+        expect(subject.begin_pos).to eq 'Synvert::Application.configure do'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "Synvert::Application.configure do".length
+        expect(subject.end_pos).to eq 'Synvert::Application.configure do'.length
       end
 
       it 'gets rewritten_code' do
@@ -34,11 +34,11 @@ module Synvert::Core
       }
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "RSpec.configure do |config|".length
+        expect(subject.begin_pos).to eq 'RSpec.configure do |config|'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "RSpec.configure do |config|".length
+        expect(subject.end_pos).to eq 'RSpec.configure do |config|'.length
       end
 
       it 'gets rewritten_code' do
@@ -55,11 +55,11 @@ module Synvert::Core
       }
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "class User".length
+        expect(subject.begin_pos).to eq 'class User'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "class User".length
+        expect(subject.end_pos).to eq 'class User'.length
       end
 
       it 'gets rewritten_code' do
@@ -76,11 +76,11 @@ module Synvert::Core
       }
 
       it 'gets begin_pos' do
-        expect(subject.begin_pos).to eq "class User < ActionRecord::Base".length
+        expect(subject.begin_pos).to eq 'class User < ActionRecord::Base'.length
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "class User < ActionRecord::Base".length
+        expect(subject.end_pos).to eq 'class User < ActionRecord::Base'.length
       end
 
       it 'gets rewritten_code' do

@@ -287,12 +287,13 @@ module Parser::AST
     end
 
     def debug_info
-      "\n" + [
-        "file: #{self.loc.expression.source_buffer.name}",
-        "line: #{self.loc.expression.line}",
-        "source: #{self.to_source}",
-        "node: #{self.inspect}"
-      ].join("\n")
+      "\n" +
+        [
+          "file: #{self.loc.expression.source_buffer.name}",
+          "line: #{self.loc.expression.line}",
+          "source: #{self.to_source}",
+          "node: #{self.inspect}"
+        ].join("\n")
     end
 
     # Get the source code of current node.
@@ -336,21 +337,23 @@ module Parser::AST
     # @param rules [Hash] rules to match.
     # @return true if matches.
     def match?(rules)
-      flat_hash(rules).keys.all? do |multi_keys|
-        if multi_keys.last == :any
-          actual_values = actual_value(self, multi_keys[0...-1])
-          expected = expected_value(rules, multi_keys)
-          actual_values.any? { |actual| match_value?(actual, expected) }
-        elsif multi_keys.last == :not
-          actual = actual_value(self, multi_keys[0...-1])
-          expected = expected_value(rules, multi_keys)
-          !match_value?(actual, expected)
-        else
-          actual = actual_value(self, multi_keys)
-          expected = expected_value(rules, multi_keys)
-          match_value?(actual, expected)
+      flat_hash(rules)
+        .keys
+        .all? do |multi_keys|
+          if multi_keys.last == :any
+            actual_values = actual_value(self, multi_keys[0...-1])
+            expected = expected_value(rules, multi_keys)
+            actual_values.any? { |actual| match_value?(actual, expected) }
+          elsif multi_keys.last == :not
+            actual = actual_value(self, multi_keys[0...-1])
+            expected = expected_value(rules, multi_keys)
+            !match_value?(actual, expected)
+          else
+            actual = actual_value(self, multi_keys)
+            expected = expected_value(rules, multi_keys)
+            match_value?(actual, expected)
+          end
         end
-      end
     end
 
     # Get rewritten source code.
@@ -377,7 +380,7 @@ module Parser::AST
               if lines_count > 1 && lines_count == evaluated.size
                 new_code = []
                 lines.each_with_index { |line, index|
-                  new_code << (index == 0 ? line : line[evaluated.first.indent-2..-1])
+                  new_code << (index == 0 ? line : line[evaluated.first.indent - 2..-1])
                 }
                 new_code.join("\n")
               else
@@ -397,7 +400,7 @@ module Parser::AST
       end
     end
 
-  private
+    private
 
     # Compare actual value with expected value.
     #
@@ -415,8 +418,7 @@ module Parser::AST
         end
       when String
         if Parser::AST::Node === actual
-          actual.to_source == expected ||
-            (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
+          actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
             actual.to_source[1...-1] == expected
         else
           actual.to_s == expected
