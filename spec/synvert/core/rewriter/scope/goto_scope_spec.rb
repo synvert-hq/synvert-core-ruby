@@ -8,11 +8,10 @@ module Synvert::Core
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
-    let(:source) {'''
+    let(:source) {"
 Factory.define :user do |user|
 end
-    '''
-    }
+    "}
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do
       Rewriter::Instance.reset
