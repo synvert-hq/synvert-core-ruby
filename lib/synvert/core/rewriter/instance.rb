@@ -91,6 +91,7 @@ module Synvert::Core
         .glob(file_pattern)
         .each do |file_path|
           next if Configuration.instance.get(:skip_files).include? file_path
+
           begin
             conflict_actions = []
             source = +self.class.file_source(file_path)
