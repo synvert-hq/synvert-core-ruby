@@ -300,9 +300,7 @@ module Parser::AST
     #
     # @return [String] source code.
     def to_source
-      if loc.expression
-        loc.expression.source
-      end
+      loc.expression&.source
     end
 
     # Get the indent of current node.
