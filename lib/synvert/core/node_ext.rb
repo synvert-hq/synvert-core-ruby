@@ -338,11 +338,12 @@ module Parser::AST
       flat_hash(rules)
         .keys
         .all? do |multi_keys|
-          if multi_keys.last == :any
+          case multi_keys.last
+          when :any
             actual_values = actual_value(self, multi_keys[0...-1])
             expected = expected_value(rules, multi_keys)
             actual_values.any? { |actual| match_value?(actual, expected) }
-          elsif multi_keys.last == :not
+          when :not
             actual = actual_value(self, multi_keys[0...-1])
             expected = expected_value(rules, multi_keys)
             !match_value?(actual, expected)
