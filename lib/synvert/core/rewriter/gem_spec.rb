@@ -3,7 +3,7 @@
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::GemSpec
-    OPERATORS = {eq: '==', lt: '<', gt: '>', lte: '<=', gte: '>=', ne: '!='}
+    OPERATORS = { eq: '==', lt: '<', gt: '>', lte: '<=', gte: '>=', ne: '!=' }
 
     # Initialize a gem_spec.
     #
@@ -27,6 +27,7 @@ module Synvert::Core
     # @raise [Synvert::Core::GemfileLockNotFound] raise if Gemfile.lock does not exist.
     def match?
       gemfile_lock_path = File.join(Configuration.instance.get(:path), 'Gemfile.lock')
+
       # if Gemfile.lock does not exist, just ignore this check
       return true unless File.exist?(gemfile_lock_path)
 
