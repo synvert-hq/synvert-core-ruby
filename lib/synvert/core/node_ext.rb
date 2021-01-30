@@ -31,15 +31,15 @@ module Parser::AST
     # @return [Parser::AST::Node] name node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def name
-      case self.type
+      case type
       when :class, :module, :def, :arg, :blockarg, :restarg
-        self.children[0]
+        children[0]
       when :defs, :const
-        self.children[1]
+        children[1]
       when :mlhs
         self
       else
-        raise Synvert::Core::MethodNotSupported.new "name is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "name is not handled for #{debug_info}"
       end
     end
 
@@ -48,10 +48,10 @@ module Parser::AST
     # @return [Parser::AST::Node] parent_class node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def parent_class
-      if :class == self.type
-        self.children[1]
+      if :class == type
+        children[1]
       else
-        raise Synvert::Core::MethodNotSupported.new "parent_class is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "parent_class is not handled for #{debug_info}"
       end
     end
 
@@ -60,10 +60,10 @@ module Parser::AST
     # @return [Parser::AST::Node] parent const node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def parent_const
-      if :const == self.type
-        self.children[0]
+      if :const == type
+        children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "parent_const is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "parent_const is not handled for #{debug_info}"
       end
     end
 
@@ -72,10 +72,10 @@ module Parser::AST
     # @return [Parser::AST::Node] receiver node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def receiver
-      if :send == self.type
-        self.children[0]
+      if :send == type
+        children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "receiver is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "receiver is not handled for #{debug_info}"
       end
     end
 
@@ -84,13 +84,13 @@ module Parser::AST
     # @return [Parser::AST::Node] mesage node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def message
-      case self.type
+      case type
       when :super, :zsuper
         :super
       when :send
-        self.children[1]
+        children[1]
       else
-        raise Synvert::Core::MethodNotSupported.new "message is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "message is not handled for #{debug_info}"
       end
     end
 
@@ -99,17 +99,17 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] arguments node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def arguments
-      case self.type
+      case type
       when :def, :block
-        ArgumentsNode.new self.children[1]
+        ArgumentsNode.new children[1]
       when :defs
-        ArgumentsNode.new self.children[2]
+        ArgumentsNode.new children[2]
       when :send
-        self.children[2..-1]
+        children[2..-1]
       when :defined?
-        self.children
+        children
       else
-        raise Synvert::Core::MethodNotSupported.new "arguments is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "arguments is not handled for #{debug_info}"
       end
     end
 
@@ -118,10 +118,10 @@ module Parser::AST
     # @return [Parser::AST::Node] caller node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def caller
-      if :block == self.type
-        self.children[0]
+      if :block == type
+        children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "caller is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "caller is not handled for #{debug_info}"
       end
     end
 
@@ -130,19 +130,19 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] body node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def body
-      case self.type
+      case type
       when :begin
-        self.children
+        children
       when :def, :block
-        return [] if self.children[2].nil?
+        return [] if children[2].nil?
 
-        :begin == self.children[2].type ? self.children[2].body : self.children[2..-1]
+        :begin == children[2].type ? children[2].body : children[2..-1]
       when :defs
-        return [] if self.children[3].nil?
+        return [] if children[3].nil?
 
-        :begin == self.children[3].type ? self.children[3].body : self.children[3..-1]
+        :begin == children[3].type ? children[3].body : children[3..-1]
       else
-        raise Synvert::Core::MethodNotSupported.new "body is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "body is not handled for #{debug_info}"
       end
     end
 
@@ -151,10 +151,10 @@ module Parser::AST
     # @return [Parser::AST::Node] condition node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def condition
-      if :if == self.type
-        self.children[0]
+      if :if == type
+        children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "condition is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "condition is not handled for #{debug_info}"
       end
     end
 
@@ -163,10 +163,10 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] keys node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def keys
-      if :hash == self.type
-        self.children.map { |child| child.children[0] }
+      if :hash == type
+        children.map { |child| child.children[0] }
       else
-        raise Synvert::Core::MethodNotSupported.new "keys is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "keys is not handled for #{debug_info}"
       end
     end
 
@@ -175,10 +175,10 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] values node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def values
-      if :hash == self.type
-        self.children.map { |child| child.children[1] }
+      if :hash == type
+        children.map { |child| child.children[1] }
       else
-        raise Synvert::Core::MethodNotSupported.new "keys is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "keys is not handled for #{debug_info}"
       end
     end
 
@@ -188,10 +188,10 @@ module Parser::AST
     # @return [Boolean] true if specified key exists.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def has_key?(key)
-      if :hash == self.type
-        self.children.any? { |pair_node| pair_node.key.to_value == key }
+      if :hash == type
+        children.any? { |pair_node| pair_node.key.to_value == key }
       else
-        raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{debug_info}"
       end
     end
 
@@ -201,11 +201,11 @@ module Parser::AST
     # @return [Parser::AST::Node] value node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def hash_value(key)
-      if :hash == self.type
-        value_node = self.children.find { |pair_node| pair_node.key.to_value == key }
+      if :hash == type
+        value_node = children.find { |pair_node| pair_node.key.to_value == key }
         value_node ? value_node.value : nil
       else
-        raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "has_key? is not handled for #{debug_info}"
       end
     end
 
@@ -214,10 +214,10 @@ module Parser::AST
     # @return [Parser::AST::Node] key node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def key
-      if :pair == self.type
-        self.children.first
+      if :pair == type
+        children.first
       else
-        raise Synvert::Core::MethodNotSupported.new "key is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "key is not handled for #{debug_info}"
       end
     end
 
@@ -226,10 +226,10 @@ module Parser::AST
     # @return [Parser::AST::Node] value node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def value
-      if :pair == self.type
-        self.children.last
+      if :pair == type
+        children.last
       else
-        raise Synvert::Core::MethodNotSupported.new "value is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "value is not handled for #{debug_info}"
       end
     end
 
@@ -238,10 +238,10 @@ module Parser::AST
     # @return [Parser::AST::Node] variable nodes.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def left_value
-      if %i[masgn lvasgn ivasgn].include? self.type
-        self.children[0]
+      if %i[masgn lvasgn ivasgn].include? type
+        children[0]
       else
-        raise Synvert::Core::MethodNotSupported.new "left_value is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "left_value is not handled for #{debug_info}"
       end
     end
 
@@ -250,10 +250,10 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] variable nodes.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def right_value
-      if %i[masgn lvasgn ivasgn].include? self.type
-        self.children[1]
+      if %i[masgn lvasgn ivasgn].include? type
+        children[1]
       else
-        raise Synvert::Core::MethodNotSupported.new "right_value is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "right_value is not handled for #{debug_info}"
       end
     end
 
@@ -262,37 +262,37 @@ module Parser::AST
     # @return [Object] exact value.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def to_value
-      case self.type
+      case type
       when :int, :str, :sym
-        self.children.last
+        children.last
       when :true
         true
       when :false
         false
       when :array
-        self.children.map(&:to_value)
+        children.map(&:to_value)
       when :irange
-        (self.children.first.to_value..self.children.last.to_value)
+        (children.first.to_value..children.last.to_value)
       when :begin
-        self.children.first.to_value
+        children.first.to_value
       else
-        raise Synvert::Core::MethodNotSupported.new "to_value is not handled for #{self.debug_info}"
+        raise Synvert::Core::MethodNotSupported.new "to_value is not handled for #{debug_info}"
       end
     end
 
     def to_s
-      if :mlhs == self.type
-        "(#{self.children.map(&:name).join(', ')})"
+      if :mlhs == type
+        "(#{children.map(&:name).join(', ')})"
       end
     end
 
     def debug_info
       "\n" +
         [
-          "file: #{self.loc.expression.source_buffer.name}",
-          "line: #{self.loc.expression.line}",
-          "source: #{self.to_source}",
-          "node: #{self.inspect}"
+          "file: #{loc.expression.source_buffer.name}",
+          "line: #{loc.expression.line}",
+          "source: #{to_source}",
+          "node: #{inspect}"
         ].join("\n")
     end
 
@@ -300,8 +300,8 @@ module Parser::AST
     #
     # @return [String] source code.
     def to_source
-      if self.loc.expression
-        self.loc.expression.source
+      if loc.expression
+        loc.expression.source
       end
     end
 
@@ -309,14 +309,14 @@ module Parser::AST
     #
     # @return [Integer] indent.
     def indent
-      self.loc.expression.column
+      loc.expression.column
     end
 
     # Get the line of current node.
     #
     # @return [Integer] line.
     def line
-      self.loc.expression.line
+      loc.expression.line
     end
 
     # Recursively iterate all child nodes of current node.
@@ -324,7 +324,7 @@ module Parser::AST
     # @yield [child] Gives a child node.
     # @yieldparam child [Parser::AST::Node] child node
     def recursive_children
-      self.children.each do |child|
+      children.each do |child|
         if Parser::AST::Node === child
           yield child
           child.recursive_children { |c| yield c }
@@ -366,8 +366,8 @@ module Parser::AST
     def rewritten_source(code)
       code.gsub(/{{(.*?)}}/m) do
         old_code = $1
-        if self.respond_to? old_code.split(/\.|\[/).first
-          evaluated = self.instance_eval old_code
+        if respond_to? old_code.split(/\.|\[/).first
+          evaluated = instance_eval old_code
           case evaluated
           when Parser::AST::Node
             evaluated.loc.expression.source
