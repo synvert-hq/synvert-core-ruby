@@ -190,7 +190,7 @@ module Synvert::Core
     it 'parses helper_method' do
       rewriter =
         Rewriter.new 'group', 'name' do
-          helper_method 'dynamic_helper' do |arg1, arg2|
+          helper_method 'dynamic_helper' do |_arg1, _arg2|
             'dynamic result'
           end
         end
