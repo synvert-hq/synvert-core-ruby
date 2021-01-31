@@ -65,7 +65,7 @@ module Synvert::Core
     #
     #   strip_brackets("(1..100)") #=> "1..100"
     def strip_brackets(code)
-      code.sub(/^\((.*)\)$/) { $1 }.sub(/^\[(.*)\]$/) { $1 }.sub(/^{(.*)}$/) { $1 }
+      code.sub(/^\((.*)\)$/) { Regexp.last_match(1) }.sub(/^\[(.*)\]$/) { Regexp.last_match(1) }.sub(/^{(.*)}$/) { Regexp.last_match(1) }
     end
   end
 end

@@ -31,21 +31,21 @@ module Synvert::Core
         private
 
         def decode_ruby_stmt(source)
-          source.gsub(/#{ERUBY_STMT_SPLITTER}(.+?)#{ERUBY_STMT_SPLITTER}/m) { "<%#{$1}%>" }
+          source.gsub(/#{ERUBY_STMT_SPLITTER}(.+?)#{ERUBY_STMT_SPLITTER}/m) { "<%#{Regexp.last_match(1)}%>" }
         end
 
         def decode_ruby_output(source)
-          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { "<%=#{$1}%>" }.gsub(
+          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m) { "<%=#{Regexp.last_match(1)}%>" }.gsub(
             /@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m
           ) { |m| "<%=#{m.sub('@output_buffer.append= ', '').sub(ERUBY_EXPR_SPLITTER, '')}%>" }
         end
 
         def decode_html_output(source)
-          source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text($1) }.gsub(
+          source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text(Regexp.last_match(1)) }.gsub(
             /@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/m
-          ) { reverse_escape_text($1) }.gsub(
+          ) { reverse_escape_text(Regexp.last_match(1)) }.gsub(
             /@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/m
-          ) { reverse_escape_text($1) }
+          ) { reverse_escape_text(Regexp.last_match(1)) }
         end
 
         def remove_erubis_buf(source)
@@ -119,9 +119,9 @@ module Synvert::Core
           index =
             case code
             when /\A(\s*)\r?\n/
-              $1.length
+              Regexp.last_match(1).length
             when /\A(\s+)/
-              $1.end_with?(' ') ? $1.length - 1 : $1.length
+              Regexp.last_match(1).end_with?(' ') ? Regexp.last_match(1).length - 1 : Regexp.last_match(1).length
             else
               0
             end
