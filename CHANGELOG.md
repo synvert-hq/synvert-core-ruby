@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.19.0 (2021-02-07)
+
+* Simplify `Configuration`
+
 ## 0.18.0 (2021-02-07)
 
 * Add `Rewriter.execute`
