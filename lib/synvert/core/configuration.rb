@@ -1,26 +1,18 @@
 # frozen_string_literal: true
 
-require 'singleton'
-
 module Synvert::Core
   # Synvert global configuration.
-  class Configuration < Hash
-    include Singleton
+  class Configuration
+    class << self
+      attr_writer :path, :skip_files
 
-    # Set the configuration.
-    #
-    # @param key [String] configuration key.
-    # @param value [Object] configuration value.
-    def set(key, value)
-      self[key] = value
-    end
+      def path
+        @path || '.'
+      end
 
-    # Get the configuration.
-    #
-    # @param key [String] configuration key.
-    # @return [Object] configuration value.
-    def get(key)
-      self[key]
+      def skip_files
+        @skip_files || []
+      end
     end
   end
 end

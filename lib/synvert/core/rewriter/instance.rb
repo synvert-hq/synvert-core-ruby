@@ -86,11 +86,11 @@ module Synvert::Core
     # It finds all files, for each file, it executes the block code, gets all rewrite actions,
     # and rewrite source code back to original file.
     def process
-      file_pattern = File.join(Configuration.instance.get(:path), @file_pattern)
+      file_pattern = File.join(Configuration.path, @file_pattern)
       Dir
         .glob(file_pattern)
         .each do |file_path|
-          next if Configuration.instance.get(:skip_files).include? file_path
+          next if Configuration.skip_files.include? file_path
 
           begin
             conflict_actions = []
