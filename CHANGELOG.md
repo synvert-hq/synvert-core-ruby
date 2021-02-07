@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.18.0 (2021-02-07)
+
+* Add `Rewriter.execute`
+
 ## 0.17.0 (2021-01-29)
 
 * Ignore `gem_spec` check if `Gemfile.lock` does not eixst
