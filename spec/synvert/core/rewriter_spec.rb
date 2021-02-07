@@ -4,6 +4,12 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter do
+    it '.execute' do
+      run = false
+      Rewriter.execute { run = true }
+      expect(run).to be_truthy
+    end
+
     it 'parses description' do
       rewriter =
         Rewriter.new 'group', 'name' do
@@ -14,7 +20,7 @@ module Synvert::Core
     end
 
     it 'parses if_ruby' do
-      # stub_const("RUBY_VERSION", '2.0.0')
+      expect(Rewriter::RubyVersion).to receive(:new).with('2.0.0')
       rewriter =
         Rewriter.new 'group', 'name' do
           if_ruby '2.0.0'
