@@ -80,13 +80,18 @@ module Synvert::Core
       #
       # @param group [String] the rewriter group.
       # @param name [String] the rewriter name.
+      # @param sandbox [Boolean] if run in sandbox mode, default is false.
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(group, name)
+      def call(group, name, sandbox = false)
         group, name = group.to_s, name.to_s
         if exist? group, name
           rewriter = rewriters[group][name]
-          rewriter.process
+          if sandbox
+            rewriter.process_with_sandbox
+          else
+            rewriter.process
+          end
           rewriter
         else
           raise RewriterNotFound, "Rewriter #{group}/#{name} not found"
@@ -165,8 +170,11 @@ module Synvert::Core
     # It will call the block but doesn't change any file.
     def process_with_sandbox
       @sandbox = true
-      process
-      @sandbox = false
+      begin
+        process
+      ensure
+        @sandbox = false
+      end
     end
 
     # Add a warning.
@@ -260,7 +268,7 @@ module Synvert::Core
     # @param group [String] group of another rewriter.
     # @param name [String] name of another rewriter.
     def add_snippet(group, name)
-      @sub_snippets << self.class.call(group.to_s, name.to_s)
+      @sub_snippets << self.class.call(group.to_s, name.to_s, @sandbox)
     end
 
     # Parse helper_method dsl, it defines helper method for [Synvert::Core::Rewriter::Instance].
