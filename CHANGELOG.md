@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.20.0 (2021-02-15)
+
+* Call snippet in sandbox mode
+
 ## 0.19.0 (2021-02-07)
 
 * Simplify `Configuration`
