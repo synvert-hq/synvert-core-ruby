@@ -14,9 +14,7 @@ module Synvert::Core
     #
     # @return [Boolean] true if matches, otherwise false.
     def match?
-      # Gem::Version initialize will strip RUBY_VERSION directly in ruby 1.9,
-      # which is solved from ruby 2.0.0, which calls dup internally.
-      Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new(@version)
+      Gem::Version.new(RUBY_VERSION) >= Gem::Version.new(@version)
     end
   end
 end
