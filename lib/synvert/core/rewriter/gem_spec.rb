@@ -12,7 +12,7 @@ module Synvert::Core
     #   comparator key can be eq, lt, gt, lte, gte or ne.
     def initialize(name, comparator)
       @name = name
-      if Hash === comparator
+      if comparator.is_a?(Hash)
         @operator = comparator.keys.first
         @version = Gem::Version.new comparator.values.first
       else

@@ -323,7 +323,7 @@ module Parser::AST
     # @yieldparam child [Parser::AST::Node] child node
     def recursive_children(&block)
       children.each do |child|
-        if Parser::AST::Node === child
+        if child.is_a?(Parser::AST::Node)
           yield child
           child.recursive_children(&block)
         end
@@ -410,20 +410,20 @@ module Parser::AST
     def match_value?(actual, expected)
       case expected
       when Symbol
-        if Parser::AST::Node === actual
+        if actual.is_a?(Parser::AST::Node)
           actual.to_source == ":#{expected}"
         else
           actual.to_sym == expected
         end
       when String
-        if Parser::AST::Node === actual
+        if actual.is_a?(Parser::AST::Node)
           actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
             actual.to_source[1...-1] == expected
         else
           actual.to_s == expected
         end
       when Regexp
-        if Parser::AST::Node === actual
+        if actual.is_a?(Parser::AST::Node)
           actual.to_source =~ Regexp.new(expected.to_s, Regexp::MULTILINE)
         else
           actual.to_s =~ Regexp.new(expected.to_s, Regexp::MULTILINE)
@@ -435,7 +435,7 @@ module Parser::AST
       when NilClass
         actual.nil?
       when Numeric
-        if Parser::AST::Node === actual
+        if actual.is_a?(Parser::AST::Node)
           actual.children[0] == expected
         else
           actual == expected
