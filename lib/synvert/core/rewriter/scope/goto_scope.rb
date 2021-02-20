@@ -21,7 +21,7 @@ module Synvert::Core
 
       child_node = current_node.send @child_node_name
       @instance.process_with_other_node child_node do
-        @instance.instance_eval &@block
+        @instance.instance_eval(&@block)
       end
     end
   end

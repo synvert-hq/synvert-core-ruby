@@ -101,7 +101,7 @@ module Synvert::Core
 
             process_with_node ast do
               begin
-                instance_eval &@block
+                instance_eval(&@block)
               rescue NoMethodError
                 puts @current_node.debug_info
                 raise

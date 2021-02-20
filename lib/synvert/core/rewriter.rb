@@ -163,7 +163,7 @@ module Synvert::Core
     # Process the rewriter.
     # It will call the block.
     def process
-      instance_eval &@block
+      instance_eval(&@block)
     end
 
     # Process rewriter with sandbox mode.

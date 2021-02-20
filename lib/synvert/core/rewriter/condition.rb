@@ -17,7 +17,7 @@ module Synvert::Core
 
     # If condition matches, run the block code.
     def process
-      @instance.instance_eval &@block if match?
+      @instance.instance_eval(&@block) if match?
     end
   end
 end
