@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.20.1 (2021-02-20)
+
+* Set env['BUNDLE_GEMFILE'] before parsing Gemfile.lock
+* Add Rewriter::RubyVersion test
+
 ## 0.20.0 (2021-02-15)
 
 * Call snippet in sandbox mode
