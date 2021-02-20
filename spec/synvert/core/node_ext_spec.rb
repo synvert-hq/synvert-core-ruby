@@ -295,7 +295,7 @@ describe Parser::AST::Node do
 
     it 'get for range' do
       node = parse('(1..10)')
-      expect(node.to_value).to eq (1..10)
+      expect(node.to_value).to eq(1..10)
     end
 
     it 'gets for array' do
