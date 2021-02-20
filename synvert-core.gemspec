@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Synvert::Core::VERSION
   spec.authors       = ["Richard Huang"]
   spec.email         = ["flyerhzm@gmail.com"]
-  spec.summary       = %q{convert ruby code to better syntax.}
-  spec.description   = %q{convert ruby code to better syntax automatically.}
+  spec.summary       = 'convert ruby code to better syntax.'
+  spec.description   = 'convert ruby code to better syntax automatically.'
   spec.homepage      = "https://github.com/xinminlabs/synvert-core"
   spec.license       = "MIT"
 
