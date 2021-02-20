@@ -321,11 +321,11 @@ module Parser::AST
     #
     # @yield [child] Gives a child node.
     # @yieldparam child [Parser::AST::Node] child node
-    def recursive_children
+    def recursive_children(&block)
       children.each do |child|
         if Parser::AST::Node === child
           yield child
-          child.recursive_children { |c| yield c }
+          child.recursive_children(&block)
         end
       end
     end
