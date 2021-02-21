@@ -35,9 +35,11 @@ module Synvert::Core
         end
 
         def decode_ruby_output(source)
-          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/mo) { "<%=#{Regexp.last_match(1)}%>" }.gsub(
-            /@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/mo
-          ) { |m| "<%=#{m.sub('@output_buffer.append= ', '').sub(ERUBY_EXPR_SPLITTER, '')}%>" }
+          source.gsub(/@output_buffer.append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/mo) {
+            "<%=#{Regexp.last_match(1)}%>"
+          }.gsub(/@output_buffer.append= (.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/mo) { |m|
+            "<%=#{m.sub('@output_buffer.append= ', '').sub(ERUBY_EXPR_SPLITTER, '')}%>"
+          }
         end
 
         def decode_html_output(source)
