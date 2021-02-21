@@ -97,7 +97,7 @@ module Synvert::Core
 
       def add_expr_literal(src, code)
         flush_newline_if_pending(src)
-        if code =~ BLOCK_EXPR
+        if BLOCK_EXPR.match?(code)
           src << '@output_buffer.append= ' << code << ERUBY_EXPR_SPLITTER
         else
           src << '@output_buffer.append=(' << code << ');' << ERUBY_EXPR_SPLITTER
@@ -106,7 +106,7 @@ module Synvert::Core
 
       def add_expr_escaped(src, code)
         flush_newline_if_pending(src)
-        if code =~ BLOCK_EXPR
+        if BLOCK_EXPR.match?(code)
           src << '@output_buffer.safe_append= ' << code << ERUBY_EXPR_SPLITTER
         else
           src << '@output_buffer.safe_append=(' << code << ');' << ERUBY_EXPR_SPLITTER
