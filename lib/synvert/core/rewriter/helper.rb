@@ -69,5 +69,19 @@ module Synvert::Core
         Regexp.last_match(1)
       }
     end
+
+    # Reject some keys from hash node.
+    #
+    # @param hash_node [Parser::AST::Node]
+    # @param keys [Array] keys should be rejected from the hash.
+    # @return [String] source of of the hash node after rejecting some keys.
+    #
+    # @example
+    #
+    #   hash_node = Parser::CurrentRuby.parse("{ key1: 'value1', key2: 'value2' }")
+    #   reject_keys_from_hash(hash_node, :key1) => "key2: 'value2'"
+    def reject_keys_from_hash(hash_node, *keys)
+      hash_node.children.reject { |pair_node| keys.include?(pair_node.key.to_value) }.map(&:to_source).join(', ')
+    end
   end
 end

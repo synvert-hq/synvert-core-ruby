@@ -80,5 +80,17 @@ module Synvert::Core
         expect(dummy_instance.strip_brackets('(123]')).to eq '(123]'
       end
     end
+
+    describe '#reject_keys_from_hash' do
+      it 'rejects single key' do
+        hash_node = Parser::CurrentRuby.parse("{ key1: 'value1', key2: 'value2' }")
+        expect(dummy_instance.reject_keys_from_hash(hash_node, :key1)).to eq "key2: 'value2'"
+      end
+
+      it 'rejects multi keys' do
+        hash_node = Parser::CurrentRuby.parse("{ key1: 'value1', key2: 'value2', key3: 'value3', key4: 'value4' }")
+        expect(dummy_instance.reject_keys_from_hash(hash_node, :key1, :key3)).to eq "key2: 'value2', key4: 'value4'"
+      end
+    end
   end
 end
