@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## 0.20.1 (2021-02-20)
+## 0.21.0 (2021-02-25)
 
-* Set env['BUNDLE_GEMFILE'] before parsing Gemfile.lock
-* Add Rewriter::RubyVersion test
+* Set `env['BUNDLE_GEMFILE']` before parsing `Gemfile.lock`
+* Add `Rewriter::RubyVersion` test
+* Add `reject_keys_from_hash` helper method
 
 ## 0.20.0 (2021-02-15)
 
