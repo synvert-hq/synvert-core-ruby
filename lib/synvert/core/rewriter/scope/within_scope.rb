@@ -42,7 +42,13 @@ module Synvert::Core
           matching_nodes << child_node if child_node.match? @rules
         end
       elsif current_node.is_a?(Parser::AST::Node)
-        matching_nodes << current_node if current_node.match? @rules
+        if current_node.type == :begin
+          current_node.children.each do |child_node|
+            matching_nodes << child_node if child_node.match? @rules
+          end
+        else
+          matching_nodes << current_node if current_node.match? @rules
+        end
       else
         current_node.each do |child_node|
           matching_nodes << child_node if child_node.match? @rules
