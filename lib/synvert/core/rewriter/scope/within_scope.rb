@@ -41,6 +41,8 @@ module Synvert::Core
         current_node.recursive_children do |child_node|
           matching_nodes << child_node if child_node.match? @rules
         end
+      elsif current_node.is_a?(Parser::AST::Node)
+        matching_nodes << current_node if current_node.match? @rules
       else
         current_node.each do |child_node|
           matching_nodes << child_node if child_node.match? @rules
