@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.21.1 (2021-02-26)
+
+* Fix `find_matching_nodes` if `current_node` is a `Parser::AST::Node`
+
 ## 0.21.0 (2021-02-25)
 
 * Set `env['BUNDLE_GEMFILE']` before parsing `Gemfile.lock`
