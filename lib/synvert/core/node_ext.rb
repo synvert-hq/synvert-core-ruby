@@ -335,24 +335,22 @@ module Parser::AST
     # @param rules [Hash] rules to match.
     # @return true if matches.
     def match?(rules)
-      flat_hash(rules)
-        .keys
-        .all? do |multi_keys|
-          case multi_keys.last
-          when :any
-            actual_values = actual_value(self, multi_keys[0...-1])
-            expected = expected_value(rules, multi_keys)
-            actual_values.any? { |actual| match_value?(actual, expected) }
-          when :not
-            actual = actual_value(self, multi_keys[0...-1])
-            expected = expected_value(rules, multi_keys)
-            !match_value?(actual, expected)
-          else
-            actual = actual_value(self, multi_keys)
-            expected = expected_value(rules, multi_keys)
-            match_value?(actual, expected)
-          end
+      flat_hash(rules).keys.all? do |multi_keys|
+        case multi_keys.last
+        when :any
+          actual_values = actual_value(self, multi_keys[0...-1])
+          expected = expected_value(rules, multi_keys)
+          actual_values.any? { |actual| match_value?(actual, expected) }
+        when :not
+          actual = actual_value(self, multi_keys[0...-1])
+          expected = expected_value(rules, multi_keys)
+          !match_value?(actual, expected)
+        else
+          actual = actual_value(self, multi_keys)
+          expected = expected_value(rules, multi_keys)
+          match_value?(actual, expected)
         end
+      end
     end
 
     # Get rewritten source code.
