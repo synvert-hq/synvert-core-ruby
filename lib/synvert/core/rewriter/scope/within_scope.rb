@@ -48,7 +48,7 @@ module Synvert::Core
           end
         elsif current_node.match? @rules
           matching_nodes << current_node
-end
+        end
       else
         current_node.each do |child_node|
           matching_nodes << child_node if child_node.match? @rules
