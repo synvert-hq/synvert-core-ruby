@@ -145,7 +145,9 @@ module Synvert::Core
     #   @return [Array] helper methods.
     # @!attribute [r] warnings
     #   @return [Array<Synvert::Core::Rewriter::Warning>] warning messages.
-    attr_reader :group, :name, :sub_snippets, :helpers, :warnings
+    # @!attribute [r] affected_files
+    #   @return [Set] affected fileds
+    attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files
 
     # Initialize a rewriter.
     # When a rewriter is initialized, it is also registered.
@@ -161,6 +163,7 @@ module Synvert::Core
       @helpers = []
       @sub_snippets = []
       @warnings = []
+      @affected_files = Set.new
       self.class.register(@group, @name, self)
     end
 
@@ -186,6 +189,13 @@ module Synvert::Core
     # @param warning [Synvert::Core::Rewriter::Warning]
     def add_warning(warning)
       @warnings << warning
+    end
+
+    # Add an affected file.
+    #
+    # @param file_path [String]
+    def add_affected_file(file_path)
+      @affected_files.add(file_path)
     end
 
     #######

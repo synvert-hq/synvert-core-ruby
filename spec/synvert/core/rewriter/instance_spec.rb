@@ -243,6 +243,7 @@ end
         expect(File).to receive(:read).with('spec/models/post_spec.rb').and_return(output)
         instance.process
         instance.process
+        expect(rewriter.affected_files).to be_include('spec/models/post_spec.rb')
       end
     end
 

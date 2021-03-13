@@ -115,7 +115,7 @@ module Synvert::Core
             end
             @actions = []
 
-            self.class.write_file(file_path, source)
+            update_file(file_path, source)
           end
         rescue Parser::SyntaxError
           puts "[Warn] file #{file_path} was not parsed correctly."
@@ -309,6 +309,15 @@ module Synvert::Core
       else
         source
       end
+    end
+
+    # It updates a file with new source code.
+    #
+    # @param file_path [String] the file path
+    # @param source [String] the new source code
+    def update_file(file_path, source)
+      self.class.write_file(file_path, source)
+      @rewriter.add_affected_file(file_path)
     end
   end
 end
