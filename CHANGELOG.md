@@ -1,12 +1,9 @@
 # CHANGELOG
 
-## 0.21.2 (2021-02-26)
+## 0.22.0 (2021-03-13)
 
-* Fix `find_matching_nodes` if `current_node` is a `:begin` node
-
-## 0.21.1 (2021-02-26)
-
-* Fix `find_matching_nodes` if `current_node` is a `Parser::AST::Node`
+* Track `affected_files` for rewriter
+* Fix `find_matching_nodes` for `current_node`
 
 ## 0.21.0 (2021-02-25)
 
