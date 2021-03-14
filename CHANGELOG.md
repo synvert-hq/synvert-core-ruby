@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.23.0 (2021-03-14)
+
+* Accept a node as goto_node argument
+
 ## 0.22.0 (2021-03-13)
 
 * Track `affected_files` for rewriter
