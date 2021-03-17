@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.24.0 (2021-03-17)
+
+* Rename helper method `has_key?` to `key?`
+
 ## 0.23.0 (2021-03-14)
 
 * Accept a node as goto_node argument
