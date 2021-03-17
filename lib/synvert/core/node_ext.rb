@@ -187,11 +187,11 @@ module Parser::AST
     # @param [Object] key value.
     # @return [Boolean] true if specified key exists.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def has_key?(key)
+    def key?(key)
       if :hash == type
         children.any? { |pair_node| pair_node.key.to_value == key }
       else
-        raise Synvert::Core::MethodNotSupported, "has_key? is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "key? is not handled for #{debug_info}"
       end
     end
 
@@ -205,7 +205,7 @@ module Parser::AST
         value_node = children.find { |pair_node| pair_node.key.to_value == key }
         value_node ? value_node.value : nil
       else
-        raise Synvert::Core::MethodNotSupported, "has_key? is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "has_value is not handled for #{debug_info}"
       end
     end
 

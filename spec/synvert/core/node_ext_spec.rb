@@ -186,15 +186,15 @@ describe Parser::AST::Node do
     end
   end
 
-  describe '#has_key?' do
+  describe '#key?' do
     it 'gets true if key exists' do
       node = parse('{:foo => :bar}')
-      expect(node.has_key?(:foo)).to be_truthy
+      expect(node.key?(:foo)).to be_truthy
     end
 
     it 'gets false if key does not exist' do
       node = parse('{:foo => :bar}')
-      expect(node.has_key?('foo')).to be_falsey
+      expect(node.key?('foo')).to be_falsey
     end
   end
 
