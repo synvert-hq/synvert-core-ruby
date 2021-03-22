@@ -205,7 +205,7 @@ module Parser::AST
         value_node = children.find { |pair_node| pair_node.key.to_value == key }
         value_node ? value_node.value : nil
       else
-        raise Synvert::Core::MethodNotSupported, "has_value is not handled for #{debug_info}"
+        raise Synvert::Core::MethodNotSupported, "hash_value is not handled for #{debug_info}"
       end
     end
 
