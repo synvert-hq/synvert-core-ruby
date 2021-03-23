@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.25.0 (2021-03-23)
+
+* Use `Gem::Dependency#match?` to check gem version
+
 ## 0.24.0 (2021-03-17)
 
 * Rename helper method `has_key?` to `key?`
