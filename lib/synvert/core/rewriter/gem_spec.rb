@@ -3,22 +3,13 @@
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::GemSpec
-    OPERATORS = { eq: '==', lt: '<', gt: '>', lte: '<=', gte: '>=', ne: '!=' }.freeze
-
     # Initialize a gem_spec.
     #
     # @param name [String] gem name
-    # @param comparator [Hash] comparator to gem version, e.g. {eq: '2.0.0'},
-    #   comparator key can be eq, lt, gt, lte, gte or ne.
-    def initialize(name, comparator)
+    # @param version [String] gem version, e.g. '~> 2.0.0',
+    def initialize(name, version)
       @name = name
-      if comparator.is_a?(Hash)
-        @operator = comparator.keys.first
-        @version = Gem::Version.new comparator.values.first
-      else
-        @operator = :eq
-        @version = Gem::Version.new comparator
-      end
+      @version = version
     end
 
     # Check if the specified gem version in Gemfile.lock matches gem_spec comparator.
@@ -33,11 +24,7 @@ module Synvert::Core
 
       ENV['BUNDLE_GEMFILE'] = Configuration.path # make sure bundler reads Gemfile.lock in the correct path
       parser = Bundler::LockfileParser.new(File.read(gemfile_lock_path))
-      if spec = parser.specs.find { |spec| spec.name == @name }
-        Gem::Version.new(spec.version).send(OPERATORS[@operator], @version)
-      else
-        false
-      end
+      parser.specs.any? { |spec| Gem::Dependency.new(@name, @version).match?(spec) }
     end
   end
 end
