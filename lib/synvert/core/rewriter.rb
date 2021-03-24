@@ -7,7 +7,7 @@ module Synvert::Core
   # which define the behavior what files and what codes to detect and rewrite to what code.
   #
   #   Synvert::Rewriter.new 'factory_girl_short_syntax', 'use FactoryGirl short syntax' do
-  #     if_gem 'factory_girl', {gte: '2.0.0'}
+  #     if_gem 'factory_girl', '>= 2.0.0'
   #
   #     within_files 'spec/**/*.rb' do
   #       with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
@@ -147,7 +147,11 @@ module Synvert::Core
     #   @return [Array<Synvert::Core::Rewriter::Warning>] warning messages.
     # @!attribute [r] affected_files
     #   @return [Set] affected fileds
-    attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files
+    # @!attribute [r] ruby_version
+    #   @return [Rewriter::RubyVersion] the ruby version
+    # @!attribute [r] gem_spec
+    #   @return [Rewriter::GemSpec] the gem spec
+    attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files, :ruby_version, :gem_spec
 
     # Initialize a rewriter.
     # When a rewriter is initialized, it is also registered.
@@ -225,10 +229,9 @@ module Synvert::Core
     # Parse if_gem dsl, it compares version of the specified gem.
     #
     # @param name [String] gem name.
-    # @param comparator [Hash] equal, less than or greater than specified version, e.g. {gte: '2.0.0'},
-    #   key can be eq, lt, gt, lte, gte or ne.
-    def if_gem(name, comparator)
-      @gem_spec = Rewriter::GemSpec.new(name, comparator)
+    # @param version [String] equal, less than or greater than specified version, e.g. '>= 2.0.0',
+    def if_gem(name, version)
+      @gem_spec = Rewriter::GemSpec.new(name, version)
     end
 
     # Parse within_files dsl, it finds specified files.

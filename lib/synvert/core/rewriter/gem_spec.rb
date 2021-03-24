@@ -3,6 +3,8 @@
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::GemSpec
+    attr_reader :name, :version
+
     # Initialize a gem_spec.
     #
     # @param name [String] gem name

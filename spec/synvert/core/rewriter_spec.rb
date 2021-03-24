@@ -29,10 +29,10 @@ module Synvert::Core
     end
 
     it 'parses if_gem' do
-      expect(Rewriter::GemSpec).to receive(:new).with('synvert', { gte: '1.0.0' })
+      expect(Rewriter::GemSpec).to receive(:new).with('synvert', '>= 1.0.0')
       rewriter =
         Rewriter.new 'group', 'name' do
-          if_gem 'synvert', { gte: '1.0.0' }
+          if_gem 'synvert', '>= 1.0.0'
         end
       rewriter.process
     end
