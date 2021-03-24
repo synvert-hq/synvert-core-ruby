@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.25.1 (2021-03-24)
+
+* attr_reader ruby_version and gem_spec
+
 ## 0.25.0 (2021-03-23)
 
 * Use `Gem::Dependency#match?` to check gem version
