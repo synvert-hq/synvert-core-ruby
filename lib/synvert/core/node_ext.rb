@@ -317,6 +317,28 @@ module Parser::AST
       loc.expression.line
     end
 
+    # Get the source range of child node.
+    #
+    # @param [String] name of child node.
+    # @return [Parser::Source::Range] source range of child node.
+    def child_node_range(child_name)
+      case type
+      when :send
+        case child_name
+        when :receiver
+          receiver&.loc&.expression
+        when :dot
+          loc.dot
+        when :message
+          loc.selector
+        when :arguments
+          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
+        end
+      else
+        raise Synvert::Core::MethodNotSupported, "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
+      end
+    end
+
     # Recursively iterate all child nodes of current node.
     #
     # @yield [child] Gives a child node.

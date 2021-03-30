@@ -394,6 +394,54 @@ describe Parser::AST::Node do
     end
   end
 
+  describe '#child_node_range' do
+    context 'send node' do
+      it 'checks receiver' do
+        node = parse('foo.bar(test)')
+        range = node.child_node_range(:receiver)
+        expect(range.to_range).to eq(0...3)
+
+        node = parse('foobar(test)')
+        range = node.child_node_range(:receiver)
+        expect(range).to be_nil
+      end
+
+      it 'checks dot' do
+        node = parse('foo.bar(test)')
+        range = node.child_node_range(:dot)
+        expect(range.to_range).to eq(3...4)
+
+        node = parse('foobar(test)')
+        range = node.child_node_range(:dot)
+        expect(range).to be_nil
+      end
+
+      it 'checks message' do
+        node = parse('foo.bar(test)')
+        range = node.child_node_range(:message)
+        expect(range.to_range).to eq(4...7)
+
+        node = parse('foobar(test)')
+        range = node.child_node_range(:message)
+        expect(range.to_range).to eq(0...6)
+      end
+
+      it 'checks arguments' do
+        node = parse('foo.bar(test)')
+        range = node.child_node_range(:arguments)
+        expect(range.to_range).to eq(8...12)
+
+        node = parse('foobar(test)')
+        range = node.child_node_range(:arguments)
+        expect(range.to_range).to eq(7...11)
+
+        node = parse('foo.bar')
+        range = node.child_node_range(:arguments)
+        expect(range).to be_nil
+      end
+    end
+  end
+
   describe '#rewritten_source' do
     let(:instance) {
       rewriter = Synvert::Rewriter.new('foo', 'bar')

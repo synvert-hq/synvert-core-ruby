@@ -117,6 +117,11 @@ module Synvert::Core
       instance.replace_with 'create {{arguments}}'
     end
 
+    it 'parses replace with' do
+      expect(Rewriter::ReplaceAction).to receive(:new).with(instance, :message, with: 'test')
+      instance.replace :message, with: 'test'
+    end
+
     it 'parses remove' do
       expect(Rewriter::RemoveAction).to receive(:new).with(instance)
       instance.remove
