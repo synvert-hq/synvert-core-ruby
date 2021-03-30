@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.25.1 (2021-03-24)
+## 0.26.0 (2021-03-30)
 
 * attr_reader ruby_version and gem_spec
+* Add `replace` action
 
 ## 0.25.0 (2021-03-23)
 
