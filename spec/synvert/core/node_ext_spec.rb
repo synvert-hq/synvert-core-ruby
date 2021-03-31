@@ -413,6 +413,20 @@ describe Parser::AST::Node do
       end
     end
 
+    context 'def node' do
+      it 'checks name' do
+        node = parse('def foo(bar); end')
+        range = node.child_node_range(:name)
+        expect(range.to_range).to eq(4...7)
+      end
+
+      it 'checks arguments' do
+        node = parse('def foo(bar); end')
+        range = node.child_node_range(:arguments)
+        expect(range.to_range).to eq(8...11)
+      end
+    end
+
     context 'defs node' do
       it 'checks self' do
         node = parse('def self.foo(bar); end')
