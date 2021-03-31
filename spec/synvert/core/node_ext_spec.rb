@@ -406,16 +406,6 @@ describe Parser::AST::Node do
         expect(range).to be_nil
       end
 
-      it 'checks dot' do
-        node = parse('foo.bar(test)')
-        range = node.child_node_range(:dot)
-        expect(range.to_range).to eq(3...4)
-
-        node = parse('foobar(test)')
-        range = node.child_node_range(:dot)
-        expect(range).to be_nil
-      end
-
       it 'checks message' do
         node = parse('foo.bar(test)')
         range = node.child_node_range(:message)
@@ -437,6 +427,24 @@ describe Parser::AST::Node do
 
         node = parse('foo.bar')
         range = node.child_node_range(:arguments)
+        expect(range).to be_nil
+      end
+    end
+
+    context 'class node' do
+      it 'checks name' do
+        node = parse('class Post < ActiveRecord::Base; end')
+        range = node.child_node_range(:name)
+        expect(range.to_range).to eq(6...10)
+      end
+
+      it 'checks parent_class' do
+        node = parse('class Post < ActiveRecord::Base; end')
+        range = node.child_node_range(:parent_class)
+        expect(range.to_range).to eq(13...31)
+
+        node = parse('class Post; end')
+        range = node.child_node_range(:parent_class)
         expect(range).to be_nil
       end
     end

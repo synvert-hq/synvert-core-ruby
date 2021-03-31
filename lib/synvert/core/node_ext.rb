@@ -323,12 +323,17 @@ module Parser::AST
     # @return [Parser::Source::Range] source range of child node.
     def child_node_range(child_name)
       case type
+      when :class
+        case child_name
+        when :name
+          loc.name
+        when :parent_class
+          parent_class&.loc&.expression
+        end
       when :send
         case child_name
         when :receiver
           receiver&.loc&.expression
-        when :dot
-          loc.dot
         when :message
           loc.selector
         when :arguments
