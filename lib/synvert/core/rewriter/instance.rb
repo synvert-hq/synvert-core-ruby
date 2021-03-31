@@ -254,7 +254,7 @@ module Synvert::Core
     # Parse replace with dsl, it creates a [Synvert::Core::Rewriter::ReplaceAction] to
     # replace child node with code.
     #
-    # @param selector [Symbol] selector name of child name.
+    # @param selector [Symbol] selector name of child node.
     # @param with [String] code need to be replaced with.
     def replace(selector, with:)
       @actions << Rewriter::ReplaceAction.new(self, selector, with: with)
@@ -272,7 +272,9 @@ module Synvert::Core
     end
 
     # Parse delete dsl, it creates a [Synvert::Core::Rewriter::DeleteAction] to delete child nodes.
-    def delete
+    #
+    # @param selectors [Array<Symbol>] selector names of child node.
+    def delete(*selectors)
       @actions << Rewriter::DeleteAction.new(self, *selectors)
     end
 

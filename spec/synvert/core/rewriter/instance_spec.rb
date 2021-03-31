@@ -127,6 +127,11 @@ module Synvert::Core
       instance.remove
     end
 
+    it 'parses remove' do
+      expect(Rewriter::DeleteAction).to receive(:new).with(instance, :dot, :message)
+      instance.delete :dot, :message
+    end
+
     it 'parses warn' do
       expect(Rewriter::Warning).to receive(:new).with(instance, 'foobar')
       instance.warn 'foobar'
