@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.26.1 (2021-03-31)
+
+* Support `:class` in `child_node_range`
+
 ## 0.26.0 (2021-03-30)
 
 * attr_reader ruby_version and gem_spec
