@@ -330,6 +330,17 @@ module Parser::AST
         when :parent_class
           parent_class&.loc&.expression
         end
+      when :defs
+        case child_name
+        when :dot
+          loc.operator
+        when :self
+          Parser::Source::Range.new('(string)', loc.operator.begin_pos - 4, loc.operator.begin_pos)
+        when :name
+          loc.name
+        when :arguments
+          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
+        end
       when :send
         case child_name
         when :receiver

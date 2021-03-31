@@ -395,6 +395,50 @@ describe Parser::AST::Node do
   end
 
   describe '#child_node_range' do
+    context 'class node' do
+      it 'checks name' do
+        node = parse('class Post < ActiveRecord::Base; end')
+        range = node.child_node_range(:name)
+        expect(range.to_range).to eq(6...10)
+      end
+
+      it 'checks parent_class' do
+        node = parse('class Post < ActiveRecord::Base; end')
+        range = node.child_node_range(:parent_class)
+        expect(range.to_range).to eq(13...31)
+
+        node = parse('class Post; end')
+        range = node.child_node_range(:parent_class)
+        expect(range).to be_nil
+      end
+    end
+
+    context 'defs node' do
+      it 'checks self' do
+        node = parse('def self.foo(bar); end')
+        range = node.child_node_range(:self)
+        expect(range.to_range).to eq(4...8)
+      end
+
+      it 'checks dot' do
+        node = parse('def self.foo(bar); end')
+        range = node.child_node_range(:dot)
+        expect(range.to_range).to eq(8...9)
+      end
+
+      it 'checks name' do
+        node = parse('def self.foo(bar); end')
+        range = node.child_node_range(:name)
+        expect(range.to_range).to eq(9...12)
+      end
+
+      it 'checks arguments' do
+        node = parse('def self.foo(bar); end')
+        range = node.child_node_range(:arguments)
+        expect(range.to_range).to eq(13...16)
+      end
+    end
+
     context 'send node' do
       it 'checks receiver' do
         node = parse('foo.bar(test)')
@@ -441,24 +485,6 @@ describe Parser::AST::Node do
 
         node = parse('foo.bar')
         range = node.child_node_range(:arguments)
-        expect(range).to be_nil
-      end
-    end
-
-    context 'class node' do
-      it 'checks name' do
-        node = parse('class Post < ActiveRecord::Base; end')
-        range = node.child_node_range(:name)
-        expect(range.to_range).to eq(6...10)
-      end
-
-      it 'checks parent_class' do
-        node = parse('class Post < ActiveRecord::Base; end')
-        range = node.child_node_range(:parent_class)
-        expect(range.to_range).to eq(13...31)
-
-        node = parse('class Post; end')
-        range = node.child_node_range(:parent_class)
         expect(range).to be_nil
       end
     end
