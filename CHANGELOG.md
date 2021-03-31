@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.26.1 (2021-03-31)
+## 0.27.0 (2021-03-31)
 
 * Support `:class` in `child_node_range`
+* Add `delete` action
 
 ## 0.26.0 (2021-03-30)
 
