@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.27.2 (2021-03-31)
+
+* Fix selector with operator in `child_node_range`
+
 ## 0.27.1 (2021-03-31)
 
 * Fix `delete` action arguments
