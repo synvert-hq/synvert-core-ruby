@@ -337,7 +337,7 @@ module Parser::AST
         when :dot
           loc.dot
         when :message
-          loc.selector
+          loc.operator ? Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos) : loc.selector
         when :arguments
           Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
         end

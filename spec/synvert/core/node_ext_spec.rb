@@ -421,6 +421,10 @@ describe Parser::AST::Node do
         range = node.child_node_range(:message)
         expect(range.to_range).to eq(4...7)
 
+        node = parse('foo.bar = test')
+        range = node.child_node_range(:message)
+        expect(range.to_range).to eq(4...9)
+
         node = parse('foobar(test)')
         range = node.child_node_range(:message)
         expect(range.to_range).to eq(0...6)
