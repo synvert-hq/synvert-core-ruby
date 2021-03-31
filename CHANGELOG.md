@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.27.3 (2021-03-31)
+
+* Support `:def` in `child_node_range`
+* Support `:defs` in `child_node_range`
+
 ## 0.27.2 (2021-03-31)
 
 * Fix selector with operator in `child_node_range`
