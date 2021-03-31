@@ -24,6 +24,7 @@ module Synvert::Core
     autoload :ReplaceAction, 'synvert/core/rewriter/action/replace_action'
     autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
     autoload :RemoveAction, 'synvert/core/rewriter/action/remove_action'
+    autoload :DeleteAction, 'synvert/core/rewriter/action/delete_action'
 
     autoload :Warning, 'synvert/core/rewriter/warning'
 

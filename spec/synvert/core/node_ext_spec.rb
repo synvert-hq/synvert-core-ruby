@@ -406,6 +406,16 @@ describe Parser::AST::Node do
         expect(range).to be_nil
       end
 
+      it 'checks dot' do
+        node = parse('foo.bar(test)')
+        range = node.child_node_range(:dot)
+        expect(range.to_range).to eq(3...4)
+
+        node = parse('foobar(test)')
+        range = node.child_node_range(:dot)
+        expect(range).to be_nil
+      end
+
       it 'checks message' do
         node = parse('foo.bar(test)')
         range = node.child_node_range(:message)

@@ -334,6 +334,8 @@ module Parser::AST
         case child_name
         when :receiver
           receiver&.loc&.expression
+        when :dot
+          loc.dot
         when :message
           loc.selector
         when :arguments

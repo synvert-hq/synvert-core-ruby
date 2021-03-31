@@ -266,9 +266,14 @@ module Synvert::Core
       @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self)
     end
 
-    # Parse remove dsl, it creates a [Synvert::Core::Rewriter::RemoveAction] to current node.
+    # Parse remove dsl, it creates a [Synvert::Core::Rewriter::RemoveAction] to remove current node.
     def remove
       @actions << Rewriter::RemoveAction.new(self)
+    end
+
+    # Parse delete dsl, it creates a [Synvert::Core::Rewriter::DeleteAction] to delete child nodes.
+    def delete
+      @actions << Rewriter::DeleteAction.new(self, *selectors)
     end
 
     # Parse warn dsl, it creates a [Synvert::Core::Rewriter::Warning] to save warning message.
