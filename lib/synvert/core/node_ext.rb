@@ -337,12 +337,23 @@ module Parser::AST
         when :dot
           loc.dot
         when :message
-          loc.operator ? Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos) : loc.selector
+          if loc.operator
+            Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos)
+          else
+            loc.selector
+          end
         when :arguments
-          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
+          unless arguments.empty?
+            Parser::Source::Range.new(
+              '(string)',
+              arguments.first.loc.expression.begin_pos,
+              arguments.last.loc.expression.end_pos
+            )
+          end
         end
       else
-        raise Synvert::Core::MethodNotSupported, "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
+        raise Synvert::Core::MethodNotSupported,
+              "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
       end
     end
 
