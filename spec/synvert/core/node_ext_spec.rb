@@ -395,6 +395,20 @@ describe Parser::AST::Node do
   end
 
   describe '#child_node_range' do
+    context 'block node' do
+      it 'checks caller' do
+        node = parse('Factory.define :user do |user|; end')
+        range = node.child_node_range(:caller)
+        expect(range.to_range).to eq(0...20)
+      end
+
+      it 'checks arguments' do
+        node = parse('Factory.define :user do |user|; end')
+        range = node.child_node_range(:arguments)
+        expect(range.to_range).to eq(24...30)
+      end
+    end
+
     context 'class node' do
       it 'checks name' do
         node = parse('class Post < ActiveRecord::Base; end')
