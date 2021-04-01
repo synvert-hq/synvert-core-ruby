@@ -332,10 +332,17 @@ module Parser::AST
         when :message
           loc.selector
         when :arguments
-          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
+          unless arguments.empty?
+            Parser::Source::Range.new(
+              '(string)',
+              arguments.first.loc.expression.begin_pos,
+              arguments.last.loc.expression.end_pos
+            )
+          end
         end
       else
-        raise Synvert::Core::MethodNotSupported, "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
+        raise Synvert::Core::MethodNotSupported,
+              "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
       end
     end
 
