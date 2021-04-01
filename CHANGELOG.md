@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.27.4 (2021-04-01)
+
+* Support `:block` in `child_node_range`
+
 ## 0.27.3 (2021-03-31)
 
 * Support `:def` in `child_node_range`
