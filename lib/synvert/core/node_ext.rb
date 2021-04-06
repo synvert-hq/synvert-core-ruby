@@ -101,9 +101,9 @@ module Parser::AST
     def arguments
       case type
       when :def, :block
-        ArgumentsNode.new children[1]
+        ArgumentsNode.new(children[1])
       when :defs
-        ArgumentsNode.new children[2]
+        ArgumentsNode.new(children[2])
       when :send
         children[2..-1]
       when :defined?
@@ -322,51 +322,33 @@ module Parser::AST
     # @param [String] name of child node.
     # @return [Parser::Source::Range] source range of child node.
     def child_node_range(child_name)
-      case type
-      when :block
-        case child_name
-        when :caller
-          caller&.loc&.expression
-        when :arguments
-          arguments&.loc&.expression
-        end
-      when :class
-        case child_name
-        when :name
-          loc.name
-        when :parent_class
-          parent_class&.loc&.expression
-        end
-      when :def
-        case child_name
-        when :name
-          loc.name
-        when :arguments
-          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
-        end
-      when :defs
-        case child_name
-        when :dot
-          loc.operator
-        when :self
-          Parser::Source::Range.new('(string)', loc.operator.begin_pos - 4, loc.operator.begin_pos)
-        when :name
-          loc.name
-        when :arguments
-          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
-        end
-      when :send
-        case child_name
-        when :receiver
-          receiver&.loc&.expression
-        when :dot
-          loc.dot
-        when :message
-          loc.operator ? Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos) : loc.selector
-        when :arguments
-          Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos) unless arguments.empty?
-        end
+      case [type, child_name]
+      when [:class, :name]
+        loc.name
+      when [:def, :name]
+        loc.name
+      when [:defs, :name]
+        loc.name
+      when [:defs, :dot]
+        loc.operator
+      when [:defs, :self]
+        Parser::Source::Range.new('(string)', loc.operator.begin_pos - 4, loc.operator.begin_pos)
+      when [:send, :dot]
+        loc.dot
+      when [:send, :message]
+        loc.operator ? Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos) : loc.selector
       else
+        if respond_to?(child_name)
+          child_node = send(child_name)
+          return nil if child_node.nil?
+          if child_node.is_a?(Parser::AST::Node)
+            return Parser::Source::Range.new('(string)', child_node.loc.expression.begin_pos, child_node.loc.expression.end_pos)
+          end
+          # arguments
+          return nil if child_node.empty?
+          return Parser::Source::Range.new('(string)', child_node.first.loc.expression.begin_pos, child_node.last.loc.expression.end_pos)
+        end
+
         raise Synvert::Core::MethodNotSupported, "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
       end
     end

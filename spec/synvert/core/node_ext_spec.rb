@@ -405,7 +405,7 @@ describe Parser::AST::Node do
       it 'checks arguments' do
         node = parse('Factory.define :user do |user|; end')
         range = node.child_node_range(:arguments)
-        expect(range.to_range).to eq(24...30)
+        expect(range.to_range).to eq(25...29)
       end
     end
 
