@@ -1,20 +1,9 @@
 # CHANGELOG
 
-## 0.27.4 (2021-04-01)
+## 0.28.0 (2021-04-07)
 
-* Support `:block` in `child_node_range`
-
-## 0.27.3 (2021-03-31)
-
-* Support `:def` in `child_node_range`
-* Support `:defs` in `child_node_range`
-
-## 0.27.2 (2021-03-31)
-
-* Fix selector with operator in `child_node_range`
-
-## 0.27.1 (2021-03-31)
-
+* Make `child_name_range` support all dsl nodes
+* Make `replace` action support multi child names
 * Fix `delete` action arguments
 
 ## 0.27.0 (2021-03-31)
