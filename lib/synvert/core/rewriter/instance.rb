@@ -252,12 +252,12 @@ module Synvert::Core
     end
 
     # Parse replace with dsl, it creates a [Synvert::Core::Rewriter::ReplaceAction] to
-    # replace child node with code.
+    # replace child nodes with code.
     #
-    # @param selector [Symbol] selector name of child node.
+    # @param selectors [Array<Symbol>] selector names of child node.
     # @param with [String] code need to be replaced with.
-    def replace(selector, with:)
-      @actions << Rewriter::ReplaceAction.new(self, selector, with: with)
+    def replace(*selectors, with:)
+      @actions << Rewriter::ReplaceAction.new(self, *selectors, with: with)
     end
 
     # Parse replace_erb_stmt_with_expr dsl, it creates a [Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction] to

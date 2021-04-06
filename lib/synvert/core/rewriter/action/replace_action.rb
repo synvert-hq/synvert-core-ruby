@@ -3,9 +3,9 @@
 module Synvert::Core
   # ReplaceAction to replace child node with code.
   class Rewriter::ReplaceAction < Rewriter::Action
-    def initialize(instance, selector, with:)
+    def initialize(instance, *selectors, with:)
       @instance = instance
-      @selector = selector
+      @selectors = selectors
       @code = with
       @node = @instance.current_node
     end
@@ -14,14 +14,14 @@ module Synvert::Core
     #
     # @return [Integer] begin position.
     def begin_pos
-      @node.child_node_range(@selector).begin_pos
+      @selectors.map { |selector| @node.child_node_range(selector).begin_pos }.min
     end
 
     # End position of code to replace.
     #
     # @return [Integer] end position.
     def end_pos
-      @node.child_node_range(@selector).end_pos
+      @selectors.map { |selector| @node.child_node_range(selector).end_pos }.max
     end
 
     # The rewritten source code.
