@@ -6,7 +6,7 @@ module Synvert::Core
   describe Rewriter::ReplaceAction do
     context 'replace with single line' do
       subject {
-        source = "FactoryBot.create(:user)"
+        source = 'FactoryBot.create(:user)'
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
         Rewriter::ReplaceAction.new(instance, :receiver, :dot, :message, with: 'create')
@@ -17,7 +17,7 @@ module Synvert::Core
       end
 
       it 'gets end_pos' do
-        expect(subject.end_pos).to eq "FactoryBot.create".length
+        expect(subject.end_pos).to eq 'FactoryBot.create'.length
       end
 
       it 'gets rewritten_code' do

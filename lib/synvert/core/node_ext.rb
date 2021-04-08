@@ -336,20 +336,38 @@ module Parser::AST
       when [:send, :dot]
         loc.dot
       when [:send, :message]
-        loc.operator ? Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos) : loc.selector
+        if loc.operator
+          Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos)
+        else
+          loc.selector
+        end
       else
         if respond_to?(child_name)
           child_node = send(child_name)
           return nil if child_node.nil?
           if child_node.is_a?(Parser::AST::Node)
-            return Parser::Source::Range.new('(string)', child_node.loc.expression.begin_pos, child_node.loc.expression.end_pos)
+            return(
+              Parser::Source::Range.new(
+                '(string)',
+                child_node.loc.expression.begin_pos,
+                child_node.loc.expression.end_pos
+              )
+            )
           end
+
           # arguments
           return nil if child_node.empty?
-          return Parser::Source::Range.new('(string)', child_node.first.loc.expression.begin_pos, child_node.last.loc.expression.end_pos)
+          return(
+            Parser::Source::Range.new(
+              '(string)',
+              child_node.first.loc.expression.begin_pos,
+              child_node.last.loc.expression.end_pos
+            )
+          )
         end
 
-        raise Synvert::Core::MethodNotSupported, "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
+        raise Synvert::Core::MethodNotSupported,
+              "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
       end
     end
 
