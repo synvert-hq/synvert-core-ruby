@@ -348,6 +348,7 @@ module Parser::AST
           end
           # arguments
           return nil if child_node.empty?
+
           return Parser::Source::Range.new('(string)', child_node.first.loc.expression.begin_pos, child_node.last.loc.expression.end_pos)
         end
 
