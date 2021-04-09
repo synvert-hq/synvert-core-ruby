@@ -407,6 +407,12 @@ describe Parser::AST::Node do
         range = node.child_node_range(:arguments)
         expect(range.to_range).to eq(25...29)
       end
+
+      it 'checks pipe' do
+        node = parse('Factory.define :user do |user|; end')
+        range = node.child_node_range(:pipe)
+        expect(range.to_range).to eq(24...30)
+      end
     end
 
     context 'class node' do
