@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.28.1 (2021-04-09)
+
+* Make `child_name_range` support [:block, :pipe]
+
 ## 0.28.0 (2021-04-07)
 
 * Make `child_name_range` support all dsl nodes
