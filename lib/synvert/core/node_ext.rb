@@ -347,6 +347,7 @@ module Parser::AST
         if respond_to?(child_name)
           child_node = send(child_name)
           return nil if child_node.nil?
+
           if child_node.is_a?(Parser::AST::Node)
             return(
               Parser::Source::Range.new(
