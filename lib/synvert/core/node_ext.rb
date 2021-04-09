@@ -323,21 +323,21 @@ module Parser::AST
     # @return [Parser::Source::Range] source range of child node.
     def child_node_range(child_name)
       case [type, child_name]
-      when [:block, :pipe]
+      when %i[block pipe]
         Parser::Source::Range.new('(string)', arguments.loc.expression.begin_pos, arguments.loc.expression.end_pos)
-      when [:class, :name]
+      when %i[class name]
         loc.name
-      when [:def, :name]
+      when %i[def name]
         loc.name
-      when [:defs, :name]
+      when %i[defs name]
         loc.name
-      when [:defs, :dot]
+      when %i[defs dot]
         loc.operator
-      when [:defs, :self]
+      when %i[defs self]
         Parser::Source::Range.new('(string)', loc.operator.begin_pos - 4, loc.operator.begin_pos)
-      when [:send, :dot]
+      when %i[send dot]
         loc.dot
-      when [:send, :message]
+      when %i[send message]
         if loc.operator
           Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos)
         else
