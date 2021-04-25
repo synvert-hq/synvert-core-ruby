@@ -335,7 +335,7 @@ describe Parser::AST::Node do
 
   describe 'key value by method_missing' do
     it 'gets for key value' do
-      node = parse("{:foo => :bar}")
+      node = parse('{:foo => :bar}')
       expect(node.foo_value).to eq :bar
 
       node = parse("{'foo' => 'bar'}")
