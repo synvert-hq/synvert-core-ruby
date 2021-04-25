@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "activesupport"
   spec.add_runtime_dependency "erubis"
-  spec.add_runtime_dependency "parser", "~> 3.0.0"
+  spec.add_runtime_dependency "parser"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "guard"
