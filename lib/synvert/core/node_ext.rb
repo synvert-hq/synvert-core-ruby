@@ -203,7 +203,7 @@ module Parser::AST
     def hash_value(key)
       if :hash == type
         value_node = children.find { |pair_node| pair_node.key.to_value == key }
-        value_node ? value_node.value : nil
+        value_node&.value
       else
         raise Synvert::Core::MethodNotSupported, "hash_value is not handled for #{debug_info}"
       end
@@ -278,6 +278,29 @@ module Parser::AST
       else
         raise Synvert::Core::MethodNotSupported, "to_value is not handled for #{debug_info}"
       end
+    end
+
+    # Respond key value for hash node, e.g.
+    #
+    # Current node is s(:hash, s(:pair, s(:sym, :number), s(:int, 10)))
+    # node.number_value is 10
+    def method_missing(method_name, *args, &block)
+      if :hash == type && method_name.to_s.include?('_value')
+        key = method_name.to_s.sub('_value', '')
+        return hash_value(key.to_sym)&.to_value if key?(key.to_sym)
+        return hash_value(key.to_s)&.to_value if key?(key.to_s)
+      end
+
+      super
+    end
+
+    def respond_to_missing?(method_name, *args)
+      if :hash == type && method_name.to_s.include?('_value')
+        key = method_name.to_s.sub('_value', '')
+        return true if key?(key.to_sym) || key?(key.to_s)
+      end
+
+      super
     end
 
     def to_s
