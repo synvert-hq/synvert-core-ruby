@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.28.1 (2021-04-09)
+## 0.29.0 (2021-04-25)
 
 * Make `child_name_range` support [:block, :pipe]
+* Get key value for hash node
 
 ## 0.28.0 (2021-04-07)
 
