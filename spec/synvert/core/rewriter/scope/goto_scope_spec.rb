@@ -12,6 +12,7 @@ module Synvert::Core
       Factory.define :user do |user|
       end
     EOS
+
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do
       Rewriter::Instance.reset
