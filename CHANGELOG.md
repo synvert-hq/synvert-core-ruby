@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.30.0 (2021-04-26)
+
+* `goto_node` accepts multiple child node names
+* Match any_value
+
 ## 0.29.0 (2021-04-25)
 
 * Make `child_name_range` support [:block, :pipe]
