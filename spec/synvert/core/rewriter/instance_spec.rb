@@ -54,9 +54,9 @@ module Synvert::Core
     it 'parses goto_node' do
       scope = double
       block = proc {}
-      expect(Rewriter::GotoScope).to receive(:new).with(instance, :caller, &block).and_return(scope)
+      expect(Rewriter::GotoScope).to receive(:new).with(instance, :caller, :receiver, &block).and_return(scope)
       expect(scope).to receive(:process)
-      instance.goto_node(:caller, &block)
+      instance.goto_node(:caller, :receiver, &block)
     end
 
     it 'parses if_exist_node' do

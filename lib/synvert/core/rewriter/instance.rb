@@ -181,10 +181,10 @@ module Synvert::Core
     # Parse goto_node dsl, it creates a [Synvert::Core::Rewriter::GotoScope] to go to a child node,
     # then continue operating on the child node.
     #
-    # @param child_node_name [String] the name of the child node.
+    # @param *child_node_names [Array] the name of the child nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
-    def goto_node(child_node_name, &block)
-      Rewriter::GotoScope.new(self, child_node_name, &block).process
+    def goto_node(*child_node_names, &block)
+      Rewriter::GotoScope.new(self, *child_node_names, &block).process
     end
 
     # Parse if_exist_node dsl, it creates a [Synvert::Core::Rewriter::IfExistCondition] to check

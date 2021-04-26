@@ -8,12 +8,10 @@ module Synvert::Core
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
-    let(:source) {
-      '
-Factory.define :user do |user|
-end
-    '
-    }
+    let(:source) { <<~EOS }
+      Factory.define :user do |user|
+      end
+    EOS
     let(:node) { Parser::CurrentRuby.parse(source) }
     before do
       Rewriter::Instance.reset
@@ -25,13 +23,13 @@ end
         run = false
         type_in_scope = nil
         scope =
-          Rewriter::GotoScope.new instance, :caller do
+          Rewriter::GotoScope.new instance, :caller, :receiver do
             run = true
             type_in_scope = node.type
           end
         scope.process
         expect(run).to be_truthy
-        expect(type_in_scope).to eq :send
+        expect(type_in_scope).to eq :const
         expect(instance.current_node.type).to eq :block
       end
     end
