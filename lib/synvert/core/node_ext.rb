@@ -289,6 +289,7 @@ module Parser::AST
         key = method_name.to_s.sub('_value', '')
         return hash_value(key.to_sym)&.to_value if key?(key.to_sym)
         return hash_value(key.to_s)&.to_value if key?(key.to_s)
+        return nil
       end
 
       super

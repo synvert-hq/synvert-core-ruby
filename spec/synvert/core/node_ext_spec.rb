@@ -340,6 +340,8 @@ describe Parser::AST::Node do
 
       node = parse("{'foo' => 'bar'}")
       expect(node.foo_value).to eq 'bar'
+
+      expect(node.bar_value).to be_nil
     end
   end
 
