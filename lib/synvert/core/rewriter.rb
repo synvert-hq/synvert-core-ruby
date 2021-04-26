@@ -44,6 +44,8 @@ module Synvert::Core
     autoload :RubyVersion, 'synvert/core/rewriter/ruby_version'
     autoload :GemSpec, 'synvert/core/rewriter/gem_spec'
 
+    autoload :AnyValue, 'synvert/core/rewriter/any_value'
+
     class << self
       # Execute the temporary rewriter without group and name.
       #

@@ -285,6 +285,11 @@ module Synvert::Core
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
+    # Any value but nil.
+    def any_value
+      Rewriter::AnyValue.new
+    end
+
     private
 
     # It changes source code from bottom to top, and it can change source code twice at the same time,

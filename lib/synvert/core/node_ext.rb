@@ -467,7 +467,7 @@ module Parser::AST
                 source
               end
             end
-          when String, Symbol
+          when String, Symbol, Integer, Float
             evaluated
           when NilClass
             'nil'
@@ -527,6 +527,8 @@ module Parser::AST
         :false == actual.type
       when Parser::AST::Node
         actual == expected
+      when Synvert::Core::Rewriter::AnyValue
+        !actual.nil?
       else
         raise Synvert::Core::MethodNotSupported, "#{expected.class} is not handled for match_value?"
       end
