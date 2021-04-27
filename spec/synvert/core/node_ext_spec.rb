@@ -404,6 +404,18 @@ describe Parser::AST::Node do
       node = parse(source)
       expect(node).not_to be_match(type: 'class', name: { not: 'Synvert' })
     end
+
+    it 'matches in' do
+      source = 'FactoryBot.create(:user)'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', message: { in: [:create, :build] })
+    end
+
+    it 'matches not_in' do
+      source = 'FactoryBot.create(:user)'
+      node = parse(source)
+      expect(node).not_to be_match(type: 'send', message: { not_in: [:create, :build] })
+    end
   end
 
   describe '#child_node_range' do

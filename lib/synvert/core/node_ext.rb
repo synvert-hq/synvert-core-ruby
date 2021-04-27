@@ -428,6 +428,14 @@ module Parser::AST
           actual = actual_value(self, multi_keys[0...-1])
           expected = expected_value(rules, multi_keys)
           !match_value?(actual, expected)
+        when :in
+          actual = actual_value(self, multi_keys[0...-1])
+          expected_values = expected_value(rules, multi_keys)
+          expected_values.any? { |expected| match_value?(actual, expected) }
+        when :not_in
+          actual = actual_value(self, multi_keys[0...-1])
+          expected_values = expected_value(rules, multi_keys)
+          expected_values.all? { |expected| !match_value?(actual, expected) }
         else
           actual = actual_value(self, multi_keys)
           expected = expected_value(rules, multi_keys)
