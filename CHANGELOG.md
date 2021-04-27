@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.31.0 (2021-04-27)
+
+* Add `in` and `not_in` rules
+
 ## 0.30.0 (2021-04-26)
 
 * `goto_node` accepts multiple child node names
