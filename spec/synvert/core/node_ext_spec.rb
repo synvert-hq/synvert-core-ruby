@@ -408,13 +408,13 @@ describe Parser::AST::Node do
     it 'matches in' do
       source = 'FactoryBot.create(:user)'
       node = parse(source)
-      expect(node).to be_match(type: 'send', message: { in: [:create, :build] })
+      expect(node).to be_match(type: 'send', message: { in: %i[create build] })
     end
 
     it 'matches not_in' do
       source = 'FactoryBot.create(:user)'
       node = parse(source)
-      expect(node).not_to be_match(type: 'send', message: { not_in: [:create, :build] })
+      expect(node).not_to be_match(type: 'send', message: { not_in: %i[create build] })
     end
   end
 
