@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.32.0 (2021-05-07)
+
+* Remove `ArgumentsNode`
+
 ## 0.31.0 (2021-04-27)
 
 * Add `in` and `not_in` rules
