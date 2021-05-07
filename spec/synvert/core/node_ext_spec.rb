@@ -104,17 +104,17 @@ describe Parser::AST::Node do
   describe '#arguments' do
     it 'gets for def node' do
       node = parse('def test(foo, bar); foo + bar; end')
-      expect(node.arguments.map { |argument| argument.to_source }).to eq %w[foo bar]
+      expect(node.arguments.type).to eq :args
     end
 
     it 'gets for defs node' do
       node = parse('def self.test(foo, bar); foo + bar; end')
-      expect(node.arguments.map { |argument| argument.to_source }).to eq %w[foo bar]
+      expect(node.arguments.type).to eq :args
     end
 
     it 'gets for block node' do
       node = parse('RSpec.configure do |config|; end')
-      expect(node.arguments.map { |argument| argument.to_source }).to eq ['config']
+      expect(node.arguments.type).to eq :args
     end
 
     it 'gets for send node' do
@@ -566,7 +566,7 @@ describe Parser::AST::Node do
       expect(node.rewritten_source('{{name}}')).to eq 'Synvert'
     end
 
-    it 'rewrites for ArgumentsNode' do
+    it 'rewrites for arguments' do
       source = 'test { |a, b| }'
       node = parse(source)
       expect(node.rewritten_source('{{arguments}}')).to eq 'a, b'

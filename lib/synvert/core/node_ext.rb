@@ -1,29 +1,6 @@
 # frozen_string_literal: true
 
 module Parser::AST
-  # ArgumentsNode allows to handle all args as one node or handle all args as an array.
-  class ArgumentsNode
-    # Initialize
-    #
-    # @param node [Parser::AST::Node] args node.
-    def initialize(node)
-      @node = node
-    end
-
-    # If args node responds method itself, call method on args node.
-    # If args children (array) responds method,  call method on args children.
-    # Otherwise raise method missing error.
-    def method_missing(meth, *args, &block)
-      if @node.respond_to?(meth)
-        @node.send meth, *args, &block
-      elsif @node.children.respond_to?(meth)
-        @node.children.send meth, *args, &block
-      else
-        super
-      end
-    end
-  end
-
   # Parser::AST::Node monkey patch.
   class Node
     # Get name node of :class, :module, :const, :mlhs, :def and :defs node.
@@ -101,9 +78,9 @@ module Parser::AST
     def arguments
       case type
       when :def, :block
-        ArgumentsNode.new(children[1])
+        children[1]
       when :defs
-        ArgumentsNode.new(children[2])
+        children[2]
       when :send
         children[2..-1]
       when :defined?
@@ -285,7 +262,9 @@ module Parser::AST
     # Current node is s(:hash, s(:pair, s(:sym, :number), s(:int, 10)))
     # node.number_value is 10
     def method_missing(method_name, *args, &block)
-      if :hash == type && method_name.to_s.include?('_value')
+      if :args == type && children.respond_to?(method_name)
+        return children.send(method_name, *args, &block)
+      elsif :hash == type && method_name.to_s.include?('_value')
         key = method_name.to_s.sub('_value', '')
         return hash_value(key.to_sym)&.to_value if key?(key.to_sym)
         return hash_value(key.to_s)&.to_value if key?(key.to_s)
@@ -297,7 +276,9 @@ module Parser::AST
     end
 
     def respond_to_missing?(method_name, *args)
-      if :hash == type && method_name.to_s.include?('_value')
+      if :args == type && children.respond_to?(method_name)
+        return true
+      elsif :hash == type && method_name.to_s.include?('_value')
         key = method_name.to_s.sub('_value', '')
         return true if key?(key.to_sym) || key?(key.to_s)
       end
@@ -350,6 +331,8 @@ module Parser::AST
       case [type, child_name]
       when %i[block pipe]
         Parser::Source::Range.new('(string)', arguments.loc.expression.begin_pos, arguments.loc.expression.end_pos)
+      when %i[block arguments], %i[def arguments], %i[defs arguments]
+        Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos)
       when %i[class name]
         loc.name
       when %i[def name]
@@ -458,8 +441,12 @@ module Parser::AST
           evaluated = instance_eval old_code
           case evaluated
           when Parser::AST::Node
-            evaluated.loc.expression.source
-          when Array, ArgumentsNode
+            if evaluated.type == :args
+              evaluated.loc.expression.source[1...-1]
+            else
+              evaluated.loc.expression.source
+            end
+          when Array
             if evaluated.size > 0
               file_source = evaluated.first.loc.expression.source_buffer.source
               source = file_source[evaluated.first.loc.expression.begin_pos...evaluated.last.loc.expression.end_pos]
