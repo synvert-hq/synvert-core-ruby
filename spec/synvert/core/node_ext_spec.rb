@@ -146,6 +146,21 @@ describe Parser::AST::Node do
       expect(node.body).to eq [parse('include EmailSpec::Helpers'), parse('include EmailSpec::Matchers')]
     end
 
+    it 'gets empty for class node' do
+      node = parse('class User; end')
+      expect(node.body).to be_empty
+    end
+
+    it 'gets one line for class node' do
+      node = parse('class User; attr_accessor :email; end')
+      expect(node.body).to eq [parse('attr_accessor :email')]
+    end
+
+    it 'gets one line for class node' do
+      node = parse('class User; attr_accessor :email; attr_accessor :username; end')
+      expect(node.body).to eq [parse('attr_accessor :email'), parse('attr_accessor :username')]
+    end
+
     it 'gets for begin node' do
       node = parse('foo; bar')
       expect(node.body).to eq [parse('foo'), parse('bar')]

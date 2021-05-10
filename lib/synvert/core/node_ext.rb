@@ -110,7 +110,7 @@ module Parser::AST
       case type
       when :begin
         children
-      when :def, :block
+      when :def, :block, :class
         return [] if children[2].nil?
 
         :begin == children[2].type ? children[2].body : children[2..-1]
@@ -342,7 +342,7 @@ module Parser::AST
       when %i[defs dot]
         loc.operator
       when %i[defs self]
-        Parser::Source::Range.new('(string)', loc.operator.begin_pos - 4, loc.operator.begin_pos)
+        Parser::Source::Range.new('(string)', loc.operator.begin_pos - 'self'.length, loc.operator.begin_pos)
       when %i[send dot]
         loc.dot
       when %i[send message]
