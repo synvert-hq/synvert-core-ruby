@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.33.0 (2021-05-10)
+
+* Add `body` for `class` node
+
 ## 0.32.0 (2021-05-07)
 
 * Remove `ArgumentsNode`
