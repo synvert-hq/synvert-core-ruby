@@ -332,7 +332,11 @@ module Parser::AST
       when %i[block pipe]
         Parser::Source::Range.new('(string)', arguments.loc.expression.begin_pos, arguments.loc.expression.end_pos)
       when %i[block arguments], %i[def arguments], %i[defs arguments]
-        Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos)
+        Parser::Source::Range.new(
+          '(string)',
+          arguments.first.loc.expression.begin_pos,
+          arguments.last.loc.expression.end_pos
+        )
       when %i[class name]
         loc.name
       when %i[def name]
