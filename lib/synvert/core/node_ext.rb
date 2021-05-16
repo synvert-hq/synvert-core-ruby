@@ -329,7 +329,7 @@ module Parser::AST
     # @return [Parser::Source::Range] source range of child node.
     def child_node_range(child_name)
       case [type, child_name]
-      when %i[block pipe]
+      when %i[block pipes]
         Parser::Source::Range.new('(string)', arguments.loc.expression.begin_pos, arguments.loc.expression.end_pos)
       when %i[block arguments], %i[def arguments], %i[defs arguments]
         Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos, arguments.last.loc.expression.end_pos)

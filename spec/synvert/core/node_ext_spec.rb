@@ -447,9 +447,9 @@ describe Parser::AST::Node do
         expect(range.to_range).to eq(25...29)
       end
 
-      it 'checks pipe' do
+      it 'checks pipes' do
         node = parse('Factory.define :user do |user|; end')
-        range = node.child_node_range(:pipe)
+        range = node.child_node_range(:pipes)
         expect(range.to_range).to eq(24...30)
       end
     end
