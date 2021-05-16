@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.34.0 (2021-05-16)
+
+* `child_node_name` supports [:def, :parentheses] and [:defs, :parentheses]
+* rename `pipe` to `pipes`
+
 ## 0.33.0 (2021-05-10)
 
 * Add `body` for `class` node
