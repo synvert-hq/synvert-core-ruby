@@ -414,6 +414,12 @@ describe Parser::AST::Node do
       expect(node).to be_match(type: 'send', arguments: { any: 'Lifo::Cache' })
     end
 
+    it 'matches arguments contain' do
+      source = 'def slow(foo, bar, &block); end'
+      node = parse(source)
+      expect(node).to be_match(type: 'def', arguments: { contain: '&block' })
+    end
+
     it 'matches not' do
       source = 'class Synvert; end'
       node = parse(source)

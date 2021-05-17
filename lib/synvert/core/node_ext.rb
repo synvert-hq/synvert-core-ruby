@@ -399,7 +399,7 @@ module Parser::AST
     def match?(rules)
       flat_hash(rules).keys.all? do |multi_keys|
         case multi_keys.last
-        when :any
+        when :any, :contain
           actual_values = actual_value(self, multi_keys[0...-1])
           expected = expected_value(rules, multi_keys)
           actual_values.any? { |actual| match_value?(actual, expected) }
