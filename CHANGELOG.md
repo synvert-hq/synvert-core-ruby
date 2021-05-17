@@ -1,9 +1,13 @@
 # CHANGELOG
 
+## 0.35.0 (2021-05-17)
+
+* Add `contain` rule
+
 ## 0.34.0 (2021-05-16)
 
 * `child_node_name` supports [:def, :parentheses] and [:defs, :parentheses]
-* rename `pipe` to `pipes`
+* Rename `pipe` to `pipes`
 
 ## 0.33.0 (2021-05-10)
 
