@@ -8,16 +8,15 @@ module Synvert::Core
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
-    let(:source) {
-      "
-describe Post do
-  it 'gets post' do
-    FactoryGirl.create :post
-  end
-end
-    "
-    }
+    let(:source) { <<~EOS }
+      describe Post do
+        it 'gets post' do
+          FactoryGirl.create :post
+        end
+      end
+    EOS
     let(:node) { Parser::CurrentRuby.parse(source) }
+
     before do
       Rewriter::Instance.reset
       instance.current_node = node

@@ -37,9 +37,18 @@ module Synvert::Core
     def find_matching_nodes(current_node)
       matching_nodes = []
       if @options[:recursive]
-        matching_nodes << current_node if current_node.match? @rules
-        current_node.recursive_children do |child_node|
-          matching_nodes << child_node if child_node.match? @rules
+        if current_node.is_a?(Parser::AST::Node)
+          matching_nodes << current_node if current_node.match? @rules
+          current_node.recursive_children do |child_node|
+            matching_nodes << child_node if child_node.match? @rules
+          end
+        else
+          current_node.each do |node|
+            matching_nodes << node if node.match? @rules
+            node.recursive_children do |child_node|
+              matching_nodes << child_node if child_node.match? @rules
+            end
+          end
         end
       elsif current_node.is_a?(Parser::AST::Node)
         if current_node.type == :begin
