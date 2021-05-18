@@ -15,6 +15,7 @@ module Synvert::Core
         end
       end
     EOS
+
     let(:node) { Parser::CurrentRuby.parse(source) }
 
     before do
