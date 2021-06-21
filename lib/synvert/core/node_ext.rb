@@ -287,6 +287,9 @@ module Parser::AST
       elsif :hash == type && method_name.to_s.include?('_value')
         key = method_name.to_s.sub('_value', '')
         return true if key?(key.to_sym) || key?(key.to_s)
+      elsif :hash == type && method_name.to_s.include?('_source')
+        key = method_name.to_s.sub('_source', '')
+        return true if key?(key.to_sym) || key?(key.to_s)
       end
 
       super
