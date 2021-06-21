@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.37.0 (2021-06-21)
+## 0.38.0 (2021-06-21)
 
 * Add `xxx_source` for `hash` node
 
