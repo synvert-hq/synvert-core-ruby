@@ -360,6 +360,18 @@ describe Parser::AST::Node do
     end
   end
 
+  describe 'key value source by method_missing' do
+    it 'gets for key value source' do
+      node = parse('{:foo => :bar}')
+      expect(node.foo_source).to eq ':bar'
+
+      node = parse("{'foo' => 'bar'}")
+      expect(node.foo_source).to eq "'bar'"
+
+      expect(node.bar_source).to be_nil
+    end
+  end
+
   describe '#recursive_children' do
     it 'iterates all children recursively' do
       node = parse('class Synvert; def current_node; @node; end; end')

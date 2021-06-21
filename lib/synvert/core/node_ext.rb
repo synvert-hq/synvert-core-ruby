@@ -270,6 +270,12 @@ module Parser::AST
         return hash_value(key.to_s)&.to_value if key?(key.to_s)
 
         return nil
+      elsif :hash == type && method_name.to_s.include?('_source')
+        key = method_name.to_s.sub('_source', '')
+        return hash_value(key.to_sym)&.to_source if key?(key.to_sym)
+        return hash_value(key.to_s)&.to_source if key?(key.to_s)
+
+        return nil
       end
 
       super
