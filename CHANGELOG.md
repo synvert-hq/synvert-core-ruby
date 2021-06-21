@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.36.0 (2021-06-21)
+
+* Require `active_support/core_ext/array`
+
 ## 0.35.0 (2021-05-17)
 
 * Add `contain` rule
