@@ -94,6 +94,15 @@ module Synvert::Core
       instance.append 'include FactoryGirl::Syntax::Methods'
     end
 
+    it 'parses prepend' do
+      expect(Rewriter::PrependAction).to receive(:new).with(
+        instance,
+        '{{arguments.first}}.include FactoryGirl::Syntax::Methods',
+        {}
+      )
+      instance.prepend '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
+    end
+
     it 'parses insert' do
       expect(Rewriter::InsertAction).to receive(:new).with(
         instance,

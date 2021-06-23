@@ -18,6 +18,7 @@ module Synvert::Core
   class Rewriter
     autoload :Action, 'synvert/core/rewriter/action'
     autoload :AppendAction, 'synvert/core/rewriter/action/append_action'
+    autoload :PrependAction, 'synvert/core/rewriter/action/prepend_action'
     autoload :InsertAction, 'synvert/core/rewriter/action/insert_action'
     autoload :InsertAfterAction, 'synvert/core/rewriter/action/insert_after_action'
     autoload :ReplaceWithAction, 'synvert/core/rewriter/action/replace_with_action'

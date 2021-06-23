@@ -224,6 +224,15 @@ module Synvert::Core
       @actions << Rewriter::AppendAction.new(self, code, options)
     end
 
+    # Parse prepend dsl, it creates a [Synvert::Core::Rewriter::PrependAction] to
+    # prepend the code to the top of current node body.
+    #
+    # @param code [String] code need to be prepended.
+    # @param options [Hash] action options.
+    def prepend(code, options = {})
+      @actions << Rewriter::PrependAction.new(self, code, options)
+    end
+
     # Parse insert dsl, it creates a [Synvert::Core::Rewriter::InsertAction] to
     # insert the code to the top of current node body.
     #
