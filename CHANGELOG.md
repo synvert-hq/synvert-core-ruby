@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.39.0 (2021-06-23)
+
+* Add `prepend` dsl instead of `insert`
+
 ## 0.38.0 (2021-06-21)
 
 * Add `xxx_source` for `hash` node
