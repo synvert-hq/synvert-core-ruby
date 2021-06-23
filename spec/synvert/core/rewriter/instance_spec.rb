@@ -106,10 +106,10 @@ module Synvert::Core
     it 'parses insert' do
       expect(Rewriter::InsertAction).to receive(:new).with(
         instance,
-        '{{arguments.first}}.include FactoryGirl::Syntax::Methods',
+        '.first',
         {}
       )
-      instance.insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
+      instance.insert '.first'
     end
 
     it 'parses insert_after' do
