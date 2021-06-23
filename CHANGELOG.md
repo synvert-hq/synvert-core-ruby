@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 0.40.0 (2021-06-23)
+
+* Rewrite `insert` action
+
 ## 0.39.0 (2021-06-23)
 
-* Add `prepend` dsl instead of `insert`
+* Add `prepend` action instead of `insert`
 
 ## 0.38.0 (2021-06-21)
 
