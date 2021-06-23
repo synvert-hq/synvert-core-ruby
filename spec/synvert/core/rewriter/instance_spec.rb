@@ -104,11 +104,7 @@ module Synvert::Core
     end
 
     it 'parses insert' do
-      expect(Rewriter::InsertAction).to receive(:new).with(
-        instance,
-        '.first',
-        {}
-      )
+      expect(Rewriter::InsertAction).to receive(:new).with(instance, '.first', {})
       instance.insert '.first'
     end
 

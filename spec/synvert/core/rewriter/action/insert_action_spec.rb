@@ -20,7 +20,7 @@ module Synvert::Core
     end
 
     it 'gets rewritten_code' do
-      expect(subject.rewritten_code).to eq ".first"
+      expect(subject.rewritten_code).to eq '.first'
     end
   end
 end
