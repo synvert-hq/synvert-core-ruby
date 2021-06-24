@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.41.0 (2021-06-24)
+
+* Remove unused autoindent option
+* Add `insert 'xxx', at: 'beginning'`
+
 ## 0.40.0 (2021-06-23)
 
 * Rewrite `insert` action
