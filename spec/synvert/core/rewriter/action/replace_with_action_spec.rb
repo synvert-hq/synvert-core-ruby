@@ -31,11 +31,11 @@ module Synvert::Core
         send_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: send_node)
         Rewriter::ReplaceWithAction.new(instance, <<~EOS)
-            describe '#size' do
-              subject { super().size }
-              it { {{body}} }
-            end
-          EOS
+          describe '#size' do
+            subject { super().size }
+            it { {{body}} }
+          end
+        EOS
       }
 
       it 'gets begin_pos' do
