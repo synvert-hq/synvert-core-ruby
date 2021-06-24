@@ -32,11 +32,12 @@ module Synvert::Core
         instance = double(current_node: send_node)
         Rewriter::ReplaceWithAction.new(
           instance,
-          "describe '#size' do
-  subject { super().size }
-  it { {{body}} }
-end",
-          autoindent: false
+          <<~EOS
+            describe '#size' do
+              subject { super().size }
+              it { {{body}} }
+            end
+          EOS
         )
       }
 
@@ -49,10 +50,12 @@ end",
       end
 
       it 'gets rewritten_code' do
-        expect(subject.rewritten_code).to eq "describe '#size' do
-  subject { super().size }
-  it { should == 1 }
-end"
+        expect(subject.rewritten_code).to eq <<~EOS.strip
+          describe '#size' do
+              subject { super().size }
+              it { should == 1 }
+            end
+        EOS
       end
     end
   end

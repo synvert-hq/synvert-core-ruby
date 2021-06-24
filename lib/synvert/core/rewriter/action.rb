@@ -3,18 +3,15 @@
 module Synvert::Core
   # Action defines rewriter action, add, replace or remove code.
   class Rewriter::Action
-    DEFAULT_OPTIONS = { autoindent: true }.freeze
     DEFAULT_INDENT = 2
 
     # Initialize an action.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param code [String] new code to add, replace or remove.
-    # @param options [Hash] action options, it includes :autoindent.
-    def initialize(instance, code, options = {})
+    def initialize(instance, code)
       @instance = instance
       @code = code
-      @options = DEFAULT_OPTIONS.merge(options)
       @node = @instance.current_node
     end
 

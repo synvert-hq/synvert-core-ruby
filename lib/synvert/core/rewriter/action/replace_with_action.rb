@@ -21,11 +21,11 @@ module Synvert::Core
     #
     # @return [String] rewritten code.
     def rewritten_code
-      if rewritten_source.split("\n").length > 1
+      if rewritten_source.include?("\n")
         new_code = []
-        rewritten_source.split("\n").each_with_index { |line, index|
-          new_code << (index == 0 || !@options[:autoindent] ? line : indent(@node) + line)
-        }
+        rewritten_source.split("\n").each_with_index do |line, index|
+          new_code << (index == 0 ? line : indent(@node) + line)
+        end
         new_code.join("\n")
       else
         rewritten_source

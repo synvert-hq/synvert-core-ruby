@@ -219,45 +219,40 @@ module Synvert::Core
     # append the code to the bottom of current node body.
     #
     # @param code [String] code need to be appended.
-    # @param options [Hash] action options.
-    def append(code, options = {})
-      @actions << Rewriter::AppendAction.new(self, code, options)
+    def append(code)
+      @actions << Rewriter::AppendAction.new(self, code)
     end
 
     # Parse prepend dsl, it creates a [Synvert::Core::Rewriter::PrependAction] to
     # prepend the code to the top of current node body.
     #
     # @param code [String] code need to be prepended.
-    # @param options [Hash] action options.
-    def prepend(code, options = {})
-      @actions << Rewriter::PrependAction.new(self, code, options)
+    def prepend(code)
+      @actions << Rewriter::PrependAction.new(self, code)
     end
 
     # Parse insert dsl, it creates a [Synvert::Core::Rewriter::InsertAction] to
     # insert the code to the top of current node body.
     #
     # @param code [String] code need to be inserted.
-    # @param options [Hash] action options.
-    def insert(code, options = {})
-      @actions << Rewriter::InsertAction.new(self, code, options)
+    def insert(code)
+      @actions << Rewriter::InsertAction.new(self, code)
     end
 
     # Parse insert_after dsl, it creates a [Synvert::Core::Rewriter::InsertAfterAction] to
     # insert the code next to the current node.
     #
     # @param code [String] code need to be inserted.
-    # @param options [Hash] action options.
-    def insert_after(node, options = {})
-      @actions << Rewriter::InsertAfterAction.new(self, node, options)
+    def insert_after(node)
+      @actions << Rewriter::InsertAfterAction.new(self, node)
     end
 
     # Parse replace_with dsl, it creates a [Synvert::Core::Rewriter::ReplaceWithAction] to
     # replace current node with code.
     #
     # @param code [String] code need to be replaced with.
-    # @param options [Hash] action options.
-    def replace_with(code, options = {})
-      @actions << Rewriter::ReplaceWithAction.new(self, code, options)
+    def replace_with(code)
+      @actions << Rewriter::ReplaceWithAction.new(self, code)
     end
 
     # Parse replace with dsl, it creates a [Synvert::Core::Rewriter::ReplaceAction] to
