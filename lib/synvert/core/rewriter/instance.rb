@@ -235,8 +235,9 @@ module Synvert::Core
     # insert the code to the top of current node body.
     #
     # @param code [String] code need to be inserted.
-    def insert(code)
-      @actions << Rewriter::InsertAction.new(self, code)
+    # @param at [String] insert position, beginning or end, end is the default.
+    def insert(code, at: 'end')
+      @actions << Rewriter::InsertAction.new(self, code, at: at)
     end
 
     # Parse insert_after dsl, it creates a [Synvert::Core::Rewriter::InsertAfterAction] to

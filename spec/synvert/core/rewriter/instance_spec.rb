@@ -105,9 +105,19 @@ module Synvert::Core
     it 'parses insert' do
       expect(Rewriter::InsertAction).to receive(:new).with(
         instance,
-        '.first'
+        '.first',
+        at: 'end'
       )
       instance.insert '.first'
+    end
+
+    it 'parses insert' do
+      expect(Rewriter::InsertAction).to receive(:new).with(
+        instance,
+        'URI.',
+        at: 'beginning'
+      )
+      instance.insert 'URI.', at: 'beginning'
     end
 
     it 'parses insert_after' do
