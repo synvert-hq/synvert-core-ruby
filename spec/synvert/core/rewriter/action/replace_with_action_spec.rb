@@ -30,15 +30,12 @@ module Synvert::Core
         source = '  its(:size) { should == 1 }'
         send_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: send_node)
-        Rewriter::ReplaceWithAction.new(
-          instance,
-          <<~EOS
+        Rewriter::ReplaceWithAction.new(instance, <<~EOS)
             describe '#size' do
               subject { super().size }
               it { {{body}} }
             end
           EOS
-        )
       }
 
       it 'gets begin_pos' do
