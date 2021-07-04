@@ -388,7 +388,7 @@ module Parser::AST
         end
 
         raise Synvert::Core::MethodNotSupported,
-              "child_node_range is not handled for #{evaluated.inspect}, child_name: #{child_name}"
+              "child_node_range is not handled for #{debug_info}, child_name: #{child_name}"
       end
     end
 
