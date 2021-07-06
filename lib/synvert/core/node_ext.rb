@@ -493,6 +493,8 @@ module Parser::AST
     # @return [Integer] -1, 0 or 1.
     # @raise [Synvert::Core::MethodNotSupported] if expected class is not supported.
     def match_value?(actual, expected)
+      return true if actual == expected
+
       case expected
       when Symbol
         if actual.is_a?(Parser::AST::Node)
