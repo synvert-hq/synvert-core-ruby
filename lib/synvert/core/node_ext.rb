@@ -504,7 +504,15 @@ module Parser::AST
         end
       when String
         if actual.is_a?(Parser::AST::Node)
-          return true if (Parser::CurrentRuby.parse(expected) == actual rescue nil)
+          if (
+               begin
+                 Parser::CurrentRuby.parse(expected) == actual
+               rescue StandardError
+                 nil
+               end
+             )
+            return true
+          end
           actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
             actual.to_source[1...-1] == expected
         else
