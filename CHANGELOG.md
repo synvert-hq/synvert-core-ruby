@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# 0.42.0 (2021-07-11)
+
+* Match string with quote
+* `match_value?` returns true if actual and expected are the same
+
 ## 0.41.0 (2021-06-24)
 
 * Remove unused autoindent option
