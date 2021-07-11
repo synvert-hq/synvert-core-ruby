@@ -291,6 +291,11 @@ describe Parser::AST::Node do
       expect(node.to_value).to eq 1
     end
 
+    it 'gets for float' do
+      node = parse('1.5')
+      expect(node.to_value).to eq 1.5
+    end
+
     it 'gets for string' do
       node = parse("'str'")
       expect(node.to_value).to eq 'str'
@@ -385,11 +390,6 @@ describe Parser::AST::Node do
   end
 
   describe '#match?' do
-    let(:instance) {
-      rewriter = Synvert::Rewriter.new('foo', 'bar')
-      Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
-    }
-
     it 'matches class name' do
       source = 'class Synvert; end'
       node = parse(source)
@@ -414,16 +414,40 @@ describe Parser::AST::Node do
       expect(node).to be_match(type: 'send', arguments: [0])
     end
 
+    it 'matches assign float' do
+      source = 'at_least(1.5)'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', arguments: [1.5])
+    end
+
     it 'matches arguments with string' do
       source = 'params["user"]'
       node = parse(source)
       expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: ['user'])
     end
 
+    it 'matches arguments with string 2' do
+      source = 'params["user"]'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: ["'user'"])
+    end
+
+    it 'matches arguments with string 3' do
+      source = "{ notice: 'Welcome' }"
+      node = parse(source)
+      expect(node).to be_match(type: 'hash', notice_value: "'Welcome'")
+    end
+
     it 'matches arguments any' do
       source = 'config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false'
       node = parse(source)
       expect(node).to be_match(type: 'send', arguments: { any: 'Lifo::Cache' })
+    end
+
+    it 'matches arguments with nested hash' do
+      source = '{ user_id: user.id }'
+      node = parse(source)
+      expect(node).to be_match(type: 'hash', user_id_value: { type: 'send', receiver: { type: 'send', message: 'user' }, message: 'id' })
     end
 
     it 'matches arguments contain' do
@@ -594,11 +618,6 @@ describe Parser::AST::Node do
   end
 
   describe '#rewritten_source' do
-    let(:instance) {
-      rewriter = Synvert::Rewriter.new('foo', 'bar')
-      Synvert::Rewriter::Instance.new(rewriter, 'file pattern')
-    }
-
     it 'does not rewrite with unknown method' do
       source = 'class Synvert; end'
       node = parse(source)

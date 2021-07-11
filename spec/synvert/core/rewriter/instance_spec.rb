@@ -155,22 +155,20 @@ module Synvert::Core
               replace_with 'create {{arguments}}'
             end
           end
-        input =
-          "
-it 'uses factory_girl' do
-  user = FactoryGirl.create :user
-  post = FactoryGirl.create :post, user: user
-  assert post.valid?
-end
-"
-        output =
-          "
-it 'uses factory_girl' do
-  user = create :user
-  post = create :post, user: user
-  assert post.valid?
-end
-"
+        input = <<~EOS
+          it 'uses factory_girl' do
+            user = FactoryGirl.create :user
+            post = FactoryGirl.create :post, user: user
+            assert post.valid?
+          end
+        EOS
+        output = <<~EOS
+          it 'uses factory_girl' do
+            user = create :user
+            post = create :post, user: user
+            assert post.valid?
+          end
+        EOS
         expect(Dir).to receive(:glob).with('./spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
         expect(File).to receive(:read).with('spec/models/post_spec.rb').and_return(input)
         expect(File).to receive(:write).with('spec/models/post_spec.rb', output)
@@ -186,18 +184,16 @@ end
               end
             end
           end
-        input =
-          '
-        RSpec.configure do |config|
-          config.include FactoryGirl::Syntax::Methods
-        end
-        '
-        output =
-          '
-        RSpec.configure do |config|
-          config.include FactoryGirl::Syntax::Methods
-        end
-        '
+        input = <<~EOS
+          RSpec.configure do |config|
+            config.include FactoryGirl::Syntax::Methods
+          end
+        EOS
+        output = <<~EOS
+          RSpec.configure do |config|
+            config.include FactoryGirl::Syntax::Methods
+          end
+        EOS
         expect(Dir).to receive(:glob).with('./spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
         expect(File).to receive(:read).with('spec/spec_helper.rb').and_return(input)
         expect(File).not_to receive(:write).with('spec/spec_helper.rb', output)
@@ -213,18 +209,16 @@ end
               end
             end
           end
-        input =
-          '
-        RSpec.configure do |config|
-          config.include FactoryGirl::Syntax::Methods
-        end
-        '
-        output =
-          '
-        RSpec.configure do |config|
-          config.include FactoryGirl::Syntax::Methods
-        end
-        '
+        input = <<~EOS
+          RSpec.configure do |config|
+            config.include FactoryGirl::Syntax::Methods
+          end
+        EOS
+        output = <<~EOS
+          RSpec.configure do |config|
+            config.include FactoryGirl::Syntax::Methods
+          end
+        EOS
         expect(Dir).to receive(:glob).with('./spec/spec_helper.rb').and_return(['spec/spec_helper.rb']).twice
         expect(File).to receive(:read).with('spec/spec_helper.rb').and_return(input).once
         expect(File).not_to receive(:write).with('spec/spec_helper.rb', output)
@@ -239,22 +233,20 @@ end
               replace_with 'create {{arguments}}'
             end
           end
-        input =
-          "
-it 'uses factory_girl' do
-  user = FactoryGirl.create :user
-  post = FactoryGirl.create :post, user: user
-  assert post.valid?
-end
-"
-        output =
-          "
-it 'uses factory_girl' do
-  user = create :user
-  post = create :post, user: user
-  assert post.valid?
-end
-"
+        input = <<~EOS
+          it 'uses factory_girl' do
+            user = FactoryGirl.create :user
+            post = FactoryGirl.create :post, user: user
+            assert post.valid?
+          end
+        EOS
+        output = <<~EOS
+          it 'uses factory_girl' do
+            user = create :user
+            post = create :post, user: user
+            assert post.valid?
+          end
+        EOS
         expect(Dir).to receive(:glob).with('./spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb']).twice
         expect(File).to receive(:read).with('spec/models/post_spec.rb').and_return(input)
         expect(File).to receive(:write).with('spec/models/post_spec.rb', output)

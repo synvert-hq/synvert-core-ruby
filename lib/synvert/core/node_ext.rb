@@ -240,7 +240,7 @@ module Parser::AST
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def to_value
       case type
-      when :int, :str, :sym
+      when :int, :float, :str, :sym
         children.last
       when :true
         true
@@ -253,7 +253,7 @@ module Parser::AST
       when :begin
         children.first.to_value
       else
-        raise Synvert::Core::MethodNotSupported, "to_value is not handled for #{debug_info}"
+        self
       end
     end
 
@@ -504,10 +504,11 @@ module Parser::AST
         end
       when String
         if actual.is_a?(Parser::AST::Node)
+          return true if (Parser::CurrentRuby.parse(expected) == actual rescue nil)
           actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
             actual.to_source[1...-1] == expected
         else
-          actual.to_s == expected
+          actual.to_s == expected || wrap_quote(actual.to_s) == expected
         end
       when Regexp
         if actual.is_a?(Parser::AST::Node)
@@ -565,11 +566,7 @@ module Parser::AST
     # @param multi_keys [Array<Symbol>]
     # @return [Object] actual value.
     def actual_value(node, multi_keys)
-      multi_keys.inject(node) { |n, key|
-        if n
-          key == :source ? n.send(key) : n.send(key)
-        end
-      }
+      multi_keys.inject(node) { |n, key| n.send(key) if n }
     end
 
     # Get expected value from rules.
@@ -579,6 +576,14 @@ module Parser::AST
     # @return [Object] expected value.
     def expected_value(rules, multi_keys)
       multi_keys.inject(rules) { |o, key| o[key] }
+    end
+
+    def wrap_quote(string)
+      if string.include?("'")
+        "\"#{string}\""
+      else
+        "'#{string}'"
+      end
     end
   end
 end
