@@ -52,7 +52,9 @@ module Synvert::Core
       #
       # @param block [Block] a block defines the behaviors of the rewriter.
       def execute(&block)
-        Rewriter.new('', '', &block).process
+        rewriter = Rewriter.new('', '', &block)
+        rewriter.process
+        rewriter
       end
 
       # Register a rewriter with its group and name.
