@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 0.42.1 (2021-07-14)
+
+* Return rewrtier after executing snippet
+
 # 0.42.0 (2021-07-11)
 
 * Match string with quote
