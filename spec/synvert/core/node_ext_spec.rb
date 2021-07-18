@@ -261,6 +261,11 @@ describe Parser::AST::Node do
       node = parse('@a = 1')
       expect(node.left_value).to eq :@a
     end
+
+    it 'gets for or_asgn' do
+      node = parse('a ||= 1')
+      expect(node.left_value).to eq :a
+    end
   end
 
   describe '#right_value' do
@@ -281,6 +286,11 @@ describe Parser::AST::Node do
 
     it 'gets for ivasgn' do
       node = parse('@a = 1')
+      expect(node.right_value).to eq parse('1')
+    end
+
+    it 'gets for or_asgn' do
+      node = parse('a ||= 1')
       expect(node.right_value).to eq parse('1')
     end
   end
