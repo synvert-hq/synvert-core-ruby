@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 0.44.1 (2021-07-19)
+
+* Handle `nil` child node for `begin_pos` and `end_pos`
+
 # 0.44.0 (2021-07-19)
 
 * Return rewrtier after executing snippet
