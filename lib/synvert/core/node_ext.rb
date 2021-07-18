@@ -362,6 +362,12 @@ module Parser::AST
         else
           loc.selector
         end
+      when %i[send parentheses]
+        if loc.begin && loc.end
+          Parser::Source::Range.new('(string)', loc.begin.begin_pos, loc.end.end_pos)
+        else
+          nil
+        end
       else
         if respond_to?(child_name)
           child_node = send(child_name)

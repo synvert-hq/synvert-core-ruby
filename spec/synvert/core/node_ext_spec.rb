@@ -624,6 +624,20 @@ describe Parser::AST::Node do
         range = node.child_node_range(:arguments)
         expect(range).to be_nil
       end
+
+      it 'checks parentheses' do
+        node = parse('foo.bar(test)')
+        range = node.child_node_range(:parentheses)
+        expect(range.to_range).to eq(7...13)
+
+        node = parse('foobar(test)')
+        range = node.child_node_range(:parentheses)
+        expect(range.to_range).to eq(6...12)
+
+        node = parse('foo.bar')
+        range = node.child_node_range(:parentheses)
+        expect(range).to be_nil
+      end
     end
   end
 
