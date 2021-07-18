@@ -12,14 +12,14 @@ module Synvert::Core
     #
     # @return [Integer] begin position.
     def begin_pos
-      @selectors.map { |selector| @node.child_node_range(selector).begin_pos }.min
+      @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:begin_pos).min
     end
 
     # End position of code to replace.
     #
     # @return [Integer] end position.
     def end_pos
-      @selectors.map { |selector| @node.child_node_range(selector).end_pos }.max
+      @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:end_pos).max
     end
 
     # The rewritten code, always empty string.
