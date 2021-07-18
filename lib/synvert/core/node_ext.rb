@@ -513,6 +513,7 @@ module Parser::AST
       when String
         if actual.is_a?(Parser::AST::Node)
           return true if (Parser::CurrentRuby.parse(expected) == actual rescue nil)
+
           actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
             actual.to_source[1...-1] == expected
         else
