@@ -113,7 +113,7 @@ module Synvert::Core
               source[action.begin_pos...action.end_pos] = action.rewritten_code
               source = remove_code_or_whole_line(source, action.line)
             end
-            @actions = conflict_actions
+            @actions = []
 
             update_file(file_path, source)
           end
