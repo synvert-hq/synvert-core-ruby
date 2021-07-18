@@ -1,11 +1,10 @@
 # CHANGELOG
 
-# 0.43.0 (2021-07-18)
+# 0.44.0 (2021-07-19)
 
 * Return rewrtier after executing snippet
 * `left_value` and `right_value` support `or_asgn` node
 * `child_node_range` supports send `parentheses`
-* Fix conflict actions
 
 # 0.42.0 (2021-07-11)
 
