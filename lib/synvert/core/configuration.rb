@@ -7,7 +7,7 @@ module Synvert::Core
       attr_writer :path, :skip_files
 
       def path
-        @path || '.'
+        @path || File.absolute_path('.')
       end
 
       def skip_files
