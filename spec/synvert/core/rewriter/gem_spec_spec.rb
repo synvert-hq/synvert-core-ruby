@@ -4,19 +4,18 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::GemSpec do
-    let(:gemfile_lock_content) {
-      '
-GEM
-  remote: https://rubygems.org/
-  specs:
-    ast (1.1.0)
-    parser (2.1.7)
-      ast (~> 1.1)
-      slop (~> 3.4, >= 3.4.5)
-    rake (10.1.1)
-    slop (3.4.7)
-    '
-    }
+    let(:gemfile_lock_content) { <<~EOS }
+      GEM
+        remote: https://rubygems.org/
+        specs:
+          ast (1.1.0)
+          parser (2.1.7)
+            ast (~> 1.1)
+            slop (~> 3.4, >= 3.4.5)
+          rake (10.1.1)
+          slop (3.4.7)
+    EOS
+    before { allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem/specs')).and_return(false) }
 
     it 'returns true if version in Gemfile.lock is greater than definition' do
       expect(File).to receive(:exist?).with('./Gemfile.lock').and_return(true)
