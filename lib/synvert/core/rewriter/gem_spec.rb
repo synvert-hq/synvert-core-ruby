@@ -25,9 +25,6 @@ module Synvert::Core
       return true unless File.exist?(gemfile_lock_path)
 
       ENV['BUNDLE_GEMFILE'] = Configuration.path # make sure bundler reads Gemfile.lock in the correct path
-      puts "================="
-      puts ENV['BUNDLE_GEMFILE']
-      puts gemfile_lock_path
       parser = Bundler::LockfileParser.new(File.read(gemfile_lock_path))
       parser.specs.any? { |spec| Gem::Dependency.new(@name, @version).match?(spec) }
     end
