@@ -169,7 +169,9 @@ module Synvert::Core
             assert post.valid?
           end
         EOS
-        expect(Dir).to receive(:glob).with(File.join(File.absolute_path('.'), 'spec/**/*_spec.rb')).and_return(['spec/models/post_spec.rb'])
+        expect(Dir).to receive(:glob)
+          .with(File.join(File.absolute_path('.'), 'spec/**/*_spec.rb'))
+          .and_return(['spec/models/post_spec.rb'])
         expect(File).to receive(:read).with('spec/models/post_spec.rb').and_return(input)
         expect(File).to receive(:write).with('spec/models/post_spec.rb', output)
         instance.process
@@ -194,7 +196,9 @@ module Synvert::Core
             config.include FactoryGirl::Syntax::Methods
           end
         EOS
-        expect(Dir).to receive(:glob).with(File.join(File.absolute_path('.'), 'spec/spec_helper.rb')).and_return(['spec/spec_helper.rb'])
+        expect(Dir).to receive(:glob)
+          .with(File.join(File.absolute_path('.'), 'spec/spec_helper.rb'))
+          .and_return(['spec/spec_helper.rb'])
         expect(File).to receive(:read).with('spec/spec_helper.rb').and_return(input)
         expect(File).not_to receive(:write).with('spec/spec_helper.rb', output)
         instance.process
@@ -219,7 +223,10 @@ module Synvert::Core
             config.include FactoryGirl::Syntax::Methods
           end
         EOS
-        expect(Dir).to receive(:glob).with(File.join(File.absolute_path('.'), 'spec/spec_helper.rb')).and_return(['spec/spec_helper.rb']).twice
+        expect(Dir).to receive(:glob)
+          .with(File.join(File.absolute_path('.'), 'spec/spec_helper.rb'))
+          .and_return(['spec/spec_helper.rb'])
+          .twice
         expect(File).to receive(:read).with('spec/spec_helper.rb').and_return(input).once
         expect(File).not_to receive(:write).with('spec/spec_helper.rb', output)
         instance.process
@@ -247,7 +254,10 @@ module Synvert::Core
             assert post.valid?
           end
         EOS
-        expect(Dir).to receive(:glob).with(File.join(File.absolute_path('.'), 'spec/**/*_spec.rb')).and_return(['spec/models/post_spec.rb']).twice
+        expect(Dir).to receive(:glob)
+          .with(File.join(File.absolute_path('.'), 'spec/**/*_spec.rb'))
+          .and_return(['spec/models/post_spec.rb'])
+          .twice
         expect(File).to receive(:read).with('spec/models/post_spec.rb').and_return(input)
         expect(File).to receive(:write).with('spec/models/post_spec.rb', output)
         expect(File).to receive(:read).with('spec/models/post_spec.rb').and_return(output)
