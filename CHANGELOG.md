@@ -1,8 +1,9 @@
 # CHANGELOG
 
-# 0.44.1 (2021-07-19)
+# 0.45.0 (2021-07-22)
 
 * Handle `nil` child node for `begin_pos` and `end_pos`
+* Remove `Rewriter::Instance` options
 
 # 0.44.0 (2021-07-19)
 
