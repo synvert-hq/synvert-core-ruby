@@ -64,20 +64,16 @@ module Synvert::Core
     #   @return current filename
     attr_accessor :current_node, :current_file
 
-    DEFAULT_OPTIONS = { sort_by: 'begin_pos' }.freeze
-
     # Initialize an instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
     # @param file_pattern [String] pattern to find files, e.g. spec/**/*_spec.rb
-    # @param options [Hash] instance options, it includes :sort_by.
     # @param block [Block] block code to find nodes, match conditions and rewrite code.
     # @return [Synvert::Core::Rewriter::Instance]
-    def initialize(rewriter, file_pattern, options = {}, &block)
+    def initialize(rewriter, file_pattern, &block)
       @rewriter = rewriter
       @actions = []
       @file_pattern = file_pattern
-      @options = DEFAULT_OPTIONS.merge(options)
       @block = block
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
@@ -107,7 +103,7 @@ module Synvert::Core
           end
 
           if @actions.length > 0
-            @actions.sort_by! { |action| action.send(@options[:sort_by]) }
+            @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
             conflict_actions = get_conflict_actions
             @actions.reverse_each do |action|
               source[action.begin_pos...action.end_pos] = action.rewritten_code
