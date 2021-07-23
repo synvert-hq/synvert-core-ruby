@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 0.45.1 (2021-07-24)
+
+* Unwrap quote when matching string value
+
 # 0.45.0 (2021-07-22)
 
 * Handle `nil` child node for `begin_pos` and `end_pos`
