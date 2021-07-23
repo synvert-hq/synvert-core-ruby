@@ -510,9 +510,8 @@ module Parser::AST
         end
       when String
         if actual.is_a?(Parser::AST::Node)
-          return true if (Parser::CurrentRuby.parse(expected) == actual rescue nil)
-          actual.to_source == expected || (actual.to_source[0] == ':' && actual.to_source[1..-1] == expected) ||
-            actual.to_source[1...-1] == expected
+          actual.to_source == expected || actual.to_value == expected ||
+            actual.to_source == unwrap_quote(expected) || actual.to_value == unwrap_quote(expected)
         else
           actual.to_s == expected || wrap_quote(actual.to_s) == expected
         end
@@ -589,6 +588,14 @@ module Parser::AST
         "\"#{string}\""
       else
         "'#{string}'"
+      end
+    end
+
+    def unwrap_quote(string)
+      if (string[0] == '"' && string[-1] == '"') || (string[0] == "'" && string[-1] == "'")
+        string[1...-1]
+      else
+        string
       end
     end
   end
