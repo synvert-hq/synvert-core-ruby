@@ -504,7 +504,7 @@ module Parser::AST
       case expected
       when Symbol
         if actual.is_a?(Parser::AST::Node)
-          actual.to_source == ":#{expected}"
+          actual.to_value == expected
         else
           actual.to_sym == expected
         end
