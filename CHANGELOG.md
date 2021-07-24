@@ -1,21 +1,25 @@
 # CHANGELOG
 
-# 0.45.1 (2021-07-24)
+## 0.45.2 (2021-07-24)
+
+* Simplify symbol `match_value?`
+
+## 0.45.1 (2021-07-24)
 
 * Unwrap quote when matching string value
 
-# 0.45.0 (2021-07-22)
+## 0.45.0 (2021-07-22)
 
 * Handle `nil` child node for `begin_pos` and `end_pos`
 * Remove `Rewriter::Instance` options
 
-# 0.44.0 (2021-07-19)
+## 0.44.0 (2021-07-19)
 
 * Return rewrtier after executing snippet
 * `left_value` and `right_value` support `or_asgn` node
 * `child_node_range` supports send `parentheses`
 
-# 0.42.0 (2021-07-11)
+## 0.42.0 (2021-07-11)
 
 * Match string with quote
 * `match_value?` returns true if actual and expected are the same
