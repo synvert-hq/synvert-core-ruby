@@ -490,6 +490,20 @@ module Parser::AST
       end
     end
 
+    # strip curly braces for hash
+    def strip_curly_braces
+      return to_source unless type == :hash
+
+      to_source.sub(/^{(.*)}$/) { Regexp.last_match(1).strip }
+    end
+
+    # wrap curly braces for hash
+    def wrap_curly_braces
+      return to_source unless type == :hash
+
+      "{ #{to_source} }"
+    end
+
     private
 
     # Compare actual value with expected value.

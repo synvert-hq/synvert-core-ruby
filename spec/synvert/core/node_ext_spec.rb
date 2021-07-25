@@ -679,4 +679,37 @@ describe Parser::AST::Node do
       EOS
     end
   end
+
+  describe '#strip_curly_braces' do
+    context 'hash node' do
+      it 'removes curly braces' do
+        node = parse("{ foo: 'bar' }")
+        expect(node.strip_curly_braces).to eq("foo: 'bar'")
+      end
+    end
+
+    context 'other node' do
+      it 'do nothing' do
+        node = parse("'foobar'")
+        expect(node.strip_curly_braces).to eq("'foobar'")
+      end
+    end
+  end
+
+  describe '#wrap_curly_braces' do
+    context 'hash node' do
+      it 'adds curly braces' do
+        node = parse("test(foo: 'bar')").arguments.first
+        expect(node.to_source).to eq("foo: 'bar'")
+        expect(node.wrap_curly_braces).to eq("{ foo: 'bar' }")
+      end
+    end
+
+    context 'other node' do
+      it 'do nothing' do
+        node = parse("'foobar'")
+        expect(node.wrap_curly_braces).to eq("'foobar'")
+      end
+    end
+  end
 end
