@@ -1,11 +1,9 @@
 # CHANGELOG
 
-## 0.45.2 (2021-07-24)
+## 0.46.0 (2021-07-25)
 
+* Add `strip_curly_braces` and `wrap_curly_braces` for `hash` node
 * Simplify symbol `match_value?`
-
-## 0.45.1 (2021-07-24)
-
 * Unwrap quote when matching string value
 
 ## 0.45.0 (2021-07-22)
