@@ -457,7 +457,17 @@ describe Parser::AST::Node do
     it 'matches arguments with nested hash' do
       source = '{ user_id: user.id }'
       node = parse(source)
-      expect(node).to be_match(type: 'hash', user_id_value: { type: 'send', receiver: { type: 'send', message: 'user' }, message: 'id' })
+      expect(node).to be_match(
+        type: 'hash',
+        user_id_value: {
+          type: 'send',
+          receiver: {
+            type: 'send',
+            message: 'user'
+          },
+          message: 'id'
+        }
+      )
     end
 
     it 'matches arguments contain' do
