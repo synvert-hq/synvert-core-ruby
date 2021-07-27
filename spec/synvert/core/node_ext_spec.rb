@@ -706,9 +706,26 @@ describe Parser::AST::Node do
     end
 
     context 'other node' do
-      it 'do nothing' do
+      it 'does nothing' do
         node = parse("'foobar'")
         expect(node.wrap_curly_braces).to eq("'foobar'")
+      end
+    end
+  end
+
+  describe '#to_single_quote' do
+    context 'str node' do
+      it 'converts double quote to single quote' do
+        node = parse('"foobar"')
+        expect(node.to_source).to eq '"foobar"'
+        expect(node.to_single_quote).to eq "'foobar'"
+      end
+    end
+
+    context 'other node' do
+      it 'does nothing' do
+        node = parse(':foobar')
+        expect(node.to_single_quote).to eq ':foobar'
       end
     end
   end

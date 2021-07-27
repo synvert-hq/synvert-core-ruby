@@ -504,6 +504,13 @@ module Parser::AST
       "{ #{to_source} }"
     end
 
+    # get single quote string
+    def to_single_quote
+      return to_source unless type == :str
+
+      "'#{to_value}'"
+    end
+
     private
 
     # Compare actual value with expected value.
