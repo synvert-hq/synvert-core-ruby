@@ -511,6 +511,13 @@ module Parser::AST
       "'#{to_value}'"
     end
 
+    # convert string to symbol
+    def to_symbol
+      return to_source unless type == :str
+
+      ":#{to_value}"
+    end
+
     private
 
     # Compare actual value with expected value.

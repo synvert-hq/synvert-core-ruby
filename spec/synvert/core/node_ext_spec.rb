@@ -729,4 +729,20 @@ describe Parser::AST::Node do
       end
     end
   end
+
+  describe '#to_symbol' do
+    context 'str node' do
+      it 'converts string to symbol' do
+        node = parse("'foobar'")
+        expect(node.to_symbol).to eq ':foobar'
+      end
+    end
+
+    context 'other node' do
+      it 'does nothing' do
+        node = parse(':foobar')
+        expect(node.to_symbol).to eq ':foobar'
+      end
+    end
+  end
 end
