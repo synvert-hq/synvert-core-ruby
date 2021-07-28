@@ -745,4 +745,25 @@ describe Parser::AST::Node do
       end
     end
   end
+
+  describe '#to_lambda_literal' do
+    context 'lambda node' do
+      it 'converts to lambda literal without arguments' do
+        node = parse('lambda { foobar }')
+        expect(node.to_lambda_literal).to eq('-> { foobar }')
+      end
+
+      it 'converts to lambda literal with arguments' do
+        node = parse('lambda { |x, y| foobar }')
+        expect(node.to_lambda_literal).to eq('->(x, y) { foobar }')
+      end
+    end
+
+    context 'other node' do
+      it 'does nothing' do
+        node = parse(':foobar')
+        expect(node.to_lambda_literal).to eq ':foobar'
+      end
+    end
+  end
 end
