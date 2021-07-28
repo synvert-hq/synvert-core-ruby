@@ -523,7 +523,8 @@ module Parser::AST
       if type == :block && caller.type == :send && caller.receiver.nil? && caller.message == :lambda
         new_source = to_source
         if arguments.size > 1
-          new_source = new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
+          new_source =
+            new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
           new_source = new_source.sub('lambda', "->(#{arguments.map(&:to_source).join(', ')})")
         else
           new_source = new_source.sub('lambda', '->')
@@ -554,8 +555,8 @@ module Parser::AST
         end
       when String
         if actual.is_a?(Parser::AST::Node)
-          actual.to_source == expected || actual.to_value == expected ||
-            actual.to_source == unwrap_quote(expected) || actual.to_value == unwrap_quote(expected)
+          actual.to_source == expected || actual.to_value == expected || actual.to_source == unwrap_quote(expected) ||
+            actual.to_value == unwrap_quote(expected)
         else
           actual.to_s == expected || wrap_quote(actual.to_s) == expected
         end
