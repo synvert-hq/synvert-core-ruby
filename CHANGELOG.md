@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.47.0 (2021-07-28)
+
+* Add `to_single_quote` to `str` node
+* Add `to_symbol` to `str` node
+* Add `to_lambda_literal` to `lambda` node
+
 ## 0.46.0 (2021-07-25)
 
 * Add `strip_curly_braces` and `wrap_curly_braces` for `hash` node
