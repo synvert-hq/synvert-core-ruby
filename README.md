@@ -1,5 +1,7 @@
 # Synvert::Core
 
+<img src="https://xinminlabs.github.io/synvert/img/logo_96.png" alt="logo" width="32" height="32" />
+
 ![Main workflow](https://github.com/xinminlabs/synvert-core/actions/workflows/main.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/xinminlabs/synvert-core/badge.png?branch=master)](https://coveralls.io/r/xinminlabs/synvert-core)
 [![Gem Version](https://badge.fury.io/rb/synvert-core.png)](http://badge.fury.io/rb/synvert-core)
@@ -35,5 +37,5 @@ Or install it yourself as:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
-[1]: http://xinminlabs.github.io/synvert/
-[2]: http://rubydoc.info/github/xinminlabs/synvert-core/master/frames
+[1]: https://xinminlabs.github.io/synvert/
+[2]: https://rubydoc.info/github/xinminlabs/synvert-core/master/frames
