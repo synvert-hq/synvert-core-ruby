@@ -17,7 +17,7 @@ module Synvert::Core
         @file_source ||= {}
         @file_source[file_path] ||=
           begin
-            source = File.read(file_path)
+            source = File.read(file_path, encoding: 'UTF-8')
             source = Engine::ERB.encode(source) if /\.erb$/.match?(file_path)
             source
           end
