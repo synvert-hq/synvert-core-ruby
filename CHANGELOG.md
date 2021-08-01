@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.48.0 (2021-08-01)
+
+* Force to read file as utf-8
+* Add logo
+
 ## 0.47.0 (2021-07-28)
 
 * Add `to_single_quote` to `str` node
