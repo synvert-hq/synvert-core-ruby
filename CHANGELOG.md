@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.49.1 (2021-08-04)
+
+* Fix symbol match
+
 ## 0.49.0 (2021-08-04)
 
 * Support :erange in to_value
