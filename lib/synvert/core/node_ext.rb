@@ -252,6 +252,8 @@ module Parser::AST
         children.map(&:to_value)
       when :irange
         (children.first.to_value..children.last.to_value)
+      when :erange
+        (children.first.to_value...children.last.to_value)
       when :begin
         children.first.to_value
       else
