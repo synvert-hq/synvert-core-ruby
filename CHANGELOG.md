@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.49.0 (2021-08-04)
+
+* Support :erange in to_value
+* Do not use to_value in match_value?
+
 ## 0.48.0 (2021-08-01)
 
 * Force to read file as utf-8
