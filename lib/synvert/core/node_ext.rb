@@ -550,7 +550,7 @@ module Parser::AST
       case expected
       when Symbol
         if actual.is_a?(Parser::AST::Node)
-          actual.to_source == ":#{expected}"
+          actual.to_source == ":#{expected}" || actual.to_source == expected.to_s
         else
           actual.to_sym == expected
         end

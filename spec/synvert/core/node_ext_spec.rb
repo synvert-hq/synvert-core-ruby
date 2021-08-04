@@ -423,6 +423,12 @@ describe Parser::AST::Node do
       expect(node).to be_match(type: 'send', receiver: 'params', message: '[]', arguments: [:user])
     end
 
+    it 'matches pair key with symbol' do
+      source = '{ type: :model }'
+      node = parse(source).children[0]
+      expect(node).to be_match(type: 'pair', key: :type)
+    end
+
     it 'matches assign number' do
       source = 'at_least(0)'
       node = parse(source)
