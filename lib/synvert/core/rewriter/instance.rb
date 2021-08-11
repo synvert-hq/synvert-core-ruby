@@ -279,6 +279,15 @@ module Synvert::Core
       @actions << Rewriter::DeleteAction.new(self, *selectors)
     end
 
+    # Parse wrap with dsl, it creates a [Synvert::Core::Rewriter::WrapAction] to
+    # wrap current node with code.
+    #
+    # @param with [String] code need to be wrapped with.
+    # @param indent [Number]
+    def wrap(with:, indent: nil)
+      @actions << Rewriter::WrapAction.new(self, with: with, indent: indent)
+    end
+
     # Parse warn dsl, it creates a [Synvert::Core::Rewriter::Warning] to save warning message.
     #
     # @param message [String] warning message.

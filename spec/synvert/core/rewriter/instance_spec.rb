@@ -140,6 +140,11 @@ module Synvert::Core
       instance.delete :dot, :message
     end
 
+    it 'parses wrap with' do
+      expect(Rewriter::WrapAction).to receive(:new).with(instance, with: 'module Foo', indent: nil)
+      instance.wrap with: 'module Foo'
+    end
+
     it 'parses warn' do
       expect(Rewriter::Warning).to receive(:new).with(instance, 'foobar')
       instance.warn 'foobar'
