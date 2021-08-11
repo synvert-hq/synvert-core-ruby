@@ -283,7 +283,7 @@ module Synvert::Core
     # wrap current node with code.
     #
     # @param with [String] code need to be wrapped with.
-    # @param indent [Number]
+    # @param indent [Integer] number of whitespaces.
     def wrap(with:, indent: nil)
       @actions << Rewriter::WrapAction.new(self, with: with, indent: indent)
     end
