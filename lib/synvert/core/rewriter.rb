@@ -18,14 +18,15 @@ module Synvert::Core
   class Rewriter
     autoload :Action, 'synvert/core/rewriter/action'
     autoload :AppendAction, 'synvert/core/rewriter/action/append_action'
-    autoload :PrependAction, 'synvert/core/rewriter/action/prepend_action'
+    autoload :DeleteAction, 'synvert/core/rewriter/action/delete_action'
     autoload :InsertAction, 'synvert/core/rewriter/action/insert_action'
     autoload :InsertAfterAction, 'synvert/core/rewriter/action/insert_after_action'
-    autoload :ReplaceWithAction, 'synvert/core/rewriter/action/replace_with_action'
+    autoload :RemoveAction, 'synvert/core/rewriter/action/remove_action'
+    autoload :PrependAction, 'synvert/core/rewriter/action/prepend_action'
     autoload :ReplaceAction, 'synvert/core/rewriter/action/replace_action'
     autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
-    autoload :RemoveAction, 'synvert/core/rewriter/action/remove_action'
-    autoload :DeleteAction, 'synvert/core/rewriter/action/delete_action'
+    autoload :ReplaceWithAction, 'synvert/core/rewriter/action/replace_with_action'
+    autoload :WrapAction, 'synvert/core/rewriter/action/wrap_action'
 
     autoload :Warning, 'synvert/core/rewriter/warning'
 
@@ -175,13 +176,18 @@ module Synvert::Core
       @sub_snippets = []
       @warnings = []
       @affected_files = Set.new
+      @redo_until_no_change = false
       self.class.register(@group, @name, self)
     end
 
     # Process the rewriter.
     # It will call the block.
     def process
+      @affected_files = Set.new
       instance_eval(&@block)
+      if !@affected_files.empty? && @redo_until_no_change
+        process
+      end
     end
 
     # Process rewriter with sandbox mode.
@@ -313,6 +319,11 @@ module Synvert::Core
       else
         @todo
       end
+    end
+
+    # Rerun the snippet until no change.
+    def redo_until_no_change
+      @redo_until_no_change = true
     end
   end
 end
