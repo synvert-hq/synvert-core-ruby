@@ -214,6 +214,15 @@ module Synvert::Core
       expect(rewriter.todo).to eq "this rewriter doesn't do blah blah blah"
     end
 
+    it 'parses redo_until_no_change' do
+      rewriter =
+        Rewriter.new 'group', 'name' do
+          redo_until_no_change
+        end
+      rewriter.process
+      expect(rewriter.instance_variable_get('@redo_until_no_change')).to be_truthy
+    end
+
     describe 'class methods' do
       before :each do
         Rewriter.clear
