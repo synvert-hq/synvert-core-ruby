@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## 0.49.1 (2021-08-04)
+## 0.50.0 (2021-08-11)
 
+* Support `:module` in `body`
 * Fix symbol match
 
 ## 0.49.0 (2021-08-04)
