@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.51.0 (2021-08-12)
+
+* Add `wrap` action
+* Add new dsl `redo_until_no_change`
+
 ## 0.50.0 (2021-08-11)
 
 * Support `:module` in `body`
