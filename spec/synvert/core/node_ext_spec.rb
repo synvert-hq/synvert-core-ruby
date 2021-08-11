@@ -151,6 +151,11 @@ describe Parser::AST::Node do
       expect(node.body).to be_empty
     end
 
+    it 'gets empty for module node' do
+      node = parse('module Admin; end')
+      expect(node.body).to be_empty
+    end
+
     it 'gets one line for class node' do
       node = parse('class User; attr_accessor :email; end')
       expect(node.body).to eq [parse('attr_accessor :email')]

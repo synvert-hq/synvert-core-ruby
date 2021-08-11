@@ -110,7 +110,7 @@ module Parser::AST
       case type
       when :begin
         children
-      when :def, :block, :class
+      when :def, :block, :class, :module
         return [] if children[2].nil?
 
         :begin == children[2].type ? children[2].body : children[2..-1]
