@@ -4,10 +4,8 @@ module Synvert::Core
   # ReplaceAction to replace child node with code.
   class Rewriter::ReplaceAction < Rewriter::Action
     def initialize(instance, *selectors, with:)
-      @instance = instance
+      super(instance, with)
       @selectors = selectors
-      @code = with
-      @node = @instance.current_node
     end
 
     # Begin position of code to replace.

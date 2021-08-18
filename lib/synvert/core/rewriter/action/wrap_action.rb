@@ -7,9 +7,7 @@ module Synvert::Core
   # we have to put those 2 actions into 2 within_file scopes.
   class Rewriter::WrapAction < Rewriter::Action
     def initialize(instance, with:, indent: nil)
-      @instance = instance
-      @code = with
-      @node = @instance.current_node
+      super(instance, with)
       @indent = indent || @node.indent
     end
 
