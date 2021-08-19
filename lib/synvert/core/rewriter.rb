@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+
 module Synvert::Core
   # Rewriter is the top level namespace in a snippet.
   #
