@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.51.1 (2021-08-19)
+
+* Require `fileutils`
+
 ## 0.51.0 (2021-08-12)
 
 * Add `wrap` action
