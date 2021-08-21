@@ -526,6 +526,12 @@ describe Parser::AST::Node do
         range = node.child_node_range('caller.receiver')
         expect(range.to_range).to eq(0...7)
       end
+
+      it 'checks caller.message' do
+        node = parse('Factory.define :user do |user|; end')
+        range = node.child_node_range('caller.message')
+        expect(range.to_range).to eq(8...14)
+      end
     end
 
     context 'class node' do

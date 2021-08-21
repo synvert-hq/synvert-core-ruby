@@ -341,7 +341,7 @@ module Parser::AST
     # @param [String] name of child node.
     # @return [Parser::Source::Range] source range of child node.
     def child_node_range(child_name)
-      case [type, child_name]
+      case [type, child_name.to_sym]
       when %i[block pipes], %i[def parentheses], %i[defs parentheses]
         Parser::Source::Range.new('(string)', arguments.loc.expression.begin_pos, arguments.loc.expression.end_pos)
       when %i[block arguments], %i[def arguments], %i[defs arguments]
@@ -369,35 +369,38 @@ module Parser::AST
           Parser::Source::Range.new('(string)', loc.begin.begin_pos, loc.end.end_pos)
         end
       else
-        child_node = self
-        child_name.to_s.split('.').each do |key|
-          if child_node.respond_to?(key)
-            child_node = child_node.send(key)
-            return nil if child_node.nil?
-          else
-            raise Synvert::Core::MethodNotSupported,
-                  "child_node_range is not handled for #{child_node.debug_info}, child_name: #{child_name}"
-          end
-        end
+        direct_child_name, nested_child_name = child_name.to_s.split('.', 2)
+        if respond_to?(direct_child_name)
+          child_node = send(direct_child_name)
 
-        if child_node.is_a?(Parser::AST::Node)
+          return child_node.child_node_range(nested_child_name) if nested_child_name
+
+          return nil if child_node.nil?
+
+          if child_node.is_a?(Parser::AST::Node)
+            return(
+              Parser::Source::Range.new(
+                '(string)',
+                child_node.loc.expression.begin_pos,
+                child_node.loc.expression.end_pos
+              )
+            )
+          end
+
+          # arguments
+          return nil if child_node.empty?
+
           return(
             Parser::Source::Range.new(
               '(string)',
-              child_node.loc.expression.begin_pos,
-              child_node.loc.expression.end_pos
+              child_node.first.loc.expression.begin_pos,
+              child_node.last.loc.expression.end_pos
             )
           )
         end
 
-        # arguments
-        return nil if child_node.empty?
-
-        Parser::Source::Range.new(
-          '(string)',
-          child_node.first.loc.expression.begin_pos,
-          child_node.last.loc.expression.end_pos
-        )
+        raise Synvert::Core::MethodNotSupported,
+              "child_node_range is not handled for #{debug_info}, child_name: #{child_name}"
       end
     end
 
