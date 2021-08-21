@@ -1,8 +1,10 @@
 # CHANGELOG
 
-## 0.51.1 (2021-08-19)
+## 0.52.0 (2021-08-21)
 
+* ``Node#child_node_range`` supports nested child
 * Require `fileutils`
+* Rename `Node#indent` to `Node#column`
 
 ## 0.51.0 (2021-08-12)
 
