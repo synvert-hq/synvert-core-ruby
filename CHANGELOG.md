@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.52.1 (2021-08-21)
+
+* Fix nested child in Node#child_node_range
+
 ## 0.52.0 (2021-08-21)
 
 * ``Node#child_node_range`` supports nested child
