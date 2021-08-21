@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # WithinScope finds out nodes which match rules, then change its scope to matching node.
+  # WithinScope finds out nodes which match rules, then changes its scope to matching node.
   class Rewriter::WithinScope < Rewriter::Scope
     # Initialize a scope
     #
@@ -16,8 +16,9 @@ module Synvert::Core
       @block = block
     end
 
-    # Find out the matching nodes. It checks the current node and iterates all child nodes,
-    # then run the block code with each matching node.
+    # Find out the matching nodes.
+    # It checks the current node and iterates all child nodes,
+    # then run the block code on each matching node.
     def process
       current_node = @instance.current_node
       return unless current_node

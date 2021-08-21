@@ -8,7 +8,7 @@ module Synvert::Core
   class Rewriter::WrapAction < Rewriter::Action
     def initialize(instance, with:, indent: nil)
       super(instance, with)
-      @indent = indent || @node.indent
+      @indent = indent || @node.column
     end
 
     # Begin position of code to wrap.

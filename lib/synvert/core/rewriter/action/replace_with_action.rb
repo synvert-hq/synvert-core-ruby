@@ -24,7 +24,7 @@ module Synvert::Core
       if rewritten_source.include?("\n")
         new_code = []
         rewritten_source.split("\n").each_with_index do |line, index|
-          new_code << (index == 0 ? line : indent(@node) + line)
+          new_code << (index == 0 ? line : indent + line)
         end
         new_code.join("\n")
       else
@@ -36,10 +36,9 @@ module Synvert::Core
 
     # Indent of the node
     #
-    # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
-    def indent(node)
-      ' ' * node.indent
+    def indent
+      ' ' * @node.column
     end
   end
 end

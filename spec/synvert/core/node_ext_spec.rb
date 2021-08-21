@@ -359,10 +359,10 @@ describe Parser::AST::Node do
     end
   end
 
-  describe '#indent' do
+  describe '#column' do
     it 'gets column number' do
       node = parse('  FactoryGirl.create :post')
-      expect(node.indent).to eq 2
+      expect(node.column).to eq 2
     end
   end
 

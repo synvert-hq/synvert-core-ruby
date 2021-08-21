@@ -38,9 +38,9 @@ module Synvert::Core
     # @return [String] n times whitesphace
     def indent(node)
       if %i[block class].include? node.type
-        ' ' * (node.indent + DEFAULT_INDENT)
+        ' ' * (node.column + DEFAULT_INDENT)
       else
-        ' ' * node.indent
+        ' ' * node.column
       end
     end
   end

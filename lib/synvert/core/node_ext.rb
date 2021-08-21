@@ -322,10 +322,10 @@ module Parser::AST
       loc.expression&.source
     end
 
-    # Get the indent of current node.
+    # Get the column of current node.
     #
-    # @return [Integer] indent.
-    def indent
+    # @return [Integer] column.
+    def column
       loc.expression.column
     end
 

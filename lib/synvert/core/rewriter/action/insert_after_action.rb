@@ -24,7 +24,7 @@ module Synvert::Core
     # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
     def indent(node)
-      ' ' * node.indent
+      ' ' * node.column
     end
   end
 end
