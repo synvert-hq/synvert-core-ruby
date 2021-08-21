@@ -369,34 +369,35 @@ module Parser::AST
           Parser::Source::Range.new('(string)', loc.begin.begin_pos, loc.end.end_pos)
         end
       else
-        if respond_to?(child_name)
-          child_node = send(child_name)
-          return nil if child_node.nil?
-
-          if child_node.is_a?(Parser::AST::Node)
-            return(
-              Parser::Source::Range.new(
-                '(string)',
-                child_node.loc.expression.begin_pos,
-                child_node.loc.expression.end_pos
-              )
-            )
+        child_node = self
+        child_name.to_s.split('.').each do |key|
+          if child_node.respond_to?(key)
+            child_node = child_node.send(key)
+            return nil if child_node.nil?
+          else
+            raise Synvert::Core::MethodNotSupported,
+                  "child_node_range is not handled for #{child_node.debug_info}, child_name: #{child_name}"
           end
+        end
 
-          # arguments
-          return nil if child_node.empty?
-
+        if child_node.is_a?(Parser::AST::Node)
           return(
             Parser::Source::Range.new(
               '(string)',
-              child_node.first.loc.expression.begin_pos,
-              child_node.last.loc.expression.end_pos
+              child_node.loc.expression.begin_pos,
+              child_node.loc.expression.end_pos
             )
           )
         end
 
-        raise Synvert::Core::MethodNotSupported,
-              "child_node_range is not handled for #{debug_info}, child_name: #{child_name}"
+        # arguments
+        return nil if child_node.empty?
+
+        Parser::Source::Range.new(
+          '(string)',
+          child_node.first.loc.expression.begin_pos,
+          child_node.last.loc.expression.end_pos
+        )
       end
     end
 

@@ -520,6 +520,12 @@ describe Parser::AST::Node do
         range = node.child_node_range(:pipes)
         expect(range.to_range).to eq(24...30)
       end
+
+      it 'checks caller.receiver' do
+        node = parse('Factory.define :user do |user|; end')
+        range = node.child_node_range('caller.receiver')
+        expect(range.to_range).to eq(0...7)
+      end
     end
 
     context 'class node' do
