@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.52.1 (2021-08-21)
+## 0.53.0 (2021-08-22)
 
 * Fix nested child in Node#child_node_range
+* Rename synvert-core to synvert-core-ruby
 
 ## 0.52.0 (2021-08-21)
 
