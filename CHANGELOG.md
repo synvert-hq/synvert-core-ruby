@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.54.0 (2021-08-28)
+
+* Change `goto_scope` param from array to string
+
 ## 0.53.0 (2021-08-22)
 
 * Fix nested child in Node#child_node_range
