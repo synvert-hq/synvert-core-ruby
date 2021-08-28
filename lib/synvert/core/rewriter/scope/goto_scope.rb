@@ -6,11 +6,11 @@ module Synvert::Core
     # Initialize a scope
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param *child_node_names [Array]
+    # @param child_node_name [Symbol|string]
     # @param block [Block]
-    def initialize(instance, *child_node_names, &block)
+    def initialize(instance, child_node_name, &block)
       @instance = instance
-      @child_node_names = child_node_names
+      @child_node_name = child_node_name
       @block = block
     end
 
@@ -20,7 +20,7 @@ module Synvert::Core
       return unless current_node
 
       child_node = current_node
-      @child_node_names.each do |child_node_name|
+      @child_node_name.to_s.split('.').each do |child_node_name|
         child_node = child_node_name.is_a?(Parser::AST::Node) ? child_node_name : child_node.send(child_node_name)
       end
       @instance.process_with_other_node child_node do

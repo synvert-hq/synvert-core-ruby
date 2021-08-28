@@ -24,7 +24,7 @@ module Synvert::Core
         run = false
         type_in_scope = nil
         scope =
-          Rewriter::GotoScope.new instance, :caller, :receiver do
+          Rewriter::GotoScope.new instance, 'caller.receiver' do
             run = true
             type_in_scope = node.type
           end
