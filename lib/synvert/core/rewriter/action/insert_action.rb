@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # AddAction to add code to the node.
+  # InsertAction to add code to the node.
   class Rewriter::InsertAction < Rewriter::Action
     def initialize(instance, code, at:)
       super(instance, code)
