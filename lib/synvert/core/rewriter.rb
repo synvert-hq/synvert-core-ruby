@@ -81,7 +81,7 @@ module Synvert::Core
       def fetch(group, name)
         group = group.to_s
         name = name.to_s
-        if exist? group, name
+        if rewriters[group] && rewriters[group][name]
           rewriters[group][name]
         else
           raise RewriterNotFound, "Rewriter #{group} #{name} not found"
@@ -96,34 +96,13 @@ module Synvert::Core
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def call(group, name, sandbox = false)
-        group = group.to_s
-        name = name.to_s
-        if exist? group, name
-          rewriter = rewriters[group][name]
-          if sandbox
-            rewriter.process_with_sandbox
-          else
-            rewriter.process
-          end
-          rewriter
+        rewriter = fetch(group, name)
+        if sandbox
+          rewriter.process_with_sandbox
         else
-          raise RewriterNotFound, "Rewriter #{group}/#{name} not found"
+          rewriter.process
         end
-      end
-
-      # Check if one rewriter exist.
-      #
-      # @param group [String] the rewriter group.
-      # @param name [String] the rewriter name.
-      # @return [Boolean] true if the rewriter exist.
-      def exist?(group, name)
-        group = group.to_s
-        name = name.to_s
-        if rewriters[group] && rewriters[group][name]
-          true
-        else
-          false
-        end
+        rewriter
       end
 
       # Get all available rewriters

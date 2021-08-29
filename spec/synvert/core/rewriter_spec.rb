@@ -249,17 +249,6 @@ module Synvert::Core
         expect { Rewriter.call 'group', 'rewriter' }.to raise_error(RewriterNotFound)
       end
 
-      context 'exist?' do
-        it 'returns true if rewriter exists' do
-          Rewriter.new 'group', 'rewriter'
-          expect(Rewriter.exist?('group', 'rewriter')).to be_truthy
-        end
-
-        it 'returns false if rewriter does not exist' do
-          expect(Rewriter.exist?('group', 'rewriter')).to be_falsey
-        end
-      end
-
       context 'available' do
         it 'lists empty rewriters' do
           expect(Rewriter.availables).to eq({})
