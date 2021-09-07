@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # RemoveAction to remove code.
+  # RemoveAction to remove current node.
   class Rewriter::RemoveAction < Rewriter::Action
-    def initialize(instance, code = nil)
-      super
+    def initialize(instance)
+      super(instance, nil)
     end
 
     # Begin position of code to replace.

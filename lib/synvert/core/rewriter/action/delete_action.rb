@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # DeleteAction to delete code.
+  # DeleteAction to delete child nodes.
   class Rewriter::DeleteAction < Rewriter::Action
     def initialize(instance, *selectors)
       super(instance, nil)
