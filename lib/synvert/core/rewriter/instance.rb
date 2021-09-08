@@ -64,6 +64,11 @@ module Synvert::Core
     #   @return current filename
     attr_accessor :current_node, :current_file
 
+    # Current file source
+    def file_source
+      self.class.file_source(current_file)
+    end
+
     # Initialize an instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
@@ -107,7 +112,6 @@ module Synvert::Core
             conflict_actions = get_conflict_actions
             @actions.reverse_each do |action|
               source[action.begin_pos...action.end_pos] = action.rewritten_code
-              source = remove_code_or_whole_line(source, action.line)
             end
             @actions = []
 
@@ -321,25 +325,6 @@ module Synvert::Core
         j -= 1
       end
       conflict_actions
-    end
-
-    # It checks if code is removed and that line is empty.
-    #
-    # @param source [String] source code of file
-    # @param line [String] the line number
-    def remove_code_or_whole_line(source, line)
-      newline_at_end_of_line = source[-1] == "\n"
-      source_arr = source.split("\n")
-      if source_arr[line - 1] && source_arr[line - 1].strip.empty?
-        source_arr.delete_at(line - 1)
-        if source_arr[line - 2] && source_arr[line - 2].strip.empty? && source_arr[line - 1] &&
-             source_arr[line - 1].strip.empty?
-          source_arr.delete_at(line - 1)
-        end
-        source_arr.join("\n") + (newline_at_end_of_line ? "\n" : '')
-      else
-        source
-      end
     end
 
     # It updates a file with new source code.

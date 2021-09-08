@@ -7,7 +7,7 @@ module Synvert::Core
     subject {
       source = "user = User.new params[:user]\nuser.save\nrender\n"
       send_node = Parser::CurrentRuby.parse(source).children[1]
-      instance = double(current_node: send_node)
+      instance = double(current_node: send_node, file_source: source)
       Rewriter::RemoveAction.new(instance)
     }
 
@@ -16,7 +16,7 @@ module Synvert::Core
     end
 
     it 'gets end_pos' do
-      expect(subject.end_pos).to eq "user = User.new params[:user]\nuser.save".length
+      expect(subject.end_pos).to eq "user = User.new params[:user]\nuser.save\n".length
     end
 
     it 'gets rewritten_code' do
