@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.54.1 (2021-09-08)
+
+* Rewrite `remove` action
+
 ## 0.54.0 (2021-08-28)
 
 * Change `goto_scope` param from array to string
