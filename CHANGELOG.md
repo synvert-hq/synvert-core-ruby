@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.54.3 (2021-09-09)
+
+* Fix remove action `begin_pos` and `end_pos`
+
 ## 0.54.2 (2021-09-09)
 
 * Fix `nil` match
