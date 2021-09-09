@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.54.2 (2021-09-09)
+
+* Fix `nil` match
+
 ## 0.54.1 (2021-09-08)
 
 * Rewrite `remove` action
