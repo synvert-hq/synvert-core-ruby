@@ -41,11 +41,13 @@ module Synvert::Core
     end
 
     def start_index
-      file_source[0..@node.loc.expression.begin_pos].rindex("\n") + "\n".length
+      index = file_source[0..@node.loc.expression.begin_pos].rindex("\n")
+      index ? index + "\n".length : @node.loc.expression.begin_pos
     end
 
     def end_index
-      file_source[@node.loc.expression.end_pos..-1].index("\n") + @node.loc.expression.end_pos + "\n".length
+      index = file_source[@node.loc.expression.end_pos..-1].index("\n")
+      index ? @node.loc.expression.end_pos + index + "\n".length : @node.loc.expression.end_pos
     end
 
     def file_source
