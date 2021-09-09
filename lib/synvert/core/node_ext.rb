@@ -576,7 +576,11 @@ module Parser::AST
 
         actual.zip(expected).all? { |a, e| match_value?(a, e) }
       when NilClass
-        actual.nil?
+        if actual.is_a?(Parser::AST::Node)
+          :nil == actual.type
+        else
+          actual.nil?
+        end
       when Numeric
         if actual.is_a?(Parser::AST::Node)
           actual.children[0] == expected
