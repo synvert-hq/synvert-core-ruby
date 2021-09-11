@@ -1,15 +1,10 @@
 # CHANGELOG
 
-## 0.54.3 (2021-09-09)
+## 0.55.0 (2021-09-11)
 
+* Add `Configuration.show_run_process`
 * Fix remove action `begin_pos` and `end_pos`
-
-## 0.54.2 (2021-09-09)
-
 * Fix `nil` match
-
-## 0.54.1 (2021-09-08)
-
 * Rewrite `remove` action
 
 ## 0.54.0 (2021-08-28)
