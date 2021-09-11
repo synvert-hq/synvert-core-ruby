@@ -92,6 +92,7 @@ module Synvert::Core
         next if Configuration.skip_files.include? file_path
 
         begin
+          puts file_path if Configuration.show_run_process
           conflict_actions = []
           source = +self.class.file_source(file_path)
           ast = self.class.file_ast(file_path)

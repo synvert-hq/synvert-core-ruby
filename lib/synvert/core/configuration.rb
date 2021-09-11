@@ -4,7 +4,7 @@ module Synvert::Core
   # Synvert global configuration.
   class Configuration
     class << self
-      attr_writer :path, :skip_files
+      attr_writer :path, :skip_files, :show_run_process
 
       def path
         @path || '.'
@@ -12,6 +12,10 @@ module Synvert::Core
 
       def skip_files
         @skip_files || []
+      end
+
+      def show_run_process
+        @show_run_process || false
       end
     end
   end
