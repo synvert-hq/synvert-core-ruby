@@ -76,7 +76,7 @@ module Synvert::Core
           @newline_pending += 1
         else
           src << "@output_buffer.safe_append='"
-          src << "\n" * @newline_pending if @newline_pending > 0
+          src << ("\n" * @newline_pending) if @newline_pending > 0
           src << escape_text(text)
           src << "'.freeze;"
 
