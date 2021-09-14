@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.56.0 (2021-09-14)
+
+* Support `name` for `:lvar`, `:ivar`, `:cvar`
+* Delete one more space if two spaces left
+
 ## 0.55.0 (2021-09-11)
 
 * Add `Configuration.show_run_process`
