@@ -7,7 +7,7 @@ module Synvert::Core
     subject {
       source = 'arr.map {}.flatten'
       node = Parser::CurrentRuby.parse(source)
-      instance = double(current_node: node)
+      instance = double(current_node: node, file_source: source)
       Rewriter::DeleteAction.new(instance, :dot, :message)
     }
 

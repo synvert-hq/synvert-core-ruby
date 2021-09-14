@@ -12,7 +12,12 @@ module Synvert::Core
     #
     # @return [Integer] begin position.
     def begin_pos
-      @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:begin_pos).min
+      pos = @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:begin_pos).min
+      if @instance.file_source[pos - 1] == ' ' && @instance.file_source[end_pos] == ' '
+        pos - 1
+      else
+        pos
+      end
     end
 
     # End position of code to delete.
