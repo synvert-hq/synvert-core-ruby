@@ -42,6 +42,21 @@ describe Parser::AST::Node do
       expect(node.name).to eq :Synvert
     end
 
+    it 'gets for lvar node' do
+      node = parse("foo = 'bar'\nfoo").children[1]
+      expect(node.name).to eq :foo
+    end
+
+    it 'gets for ivar node' do
+      node = parse("@foo = 'bar'\n@foo").children[1]
+      expect(node.name).to eq :@foo
+    end
+
+    it 'gets for cvar node' do
+      node = parse("@@foo = 'bar'\n@@foo").children[1]
+      expect(node.name).to eq :@@foo
+    end
+
     it 'gets for mlhs node' do
       node = parse('var.each { |(param1, param2)| }')
       expect(node.arguments.first.name).to eq node.arguments.first
