@@ -14,7 +14,12 @@ module Synvert::Core
       if take_whole_line?
         start_index
       else
-        @node.loc.expression.begin_pos
+        pos = @node.loc.expression.begin_pos
+        if @instance.file_source[pos - 1] == ' ' && @instance.file_source[end_pos] == ' '
+          pos - 1
+        else
+          pos
+        end
       end
     end
 
