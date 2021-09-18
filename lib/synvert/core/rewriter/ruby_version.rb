@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # GemSpec checks and compares gem version.
+  # GemSpec checks and compares ruby version.
   class Rewriter::RubyVersion
     attr_reader :version
 
@@ -16,7 +16,15 @@ module Synvert::Core
     #
     # @return [Boolean] true if matches, otherwise false.
     def match?
-      Gem::Version.new(RUBY_VERSION) >= Gem::Version.new(@version)
+      if File.exist?(File.join(Configuration.path, '.ruby-version'))
+        versionFile = '.ruby-version'
+      elsif File.exist?(File.join(Configuration.path, '.rvmrc'))
+        versionFile = '.rvmrc'
+      end
+      return true if !versionFile
+
+      version = File.read(File.join(Configuration.path, versionFile))
+      Gem::Version.new(version) >= Gem::Version.new(@version)
     end
   end
 end
