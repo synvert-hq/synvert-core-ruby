@@ -213,7 +213,7 @@ module Synvert::Core
       end
     end
 
-    # Parse if_ruby dal, it checks if ruby version if greater than or equal to the specified ruby version.
+    # Parse if_ruby dsl, it checks if ruby version if greater than or equal to the specified ruby version.
     #
     # @param version, [String] specified ruby version.
     def if_ruby(version)
