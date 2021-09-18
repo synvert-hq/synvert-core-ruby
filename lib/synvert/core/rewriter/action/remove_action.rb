@@ -15,11 +15,7 @@ module Synvert::Core
         start_index
       else
         pos = @node.loc.expression.begin_pos
-        if @instance.file_source[pos - 1] == ' ' && @instance.file_source[end_pos] == ' '
-          pos - 1
-        else
-          pos
-        end
+        squeeze_spaces(pos, end_pos)
       end
     end
 
@@ -52,11 +48,8 @@ module Synvert::Core
 
     def end_index
       index = file_source[@node.loc.expression.end_pos..-1].index("\n")
-      index ? @node.loc.expression.end_pos + index + "\n".length : @node.loc.expression.end_pos
-    end
-
-    def file_source
-      @file_source ||= @instance.file_source
+      pos = index ? @node.loc.expression.end_pos + index + "\n".length : @node.loc.expression.end_pos
+      squeeze_lines(pos, @node.loc.expression.first_line, @node.loc.expression.last_line)
     end
   end
 end

@@ -33,11 +33,37 @@ module Synvert::Core
       end
     end
 
+    protected
+
     # The rewritten source code.
     #
     # @return [String] rewritten source code.
     def rewritten_source
       @rewritten_source ||= @node.rewritten_source(@code)
+    end
+
+    def squeeze_spaces(begin_pos, end_pos)
+      if file_source[begin_pos - 1] == ' ' && file_source[end_pos] == ' '
+        begin_pos - 1
+      else
+        begin_pos
+      end
+    end
+
+    def squeeze_lines(end_pos, begin_line, end_line)
+      lines = file_source.split("\n")
+      before_line_is_blank = begin_line == 1 || lines[begin_line - 2] == ''
+      after_line_is_blank = lines[end_line] == ''
+
+      if before_line_is_blank && after_line_is_blank
+        end_pos + "\n".length
+      else
+        end_pos
+      end
+    end
+
+    def file_source
+      @file_source ||= @instance.file_source
     end
   end
 end
