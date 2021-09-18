@@ -39,7 +39,8 @@ module Synvert::Core
 
     describe 'parses within_file' do
       it 'does nothing if if_ruby does not match' do
-        stub_const('RUBY_VERSION', '2.0.0')
+        expect(File).to receive(:exist?).with('./.ruby-version').and_return(true)
+        expect(File).to receive(:read).with('./.ruby-version').and_return('2.0.0')
         expect_any_instance_of(Rewriter::Instance).not_to receive(:process)
         rewriter =
           Rewriter.new 'group', 'name' do
@@ -51,7 +52,8 @@ module Synvert::Core
       end
 
       it 'delegates process to instances if if_ruby matches' do
-        stub_const('RUBY_VERSION', '2.0.0')
+        expect(File).to receive(:exist?).with('./.ruby-version').and_return(true)
+        expect(File).to receive(:read).with('./.ruby-version').and_return('2.0.0')
         expect_any_instance_of(Rewriter::Instance).to receive(:process)
         rewriter =
           Rewriter.new 'group', 'name' do
