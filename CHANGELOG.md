@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.56.1 (2021-09-19)
+
+* Compare ruby version in `.ruby-version` or `.rvmrc`
+* Abstract `squeeze_spaces` and `squeeze_lines`
+
 ## 0.56.0 (2021-09-14)
 
 * Support `name` for `:lvar`, `:ivar`, `:cvar`
