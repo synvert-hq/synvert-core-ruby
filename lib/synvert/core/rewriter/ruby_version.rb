@@ -21,7 +21,7 @@ module Synvert::Core
       elsif File.exist?(File.join(Configuration.path, '.rvmrc'))
         versionFile = '.rvmrc'
       end
-      return true if !versionFile
+      return true unless versionFile
 
       version = File.read(File.join(Configuration.path, versionFile))
       Gem::Version.new(version) >= Gem::Version.new(@version)
