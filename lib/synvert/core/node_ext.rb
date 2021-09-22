@@ -215,7 +215,7 @@ module Parser::AST
     # @return [Parser::AST::Node] variable nodes.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def left_value
-      if %i[masgn lvasgn ivasgn].include? type
+      if %i[masgn lvasgn ivasgn cvasgn].include? type
         children[0]
       elsif :or_asgn == type
         children[0].children[0]
@@ -229,7 +229,7 @@ module Parser::AST
     # @return [Array<Parser::AST::Node>] variable nodes.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def right_value
-      if %i[masgn lvasgn ivasgn or_asgn].include? type
+      if %i[masgn lvasgn ivasgn cvasgn or_asgn].include? type
         children[1]
       else
         raise Synvert::Core::MethodNotSupported, "right_value is not handled for #{debug_info}"
