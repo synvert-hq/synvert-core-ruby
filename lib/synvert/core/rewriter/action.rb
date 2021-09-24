@@ -55,7 +55,7 @@ module Synvert::Core
       before_line_is_blank = begin_line == 1 || lines[begin_line - 2] == ''
       after_line_is_blank = lines[end_line] == ''
 
-      if before_line_is_blank && after_line_is_blank
+      if lines.length > 1 && before_line_is_blank && after_line_is_blank
         end_pos + "\n".length
       else
         end_pos
