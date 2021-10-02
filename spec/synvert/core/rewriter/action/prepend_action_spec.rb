@@ -9,7 +9,7 @@ module Synvert::Core
         source = "Synvert::Application.configure do\nend"
         block_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: block_node)
-        Rewriter::PrependAction.new(instance, 'config.eager_load = true')
+        Rewriter::PrependAction.new(instance, 'config.eager_load = true').process
       }
 
       it 'gets begin_pos' do
@@ -30,7 +30,7 @@ module Synvert::Core
         source = "RSpec.configure do |config|\nend"
         block_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: block_node)
-        Rewriter::PrependAction.new(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
+        Rewriter::PrependAction.new(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods').process
       }
 
       it 'gets begin_pos' do
@@ -51,7 +51,7 @@ module Synvert::Core
         source = "class User\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: class_node)
-        Rewriter::PrependAction.new(instance, 'include Deletable')
+        Rewriter::PrependAction.new(instance, 'include Deletable').process
       }
 
       it 'gets begin_pos' do
@@ -72,7 +72,7 @@ module Synvert::Core
         source = "class User < ActiveRecord::Base\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: class_node)
-        Rewriter::PrependAction.new(instance, 'include Deletable')
+        Rewriter::PrependAction.new(instance, 'include Deletable').process
       }
 
       it 'gets begin_pos' do

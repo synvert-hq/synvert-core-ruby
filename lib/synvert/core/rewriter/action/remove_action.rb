@@ -10,23 +10,15 @@ module Synvert::Core
     # Begin position of code to replace.
     #
     # @return [Integer] begin position.
-    def begin_pos
+    def calculate_position
       if take_whole_line?
-        start_index
+        @begin_pos = start_index
+        @end_pos = end_index
+        squeeze_lines
       else
-        pos = @node.loc.expression.begin_pos
-        squeeze_spaces(pos, end_pos)
-      end
-    end
-
-    # End position of code to replace.
-    #
-    # @return [Integer] end position.
-    def end_pos
-      if take_whole_line?
-        end_index
-      else
-        @node.loc.expression.end_pos
+        @begin_pos = @node.loc.expression.begin_pos
+        @end_pos = @node.loc.expression.end_pos
+        squeeze_spaces
       end
     end
 
@@ -49,7 +41,6 @@ module Synvert::Core
     def end_index
       index = file_source[@node.loc.expression.end_pos..-1].index("\n")
       pos = index ? @node.loc.expression.end_pos + index + "\n".length : @node.loc.expression.end_pos
-      squeeze_lines(pos, @node.loc.expression.first_line, @node.loc.expression.last_line)
     end
   end
 end

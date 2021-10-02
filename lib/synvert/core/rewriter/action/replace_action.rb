@@ -8,18 +8,9 @@ module Synvert::Core
       @selectors = selectors
     end
 
-    # Begin position of code to replace.
-    #
-    # @return [Integer] begin position.
-    def begin_pos
-      @selectors.map { |selector| @node.child_node_range(selector).begin_pos }.min
-    end
-
-    # End position of code to replace.
-    #
-    # @return [Integer] end position.
-    def end_pos
-      @selectors.map { |selector| @node.child_node_range(selector).end_pos }.max
+    def calculate_position
+      @begin_pos = @selectors.map { |selector| @node.child_node_range(selector).begin_pos }.min
+      @end_pos = @selectors.map { |selector| @node.child_node_range(selector).end_pos }.max
     end
 
     # The rewritten source code.

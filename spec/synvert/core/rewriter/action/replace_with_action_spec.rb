@@ -9,7 +9,7 @@ module Synvert::Core
         source = 'post = FactoryGirl.create_list :post, 2'
         send_node = Parser::CurrentRuby.parse(source).children[1]
         instance = double(current_node: send_node)
-        Rewriter::ReplaceWithAction.new(instance, 'create_list {{arguments}}')
+        Rewriter::ReplaceWithAction.new(instance, 'create_list {{arguments}}').process
       }
 
       it 'gets begin_pos' do
@@ -30,7 +30,7 @@ module Synvert::Core
         source = '  its(:size) { should == 1 }'
         send_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: send_node)
-        Rewriter::ReplaceWithAction.new(instance, <<~EOS)
+        Rewriter::ReplaceWithAction.new(instance, <<~EOS).process
           describe '#size' do
             subject { super().size }
             it { {{body}} }

@@ -9,7 +9,7 @@ module Synvert::Core
         source = 'FactoryBot.create(:user)'
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
-        Rewriter::ReplaceAction.new(instance, :receiver, :dot, :message, with: 'create')
+        Rewriter::ReplaceAction.new(instance, :receiver, :dot, :message, with: 'create').process
       }
 
       it 'gets begin_pos' do

@@ -9,7 +9,7 @@ module Synvert::Core
         source = "  User.where(username: 'Richard')"
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
-        Rewriter::InsertAction.new(instance, '.first', at: 'end')
+        Rewriter::InsertAction.new(instance, '.first', at: 'end').process
       }
 
       it 'gets begin_pos' do
@@ -30,7 +30,7 @@ module Synvert::Core
         source = "  open('http://test.com')"
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
-        Rewriter::InsertAction.new(instance, 'URI.', at: 'beginning')
+        Rewriter::InsertAction.new(instance, 'URI.', at: 'beginning').process
       }
 
       it 'gets begin_pos' do

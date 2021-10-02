@@ -5,22 +5,9 @@ module Synvert::Core
   class Rewriter::AppendAction < Rewriter::Action
     END_LENGTH = "\nend".length
 
-    # Begin position to append code.
-    #
-    # @return [Integer] begin position.
-    def begin_pos
-      if :begin == @node.type
-        @node.loc.expression.end_pos
-      else
-        @node.loc.expression.end_pos - @node.column - END_LENGTH
-      end
-    end
-
-    # End position, always same to begin position.
-    #
-    # @return [Integer] end position.
-    def end_pos
-      begin_pos
+    def calculate_position
+      @begin_pos = :begin == @node.type ? @node.loc.expression.end_pos : @node.loc.expression.end_pos - @node.column - END_LENGTH
+      @end_pos = @begin_pos
     end
 
     private

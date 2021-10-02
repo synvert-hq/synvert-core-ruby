@@ -9,7 +9,7 @@ module Synvert::Core
         source = "class User\n  has_many :posts\nend"
         class_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: class_node)
-        Rewriter::AppendAction.new(instance, "def as_json\n  super\nend")
+        Rewriter::AppendAction.new(instance, "def as_json\n  super\nend").process
       end
 
       it 'gets begin_pos' do
@@ -30,7 +30,7 @@ module Synvert::Core
         source = "gem 'rails'\ngem 'mysql2'"
         begin_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: begin_node)
-        Rewriter::AppendAction.new(instance, "gem 'twitter'")
+        Rewriter::AppendAction.new(instance, "gem 'twitter'").process
       end
 
       it 'gets begin_pos' do

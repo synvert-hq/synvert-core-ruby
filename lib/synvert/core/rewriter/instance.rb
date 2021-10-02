@@ -221,7 +221,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be appended.
     def append(code)
-      @actions << Rewriter::AppendAction.new(self, code)
+      @actions << Rewriter::AppendAction.new(self, code).process
     end
 
     # Parse prepend dsl, it creates a [Synvert::Core::Rewriter::PrependAction] to
@@ -229,7 +229,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be prepended.
     def prepend(code)
-      @actions << Rewriter::PrependAction.new(self, code)
+      @actions << Rewriter::PrependAction.new(self, code).process
     end
 
     # Parse insert dsl, it creates a [Synvert::Core::Rewriter::InsertAction] to
@@ -238,7 +238,7 @@ module Synvert::Core
     # @param code [String] code need to be inserted.
     # @param at [String] insert position, beginning or end, end is the default.
     def insert(code, at: 'end')
-      @actions << Rewriter::InsertAction.new(self, code, at: at)
+      @actions << Rewriter::InsertAction.new(self, code, at: at).process
     end
 
     # Parse insert_after dsl, it creates a [Synvert::Core::Rewriter::InsertAfterAction] to
@@ -246,7 +246,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be inserted.
     def insert_after(node)
-      @actions << Rewriter::InsertAfterAction.new(self, node)
+      @actions << Rewriter::InsertAfterAction.new(self, node).process
     end
 
     # Parse replace_with dsl, it creates a [Synvert::Core::Rewriter::ReplaceWithAction] to
@@ -254,7 +254,7 @@ module Synvert::Core
     #
     # @param code [String] code need to be replaced with.
     def replace_with(code)
-      @actions << Rewriter::ReplaceWithAction.new(self, code)
+      @actions << Rewriter::ReplaceWithAction.new(self, code).process
     end
 
     # Parse replace with dsl, it creates a [Synvert::Core::Rewriter::ReplaceAction] to
@@ -263,25 +263,25 @@ module Synvert::Core
     # @param selectors [Array<Symbol>] selector names of child node.
     # @param with [String] code need to be replaced with.
     def replace(*selectors, with:)
-      @actions << Rewriter::ReplaceAction.new(self, *selectors, with: with)
+      @actions << Rewriter::ReplaceAction.new(self, *selectors, with: with).process
     end
 
     # Parse replace_erb_stmt_with_expr dsl, it creates a [Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction] to
     # replace erb stmt code to expr code.
     def replace_erb_stmt_with_expr
-      @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self)
+      @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self).process
     end
 
     # Parse remove dsl, it creates a [Synvert::Core::Rewriter::RemoveAction] to remove current node.
     def remove
-      @actions << Rewriter::RemoveAction.new(self)
+      @actions << Rewriter::RemoveAction.new(self).process
     end
 
     # Parse delete dsl, it creates a [Synvert::Core::Rewriter::DeleteAction] to delete child nodes.
     #
     # @param selectors [Array<Symbol>] selector names of child node.
     def delete(*selectors)
-      @actions << Rewriter::DeleteAction.new(self, *selectors)
+      @actions << Rewriter::DeleteAction.new(self, *selectors).process
     end
 
     # Parse wrap with dsl, it creates a [Synvert::Core::Rewriter::WrapAction] to
@@ -290,7 +290,7 @@ module Synvert::Core
     # @param with [String] code need to be wrapped with.
     # @param indent [Integer] number of whitespaces.
     def wrap(with:, indent: nil)
-      @actions << Rewriter::WrapAction.new(self, with: with, indent: indent)
+      @actions << Rewriter::WrapAction.new(self, with: with, indent: indent).process
     end
 
     # Parse warn dsl, it creates a [Synvert::Core::Rewriter::Warning] to save warning message.

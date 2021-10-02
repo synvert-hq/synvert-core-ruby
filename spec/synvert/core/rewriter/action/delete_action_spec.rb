@@ -8,7 +8,7 @@ module Synvert::Core
       source = 'arr.map {}.flatten'
       node = Parser::CurrentRuby.parse(source)
       instance = double(current_node: node, file_source: source)
-      Rewriter::DeleteAction.new(instance, :dot, :message)
+      Rewriter::DeleteAction.new(instance, :dot, :message).process
     }
 
     it 'gets begin_pos' do

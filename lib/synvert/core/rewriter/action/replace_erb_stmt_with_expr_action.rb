@@ -8,25 +8,17 @@ module Synvert::Core
       super
     end
 
-    # Begin position of code to replace.
-    #
-    # @return [Integer] begin position.
-    def begin_pos
+    def calculate_position
       node_begin_pos = @node.loc.expression.begin_pos
       while @node.loc.expression.source_buffer.source[node_begin_pos -= 1] == ' '
       end
-      node_begin_pos - Engine::ERUBY_STMT_SPLITTER.length + 1
-    end
+      @begin_pos = node_begin_pos - Engine::ERUBY_STMT_SPLITTER.length + 1
 
-    # End position of code to replace.
-    #
-    # @return [Integer] end position.
-    def end_pos
       node_begin_pos = @node.loc.expression.begin_pos
       node_begin_pos += @node.loc.expression.source.index 'do'
       while @node.loc.expression.source_buffer.source[node_begin_pos += 1] != '@'
       end
-      node_begin_pos
+      @end_pos = node_begin_pos
     end
 
     # The rewritten erb expr code.

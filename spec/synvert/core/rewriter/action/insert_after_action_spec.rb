@@ -8,7 +8,7 @@ module Synvert::Core
       source = '  include Foo'
       node = Parser::CurrentRuby.parse(source)
       instance = double(current_node: node)
-      Rewriter::InsertAfterAction.new(instance, 'include Bar')
+      Rewriter::InsertAfterAction.new(instance, 'include Bar').process
     }
 
     it 'gets begin_pos' do

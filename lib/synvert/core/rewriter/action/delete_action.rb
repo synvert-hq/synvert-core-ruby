@@ -8,19 +8,10 @@ module Synvert::Core
       @selectors = selectors
     end
 
-    # Begin position of code to delete.
-    #
-    # @return [Integer] begin position.
-    def begin_pos
-      pos = @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:begin_pos).min
-      squeeze_spaces(pos, end_pos)
-    end
-
-    # End position of code to delete.
-    #
-    # @return [Integer] end position.
-    def end_pos
-      @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:end_pos).max
+    def calculate_position
+      @begin_pos = @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:begin_pos).min
+      @end_pos = @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:end_pos).max
+      squeeze_spaces
     end
 
     # The rewritten code, always empty string.

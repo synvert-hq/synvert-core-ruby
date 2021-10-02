@@ -8,7 +8,7 @@ module Synvert::Core
       source = "class Bar\nend"
       node = Parser::CurrentRuby.parse(source)
       instance = double(current_node: node)
-      Rewriter::WrapAction.new(instance, with: 'module Foo')
+      Rewriter::WrapAction.new(instance, with: 'module Foo').process
     }
 
     it 'gets begin_pos' do

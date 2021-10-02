@@ -11,18 +11,9 @@ module Synvert::Core
       @indent = indent || @node.column
     end
 
-    # Begin position of code to wrap.
-    #
-    # @return [Integer] begin position.
-    def begin_pos
-      @node.loc.expression.begin_pos
-    end
-
-    # End position of code to wrap.
-    #
-    # @return [Integer] end position.
-    def end_pos
-      @node.loc.expression.end_pos
+    def calculate_position
+      @begin_pos = @node.loc.expression.begin_pos
+      @end_pos = @node.loc.expression.end_pos
     end
 
     # The rewritten source code.

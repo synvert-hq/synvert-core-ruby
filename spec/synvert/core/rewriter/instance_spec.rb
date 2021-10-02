@@ -90,58 +90,78 @@ module Synvert::Core
     end
 
     it 'parses append' do
-      expect(Rewriter::AppendAction).to receive(:new).with(instance, 'include FactoryGirl::Syntax::Methods')
+      action = double
+      expect(Rewriter::AppendAction).to receive(:new).with(instance, 'include FactoryGirl::Syntax::Methods').and_return(action)
+      expect(action).to receive(:process)
       instance.append 'include FactoryGirl::Syntax::Methods'
     end
 
     it 'parses prepend' do
+      action = double
       expect(Rewriter::PrependAction).to receive(:new).with(
         instance,
         '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-      )
+      ).and_return(action)
+      expect(action).to receive(:process)
       instance.prepend '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
     end
 
-    it 'parses insert' do
-      expect(Rewriter::InsertAction).to receive(:new).with(instance, '.first', at: 'end')
+    it 'parses insert at end' do
+      action = double
+      expect(Rewriter::InsertAction).to receive(:new).with(instance, '.first', at: 'end').and_return(action)
+      expect(action).to receive(:process)
       instance.insert '.first'
     end
 
-    it 'parses insert' do
-      expect(Rewriter::InsertAction).to receive(:new).with(instance, 'URI.', at: 'beginning')
+    it 'parses insert at beginning' do
+      action = double
+      expect(Rewriter::InsertAction).to receive(:new).with(instance, 'URI.', at: 'beginning').and_return(action)
+      expect(action).to receive(:process)
       instance.insert 'URI.', at: 'beginning'
     end
 
     it 'parses insert_after' do
+      action = double
       expect(Rewriter::InsertAfterAction).to receive(:new).with(
         instance,
         '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-      )
+      ).and_return(action)
+      expect(action).to receive(:process)
       instance.insert_after '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
     end
 
     it 'parses replace_with' do
-      expect(Rewriter::ReplaceWithAction).to receive(:new).with(instance, 'create {{arguments}}')
+      action = double
+      expect(Rewriter::ReplaceWithAction).to receive(:new).with(instance, 'create {{arguments}}').and_return(action)
+      expect(action).to receive(:process)
       instance.replace_with 'create {{arguments}}'
     end
 
     it 'parses replace with' do
-      expect(Rewriter::ReplaceAction).to receive(:new).with(instance, :message, with: 'test')
+      action = double
+      expect(Rewriter::ReplaceAction).to receive(:new).with(instance, :message, with: 'test').and_return(action)
+      expect(action).to receive(:process)
       instance.replace :message, with: 'test'
     end
 
     it 'parses remove' do
-      expect(Rewriter::RemoveAction).to receive(:new).with(instance)
+      action = double
+      expect(Rewriter::RemoveAction).to receive(:new).with(instance).and_return(action)
+      expect(action).to receive(:process)
       instance.remove
     end
 
     it 'parses remove' do
-      expect(Rewriter::DeleteAction).to receive(:new).with(instance, :dot, :message)
+      action = double
+      expect(Rewriter::DeleteAction).to receive(:new).with(instance, :dot, :message).and_return(action)
+      expect(action).to receive(:process)
       instance.delete :dot, :message
     end
 
     it 'parses wrap with' do
-      expect(Rewriter::WrapAction).to receive(:new).with(instance, with: 'module Foo', indent: nil)
+      action = double
+      expect(Rewriter::WrapAction).to receive(:new).with(instance, with: 'module Foo', indent: nil).and_return(action)
+      expect(action).to receive(:process)
       instance.wrap with: 'module Foo'
     end
 

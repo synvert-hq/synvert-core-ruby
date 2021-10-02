@@ -3,18 +3,9 @@
 module Synvert::Core
   # ReplaceWithAction to replace code.
   class Rewriter::ReplaceWithAction < Rewriter::Action
-    # Begin position of code to replace.
-    #
-    # @return [Integer] begin position.
-    def begin_pos
-      @node.loc.expression.begin_pos
-    end
-
-    # End position of code to replace.
-    #
-    # @return [Integer] end position.
-    def end_pos
-      @node.loc.expression.end_pos
+    def calculate_position
+      @begin_pos = @node.loc.expression.begin_pos
+      @end_pos = @node.loc.expression.end_pos
     end
 
     # The rewritten source code with proper indent.
