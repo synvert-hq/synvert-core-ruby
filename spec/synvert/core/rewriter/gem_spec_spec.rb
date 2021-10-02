@@ -15,6 +15,7 @@ module Synvert::Core
           rake (10.1.1)
           slop (3.4.7)
     EOS
+
     before { allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem/specs')).and_return(false) }
 
     it 'returns true if version in Gemfile.lock is greater than definition' do

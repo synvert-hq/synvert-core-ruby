@@ -91,17 +91,18 @@ module Synvert::Core
 
     it 'parses append' do
       action = double
-      expect(Rewriter::AppendAction).to receive(:new).with(instance, 'include FactoryGirl::Syntax::Methods').and_return(action)
+      expect(Rewriter::AppendAction).to receive(:new)
+        .with(instance, 'include FactoryGirl::Syntax::Methods')
+        .and_return(action)
       expect(action).to receive(:process)
       instance.append 'include FactoryGirl::Syntax::Methods'
     end
 
     it 'parses prepend' do
       action = double
-      expect(Rewriter::PrependAction).to receive(:new).with(
-        instance,
-        '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-      ).and_return(action)
+      expect(Rewriter::PrependAction).to receive(:new)
+        .with(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
+        .and_return(action)
       expect(action).to receive(:process)
       instance.prepend '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
     end
@@ -122,10 +123,9 @@ module Synvert::Core
 
     it 'parses insert_after' do
       action = double
-      expect(Rewriter::InsertAfterAction).to receive(:new).with(
-        instance,
-        '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-      ).and_return(action)
+      expect(Rewriter::InsertAfterAction).to receive(:new)
+        .with(instance, '{{arguments.first}}.include FactoryGirl::Syntax::Methods')
+        .and_return(action)
       expect(action).to receive(:process)
       instance.insert_after '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
     end

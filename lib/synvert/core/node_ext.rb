@@ -376,11 +376,16 @@ module Parser::AST
           if nested_child_name
             if child_node.is_a?(Array)
               child_direct_child_name, *child_nested_child_name = nested_child_name
-              child_direct_child_node = child_direct_child_name =~ /\A\d+\z/ ? child_node[child_direct_child_name] : child_node.send(child_direct_child_name)
+              child_direct_child_node =
+                if child_direct_child_name =~ /\A\d+\z/
+                  child_node[child_direct_child_name]
+                else
+                  child_node.send(child_direct_child_name)
+                end
               if child_nested_child_name.length > 0
                 return child_direct_child_node.child_node_range(child_nested_child_name.join('.'))
               elsif child_direct_child_node
-                return (
+                return(
                   Parser::Source::Range.new(
                     '(string)',
                     child_direct_child_node.loc.expression.begin_pos,
@@ -550,7 +555,8 @@ module Parser::AST
       if type == :block && caller.type == :send && caller.receiver.nil? && caller.message == :lambda
         new_source = to_source
         if arguments.size > 1
-          new_source = new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
+          new_source =
+            new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
           new_source = new_source.sub('lambda', "->(#{arguments.map(&:to_source).join(', ')})")
         else
           new_source = new_source.sub('lambda', '->')
