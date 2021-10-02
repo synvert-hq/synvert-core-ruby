@@ -55,7 +55,7 @@ module Synvert::Core
 
     def squeeze_spaces
       if file_source[@begin_pos - 1] == ' ' && file_source[@end_pos] == ' '
-        @begin_pos = @begin_pos - 1
+        @begin_pos -= 1
       end
     end
 
@@ -67,19 +67,19 @@ module Synvert::Core
       after_line_is_blank = lines[end_line] == ''
 
       if lines.length > 1 && before_line_is_blank && after_line_is_blank
-        @end_pos = @end_pos + "\n".length
+        @end_pos += "\n".length
       end
     end
 
     def remove_comma
       if ',' == file_source[@begin_pos - 1]
-        @begin_pos = @begin_pos - 1
+        @begin_pos -= 1
       elsif ', ' == file_source[@begin_pos - 2, 2]
-        @begin_pos = @begin_pos - 2
+        @begin_pos -= 2
       elsif ', ' == file_source[@end_pos, 2]
-        @end_pos = @end_pos + 2
+        @end_pos += 2
       elsif ',' == file_source[@end_pos]
-        @end_pos = @end_pos + 1
+        @end_pos += 1
       end
     end
 
