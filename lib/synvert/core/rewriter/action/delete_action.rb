@@ -12,6 +12,7 @@ module Synvert::Core
       @begin_pos = @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:begin_pos).min
       @end_pos = @selectors.map { |selector| @node.child_node_range(selector) }.compact.map(&:end_pos).max
       squeeze_spaces
+      remove_comma
     end
 
     # The rewritten code, always empty string.

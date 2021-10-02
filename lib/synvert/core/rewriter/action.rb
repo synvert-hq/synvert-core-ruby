@@ -71,6 +71,18 @@ module Synvert::Core
       end
     end
 
+    def remove_comma
+      if ',' == file_source[@begin_pos - 1]
+        @begin_pos = @begin_pos - 1
+      elsif ', ' == file_source[@begin_pos - 2, 2]
+        @begin_pos = @begin_pos - 2
+      elsif ', ' == file_source[@end_pos, 2]
+        @end_pos = @end_pos + 2
+      elsif ',' == file_source[@end_pos]
+        @end_pos = @end_pos + 1
+      end
+    end
+
     def file_source
       @file_source ||= @instance.file_source
     end

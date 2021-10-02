@@ -19,6 +19,7 @@ module Synvert::Core
         @begin_pos = @node.loc.expression.begin_pos
         @end_pos = @node.loc.expression.end_pos
         squeeze_spaces
+        remove_comma
       end
     end
 
@@ -40,7 +41,7 @@ module Synvert::Core
 
     def end_index
       index = file_source[@node.loc.expression.end_pos..-1].index("\n")
-      pos = index ? @node.loc.expression.end_pos + index + "\n".length : @node.loc.expression.end_pos
+      index ? @node.loc.expression.end_pos + index + "\n".length : @node.loc.expression.end_pos
     end
   end
 end
