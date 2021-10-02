@@ -1,9 +1,13 @@
 # CHANGELOG
 
-## 0.56.1 (2021-09-19)
+## 0.57.0 (2021-10-02)
 
 * Compare ruby version in `.ruby-version` or `.rvmrc`
+* Support `left_value` and `right_value` for `casgn` node
+* Refactor - `calculate_position` to set `begin_pos` and `end_pos`
 * Abstract `squeeze_spaces` and `squeeze_lines`
+* Remove unused comma after delete/remove action
+* Handle array child node in `childNodeRange`
 
 ## 0.56.0 (2021-09-14)
 
