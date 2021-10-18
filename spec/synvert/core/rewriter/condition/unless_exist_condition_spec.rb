@@ -4,14 +4,14 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::UnlessExistCondition do
-    let(:source) {
+    let(:source) do
       '
       RSpec.configure do |config|
         config.include EmailSpec::Helpers
         config.include EmailSpec::Methods
       end
       '
-    }
+    end
     let(:node) { Parser::CurrentRuby.parse(source) }
     let(:instance) { double(current_node: node) }
 

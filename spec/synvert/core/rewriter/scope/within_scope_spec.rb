@@ -4,10 +4,10 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::WithinScope do
-    let(:instance) {
+    let(:instance) do
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
-    }
+    end
     let(:source) { <<~EOS }
       describe Post do
         it 'gets post' do
