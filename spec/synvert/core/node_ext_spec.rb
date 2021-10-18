@@ -291,6 +291,16 @@ describe Parser::AST::Node do
       node = parse('a ||= 1')
       expect(node.left_value).to eq :a
     end
+
+    it 'gets for and' do
+      node = parse('foo && bar')
+      expect(node.left_value).to eq parse('foo')
+    end
+
+    it 'gets for or' do
+      node = parse('foo || bar')
+      expect(node.left_value).to eq parse('foo')
+    end
   end
 
   describe '#right_value' do
@@ -322,6 +332,16 @@ describe Parser::AST::Node do
     it 'gets for or_asgn' do
       node = parse('a ||= 1')
       expect(node.right_value).to eq parse('1')
+    end
+
+    it 'gets for and' do
+      node = parse('foo && bar')
+      expect(node.right_value).to eq parse('bar')
+    end
+
+    it 'gets for or' do
+      node = parse('foo || bar')
+      expect(node.right_value).to eq parse('bar')
     end
   end
 
