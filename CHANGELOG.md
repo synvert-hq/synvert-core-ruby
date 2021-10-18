@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.57.1 (2021-10-18)
+
+* Support `left_value` and `right_value` for `and` and `or` node
+
 ## 0.57.0 (2021-10-02)
 
 * Compare ruby version in `.ruby-version` or `.rvmrc`
