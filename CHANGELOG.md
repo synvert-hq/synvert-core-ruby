@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.57.1 (2021-10-18)
+## 0.58.0 (2021-10-23)
 
 * Support `left_value` and `right_value` for `and` and `or` node
+* Rewrite `within_node` and `within_direct_node`, `WithinScope` accepts `recursive` and `direct` options
 
 ## 0.57.0 (2021-10-02)
 
