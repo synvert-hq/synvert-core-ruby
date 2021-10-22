@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.58.1 (2021-10-23)
+
+* Do not break the whole `recursive_children`
+
 ## 0.58.0 (2021-10-23)
 
 * Support `left_value` and `right_value` for `and` and `or` node
