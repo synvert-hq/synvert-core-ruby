@@ -5,12 +5,12 @@ require 'spec_helper'
 module Synvert::Core
   describe Rewriter::ReplaceWithAction do
     context 'replace with single line' do
-      subject {
+      subject do
         source = 'post = FactoryGirl.create_list :post, 2'
         send_node = Parser::CurrentRuby.parse(source).children[1]
         instance = double(current_node: send_node)
         Rewriter::ReplaceWithAction.new(instance, 'create_list {{arguments}}').process
-      }
+      end
 
       it 'gets begin_pos' do
         expect(subject.begin_pos).to eq 'post = '.length
@@ -26,7 +26,7 @@ module Synvert::Core
     end
 
     context '#replace with multiple line' do
-      subject {
+      subject do
         source = '  its(:size) { should == 1 }'
         send_node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: send_node)
@@ -36,7 +36,7 @@ module Synvert::Core
             it { {{body}} }
           end
         EOS
-      }
+      end
 
       it 'gets begin_pos' do
         expect(subject.begin_pos).to eq 2

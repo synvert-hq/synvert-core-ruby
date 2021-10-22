@@ -4,12 +4,12 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::WrapAction do
-    subject {
+    subject do
       source = "class Bar\nend"
       node = Parser::CurrentRuby.parse(source)
       instance = double(current_node: node)
       Rewriter::WrapAction.new(instance, with: 'module Foo').process
-    }
+    end
 
     it 'gets begin_pos' do
       expect(subject.begin_pos).to eq 0

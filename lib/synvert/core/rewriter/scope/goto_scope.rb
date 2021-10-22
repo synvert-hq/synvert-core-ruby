@@ -20,9 +20,12 @@ module Synvert::Core
       return unless current_node
 
       child_node = current_node
-      @child_node_name.to_s.split('.').each do |child_node_name|
-        child_node = child_node_name.is_a?(Parser::AST::Node) ? child_node_name : child_node.send(child_node_name)
-      end
+      @child_node_name
+        .to_s
+        .split('.')
+        .each do |child_node_name|
+          child_node = child_node_name.is_a?(Parser::AST::Node) ? child_node_name : child_node.send(child_node_name)
+        end
       @instance.process_with_other_node child_node do
         @instance.instance_eval(&@block)
       end
