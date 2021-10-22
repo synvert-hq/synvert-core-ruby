@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.58.1 (2021-10-23)
+## 0.58.2 (2021-10-23)
 
 * Do not break the whole `recursive_children`
 
