@@ -6,7 +6,8 @@ module Synvert::Core
     END_LENGTH = "\nend".length
 
     def calculate_position
-      @begin_pos = :begin == @node.type ? @node.loc.expression.end_pos : @node.loc.expression.end_pos - @node.column - END_LENGTH
+      @begin_pos =
+        :begin == @node.type ? @node.loc.expression.end_pos : @node.loc.expression.end_pos - @node.column - END_LENGTH
       @end_pos = @begin_pos
     end
 
