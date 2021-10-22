@@ -31,11 +31,21 @@ module Synvert::Core
       instance.with_node(type: 'send', message: 'create', &block)
     end
 
-    it 'parses within_direct_node' do
+    it 'parses within_node with recursive false' do
       scope = double
       block = proc {}
       expect(Rewriter::WithinScope).to receive(:new)
         .with(instance, { type: 'send', message: 'create' }, { recursive: false }, &block)
+        .and_return(scope)
+      expect(scope).to receive(:process)
+      instance.within_node({ type: 'send', message: 'create' }, { recursive: false }, &block)
+    end
+
+    it 'parses within_direct_node' do
+      scope = double
+      block = proc {}
+      expect(Rewriter::WithinScope).to receive(:new)
+        .with(instance, { type: 'send', message: 'create' }, { direct: true }, &block)
         .and_return(scope)
       expect(scope).to receive(:process)
       instance.within_direct_node(type: 'send', message: 'create', &block)
@@ -45,7 +55,7 @@ module Synvert::Core
       scope = double
       block = proc {}
       expect(Rewriter::WithinScope).to receive(:new)
-        .with(instance, { type: 'send', message: 'create' }, { recursive: false }, &block)
+        .with(instance, { type: 'send', message: 'create' }, { direct: true }, &block)
         .and_return(scope)
       expect(scope).to receive(:process)
       instance.with_direct_node(type: 'send', message: 'create', &block)

@@ -51,6 +51,33 @@ module Synvert::Core
         expect(type_in_scope).to eq :send
         expect(instance.current_node.type).to eq :block
       end
+
+      it 'matches multiple block nodes' do
+        block_nodes = []
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { recursive: true }) do
+          block_nodes << node
+        end
+        scope.process
+        expect(block_nodes.size).to eq 2
+      end
+
+      it 'matches only one block node if no recursive' do
+        block_nodes = []
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' } , { recursive: false }) do
+          block_nodes << node
+        end
+        scope.process
+        expect(block_nodes.size).to eq 1
+      end
+
+      it 'matches only one direct node' do
+        block_nodes = []
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' } , { direct: true }) do
+          block_nodes << node
+        end
+        scope.process
+        expect(block_nodes.size).to eq 1
+      end
     end
   end
 end
