@@ -5,12 +5,12 @@ require 'spec_helper'
 module Synvert::Core
   describe Rewriter::InsertAction do
     context 'at end' do
-      subject {
+      subject do
         source = "  User.where(username: 'Richard')"
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
         Rewriter::InsertAction.new(instance, '.first', at: 'end').process
-      }
+      end
 
       it 'gets begin_pos' do
         expect(subject.begin_pos).to eq "  User.where(username: 'Richard')".length
@@ -26,12 +26,12 @@ module Synvert::Core
     end
 
     context 'at beginning' do
-      subject {
+      subject do
         source = "  open('http://test.com')"
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
         Rewriter::InsertAction.new(instance, 'URI.', at: 'beginning').process
-      }
+      end
 
       it 'gets begin_pos' do
         expect(subject.begin_pos).to eq 2

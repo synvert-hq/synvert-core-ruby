@@ -6,9 +6,7 @@ module Synvert::Core
     # check if any child node matches the rules.
     def match?
       match = false
-      @instance.current_node.recursive_children do |child_node|
-        match ||= child_node&.match?(@rules)
-      end
+      @instance.current_node.recursive_children { |child_node| match ||= child_node&.match?(@rules) }
       match
     end
   end

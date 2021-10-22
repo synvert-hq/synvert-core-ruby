@@ -300,9 +300,7 @@ module Parser::AST
     end
 
     def to_s
-      if :mlhs == type
-        "(#{children.map(&:name).join(', ')})"
-      end
+      "(#{children.map(&:name).join(', ')})" if :mlhs == type
     end
 
     def debug_info
@@ -365,9 +363,7 @@ module Parser::AST
           loc.selector
         end
       when %i[send parentheses]
-        if loc.begin && loc.end
-          Parser::Source::Range.new('(string)', loc.begin.begin_pos, loc.end.end_pos)
-        end
+        Parser::Source::Range.new('(string)', loc.begin.begin_pos, loc.end.end_pos) if loc.begin && loc.end
       else
         direct_child_name, nested_child_name = child_name.to_s.split('.', 2)
         if respond_to?(direct_child_name)
@@ -376,11 +372,16 @@ module Parser::AST
           if nested_child_name
             if child_node.is_a?(Array)
               child_direct_child_name, *child_nested_child_name = nested_child_name
-              child_direct_child_node = child_direct_child_name =~ /\A\d+\z/ ? child_node[child_direct_child_name] : child_node.send(child_direct_child_name)
+              child_direct_child_node =
+                if child_direct_child_name =~ /\A\d+\z/
+                  child_node[child_direct_child_name]
+                else
+                  child_node.send(child_direct_child_name)
+                end
               if child_nested_child_name.length > 0
                 return child_direct_child_node.child_node_range(child_nested_child_name.join('.'))
               elsif child_direct_child_node
-                return (
+                return(
                   Parser::Source::Range.new(
                     '(string)',
                     child_direct_child_node.loc.expression.begin_pos,
@@ -443,30 +444,32 @@ module Parser::AST
     # @param rules [Hash] rules to match.
     # @return true if matches.
     def match?(rules)
-      flat_hash(rules).keys.all? do |multi_keys|
-        case multi_keys.last
-        when :any, :contain
-          actual_values = actual_value(self, multi_keys[0...-1])
-          expected = expected_value(rules, multi_keys)
-          actual_values.any? { |actual| match_value?(actual, expected) }
-        when :not
-          actual = actual_value(self, multi_keys[0...-1])
-          expected = expected_value(rules, multi_keys)
-          !match_value?(actual, expected)
-        when :in
-          actual = actual_value(self, multi_keys[0...-1])
-          expected_values = expected_value(rules, multi_keys)
-          expected_values.any? { |expected| match_value?(actual, expected) }
-        when :not_in
-          actual = actual_value(self, multi_keys[0...-1])
-          expected_values = expected_value(rules, multi_keys)
-          expected_values.all? { |expected| !match_value?(actual, expected) }
-        else
-          actual = actual_value(self, multi_keys)
-          expected = expected_value(rules, multi_keys)
-          match_value?(actual, expected)
+      flat_hash(rules)
+        .keys
+        .all? do |multi_keys|
+          case multi_keys.last
+          when :any, :contain
+            actual_values = actual_value(self, multi_keys[0...-1])
+            expected = expected_value(rules, multi_keys)
+            actual_values.any? { |actual| match_value?(actual, expected) }
+          when :not
+            actual = actual_value(self, multi_keys[0...-1])
+            expected = expected_value(rules, multi_keys)
+            !match_value?(actual, expected)
+          when :in
+            actual = actual_value(self, multi_keys[0...-1])
+            expected_values = expected_value(rules, multi_keys)
+            expected_values.any? { |expected| match_value?(actual, expected) }
+          when :not_in
+            actual = actual_value(self, multi_keys[0...-1])
+            expected_values = expected_value(rules, multi_keys)
+            expected_values.all? { |expected| !match_value?(actual, expected) }
+          else
+            actual = actual_value(self, multi_keys)
+            expected = expected_value(rules, multi_keys)
+            match_value?(actual, expected)
+          end
         end
-      end
     end
 
     # Get rewritten source code.
@@ -483,11 +486,7 @@ module Parser::AST
           evaluated = instance_eval old_code
           case evaluated
           when Parser::AST::Node
-            if evaluated.type == :args
-              evaluated.loc.expression.source[1...-1]
-            else
-              evaluated.loc.expression.source
-            end
+            evaluated.type == :args ? evaluated.loc.expression.source[1...-1] : evaluated.loc.expression.source
           when Array
             if evaluated.size > 0
               file_source = evaluated.first.loc.expression.source_buffer.source
@@ -496,9 +495,9 @@ module Parser::AST
               lines_count = lines.length
               if lines_count > 1 && lines_count == evaluated.size
                 new_code = []
-                lines.each_with_index { |line, index|
+                lines.each_with_index do |line, index|
                   new_code << (index == 0 ? line : line[evaluated.first.indent - 2..-1])
-                }
+                end
                 new_code.join("\n")
               else
                 source
@@ -550,7 +549,8 @@ module Parser::AST
       if type == :block && caller.type == :send && caller.receiver.nil? && caller.message == :lambda
         new_source = to_source
         if arguments.size > 1
-          new_source = new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
+          new_source =
+            new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
           new_source = new_source.sub('lambda', "->(#{arguments.map(&:to_source).join(', ')})")
         else
           new_source = new_source.sub('lambda', '->')
@@ -597,17 +597,9 @@ module Parser::AST
 
         actual.zip(expected).all? { |a, e| match_value?(a, e) }
       when NilClass
-        if actual.is_a?(Parser::AST::Node)
-          :nil == actual.type
-        else
-          actual.nil?
-        end
+        actual.is_a?(Parser::AST::Node) ? :nil == actual.type : actual.nil?
       when Numeric
-        if actual.is_a?(Parser::AST::Node)
-          actual.children[0] == expected
-        else
-          actual == expected
-        end
+        actual.is_a?(Parser::AST::Node) ? actual.children[0] == expected : actual == expected
       when TrueClass
         :true == actual.type
       when FalseClass
@@ -659,19 +651,11 @@ module Parser::AST
     end
 
     def wrap_quote(string)
-      if string.include?("'")
-        "\"#{string}\""
-      else
-        "'#{string}'"
-      end
+      string.include?("'") ? "\"#{string}\"" : "'#{string}'"
     end
 
     def unwrap_quote(string)
-      if (string[0] == '"' && string[-1] == '"') || (string[0] == "'" && string[-1] == "'")
-        string[1...-1]
-      else
-        string
-      end
+      (string[0] == '"' && string[-1] == '"') || (string[0] == "'" && string[-1] == "'") ? string[1...-1] : string
     end
   end
 end
