@@ -88,41 +88,41 @@ module Synvert::Core
     # and rewrite source code back to original file.
     def process
       file_pattern = File.join(Configuration.path, @file_pattern)
-      Dir.glob(file_pattern).each do |file_path|
-        next if Configuration.skip_files.include? file_path
+      Dir
+        .glob(file_pattern)
+        .each do |file_path|
+          next if Configuration.skip_files.include? file_path
 
-        begin
-          puts file_path if Configuration.show_run_process
-          conflict_actions = []
-          source = +self.class.file_source(file_path)
-          ast = self.class.file_ast(file_path)
+          begin
+            puts file_path if Configuration.show_run_process
+            conflict_actions = []
+            source = +self.class.file_source(file_path)
+            ast = self.class.file_ast(file_path)
 
-          @current_file = file_path
+            @current_file = file_path
 
-          process_with_node ast do
-            begin
-              instance_eval(&@block)
-            rescue NoMethodError
-              puts @current_node.debug_info
-              raise
+            process_with_node ast do
+              begin
+                instance_eval(&@block)
+              rescue NoMethodError
+                puts @current_node.debug_info
+                raise
+              end
             end
-          end
 
-          if @actions.length > 0
-            @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
-            conflict_actions = get_conflict_actions
-            @actions.reverse_each do |action|
-              source[action.begin_pos...action.end_pos] = action.rewritten_code
+            if @actions.length > 0
+              @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
+              conflict_actions = get_conflict_actions
+              @actions.reverse_each { |action| source[action.begin_pos...action.end_pos] = action.rewritten_code }
+              @actions = []
+
+              update_file(file_path, source)
             end
-            @actions = []
-
-            update_file(file_path, source)
-          end
-        rescue Parser::SyntaxError
-          puts "[Warn] file #{file_path} was not parsed correctly."
-          # do nothing, iterate next file
-        end while !conflict_actions.empty?
-      end
+          rescue Parser::SyntaxError
+            puts "[Warn] file #{file_path} was not parsed correctly."
+            # do nothing, iterate next file
+          end while !conflict_actions.empty?
+        end
     end
 
     # Gets current node, it allows to get current node in block code.
