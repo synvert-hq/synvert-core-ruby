@@ -432,8 +432,8 @@ module Parser::AST
     def recursive_children(&block)
       children.each do |child|
         if child.is_a?(Parser::AST::Node)
-          result = yield child
-          child.recursive_children(&block) unless result == :stop
+          stop = yield child
+          child.recursive_children(&block) unless stop == :stop
         end
       end
     end
