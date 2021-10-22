@@ -4,10 +4,10 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::WithinScope do
-    let(:instance) {
+    let(:instance) do
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
-    }
+    end
     let(:source) { <<~EOS }
       describe Post do
         it 'gets post' do
@@ -54,27 +54,21 @@ module Synvert::Core
 
       it 'matches multiple block nodes' do
         block_nodes = []
-        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { recursive: true }) do
-          block_nodes << node
-        end
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { recursive: true }) { block_nodes << node }
         scope.process
         expect(block_nodes.size).to eq 2
       end
 
       it 'matches only one block node if no recursive' do
         block_nodes = []
-        scope = Rewriter::WithinScope.new(instance, { type: 'block' } , { recursive: false }) do
-          block_nodes << node
-        end
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { recursive: false }) { block_nodes << node }
         scope.process
         expect(block_nodes.size).to eq 1
       end
 
       it 'matches only one direct node' do
         block_nodes = []
-        scope = Rewriter::WithinScope.new(instance, { type: 'block' } , { direct: true }) do
-          block_nodes << node
-        end
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { direct: true }) { block_nodes << node }
         scope.process
         expect(block_nodes.size).to eq 1
       end
