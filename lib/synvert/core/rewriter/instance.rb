@@ -161,9 +161,11 @@ module Synvert::Core
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
+    # @param options [Hash] optional, set if recursive or not.
     # @param block [Block] block code to continue operating on the matching nodes.
-    def within_node(rules, &block)
-      Rewriter::WithinScope.new(self, rules, { recursive: true }, &block).process
+    def within_node(rules, options = nil, &block)
+      options ||= { recursive: true }
+      Rewriter::WithinScope.new(self, rules, options, &block).process
     end
 
     alias with_node within_node
@@ -174,7 +176,7 @@ module Synvert::Core
     # @param rules [Hash] rules to find mathing ast nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
     def within_direct_node(rules, &block)
-      Rewriter::WithinScope.new(self, rules, { recursive: false }, &block).process
+      Rewriter::WithinScope.new(self, rules, { direct: true }, &block).process
     end
 
     alias with_direct_node within_direct_node
