@@ -4,12 +4,12 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::DeleteAction do
-    subject {
+    subject do
       source = 'arr.map {}.flatten'
       node = Parser::CurrentRuby.parse(source)
       instance = double(current_node: node, file_source: source)
       Rewriter::DeleteAction.new(instance, :dot, :message).process
-    }
+    end
 
     it 'gets begin_pos' do
       expect(subject.begin_pos).to eq 'arr.map {}'.length

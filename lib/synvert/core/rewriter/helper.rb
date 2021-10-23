@@ -15,11 +15,7 @@ module Synvert::Core
     #   if current_node doesn't have a receiver, it returns "{{message}} {{arguments}}"
     #   if current_node has a receiver, it returns "{{receiver}}.{{message}} {{arguments}}"
     def add_receiver_if_necessary(code)
-      if node.receiver
-        "{{receiver}}.#{code}"
-      else
-        code
-      end
+      node.receiver ? "{{receiver}}.#{code}" : code
     end
 
     # Add arguments with parenthesis if necessary.
@@ -33,11 +29,7 @@ module Synvert::Core
     #   if current_node doesn't have an argument, it returns ""
     #   if current_node has argument, it returns "({{arguments}})"
     def add_arguments_with_parenthesis_if_necessary
-      if node.arguments.size > 0
-        '({{arguments}})'
-      else
-        ''
-      end
+      node.arguments.size > 0 ? '({{arguments}})' : ''
     end
 
     # Add curly brackets to code if necessary.
@@ -49,11 +41,7 @@ module Synvert::Core
     #
     #   add_curly_brackets_if_necessary("{{arguments}}")
     def add_curly_brackets_if_necessary(code)
-      if code.start_with?('{') && code.end_with?('}')
-        code
-      else
-        "{ #{code} }"
-      end
+      code.start_with?('{') && code.end_with?('}') ? code : "{ #{code} }"
     end
 
     # Remove leading and trailing brackets.
@@ -65,9 +53,10 @@ module Synvert::Core
     #
     #   strip_brackets("(1..100)") #=> "1..100"
     def strip_brackets(code)
-      code.sub(/^\((.*)\)$/) { Regexp.last_match(1) }.sub(/^\[(.*)\]$/) { Regexp.last_match(1) }.sub(/^{(.*)}$/) {
-        Regexp.last_match(1).strip
-      }
+      code
+        .sub(/^\((.*)\)$/) { Regexp.last_match(1) }
+        .sub(/^\[(.*)\]$/) { Regexp.last_match(1) }
+        .sub(/^{(.*)}$/) { Regexp.last_match(1).strip }
     end
 
     # Reject some keys from hash node.

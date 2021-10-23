@@ -14,9 +14,7 @@ module Synvert::Core
     def rewritten_code
       if rewritten_source.include?("\n")
         new_code = []
-        rewritten_source.split("\n").each_with_index do |line, index|
-          new_code << (index == 0 ? line : indent + line)
-        end
+        rewritten_source.split("\n").each_with_index { |line, index| new_code << (index == 0 ? line : indent + line) }
         new_code.join("\n")
       else
         rewritten_source
