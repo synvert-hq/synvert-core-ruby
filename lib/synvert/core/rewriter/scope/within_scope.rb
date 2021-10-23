@@ -89,12 +89,10 @@ module Synvert::Core
           return matching_nodes
         end
         current_node.recursive_children do |child_node|
-          stop = nil
           if child_node.match?(@rules)
             matching_nodes << child_node
-            stop = :stop
+            next :stop
           end
-          stop
         end
       else
         current_node.each do |node|
@@ -103,12 +101,10 @@ module Synvert::Core
             next
           end
           node.recursive_children do |child_node|
-            stop = nil
             if child_node.match?(@rules)
               matching_nodes << child_node
-              stop = :stop
+              next :stop
             end
-            stop
           end
         end
       end
