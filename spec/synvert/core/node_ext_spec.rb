@@ -396,6 +396,14 @@ describe Parser::AST::Node do
     end
   end
 
+  describe '#filename' do
+    it 'gets file name' do
+      source = 'foobar'
+      node = parse(source)
+      expect(node.filename).to eq '(string)'
+    end
+  end
+
   describe '#to_source' do
     it 'gets for node' do
       source = 'params[:user][:email]'

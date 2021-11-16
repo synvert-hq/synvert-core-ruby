@@ -315,6 +315,13 @@ module Parser::AST
         ].join("\n")
     end
 
+    # Get the file name of the current node.
+    #
+    # @return [String] file name.
+    def filename
+      loc.expression&.source_buffer.name
+    end
+
     # Get the source code of current node.
     #
     # @return [String] source code.
