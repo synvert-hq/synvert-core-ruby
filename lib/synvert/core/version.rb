@@ -2,6 +2,6 @@
 
 module Synvert
   module Core
-    VERSION = '0.58.2'
+    VERSION = '0.58.3'
   end
 end

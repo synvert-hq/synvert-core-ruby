@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.58.3 (2021-11-16)
+
+* Return block value by `next`
+* Add `Node#filename` method
+
 ## 0.58.2 (2021-10-23)
 
 * Do not break the whole `recursive_children`
