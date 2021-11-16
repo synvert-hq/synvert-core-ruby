@@ -4,12 +4,12 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::InsertAfterAction do
-    subject {
+    subject do
       source = '  include Foo'
       node = Parser::CurrentRuby.parse(source)
       instance = double(current_node: node)
       Rewriter::InsertAfterAction.new(instance, 'include Bar').process
-    }
+    end
 
     it 'gets begin_pos' do
       expect(subject.begin_pos).to eq '  include Foo'.length
