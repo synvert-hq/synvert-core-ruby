@@ -1,13 +1,12 @@
 # CHANGELOG
 
-## 0.58.3 (2021-11-16)
+## 0.59.0 (2021-11-17)
 
+* Use option `stop_when_match` instead of `recursive`
+* Add file pattern constants
+* Instance supports array of file patterns
 * Return block value by `next`
 * Add `Node#filename` method
-
-## 0.58.2 (2021-10-23)
-
-* Do not break the whole `recursive_children`
 
 ## 0.58.0 (2021-10-23)
 
