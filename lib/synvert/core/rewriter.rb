@@ -231,13 +231,13 @@ module Synvert::Core
     # Parse within_files dsl, it finds specified files.
     # It creates a [Synvert::Core::Rewriter::Instance] to rewrite code.
     #
-    # @param file_pattern [String] pattern to find files, e.g. spec/**/*_spec.rb
+    # @param file_patterns [String|Array<String>] string pattern or list of string pattern to find files, e.g. ['spec/**/*_spec.rb']
     # @param block [Block] the block to rewrite code in the matching files.
-    def within_files(file_pattern, &block)
+    def within_files(file_patterns, &block)
       return if @sandbox
 
       if (!@ruby_version || @ruby_version.match?) && (!@gem_spec || @gem_spec.match?)
-        Rewriter::Instance.new(self, file_pattern, &block).process
+        Rewriter::Instance.new(self, Array(file_patterns), &block).process
       end
     end
 

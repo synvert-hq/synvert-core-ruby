@@ -8,7 +8,7 @@ module Synvert::Core
 
     let(:instance) {
       rewriter = Rewriter.new('foo', 'bar')
-      Rewriter::Instance.new(rewriter, 'file pattern')
+      Rewriter::Instance.new(rewriter, ['file pattern'])
     }
 
     it 'parses within_node' do
@@ -185,7 +185,7 @@ module Synvert::Core
 
       it 'writes new code to file' do
         instance =
-          Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do
+          Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
               replace_with 'create {{arguments}}'
             end
@@ -212,7 +212,7 @@ module Synvert::Core
 
       it 'does not write if file content is not changed' do
         instance =
-          Rewriter::Instance.new rewriter, 'spec/spec_helper.rb' do
+          Rewriter::Instance.new rewriter, ['spec/spec_helper.rb'] do
             with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
               unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
                 insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
@@ -237,7 +237,7 @@ module Synvert::Core
 
       it 'does not read file if already read' do
         instance =
-          Rewriter::Instance.new rewriter, 'spec/spec_helper.rb' do
+          Rewriter::Instance.new rewriter, ['spec/spec_helper.rb'] do
             with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
               unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
                 insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
@@ -263,7 +263,7 @@ module Synvert::Core
 
       it 'updates file_source and file_ast when writing a file' do
         instance =
-          Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do
+          Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
               replace_with 'create {{arguments}}'
             end
@@ -299,7 +299,7 @@ module Synvert::Core
         action1 = double(begin_pos: 10, end_pos: 20)
         action2 = double(begin_pos: 30, end_pos: 40)
         action3 = double(begin_pos: 50, end_pos: 60)
-        instance = Rewriter::Instance.new rewriter, 'spec/spec_helper.rb'
+        instance = Rewriter::Instance.new rewriter, ['spec/spec_helper.rb']
         instance.instance_variable_set :@actions, [action1, action2, action3]
         conflict_actions = instance.send(:get_conflict_actions)
         expect(conflict_actions).to eq []
@@ -310,7 +310,7 @@ module Synvert::Core
         action1 = double(begin_pos: 30, end_pos: 40)
         action2 = double(begin_pos: 50, end_pos: 60)
         action3 = double(begin_pos: 10, end_pos: 20)
-        instance = Rewriter::Instance.new rewriter, 'spec/spec_helper.rb'
+        instance = Rewriter::Instance.new rewriter, ['spec/spec_helper.rb']
         instance.instance_variable_set :@actions, [action1, action2, action3]
         conflict_actions = instance.send(:get_conflict_actions)
         expect(conflict_actions).to eq [action2, action1]

@@ -72,13 +72,13 @@ module Synvert::Core
     # Initialize an instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
-    # @param file_pattern [String] pattern to find files, e.g. spec/**/*_spec.rb
+    # @param file_patterns [Array<String>] pattern list to find files, e.g. ['spec/**/*_spec.rb']
     # @param block [Block] block code to find nodes, match conditions and rewrite code.
     # @return [Synvert::Core::Rewriter::Instance]
-    def initialize(rewriter, file_pattern, &block)
+    def initialize(rewriter, file_patterns, &block)
       @rewriter = rewriter
       @actions = []
-      @file_pattern = file_pattern
+      @file_patterns = file_patterns
       @block = block
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
@@ -87,41 +87,42 @@ module Synvert::Core
     # It finds all files, for each file, it executes the block code, gets all rewrite actions,
     # and rewrite source code back to original file.
     def process
-      file_pattern = File.join(Configuration.path, @file_pattern)
-      Dir.glob(file_pattern).each do |file_path|
-        next if Configuration.skip_files.include? file_path
+      @file_patterns.each do |file_pattern|
+        Dir.glob(File.join(Configuration.path, file_pattern)).each do |file_path|
+          next if Configuration.skip_files.include? file_path
 
-        begin
-          puts file_path if Configuration.show_run_process
-          conflict_actions = []
-          source = +self.class.file_source(file_path)
-          ast = self.class.file_ast(file_path)
+          begin
+            puts file_path if Configuration.show_run_process
+            conflict_actions = []
+            source = +self.class.file_source(file_path)
+            ast = self.class.file_ast(file_path)
 
-          @current_file = file_path
+            @current_file = file_path
 
-          process_with_node ast do
-            begin
-              instance_eval(&@block)
-            rescue NoMethodError
-              puts @current_node.debug_info
-              raise
+            process_with_node ast do
+              begin
+                instance_eval(&@block)
+              rescue NoMethodError
+                puts @current_node.debug_info
+                raise
+              end
             end
-          end
 
-          if @actions.length > 0
-            @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
-            conflict_actions = get_conflict_actions
-            @actions.reverse_each do |action|
-              source[action.begin_pos...action.end_pos] = action.rewritten_code
+            if @actions.length > 0
+              @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
+              conflict_actions = get_conflict_actions
+              @actions.reverse_each do |action|
+                source[action.begin_pos...action.end_pos] = action.rewritten_code
+              end
+              @actions = []
+
+              update_file(file_path, source)
             end
-            @actions = []
-
-            update_file(file_path, source)
-          end
-        rescue Parser::SyntaxError
-          puts "[Warn] file #{file_path} was not parsed correctly."
-          # do nothing, iterate next file
-        end while !conflict_actions.empty?
+          rescue Parser::SyntaxError
+            puts "[Warn] file #{file_path} was not parsed correctly."
+            # do nothing, iterate next file
+          end while !conflict_actions.empty?
+        end
       end
     end
 
