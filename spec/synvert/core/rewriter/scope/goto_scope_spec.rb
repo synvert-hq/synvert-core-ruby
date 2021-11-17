@@ -4,10 +4,10 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::GotoScope do
-    let(:instance) {
+    let(:instance) do
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, 'file pattern')
-    }
+    end
     let(:source) { <<~EOS }
       Factory.define :user do |user|
       end

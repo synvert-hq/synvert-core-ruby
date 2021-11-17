@@ -97,11 +97,7 @@ module Synvert::Core
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def call(group, name, sandbox = false)
         rewriter = fetch(group, name)
-        if sandbox
-          rewriter.process_with_sandbox
-        else
-          rewriter.process
-        end
+        sandbox ? rewriter.process_with_sandbox : rewriter.process
         rewriter
       end
 
@@ -166,9 +162,7 @@ module Synvert::Core
     def process
       @affected_files = Set.new
       instance_eval(&@block)
-      if !@affected_files.empty? && @redo_until_no_change
-        process
-      end
+      process if !@affected_files.empty? && @redo_until_no_change
     end
 
     # Process rewriter with sandbox mode.

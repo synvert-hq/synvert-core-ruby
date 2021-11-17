@@ -4,12 +4,12 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::RemoveAction do
-    subject {
+    subject do
       source = "user = User.new params[:user]\nuser.save\nrender\n"
       send_node = Parser::CurrentRuby.parse(source).children[1]
       instance = double(current_node: send_node, file_source: source)
       Rewriter::RemoveAction.new(instance).process
-    }
+    end
 
     it 'gets begin_pos' do
       expect(subject.begin_pos).to eq "user = User.new params[:user]\n".length

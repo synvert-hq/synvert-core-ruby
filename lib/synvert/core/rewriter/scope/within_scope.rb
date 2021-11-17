@@ -47,16 +47,12 @@ module Synvert::Core
       matching_nodes = []
       if current_node.is_a?(Parser::AST::Node)
         if current_node.type == :begin
-          current_node.children.each do |child_node|
-            matching_nodes << child_node if child_node.match?(@rules)
-          end
+          current_node.children.each { |child_node| matching_nodes << child_node if child_node.match?(@rules) }
         elsif current_node.match?(@rules)
           matching_nodes << current_node
         end
       else
-        current_node.each do |child_node|
-          matching_nodes << child_node if child_node.match?(@rules)
-        end
+        current_node.each { |child_node| matching_nodes << child_node if child_node.match?(@rules) }
       end
       matching_nodes
     end
@@ -66,15 +62,11 @@ module Synvert::Core
       matching_nodes = []
       if current_node.is_a?(Parser::AST::Node)
         matching_nodes << current_node if current_node.match?(@rules)
-        current_node.recursive_children do |child_node|
-          matching_nodes << child_node if child_node.match?(@rules)
-        end
+        current_node.recursive_children { |child_node| matching_nodes << child_node if child_node.match?(@rules) }
       else
         current_node.each do |node|
           matching_nodes << node if node.match?(@rules)
-          node.recursive_children do |child_node|
-            matching_nodes << child_node if child_node.match?(@rules)
-          end
+          node.recursive_children { |child_node| matching_nodes << child_node if child_node.match?(@rules) }
         end
       end
       matching_nodes

@@ -54,9 +54,7 @@ module Synvert::Core
     end
 
     def squeeze_spaces
-      if file_source[@begin_pos - 1] == ' ' && file_source[@end_pos] == ' '
-        @begin_pos -= 1
-      end
+      @begin_pos -= 1 if file_source[@begin_pos - 1] == ' ' && file_source[@end_pos] == ' '
     end
 
     def squeeze_lines
@@ -66,9 +64,7 @@ module Synvert::Core
       before_line_is_blank = begin_line == 1 || lines[begin_line - 2] == ''
       after_line_is_blank = lines[end_line] == ''
 
-      if lines.length > 1 && before_line_is_blank && after_line_is_blank
-        @end_pos += "\n".length
-      end
+      @end_pos += "\n".length if lines.length > 1 && before_line_is_blank && after_line_is_blank
     end
 
     def remove_comma
