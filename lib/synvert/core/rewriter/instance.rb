@@ -162,10 +162,10 @@ module Synvert::Core
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
-    # @param options [Hash] optional, set if recursive or not.
+    # @param options [Hash] optional, set if stop_when_match or not.
     # @param block [Block] block code to continue operating on the matching nodes.
     def within_node(rules, options = nil, &block)
-      options ||= { recursive: true }
+      options ||= { stop_when_match: false }
       Rewriter::WithinScope.new(self, rules, options, &block).process
     end
 

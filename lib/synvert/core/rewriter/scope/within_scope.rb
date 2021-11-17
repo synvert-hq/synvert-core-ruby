@@ -26,10 +26,10 @@ module Synvert::Core
       matching_nodes =
         if @options[:direct]
           find_direct_matching_nodes(current_node)
-        elsif @options[:recursive]
-          find_recursive_matching_nodes(current_node)
-        else
+        elsif @options[:stop_when_match]
           find_matching_nodes(current_node)
+        else
+          find_recursive_matching_nodes(current_node)
         end
       @instance.process_with_node current_node do
         matching_nodes.each do |matching_node|

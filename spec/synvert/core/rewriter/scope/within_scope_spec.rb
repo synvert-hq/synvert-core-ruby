@@ -54,7 +54,7 @@ module Synvert::Core
 
       it 'matches multiple block nodes' do
         block_nodes = []
-        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { recursive: true }) do
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' }, { stop_when_match: false }) do
           block_nodes << node
         end
         scope.process
@@ -63,7 +63,7 @@ module Synvert::Core
 
       it 'matches only one block node if no recursive' do
         block_nodes = []
-        scope = Rewriter::WithinScope.new(instance, { type: 'block' } , { recursive: false }) do
+        scope = Rewriter::WithinScope.new(instance, { type: 'block' } , { stop_when_match: true }) do
           block_nodes << node
         end
         scope.process
