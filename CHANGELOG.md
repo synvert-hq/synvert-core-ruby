@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.60.0 (2021-12-02)
+
+* Add `to_string` to `sym` node
+
 ## 0.59.0 (2021-11-17)
 
 * Use option `stop_when_match` instead of `recursive`
