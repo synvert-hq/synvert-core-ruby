@@ -552,6 +552,13 @@ module Parser::AST
       ":#{to_value}"
     end
 
+    # convert symbol to string
+    def to_string
+      return to_source unless type == :sym
+
+      "#{to_value}"
+    end
+
     # convert lambda {} to -> {}
     def to_lambda_literal
       if type == :block && caller.type == :send && caller.receiver.nil? && caller.message == :lambda

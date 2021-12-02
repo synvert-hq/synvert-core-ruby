@@ -827,6 +827,22 @@ describe Parser::AST::Node do
     end
   end
 
+  describe '#to_string' do
+    context 'sym node' do
+      it 'converts symbol to string' do
+        node = parse(':foobar')
+        expect(node.to_string).to eq 'foobar'
+      end
+    end
+
+    context 'other node' do
+      it 'does nothing' do
+        node = parse("'foobar'")
+        expect(node.to_string).to eq "'foobar'"
+      end
+    end
+  end
+
   describe '#to_lambda_literal' do
     context 'lambda node' do
       it 'converts to lambda literal without arguments' do
