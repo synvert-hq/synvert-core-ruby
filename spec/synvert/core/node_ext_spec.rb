@@ -720,6 +720,26 @@ describe Parser::AST::Node do
         expect(range).to be_nil
       end
     end
+
+    context 'array' do
+      it 'checks array by index' do
+        node = parse('factory :admin, class: User do; end')
+        range = node.child_node_range('caller.arguments.2')
+        expect(range.to_range).to eq(16...27)
+      end
+
+      it 'checks array by method' do
+        node = parse('factory :admin, class: User do; end')
+        range = node.child_node_range('caller.arguments.second')
+        expect(range.to_range).to eq(16...27)
+      end
+
+      it "checks array' value" do
+        node = parse('factory :admin, class: User do; end')
+        range = node.child_node_range('caller.arguments.second.class_value')
+        expect(range.to_range).to eq(23...27)
+      end
+    end
   end
 
   describe '#rewritten_source' do

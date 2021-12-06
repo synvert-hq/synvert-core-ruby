@@ -382,10 +382,10 @@ module Parser::AST
 
           if nested_child_name
             if child_node.is_a?(Array)
-              child_direct_child_name, *child_nested_child_name = nested_child_name
-              child_direct_child_node = child_direct_child_name =~ /\A\d+\z/ ? child_node[child_direct_child_name] : child_node.send(child_direct_child_name)
-              if child_nested_child_name.length > 0
-                return child_direct_child_node.child_node_range(child_nested_child_name.join('.'))
+              child_direct_child_name, child_nested_child_name = nested_child_name.split('.', 2)
+              child_direct_child_node = child_direct_child_name =~ /\A\d+\z/ ? child_node[child_direct_child_name.to_i - 1] : child_node.send(child_direct_child_name)
+              if child_nested_child_name
+                return child_direct_child_node.child_node_range(child_nested_child_name)
               elsif child_direct_child_node
                 return (
                   Parser::Source::Range.new(
