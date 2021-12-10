@@ -554,6 +554,54 @@ describe Parser::AST::Node do
     end
   end
 
+  describe '#child_node_by_name' do
+    context 'block node' do
+      it 'checks caller' do
+        node = parse('Factory.define :user do |user|; end')
+        child_node = node.child_node_by_name(:caller)
+        expect(child_node).to eq node.caller
+      end
+
+      it 'checks arguments' do
+        node = parse('Factory.define :user do |user|; end')
+        child_node = node.child_node_by_name(:arguments)
+        expect(child_node).to eq node.arguments
+      end
+
+      it 'checks caller.receiver' do
+        node = parse('Factory.define :user do |user|; end')
+        child_node = node.child_node_by_name('caller.receiver')
+        expect(child_node).to eq node.caller.receiver
+      end
+
+      it 'checks caller.message' do
+        node = parse('Factory.define :user do |user|; end')
+        child_node = node.child_node_by_name('caller.message')
+        expect(child_node).to eq node.caller.message
+      end
+    end
+
+    context 'array' do
+      it 'checks array by index' do
+        node = parse('factory :admin, class: User do; end')
+        child_node = node.child_node_by_name('caller.arguments.2')
+        expect(child_node).to eq node.caller.arguments[1]
+      end
+
+      it 'checks array by method' do
+        node = parse('factory :admin, class: User do; end')
+        child_node = node.child_node_by_name('caller.arguments.second')
+        expect(child_node).to eq node.caller.arguments[1]
+      end
+
+      it "checks array' value" do
+        node = parse('factory :admin, class: User do; end')
+        child_node = node.child_node_by_name('caller.arguments.second.class_value')
+        expect(child_node).to eq node.caller.arguments[1].class_value
+      end
+    end
+  end
+
   describe '#child_node_range' do
     context 'block node' do
       it 'checks caller' do

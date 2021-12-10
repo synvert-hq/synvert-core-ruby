@@ -343,6 +343,43 @@ module Parser::AST
       loc.expression.line
     end
 
+    # Get child node by child name.
+    #
+    # @param [String] name of child node.
+    # @return [Parser::AST::Node] the child node.
+    def child_node_by_name(child_name)
+      direct_child_name, nested_child_name = child_name.to_s.split('.', 2)
+      if respond_to?(direct_child_name)
+        child_node = send(direct_child_name)
+
+        if nested_child_name
+          if child_node.is_a?(Array)
+            child_direct_child_name, child_nested_child_name = nested_child_name.split('.', 2)
+            child_direct_child_node = child_direct_child_name =~ /\A\d+\z/ ? child_node[child_direct_child_name.to_i - 1] : child_node.send(child_direct_child_name)
+            return child_direct_child_node.child_node_by_name(child_nested_child_name) if child_nested_child_name
+            return child_direct_child_node if child_direct_child_node
+
+            raise Synvert::Core::MethodNotSupported,
+                  "child_node_by_name is not handled for #{debug_info}, child_name: #{child_name}"
+          end
+
+          return child_node.child_node_by_name(nested_child_name)
+        end
+
+        return nil if child_node.nil?
+
+        return child_node if child_node.is_a?(Parser::AST::Node)
+
+        # arguments
+        return nil if child_node.empty?
+
+        return child_node
+      end
+
+      raise Synvert::Core::MethodNotSupported,
+            "child_node_by_name is not handled for #{debug_info}, child_name: #{child_name}"
+    end
+
     # Get the source range of child node.
     #
     # @param [String] name of child node.
@@ -486,8 +523,8 @@ module Parser::AST
     def rewritten_source(code)
       code.gsub(/{{(.*?)}}/m) do
         old_code = Regexp.last_match(1)
-        if respond_to? old_code.split(/\.|\[/).first
-          evaluated = instance_eval old_code
+        if respond_to?(old_code.split('.').first)
+          evaluated = child_node_by_name(old_code)
           case evaluated
           when Parser::AST::Node
             if evaluated.type == :args
