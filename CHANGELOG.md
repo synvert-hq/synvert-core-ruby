@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.61.0 (2021-12-10)
+
+* Add `Node#child_node_by_name`
+* Fix `Node#child_node_range` for array
+
 ## 0.60.0 (2021-12-02)
 
 * Add `to_string` to `sym` node
