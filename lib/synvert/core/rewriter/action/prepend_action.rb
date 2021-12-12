@@ -16,6 +16,10 @@ module Synvert::Core
           end
         when :class
           @node.children[1] ? @node.children[1].loc.expression.end_pos : @node.children[0].loc.expression.end_pos
+        when :def
+          @node.children[1].empty? ? @node.loc.name.end_pos : @node.children[1].loc.expression.end_pos
+        when :defs
+          @node.children[2].empty? ? @node.loc.name.end_pos : @node.children[2].loc.expression.end_pos
         else
           @node.children.last.loc.expression.end_pos
         end
@@ -29,7 +33,7 @@ module Synvert::Core
     # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
     def indent(node)
-      if %i[block class].include? node.type
+      if %i[block class def defs].include?(node.type)
         ' ' * (node.column + DEFAULT_INDENT)
       else
         ' ' * node.column

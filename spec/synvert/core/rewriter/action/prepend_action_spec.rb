@@ -87,5 +87,89 @@ module Synvert::Core
         expect(subject.rewritten_code).to eq "\n  include Deletable"
       end
     end
+
+    describe 'def node without args' do
+      subject do
+        source = "def setup\n  do_something\nend"
+        def_node = Parser::CurrentRuby.parse(source)
+        instance = double(current_node: def_node)
+        Rewriter::PrependAction.new(instance, 'super').process
+      end
+
+      it 'gets begin_pos' do
+        expect(subject.begin_pos).to eq 'def setup'.length
+      end
+
+      it 'gets end_pos' do
+        expect(subject.end_pos).to eq 'def setup'.length
+      end
+
+      it 'gets rewritten_code' do
+        expect(subject.rewritten_code).to eq "\n  super"
+      end
+    end
+
+    describe 'def node with args' do
+      subject do
+        source = "def setup(foobar)\n  do_something\nend"
+        def_node = Parser::CurrentRuby.parse(source)
+        instance = double(current_node: def_node)
+        Rewriter::PrependAction.new(instance, 'super').process
+      end
+
+      it 'gets begin_pos' do
+        expect(subject.begin_pos).to eq 'def setup(foobar)'.length
+      end
+
+      it 'gets end_pos' do
+        expect(subject.end_pos).to eq 'def setup(foobar)'.length
+      end
+
+      it 'gets rewritten_code' do
+        expect(subject.rewritten_code).to eq "\n  super"
+      end
+    end
+
+    describe 'defs node without args' do
+      subject do
+        source = "def self.foo\n  do_something\nend"
+        def_node = Parser::CurrentRuby.parse(source)
+        instance = double(current_node: def_node)
+        Rewriter::PrependAction.new(instance, 'do_something_first').process
+      end
+
+      it 'gets begin_pos' do
+        expect(subject.begin_pos).to eq 'def self.foo'.length
+      end
+
+      it 'gets end_pos' do
+        expect(subject.end_pos).to eq 'def self.foo'.length
+      end
+
+      it 'gets rewritten_code' do
+        expect(subject.rewritten_code).to eq "\n  do_something_first"
+      end
+    end
+
+    describe 'defs node with args' do
+      subject do
+        source = "def self.foo(bar)\n  do_something\nend"
+        def_node = Parser::CurrentRuby.parse(source)
+        instance = double(current_node: def_node)
+        Rewriter::PrependAction.new(instance, 'do_something_first').process
+      end
+
+      it 'gets begin_pos' do
+        expect(subject.begin_pos).to eq 'def self.foo(bar)'.length
+      end
+
+      it 'gets end_pos' do
+        expect(subject.end_pos).to eq 'def self.foo(bar)'.length
+      end
+
+      it 'gets rewritten_code' do
+        expect(subject.rewritten_code).to eq "\n  do_something_first"
+      end
+    end
   end
 end
