@@ -45,5 +45,26 @@ module Synvert::Core
         expect(subject.rewritten_code).to eq "\ngem 'twitter'"
       end
     end
+
+    describe 'def node' do
+      subject do
+        source = "def teardown\n  do_something\nend"
+        class_node = Parser::CurrentRuby.parse(source)
+        instance = double(current_node: class_node)
+        Rewriter::AppendAction.new(instance, 'super').process
+      end
+
+      it 'gets begin_pos' do
+        expect(subject.begin_pos).to eq "def teardown\n  do_something".length
+      end
+
+      it 'gets end_pos' do
+        expect(subject.end_pos).to eq "def teardown\n  do_something".length
+      end
+
+      it 'gets rewritten_code' do
+        expect(subject.rewritten_code).to eq "\n  super"
+      end
+    end
   end
 end

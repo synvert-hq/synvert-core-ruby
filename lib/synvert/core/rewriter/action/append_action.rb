@@ -17,7 +17,7 @@ module Synvert::Core
     # @param node [Parser::AST::Node]
     # @return [String] n times whitesphace
     def indent(node)
-      if %i[block class].include? node.type
+      if %i[block class def defs].include? node.type
         ' ' * (node.column + DEFAULT_INDENT)
       else
         ' ' * node.column
