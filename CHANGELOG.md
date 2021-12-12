@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.61.1 (2021-12-12)
+
+* Fix prepend action for def and defs nodes
+* Fix append action for def and defs nodes
+
 ## 0.61.0 (2021-12-10)
 
 * Add `Node#child_node_by_name`
