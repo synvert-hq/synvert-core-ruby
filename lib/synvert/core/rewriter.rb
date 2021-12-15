@@ -81,11 +81,10 @@ module Synvert::Core
       def fetch(group, name)
         group = group.to_s
         name = name.to_s
-        if rewriters[group] && rewriters[group][name]
-          rewriters[group][name]
-        else
-          raise RewriterNotFound, "Rewriter #{group} #{name} not found"
-        end
+        rewriter = rewriters.dig(group, name)
+        raise RewriterNotFound, "Rewriter #{group} #{name} not found" unless rewriter
+
+        rewriter
       end
 
       # Get a registered rewriter by group and name, then process that rewriter.
