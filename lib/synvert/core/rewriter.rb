@@ -236,9 +236,10 @@ module Synvert::Core
     def within_files(file_patterns, &block)
       return if @sandbox
 
-      if (!@ruby_version || @ruby_version.match?) && (!@gem_spec || @gem_spec.match?)
-        Rewriter::Instance.new(self, Array(file_patterns), &block).process
-      end
+      return if @ruby_version && !@ruby_version.match?
+      return if @gem_spec && !@gem_spec.match?
+
+      Rewriter::Instance.new(self, Array(file_patterns), &block).process
     end
 
     # Parse within_file dsl, it finds a specifiled file.
