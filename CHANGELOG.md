@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.61.2 (2021-12-21)
+
+* Restrict activesupport version to ~> 6
+
 ## 0.61.1 (2021-12-12)
 
 * Fix prepend action for def and defs nodes
