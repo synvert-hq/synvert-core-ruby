@@ -593,7 +593,7 @@ module Parser::AST
     def to_string
       return to_source unless type == :sym
 
-      "#{to_value}"
+      to_value.to_s
     end
 
     # convert lambda {} to -> {}
