@@ -49,7 +49,7 @@ module Parser::AST
     # @return [Parser::AST::Node] receiver node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def receiver
-      if :send == type
+      if %i[csend send].include?(type)
         children[0]
       else
         raise Synvert::Core::MethodNotSupported, "receiver is not handled for #{debug_info}"
@@ -64,7 +64,7 @@ module Parser::AST
       case type
       when :super, :zsuper
         :super
-      when :send
+      when :send, :csend
         children[1]
       else
         raise Synvert::Core::MethodNotSupported, "message is not handled for #{debug_info}"
@@ -81,7 +81,7 @@ module Parser::AST
         children[1]
       when :defs
         children[2]
-      when :send
+      when :send, :csend
         children[2..-1]
       when :defined?
         children
@@ -400,15 +400,15 @@ module Parser::AST
         loc.operator
       when %i[defs self]
         Parser::Source::Range.new('(string)', loc.operator.begin_pos - 'self'.length, loc.operator.begin_pos)
-      when %i[send dot]
+      when %i[send dot], %i[csend dot]
         loc.dot
-      when %i[send message]
+      when %i[send message], %i[csend message]
         if loc.operator
           Parser::Source::Range.new('(string)', loc.selector.begin_pos, loc.operator.end_pos)
         else
           loc.selector
         end
-      when %i[send parentheses]
+      when %i[send parentheses], %i[csend parentheses]
         if loc.begin && loc.end
           Parser::Source::Range.new('(string)', loc.begin.begin_pos, loc.end.end_pos)
         end

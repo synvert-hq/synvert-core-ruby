@@ -80,12 +80,22 @@ describe Parser::AST::Node do
       node = parse('FactoryGirl.create :post')
       expect(node.receiver).to eq parse('FactoryGirl')
     end
+
+    it 'gets for csend node' do
+      node = parse('user&.update(name: name)')
+      expect(node.receiver).to eq parse('user')
+    end
   end
 
   describe '#message' do
     it 'gets for send node' do
       node = parse('FactoryGirl.create :post')
       expect(node.message).to eq :create
+    end
+
+    it 'gets for csend node' do
+      node = parse('user&.update(name: name)')
+      expect(node.message).to eq :update
     end
 
     it 'gets for super node' do
@@ -135,6 +145,11 @@ describe Parser::AST::Node do
     it 'gets for send node' do
       node = parse("FactoryGirl.create :post, title: 'post'")
       expect(node.arguments).to eq parse("[:post, title: 'post']").children
+    end
+
+    it 'gets for csend node' do
+      node = parse('user&.update(name: name)')
+      expect(node.arguments).to eq parse('[name: name]').children
     end
 
     it 'gets for defined? node' do
@@ -649,6 +664,50 @@ describe Parser::AST::Node do
 
         node = parse('class Post; end')
         range = node.child_node_range(:parent_class)
+        expect(range).to be_nil
+      end
+    end
+
+    context 'csend node' do
+      it 'checks receiver' do
+        node = parse('foo&.bar(test)')
+        range = node.child_node_range(:receiver)
+        expect(range.to_range).to eq(0...3)
+      end
+
+      it 'checks dot' do
+        node = parse('foo&.bar(test)')
+        range = node.child_node_range(:dot)
+        expect(range.to_range).to eq(3...5)
+      end
+
+      it 'checks message' do
+        node = parse('foo&.bar(test)')
+        range = node.child_node_range(:message)
+        expect(range.to_range).to eq(5...8)
+
+        node = parse('foo&.bar = test')
+        range = node.child_node_range(:message)
+        expect(range.to_range).to eq(5...10)
+      end
+
+      it 'checks arguments' do
+        node = parse('foo&.bar(test)')
+        range = node.child_node_range(:arguments)
+        expect(range.to_range).to eq(9...13)
+
+        node = parse('foo&.bar')
+        range = node.child_node_range(:arguments)
+        expect(range).to be_nil
+      end
+
+      it 'checks parentheses' do
+        node = parse('foo&.bar(test)')
+        range = node.child_node_range(:parentheses)
+        expect(range.to_range).to eq(8...14)
+
+        node = parse('foo&.bar')
+        range = node.child_node_range(:parentheses)
         expect(range).to be_nil
       end
     end
