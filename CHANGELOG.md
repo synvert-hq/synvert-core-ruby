@@ -1,13 +1,11 @@
 # CHANGELOG
 
-## 0.61.2 (2021-12-21)
+## 0.62.0 (2021-12-24)
 
-* Restrict activesupport version to ~> 6
-
-## 0.61.1 (2021-12-12)
-
-* Fix prepend action for def and defs nodes
-* Fix append action for def and defs nodes
+* Support `csend` node
+* Restrict `activesupport` version to `~> 6`
+* Fix `prepend` action for `def` and `defs` nodes
+* Fix `append` action for `def` and `defs` nodes
 
 ## 0.61.0 (2021-12-10)
 
