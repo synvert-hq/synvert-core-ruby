@@ -45,5 +45,26 @@ module Synvert::Core
         expect(subject.rewritten_code).to eq 'URI.'
       end
     end
+
+    context 'to receiver' do
+      subject {
+        source = "User.where(username: 'Richard')"
+        node = Parser::CurrentRuby.parse(source)
+        instance = double(current_node: node)
+        Rewriter::InsertAction.new(instance, '.active', to: 'receiver', at: 'end').process
+      }
+
+      it 'gets begin_pos' do
+        expect(subject.begin_pos).to eq "User".length
+      end
+
+      it 'gets end_pos' do
+        expect(subject.end_pos).to eq "User".length
+      end
+
+      it 'gets rewritten_code' do
+        expect(subject.rewritten_code).to eq '.active'
+      end
+    end
   end
 end

@@ -240,8 +240,9 @@ module Synvert::Core
     #
     # @param code [String] code need to be inserted.
     # @param at [String] insert position, beginning or end, end is the default.
-    def insert(code, at: 'end')
-      @actions << Rewriter::InsertAction.new(self, code, at: at).process
+    # @param to [String] where to insert, if it is nil, will insert to current node.
+    def insert(code, at: 'end', to: nil)
+      @actions << Rewriter::InsertAction.new(self, code, at: at, to: to).process
     end
 
     # Parse insert_after dsl, it creates a [Synvert::Core::Rewriter::InsertAfterAction] to
