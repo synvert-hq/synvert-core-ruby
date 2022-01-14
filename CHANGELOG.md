@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.62.1 (2022-01-14)
+
+* Add `to` option to `InsertAction`
+
 ## 0.62.0 (2021-12-24)
 
 * Support `csend` node
