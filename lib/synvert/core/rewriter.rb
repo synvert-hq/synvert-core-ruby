@@ -257,9 +257,7 @@ module Synvert::Core
       end
 
       FileUtils.mkdir_p File.dirname(filepath)
-      File.open filepath, 'w' do |file|
-        file.write content
-      end
+      File.write(filepath, content)
     end
 
     # Parses remove_file dsl, it removes a file.
