@@ -222,7 +222,7 @@ module Synvert::Core
           redo_until_no_change
         end
       rewriter.process
-      expect(rewriter.instance_variable_get('@redo_until_no_change')).to be_truthy
+      expect(rewriter.instance_variable_get(:@redo_until_no_change)).to be_truthy
     end
 
     describe 'class methods' do
