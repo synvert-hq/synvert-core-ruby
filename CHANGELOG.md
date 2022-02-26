@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.63.1 (2022-02-26)
+
+* Read absolute path of Gemfile.lock
+
 ## 0.63.0 (2022-02-26)
 
 * Add `to` option to `InsertAction`
