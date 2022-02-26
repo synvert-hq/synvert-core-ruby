@@ -487,27 +487,29 @@ module Parser::AST
     # @param rules [Hash] rules to match.
     # @return true if matches.
     def match?(rules)
+      keywords = %i[any contain not in not_in gt gte lt lte]
       flat_hash(rules).keys.all? do |multi_keys|
-        case multi_keys.last
+        last_key = multi_keys.last
+        actual = keywords.include?(last_key) ? actual_value(multi_keys[0...-1]) : actual_value(multi_keys)
+        expected = expected_value(rules, multi_keys)
+        case last_key
         when :any, :contain
-          actual_values = actual_value(self, multi_keys[0...-1])
-          expected = expected_value(rules, multi_keys)
-          actual_values.any? { |actual| match_value?(actual, expected) }
+          actual.any? { |actual_value| match_value?(actual_value, expected) }
         when :not
-          actual = actual_value(self, multi_keys[0...-1])
-          expected = expected_value(rules, multi_keys)
           !match_value?(actual, expected)
         when :in
-          actual = actual_value(self, multi_keys[0...-1])
-          expected_values = expected_value(rules, multi_keys)
-          expected_values.any? { |expected| match_value?(actual, expected) }
+          expected.any? { |expected_value| match_value?(actual, expected_value) }
         when :not_in
-          actual = actual_value(self, multi_keys[0...-1])
-          expected_values = expected_value(rules, multi_keys)
-          expected_values.all? { |expected| !match_value?(actual, expected) }
+          expected.all? { |expected_value| !match_value?(actual, expected_value) }
+        when :gt
+          actual > expected
+        when :gte
+          actual >= expected
+        when :lt
+          actual < expected
+        when :lte
+          actual <= expected
         else
-          actual = actual_value(self, multi_keys)
-          expected = expected_value(rules, multi_keys)
           match_value?(actual, expected)
         end
       end
@@ -696,8 +698,8 @@ module Parser::AST
     # @param node [Parser::AST::Node]
     # @param multi_keys [Array<Symbol>]
     # @return [Object] actual value.
-    def actual_value(node, multi_keys)
-      multi_keys.inject(node) { |n, key| n.send(key) if n }
+    def actual_value(multi_keys)
+      multi_keys.inject(self) { |n, key| n.send(key) if n }
     end
 
     # Get expected value from rules.

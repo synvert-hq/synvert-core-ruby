@@ -567,6 +567,34 @@ describe Parser::AST::Node do
       node = parse(source)
       expect(node).not_to be_match(type: 'send', message: { not_in: %i[create build] })
     end
+
+    it 'matches gt' do
+      source = 'foobar(foo, bar)'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', arguments: { size: { gt: 1 } })
+      expect(node).not_to be_match(type: 'send', arguments: { size: { gt: 2 } })
+    end
+
+    it 'matches gte' do
+      source = 'foobar(foo, bar)'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', arguments: { size: { gte: 2 } })
+      expect(node).not_to be_match(type: 'send', arguments: { size: { gte: 3 } })
+    end
+
+    it 'matches lt' do
+      source = 'foobar(foo, bar)'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', arguments: { size: { lt: 3 } })
+      expect(node).not_to be_match(type: 'send', arguments: { size: { lt: 2 } })
+    end
+
+    it 'matches lte' do
+      source = 'foobar(foo, bar)'
+      node = parse(source)
+      expect(node).to be_match(type: 'send', arguments: { size: { lte: 2 } })
+      expect(node).not_to be_match(type: 'send', arguments: { size: { lte: 1 } })
+    end
   end
 
   describe '#child_node_by_name' do
