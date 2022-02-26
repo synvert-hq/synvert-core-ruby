@@ -19,7 +19,7 @@ module Synvert::Core
     # @return [Boolean] true if matches, otherwise false.
     # @raise [Synvert::Core::GemfileLockNotFound] raise if Gemfile.lock does not exist.
     def match?
-      gemfile_lock_path = File.join(Configuration.path, 'Gemfile.lock')
+      gemfile_lock_path = File.expand_path(File.join(Configuration.path, 'Gemfile.lock'))
 
       # if Gemfile.lock does not exist, just ignore this check
       return true unless File.exist?(gemfile_lock_path)
