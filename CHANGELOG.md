@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## 0.62.1 (2022-01-14)
+## 0.63.0 (2022-02-26)
 
 * Add `to` option to `InsertAction`
+* Add `gt`, `gte`, `lt` and `lte` rules
 
 ## 0.62.0 (2021-12-24)
 
