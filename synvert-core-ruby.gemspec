@@ -27,5 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", "3.10.0"
+  spec.add_development_dependency "rspec-mocks", "3.10.2" # rspec-mocks 3.10.3 breaks tests
 end
