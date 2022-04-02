@@ -10,9 +10,5 @@ module Synvert::Core
       instance = double(current_node: block_node)
       Rewriter::Action.new(instance, source)
     }
-
-    it 'gets line' do
-      expect(subject.line).to eq 2
-    end
   end
 end

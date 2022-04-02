@@ -3,18 +3,17 @@
 module Synvert::Core
   # Go to and change its scope to a child node.
   class Rewriter::GotoScope < Rewriter::Scope
-    # Initialize a scope
+    # Initialize a GotoScope.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param child_node_name [Symbol|string]
-    # @param block [Block]
+    # @param child_node_name [Symbol|String] name of child node
+    # @yield run on the child node
     def initialize(instance, child_node_name, &block)
-      @instance = instance
+      super(instance, &block)
       @child_node_name = child_node_name
-      @block = block
     end
 
-    # Go to a child now, then run the block code with the the child node.
+    # Go to a child now, then run the block code on the the child node.
     def process
       current_node = @instance.current_node
       return unless current_node

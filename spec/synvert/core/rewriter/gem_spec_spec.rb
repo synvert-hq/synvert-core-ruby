@@ -46,7 +46,7 @@ module Synvert::Core
       expect(gem_spec).not_to be_match
     end
 
-    it 'raise Synvert::Core::GemfileLockNotFound if Gemfile.lock does not exist' do
+    it 'returns true if Gemfile.lock does not exist' do
       expect(File).to receive(:exist?).with(lock_path).and_return(false)
       gem_spec = Rewriter::GemSpec.new('ast', '1.1.0')
       expect(gem_spec).to be_match

@@ -3,17 +3,16 @@
 module Synvert::Core
   # WithinScope finds out nodes which match rules, then changes its scope to matching node.
   class Rewriter::WithinScope < Rewriter::Scope
-    # Initialize a scope
+    # Initialize a WithinScope.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param rules [Hash]
     # @param options [Hash]
-    # @param block [Block]
+    # @yield run on all matching nodes
     def initialize(instance, rules, options = {}, &block)
-      @instance = instance
+      super(instance, &block)
       @rules = rules
       @options = options
-      @block = block
     end
 
     # Find out the matching nodes.
@@ -43,6 +42,8 @@ module Synvert::Core
     private
 
     # Find the matching nodes only in current or direct children.
+    #
+    # @param current_node [Parser::AST::Node]
     def find_direct_matching_nodes(current_node)
       matching_nodes = []
       if current_node.is_a?(Parser::AST::Node)
@@ -62,6 +63,8 @@ module Synvert::Core
     end
 
     # Find matching nodes in all recursive children.
+    #
+    # @param current_node [Parser::AST::Node]
     def find_recursive_matching_nodes(current_node)
       matching_nodes = []
       if current_node.is_a?(Parser::AST::Node)
@@ -81,6 +84,8 @@ module Synvert::Core
     end
 
     # Find matching nodes in recursive children but do not continue on matching nodes.
+    #
+    # @param current_node [Parser::AST::Node]
     def find_matching_nodes(current_node)
       matching_nodes = []
       if current_node.is_a?(Parser::AST::Node)

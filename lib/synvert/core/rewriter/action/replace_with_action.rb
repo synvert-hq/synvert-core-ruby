@@ -3,11 +3,6 @@
 module Synvert::Core
   # ReplaceWithAction to replace code.
   class Rewriter::ReplaceWithAction < Rewriter::Action
-    def calculate_position
-      @begin_pos = @node.loc.expression.begin_pos
-      @end_pos = @node.loc.expression.end_pos
-    end
-
     # The rewritten source code with proper indent.
     #
     # @return [String] rewritten code.
@@ -24,6 +19,12 @@ module Synvert::Core
     end
 
     private
+
+    # Calculate the begin the end positions.
+    def calculate_position
+      @begin_pos = @node.loc.expression.begin_pos
+      @end_pos = @node.loc.expression.end_pos
+    end
 
     # Indent of the node
     #

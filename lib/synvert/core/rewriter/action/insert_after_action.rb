@@ -3,12 +3,13 @@
 module Synvert::Core
   # InsertAfterAction to insert code next to the node.
   class Rewriter::InsertAfterAction < Rewriter::Action
+    private
+
+    # Calculate the begin and end positions.
     def calculate_position
       @begin_pos = @node.loc.expression.end_pos
       @end_pos = @begin_pos
     end
-
-    private
 
     # Indent of the node.
     #

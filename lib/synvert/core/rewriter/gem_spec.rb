@@ -3,12 +3,16 @@
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::GemSpec
+    # @!attribute [r] name
+    #   @return [String] the name of gem_spec
+    # @!attribute [r] version
+    #   @return [String] the version of gem_spec
     attr_reader :name, :version
 
-    # Initialize a gem_spec.
+    # Initialize a GemSpec.
     #
     # @param name [String] gem name
-    # @param version [String] gem version, e.g. '~> 2.0.0',
+    # @param version [String] gem version, e.g. '~> 2.0.0'
     def initialize(name, version)
       @name = name
       @version = version
@@ -17,7 +21,6 @@ module Synvert::Core
     # Check if the specified gem version in Gemfile.lock matches gem_spec comparator.
     #
     # @return [Boolean] true if matches, otherwise false.
-    # @raise [Synvert::Core::GemfileLockNotFound] raise if Gemfile.lock does not exist.
     def match?
       gemfile_lock_path = File.expand_path(File.join(Configuration.path, 'Gemfile.lock'))
 

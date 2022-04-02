@@ -5,7 +5,7 @@ require 'fileutils'
 module Synvert::Core
   # Rewriter is the top level namespace in a snippet.
   #
-  # One Rewriter can contain one or many [Synvert::Core::Rewriter::Instance],
+  # One Rewriter can contain one or many {Synvert::Core::Rewriter::Instance},
   # which define the behavior what files and what codes to detect and rewrite to what code.
   #
   #   Synvert::Rewriter.new 'factory_girl_short_syntax', 'use FactoryGirl short syntax' do
@@ -53,7 +53,7 @@ module Synvert::Core
     class << self
       # Execute the temporary rewriter without group and name.
       #
-      # @param block [Block] a block defines the behaviors of the rewriter.
+      # @yield defines the behaviors of the rewriter.
       def execute(&block)
         rewriter = Rewriter.new('', '', &block)
         rewriter.process
@@ -141,13 +141,12 @@ module Synvert::Core
     #   @return [Rewriter::GemSpec] the gem spec
     attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files, :ruby_version, :gem_spec
 
-    # Initialize a rewriter.
-    # When a rewriter is initialized, it is also registered.
+    # Initialize a Rewriter.
+    # When a rewriter is initialized, it is already registered.
     #
     # @param group [String] group of the rewriter.
     # @param name [String] name of the rewriter.
-    # @param block [Block] a block defines the behaviors of the rewriter, block code won't be called when initialization.
-    # @return [Synvert::Core::Rewriter]
+    # @yield defines the behaviors of the rewriter, block code won't be called when initialization.
     def initialize(group, name, &block)
       @group = group
       @name = name
@@ -198,7 +197,7 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse description dsl, it sets description of the rewrite.
+    # Parse `description` dsl, it sets description of the rewrite.
     # Or get description.
     #
     # @param description [String] rewriter description.
@@ -211,14 +210,14 @@ module Synvert::Core
       end
     end
 
-    # Parse if_ruby dsl, it checks if ruby version if greater than or equal to the specified ruby version.
+    # Parse `if_ruby` dsl, it checks if ruby version is greater than or equal to the specified ruby version.
     #
-    # @param version, [String] specified ruby version.
+    # @param version [String] specified ruby version.
     def if_ruby(version)
       @ruby_version = Rewriter::RubyVersion.new(version)
     end
 
-    # Parse if_gem dsl, it compares version of the specified gem.
+    # Parse `if_gem` dsl, it compares version of the specified gem.
     #
     # @param name [String] gem name.
     # @param version [String] equal, less than or greater than specified version, e.g. '>= 2.0.0',
@@ -226,8 +225,8 @@ module Synvert::Core
       @gem_spec = Rewriter::GemSpec.new(name, version)
     end
 
-    # Parse within_files dsl, it finds specified files.
-    # It creates a [Synvert::Core::Rewriter::Instance] to rewrite code.
+    # Parse `within_files` dsl, it finds specified files.
+    # It creates a {Synvert::Core::Rewriter::Instance} to rewrite code.
     #
     # @param file_patterns [String|Array<String>] string pattern or list of string pattern to find files, e.g. ['spec/**/*_spec.rb']
     # @param block [Block] the block to rewrite code in the matching files.
@@ -240,10 +239,10 @@ module Synvert::Core
       Rewriter::Instance.new(self, Array(file_patterns), &block).process
     end
 
-    # Parse within_file dsl, it finds a specifiled file.
+    # Parse `within_file` dsl, it finds a specifiled file.
     alias within_file within_files
 
-    # Parses add_file dsl, it adds a new file.
+    # Parses `add_file` dsl, it adds a new file.
     #
     # @param filename [String] file name of newly created file.
     # @param content [String] file body of newly created file.
@@ -262,7 +261,7 @@ module Synvert::Core
       end
     end
 
-    # Parses remove_file dsl, it removes a file.
+    # Parses `remove_file` dsl, it removes a file.
     #
     # @param filename [String] file name.
     def remove_file(filename)
@@ -272,7 +271,7 @@ module Synvert::Core
       File.delete(file_path) if File.exist?(file_path)
     end
 
-    # Parse add_snippet dsl, it calls anther rewriter.
+    # Parse `add_snippet` dsl, it calls anther rewriter.
     #
     # @param group [String] group of another rewriter.
     # @param name [String] name of another rewriter.
@@ -280,18 +279,18 @@ module Synvert::Core
       @sub_snippets << self.class.call(group.to_s, name.to_s, @sandbox)
     end
 
-    # Parse helper_method dsl, it defines helper method for [Synvert::Core::Rewriter::Instance].
+    # Parse `helper_method` dsl, it defines helper method for {Synvert::Core::Rewriter::Instance}.
     #
     # @param name [String] helper method name.
-    # @param block [Block] helper method block.
+    # @yield helper method block.
     def helper_method(name, &block)
       @helpers << { name: name, block: block }
     end
 
-    # Parse todo dsl, it sets todo of the rewriter.
+    # Parse `todo` dsl, it sets todo of the rewriter.
     # Or get todo.
     #
-    # @param todo_list [String] rewriter todo.
+    # @param todo [String] rewriter todo.
     # @return [String] rewriter todo.
     def todo(todo = nil)
       if todo

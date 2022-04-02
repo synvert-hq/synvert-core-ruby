@@ -3,8 +3,11 @@
 module Synvert::Core
   # PrependAction to prepend code to the top of node body.
   class Rewriter::PrependAction < Rewriter::Action
+    private
+
     DO_LENGTH = ' do'.length
 
+    # Calculate the begin and end positions.
     def calculate_position
       @begin_pos =
         case @node.type
@@ -25,8 +28,6 @@ module Synvert::Core
         end
       @end_pos = @begin_pos
     end
-
-    private
 
     # Indent of the node.
     #

@@ -4,12 +4,12 @@ module Synvert::Core
   # Instance is an execution unit, it finds specified ast nodes,
   # checks if the nodes match some conditions, then add, replace or remove code.
   #
-  # One instance can contains one or many [Synvert::Core::Rewriter::Scope] and [Synvert::Rewriter::Condition].
+  # One instance can contain one or many {Synvert::Core::Rewriter::Scope} and {Synvert::Rewriter::Condition}.
   class Rewriter::Instance
     include Rewriter::Helper
 
     class << self
-      # Cached file source.
+      # Get file source.
       #
       # @param file_path [String] file path
       # @return [String] file source
@@ -23,7 +23,7 @@ module Synvert::Core
           end
       end
 
-      # Cached file ast.
+      # Get file ast.
       #
       # @param file_path [String] file path
       # @return [String] ast node for file
@@ -51,7 +51,7 @@ module Synvert::Core
         @file_ast[file_path] = nil
       end
 
-      # Reset cached file source and ast.
+      # Reset file source and ast.
       def reset
         @file_source = {}
         @file_ast = {}
@@ -69,12 +69,11 @@ module Synvert::Core
       self.class.file_source(current_file)
     end
 
-    # Initialize an instance.
+    # Initialize an Instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
     # @param file_patterns [Array<String>] pattern list to find files, e.g. ['spec/**/*_spec.rb']
-    # @param block [Block] block code to find nodes, match conditions and rewrite code.
-    # @return [Synvert::Core::Rewriter::Instance]
+    # @yield block code to find nodes, match conditions and rewrite code.
     def initialize(rewriter, file_patterns, &block)
       @rewriter = rewriter
       @actions = []
@@ -84,44 +83,14 @@ module Synvert::Core
     end
 
     # Process the instance.
-    # It finds all files, for each file, it executes the block code, gets all rewrite actions,
-    # and rewrite source code back to original file.
+    # It finds specified files, for each file, it executes the block code, rewrites the original code,
+    # then write the code back to the original file.
     def process
       @file_patterns.each do |file_pattern|
         Dir.glob(File.join(Configuration.path, file_pattern)).each do |file_path|
-          next if Configuration.skip_files.include? file_path
+          next if Configuration.skip_files.include?(file_path)
 
-          begin
-            puts file_path if Configuration.show_run_process
-            conflict_actions = []
-            source = +self.class.file_source(file_path)
-            ast = self.class.file_ast(file_path)
-
-            @current_file = file_path
-
-            process_with_node ast do
-              begin
-                instance_eval(&@block)
-              rescue NoMethodError
-                puts @current_node.debug_info
-                raise
-              end
-            end
-
-            if @actions.length > 0
-              @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
-              conflict_actions = get_conflict_actions
-              @actions.reverse_each do |action|
-                source[action.begin_pos...action.end_pos] = action.rewritten_code
-              end
-              @actions = []
-
-              update_file(file_path, source)
-            end
-          rescue Parser::SyntaxError
-            puts "[Warn] file #{file_path} was not parsed correctly."
-            # do nothing, iterate next file
-          end while !conflict_actions.empty?
+          process_file(file_path)
         end
       end
     end
@@ -158,12 +127,13 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse within_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find recursive matching ast nodes,
+    # Parse `within_node` dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
-    # @param options [Hash] optional, set if stop_when_match or not.
-    # @param block [Block] block code to continue operating on the matching nodes.
+    # @param options [Hash] optional
+    # @option stop_when_match [Boolean] set if stop_when_match or not
+    # @yield run on the matching nodes.
     def within_node(rules, options = nil, &block)
       options ||= { stop_when_match: false }
       Rewriter::WithinScope.new(self, rules, options, &block).process
@@ -171,7 +141,7 @@ module Synvert::Core
 
     alias with_node within_node
 
-    # Parse within_direct_node dsl, it creates a [Synvert::Core::Rewriter::WithinScope] to find direct matching ast nodes,
+    # Parse `within_direct_node` dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to find direct matching ast nodes,
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
@@ -182,7 +152,7 @@ module Synvert::Core
 
     alias with_direct_node within_direct_node
 
-    # Parse goto_node dsl, it creates a [Synvert::Core::Rewriter::GotoScope] to go to a child node,
+    # Parse `goto_node` dsl, it creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
     # then continue operating on the child node.
     #
     # @param child_node_name [Symbol|String] the name of the child nodes.
@@ -191,7 +161,7 @@ module Synvert::Core
       Rewriter::GotoScope.new(self, child_node_name, &block).process
     end
 
-    # Parse if_exist_node dsl, it creates a [Synvert::Core::Rewriter::IfExistCondition] to check
+    # Parse `if_exist_node` dsl, it creates a {Synvert::Core::Rewriter::IfExistCondition} to check
     # if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to check mathing ast nodes.
@@ -200,7 +170,7 @@ module Synvert::Core
       Rewriter::IfExistCondition.new(self, rules, &block).process
     end
 
-    # Parse unless_exist_node dsl, it creates a [Synvert::Core::Rewriter::UnlessExistCondition] to check
+    # Parse `unless_exist_node` dsl, it creates a {Synvert::Core::Rewriter::UnlessExistCondition} to check
     # if matching nodes doesn't exist in the child nodes, if so, then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to check mathing ast nodes.
@@ -209,7 +179,7 @@ module Synvert::Core
       Rewriter::UnlessExistCondition.new(self, rules, &block).process
     end
 
-    # Parse if_only_exist_node dsl, it creates a [Synvert::Core::Rewriter::IfOnlyExistCondition] to check
+    # Parse `if_only_exist_node` dsl, it creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
     # if current node has only one child node and the child node matches rules,
     # if so, then continue operating on each matching ast node.
     #
@@ -219,7 +189,7 @@ module Synvert::Core
       Rewriter::IfOnlyExistCondition.new(self, rules, &block).process
     end
 
-    # Parse append dsl, it creates a [Synvert::Core::Rewriter::AppendAction] to
+    # Parse `append` dsl, it creates a {Synvert::Core::Rewriter::AppendAction} to
     # append the code to the bottom of current node body.
     #
     # @param code [String] code need to be appended.
@@ -227,7 +197,7 @@ module Synvert::Core
       @actions << Rewriter::AppendAction.new(self, code).process
     end
 
-    # Parse prepend dsl, it creates a [Synvert::Core::Rewriter::PrependAction] to
+    # Parse `prepend` dsl, it creates a {Synvert::Core::Rewriter::PrependAction} to
     # prepend the code to the top of current node body.
     #
     # @param code [String] code need to be prepended.
@@ -235,8 +205,7 @@ module Synvert::Core
       @actions << Rewriter::PrependAction.new(self, code).process
     end
 
-    # Parse insert dsl, it creates a [Synvert::Core::Rewriter::InsertAction] to
-    # insert the code to the top of current node body.
+    # Parse `insert` dsl, it creates a {Synvert::Core::Rewriter::InsertAction} to insert code.
     #
     # @param code [String] code need to be inserted.
     # @param at [String] insert position, beginning or end, end is the default.
@@ -245,24 +214,24 @@ module Synvert::Core
       @actions << Rewriter::InsertAction.new(self, code, at: at, to: to).process
     end
 
-    # Parse insert_after dsl, it creates a [Synvert::Core::Rewriter::InsertAfterAction] to
+    # Parse `insert_after` dsl, it creates a {Synvert::Core::Rewriter::InsertAfterAction} to
     # insert the code next to the current node.
     #
     # @param code [String] code need to be inserted.
-    def insert_after(node)
-      @actions << Rewriter::InsertAfterAction.new(self, node).process
+    def insert_after(code)
+      @actions << Rewriter::InsertAfterAction.new(self, code).process
     end
 
-    # Parse replace_with dsl, it creates a [Synvert::Core::Rewriter::ReplaceWithAction] to
-    # replace current node with code.
+    # Parse `replace_with` dsl, it creates a {Synvert::Core::Rewriter::ReplaceWithAction} to
+    # replace the whole code of current node.
     #
     # @param code [String] code need to be replaced with.
     def replace_with(code)
       @actions << Rewriter::ReplaceWithAction.new(self, code).process
     end
 
-    # Parse replace with dsl, it creates a [Synvert::Core::Rewriter::ReplaceAction] to
-    # replace child nodes with code.
+    # Parse `replace` dsl, it creates a {Synvert::Core::Rewriter::ReplaceAction} to
+    # replace the code of specified child nodes.
     #
     # @param selectors [Array<Symbol>] selector names of child node.
     # @param with [String] code need to be replaced with.
@@ -270,46 +239,83 @@ module Synvert::Core
       @actions << Rewriter::ReplaceAction.new(self, *selectors, with: with).process
     end
 
-    # Parse replace_erb_stmt_with_expr dsl, it creates a [Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction] to
+    # Parse `replace_erb_stmt_with_expr` dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
     # replace erb stmt code to expr code.
     def replace_erb_stmt_with_expr
       @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self).process
     end
 
-    # Parse remove dsl, it creates a [Synvert::Core::Rewriter::RemoveAction] to remove current node.
+    # Parse `remove` dsl, it creates a {Synvert::Core::Rewriter::RemoveAction} to remove current node.
     def remove
       @actions << Rewriter::RemoveAction.new(self).process
     end
 
-    # Parse delete dsl, it creates a [Synvert::Core::Rewriter::DeleteAction] to delete child nodes.
+    # Parse `delete` dsl, it creates a {Synvert::Core::Rewriter::DeleteAction} to delete child nodes.
     #
     # @param selectors [Array<Symbol>] selector names of child node.
     def delete(*selectors)
       @actions << Rewriter::DeleteAction.new(self, *selectors).process
     end
 
-    # Parse wrap with dsl, it creates a [Synvert::Core::Rewriter::WrapAction] to
+    # Parse `wrap` dsl, it creates a {Synvert::Core::Rewriter::WrapAction} to
     # wrap current node with code.
     #
     # @param with [String] code need to be wrapped with.
-    # @param indent [Integer] number of whitespaces.
+    # @param indent [Integer, nil] number of whitespaces.
     def wrap(with:, indent: nil)
       @actions << Rewriter::WrapAction.new(self, with: with, indent: indent).process
     end
 
-    # Parse warn dsl, it creates a [Synvert::Core::Rewriter::Warning] to save warning message.
+    # Parse `warn` dsl, it creates a {Synvert::Core::Rewriter::Warning} to save warning message.
     #
     # @param message [String] warning message.
     def warn(message)
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
-    # Any value but nil.
+    # Match any value but nil.
+    #
+    # @return [Synvert::Core::Rewriter::AnyValue]
     def any_value
       Rewriter::AnyValue.new
     end
 
     private
+
+    # Process one file.
+    #
+    # @param file_path [String]
+    def process_file(file_path)
+      begin
+        puts file_path if Configuration.show_run_process
+        conflict_actions = []
+        source = +self.class.file_source(file_path)
+        ast = self.class.file_ast(file_path)
+
+        @current_file = file_path
+
+        process_with_node(ast) do
+          instance_eval(&@block)
+        rescue NoMethodError
+          puts @current_node.debug_info
+          raise
+        end
+
+        if @actions.length > 0
+          @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
+          conflict_actions = get_conflict_actions
+          @actions.reverse_each do |action|
+            source[action.begin_pos...action.end_pos] = action.rewritten_code
+          end
+          @actions = []
+
+          update_file(file_path, source)
+        end
+      rescue Parser::SyntaxError
+        puts "[Warn] file #{file_path} was not parsed correctly."
+        # do nothing, iterate next file
+      end while !conflict_actions.empty?
+    end
 
     # It changes source code from bottom to top, and it can change source code twice at the same time,
     # So if there is an overlap between two actions, it removes the conflict actions and operate them in the next loop.

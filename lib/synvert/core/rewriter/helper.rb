@@ -24,7 +24,7 @@ module Synvert::Core
 
     # Add arguments with parenthesis if necessary.
     #
-    # @return [String] return `({{arguments}})` if node.arguments present, otherwise return nothing.
+    # @return [String] return (!{{arguments}}) if node.arguments present, otherwise return nothing.
     #
     # @example
     #
@@ -73,7 +73,7 @@ module Synvert::Core
     # Reject some keys from hash node.
     #
     # @param hash_node [Parser::AST::Node]
-    # @param keys [Array] keys should be rejected from the hash.
+    # @param keys [Array<String, Symbol>] keys should be rejected from the hash.
     # @return [String] source of of the hash node after rejecting some keys.
     #
     # @example

@@ -3,7 +3,11 @@
 module Synvert::Core
   # IfExistCondition checks if matching node exists in the node children.
   class Rewriter::IfExistCondition < Rewriter::Condition
+    private
+
     # check if any child node matches the rules.
+    #
+    # @return [Boolean]
     def match?
       match = false
       @instance.current_node.recursive_children do |child_node|

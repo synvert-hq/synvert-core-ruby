@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # Action defines rewriter action, add, replace or remove code.
+  # Action defines rewriter action, insert, replace or delete code.
   class Rewriter::Action
     DEFAULT_INDENT = 2
 
@@ -14,23 +14,19 @@ module Synvert::Core
     # Initialize an action.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param code [String] new code to add, replace or remove.
+    # @param code [String] new code to insert, replace or delete.
     def initialize(instance, code)
       @instance = instance
       @code = code
       @node = @instance.current_node
     end
 
+    # Calculate begin and end positions, and return self.
+    #
+    # @return [Synvert::Core::Rewriter::Action] self
     def process
       calculate_position
       self
-    end
-
-    # Line number of current node.
-    #
-    # @return [Integer] line number.
-    def line
-      @node.loc.expression.line
     end
 
     # The rewritten source code with proper indent.
@@ -46,6 +42,13 @@ module Synvert::Core
 
     protected
 
+    # Calculate the begin the end positions.
+    #
+    # @abstract
+    def calculate_position
+      raise NotImplementedError, 'must be implemented by subclasses'
+    end
+
     # The rewritten source code.
     #
     # @return [String] rewritten source code.
@@ -53,12 +56,14 @@ module Synvert::Core
       @rewritten_source ||= @node.rewritten_source(@code)
     end
 
+    # Squeeze spaces from source code.
     def squeeze_spaces
       if file_source[@begin_pos - 1] == ' ' && file_source[@end_pos] == ' '
         @begin_pos -= 1
       end
     end
 
+    # Squeeze empty lines from source code.
     def squeeze_lines
       lines = file_source.split("\n")
       begin_line = @node.loc.expression.first_line
@@ -71,6 +76,9 @@ module Synvert::Core
       end
     end
 
+    # Remove unused comma.
+    # e.g. `foobar(foo, bar)`, if we remove `foo`, the comma should also be removed,
+    # the code should be changed to `foobar(bar)`.
     def remove_comma
       if ',' == file_source[@begin_pos - 1]
         @begin_pos -= 1
@@ -83,6 +91,9 @@ module Synvert::Core
       end
     end
 
+    # Return file source.
+    #
+    # @return [String]
     def file_source
       @file_source ||= @instance.file_source
     end

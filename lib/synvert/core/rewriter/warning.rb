@@ -3,7 +3,7 @@
 module Synvert::Core
   # Warning is used to save warning message.
   class Rewriter::Warning
-    # Initialize a warning.
+    # Initialize a Warning.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param message [String] warning message.

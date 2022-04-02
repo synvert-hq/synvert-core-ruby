@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
 module Parser::AST
-  # Parser::AST::Node monkey patch.
+  # Extend Parser::AST::Node.
+  # @see https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb
   class Node
-    # Get name node of :class, :module, :const, :mlhs, :def and :defs node.
-    #
-    # @return [Parser::AST::Node] name node.
+    # Get the name of node.
+    # It supports :arg, :blockarg, :class, :const, :cvar, :def, :defs, :ivar,
+    # :lvar, :mlhs, :module and :restarg nodes.
+    # @example
+    #   node # => s(:class, s(:const, nil, :Synvert), nil, nil)
+    #   node.name # => s(:const, nil, :Synvert)
+    # @return [Parser::AST::Node] name of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def name
       case type
@@ -20,9 +25,12 @@ module Parser::AST
       end
     end
 
-    # Get parent_class node of :class node.
-    #
-    # @return [Parser::AST::Node] parent_class node.
+    # Get parent_class of node.
+    # It supports :class node.
+    # @example
+    #   node # s(:class, s(:const, nil, :Post), s(:const, s(:const, nil, :ActiveRecord), :Base), nil)
+    #   node.parent_class # s(:const, s(:const, nil, :ActiveRecord), :Base)
+    # @return [Parser::AST::Node] parent_class of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def parent_class
       if :class == type
@@ -32,9 +40,12 @@ module Parser::AST
       end
     end
 
-    # Get parent constant node of :const node.
-    #
-    # @return [Parser::AST::Node] parent const node.
+    # Get parent constant of node.
+    # It supports :const node.
+    # @example
+    #   node # s(:const, s(:const, nil, :Synvert), :Node)
+    #   node.parent_const # s(:const, nil, :Synvert)
+    # @return [Parser::AST::Node] parent const of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def parent_const
       if :const == type
@@ -44,9 +55,12 @@ module Parser::AST
       end
     end
 
-    # Get receiver node of :send node.
-    #
-    # @return [Parser::AST::Node] receiver node.
+    # Get receiver of node.
+    # It support :csend and :send nodes.
+    # @example
+    #   node # s(:send, s(:const, nil, :FactoryGirl), :create, s(:sym, :post))
+    #   node.receiver # s(:const, nil, :FactoryGirl)
+    # @return [Parser::AST::Node] receiver of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def receiver
       if %i[csend send].include?(type)
@@ -56,9 +70,12 @@ module Parser::AST
       end
     end
 
-    # Get message node of :super or :send node.
-    #
-    # @return [Parser::AST::Node] mesage node.
+    # Get message of node.
+    # It support :csend, :send, :super and :zsuper nodes.
+    # @example
+    #   node # s(:send, s(:const, nil, :FactoryGirl), :create, s(:sym, :post))
+    #   node.message # :create
+    # @return [Symbol] mesage of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def message
       case type
@@ -71,9 +88,12 @@ module Parser::AST
       end
     end
 
-    # Get arguments node of :send, :block or :defined? node.
-    #
-    # @return [Array<Parser::AST::Node>] arguments node.
+    # Get arguments of node.
+    # It supports :block, :csend, :def, :defined?, :defs and :send nodes.
+    # @example
+    #   node # s(:send, s(:const, nil, :FactoryGirl), :create, s(:sym, :post), s(:hash, s(:pair, s(:sym, :title), s(:str, "post"))))
+    #   node.arguments # [s(:sym, :post), s(:hash, s(:pair, s(:sym, :title), s(:str, "post")))]
+    # @return [Array<Parser::AST::Node>] arguments of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def arguments
       case type
@@ -90,9 +110,12 @@ module Parser::AST
       end
     end
 
-    # Get caller node of :block node.
-    #
-    # @return [Parser::AST::Node] caller node.
+    # Get caller of node.
+    # It support :block node.
+    # @example
+    #   node # s(:block, s(:send, s(:const, nil, :RSpec), :configure), s(:args, s(:arg, :config)), nil)
+    #   node.caller # s(:send, s(:const, nil, :RSpec), :configure)
+    # @return [Parser::AST::Node] caller of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def caller
       if :block == type
@@ -102,9 +125,12 @@ module Parser::AST
       end
     end
 
-    # Get body node of :begin or :block node.
-    #
-    # @return [Array<Parser::AST::Node>] body node.
+    # Get body of node.
+    # It supports :begin, :block, :class, :def, :defs and :module node.
+    # @example
+    #   node # s(:block, s(:send, s(:const, nil, :RSpec), :configure), s(:args, s(:arg, :config)), s(:send, nil, :include, s(:const, s(:const, nil, :EmailSpec), :Helpers)))
+    #   node.body # [s(:send, nil, :include, s(:const, s(:const, nil, :EmailSpec), :Helpers))]
+    # @return [Array<Parser::AST::Node>] body of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def body
       case type
@@ -123,9 +149,12 @@ module Parser::AST
       end
     end
 
-    # Get condition node of :if node.
-    #
-    # @return [Parser::AST::Node] condition node.
+    # Get condition of node.
+    # It supports :if node.
+    # @example
+    #   node # s(:if, s(:defined?, s(:const, nil, :Bundler)), nil, nil)
+    #   node.condition # s(:defined?, s(:const, nil, :Bundler))
+    # @return [Parser::AST::Node] condition of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def condition
       if :if == type
@@ -135,9 +164,11 @@ module Parser::AST
       end
     end
 
-    # Get keys node of :hash node.
-    #
-    # @return [Array<Parser::AST::Node>] keys node.
+    # Get keys of :hash node.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:sym, :bar)), s(:pair, s(:str, "foo"), s(:str, "bar")))
+    #   node.keys # [s(:sym, :foo), s(:str, "foo")]
+    # @return [Array<Parser::AST::Node>] keys of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def keys
       if :hash == type
@@ -147,9 +178,11 @@ module Parser::AST
       end
     end
 
-    # Get values node of :hash node.
-    #
-    # @return [Array<Parser::AST::Node>] values node.
+    # Get values of :hash node.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:sym, :bar)), s(:pair, s(:str, "foo"), s(:str, "bar")))
+    #   node.values # [s(:sym, :bar), s(:str, "bar")]
+    # @return [Array<Parser::AST::Node>] values of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def values
       if :hash == type
@@ -159,9 +192,11 @@ module Parser::AST
       end
     end
 
-    # Test if hash node contains specified key.
-    #
-    # @param [Object] key value.
+    # Check if :hash node contains specified key.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:sym, :bar)))
+    #   node.key?(:foo) # true
+    # @param [Symbol, String] key value.
     # @return [Boolean] true if specified key exists.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def key?(key)
@@ -172,10 +207,12 @@ module Parser::AST
       end
     end
 
-    # Get hash value node according to specified key.
-    #
-    # @param [Object] key value.
-    # @return [Parser::AST::Node] value node.
+    # Get :hash value node according to specified key.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:sym, :bar)))
+    #   node.hash_value(:foo) # s(:sym, :bar)
+    # @param [Symbol, String] key value.
+    # @return [Parser::AST::Node] hash value of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def hash_value(key)
       if :hash == type
@@ -187,8 +224,10 @@ module Parser::AST
     end
 
     # Get key node of hash :pair node.
-    #
-    # @return [Parser::AST::Node] key node.
+    # @example
+    #   node # s(:pair, s(:sym, :foo), s(:str, "bar"))
+    #   node.key # s(:sym, :foo)
+    # @return [Parser::AST::Node] key of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def key
       if :pair == type
@@ -199,8 +238,10 @@ module Parser::AST
     end
 
     # Get value node of hash :pair node.
-    #
-    # @return [Parser::AST::Node] value node.
+    # @example
+    #   node # s(:pair, s(:sym, :foo), s(:str, "bar"))
+    #   node.value # s(:str, "bar")
+    # @return [Parser::AST::Node] value of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def value
       if :pair == type
@@ -210,9 +251,12 @@ module Parser::AST
       end
     end
 
-    # Return the left value.
-    #
-    # @return [Parser::AST::Node] variable nodes.
+    # Return the left value of node.
+    # It supports :and, :cvagn, :lvasgn, :masgn, :or and :or_asgn nodes.
+    # @example
+    #   node # s(:masgn, s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b)), s(:array, s(:int, 1), s(:int, 2)))
+    #   node.left_value # s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b))
+    # @return [Parser::AST::Node] left value of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def left_value
       if %i[masgn lvasgn ivasgn cvasgn and or].include? type
@@ -224,9 +268,12 @@ module Parser::AST
       end
     end
 
-    # Return the right value.
-    #
-    # @return [Array<Parser::AST::Node>] variable nodes.
+    # Return the right value of node.
+    # It supports :cvasgn, :ivasgn, :lvasgn, :masgn, :or and :or_asgn nodes.
+    # @example
+    #   node # s(:masgn, s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b)), s(:array, s(:int, 1), s(:int, 2)))
+    #   node.right_value # s(:array, s(:int, 1), s(:int, 2))
+    # @return [Array<Parser::AST::Node>] right value of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def right_value
       if %i[masgn lvasgn ivasgn cvasgn or_asgn and or].include? type
@@ -236,8 +283,11 @@ module Parser::AST
       end
     end
 
-    # Return the exact value.
-    #
+    # Return the exact value of node.
+    # It supports :array, :begin, :erange, :false, :float, :irange, :int, :str, :sym and :true nodes.
+    # @example
+    #   node # s(:array, s(:str, "str"), s(:sym, :str)) ["str", :str]
+    #   node.to_value # ['str', :str]
     # @return [Object] exact value.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def to_value
@@ -261,10 +311,11 @@ module Parser::AST
       end
     end
 
-    # Respond key value for hash node, e.g.
-    #
-    # Current node is s(:hash, s(:pair, s(:sym, :number), s(:int, 10)))
-    # node.number_value is 10
+    # Respond key value and source for hash node, e.g.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:sym, :bar)))
+    #   node.foo_value # :bar
+    #   node.foo_source # ":bar"
     def method_missing(method_name, *args, &block)
       if :args == type && children.respond_to?(method_name)
         return children.send(method_name, *args, &block)
@@ -299,6 +350,9 @@ module Parser::AST
       super
     end
 
+    # Return the debug info.
+    #
+    # @return [String] file, line, source and node.
     def debug_info
       "\n" +
         [
@@ -309,37 +363,37 @@ module Parser::AST
         ].join("\n")
     end
 
-    # Get the file name of the current node.
+    # Get the file name of node.
     #
     # @return [String] file name.
     def filename
       loc.expression&.source_buffer.name
     end
 
-    # Get the source code of current node.
+    # Get the source code of node.
     #
     # @return [String] source code.
     def to_source
       loc.expression&.source
     end
 
-    # Get the column of current node.
+    # Get the column of node.
     #
     # @return [Integer] column.
     def column
       loc.expression.column
     end
 
-    # Get the line of current node.
+    # Get the line of node.
     #
     # @return [Integer] line.
     def line
       loc.expression.line
     end
 
-    # Get child node by child name.
+    # Get child node by the name.
     #
-    # @param [String] name of child node.
+    # @param child_name [String] name of child node.
     # @return [Parser::AST::Node] the child node.
     def child_node_by_name(child_name)
       direct_child_name, nested_child_name = child_name.to_s.split('.', 2)
@@ -376,7 +430,7 @@ module Parser::AST
 
     # Get the source range of child node.
     #
-    # @param [String] name of child node.
+    # @param child_name [String] name of child node.
     # @return [Parser::Source::Range] source range of child node.
     def child_node_range(child_name)
       case [type, child_name.to_sym]
@@ -463,7 +517,7 @@ module Parser::AST
       end
     end
 
-    # Recursively iterate all child nodes of current node.
+    # Recursively iterate all child nodes of node.
     #
     # @yield [child] Gives a child node.
     # @yieldparam child [Parser::AST::Node] child node
@@ -476,8 +530,11 @@ module Parser::AST
       end
     end
 
-    # Match current node with rules.
-    #
+    # Match node with rules.
+    # It provides some additional keywords to match rules, [any, contain, not, in, not_in, gt, gte, lt, lte].
+    # @example
+    #   type: { in: ['send', 'csend'] }
+    #   type: :send, arguments: { length: { gt: 2 } }
     # @param rules [Hash] rules to match.
     # @return true if matches.
     def match?(rules)
@@ -511,11 +568,10 @@ module Parser::AST
 
     # Get rewritten source code.
     # @example
-    #   node.rewritten_source("create({{arguments}})") #=> "create(:post)"
-    #
+    #   node.rewritten_source("create({{arguments}})") # "create(:post)"
     # @param code [String] raw code.
-    # @return [String] rewritten code, replace string in block {{ }} in raw code.
-    # @raise [Synvert::Core::MethodNotSupported] if string in block {{ }} does not support.
+    # @return [String] rewritten code, replace string in block !{{ }} in raw code.
+    # @raise [Synvert::Core::MethodNotSupported] if string in block !{{ }} does not support.
     def rewritten_source(code)
       code.gsub(/{{(.*?)}}/m) do
         old_code = Regexp.last_match(1)
@@ -557,42 +613,66 @@ module Parser::AST
       end
     end
 
-    # strip curly braces for hash
+    # Strip curly braces for hash.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:str, "bar")))
+    #   node.strip_curly_braces # "foo: 'bar'"
+    # @return [String]
     def strip_curly_braces
       return to_source unless type == :hash
 
       to_source.sub(/^{(.*)}$/) { Regexp.last_match(1).strip }
     end
 
-    # wrap curly braces for hash
+    # Wrap curly braces for hash.
+    # @example
+    #   node # s(:hash, s(:pair, s(:sym, :foo), s(:str, "bar")))
+    #   node.wrap_curly_braces # "{ foo: 'bar' }"
+    # @return [String]
     def wrap_curly_braces
       return to_source unless type == :hash
 
       "{ #{to_source} }"
     end
 
-    # get single quote string
+    # Get single quote string.
+    # @example
+    #   node # s(:str, "foobar")
+    #   node.to_single_quote # "'foobar'"
+    # @return [String]
     def to_single_quote
       return to_source unless type == :str
 
       "'#{to_value}'"
     end
 
-    # convert string to symbol
+    # Convert string to symbol.
+    # @example
+    #   node # s(:str, "foobar")
+    #   node.to_symbol # ":foobar"
+    # @return [String]
     def to_symbol
       return to_source unless type == :str
 
       ":#{to_value}"
     end
 
-    # convert symbol to string
+    # Convert symbol to string.
+    # @example
+    #   node # s(:sym, :foobar)
+    #   node.to_string # "foobar"
+    # @return [String]
     def to_string
       return to_source unless type == :sym
 
       to_value.to_s
     end
 
-    # convert lambda {} to -> {}
+    # Convert lambda {} to -> {}
+    # @example
+    #   node # s(:block, s(:send, nil, :lambda), s(:args), s(:send, nil, :foobar))
+    #   node.to_lambda_literal # "-> { foobar }"
+    # @return [String]
     def to_lambda_literal
       if type == :block && caller.type == :send && caller.receiver.nil? && caller.message == :lambda
         new_source = to_source
@@ -614,7 +694,7 @@ module Parser::AST
     #
     # @param actual [Object] actual value.
     # @param expected [Object] expected value.
-    # @return [Integer] -1, 0 or 1.
+    # @return [Boolean]
     # @raise [Synvert::Core::MethodNotSupported] if expected class is not supported.
     def match_value?(actual, expected)
       return true if actual == expected
@@ -672,7 +752,7 @@ module Parser::AST
     #
     # @example
     #   flat_hash(type: 'block', caller: {type: 'send', receiver: 'RSpec'})
-    #     #=> {[:type] => 'block', [:caller, :type] => 'send', [:caller, :receiver] => 'RSpec'}
+    #     # {[:type] => 'block', [:caller, :type] => 'send', [:caller, :receiver] => 'RSpec'}
     # @param h [Hash] original hash.
     # @return flatten hash.
     def flat_hash(h, k = [])
@@ -689,8 +769,7 @@ module Parser::AST
 
     # Get actual value from the node.
     #
-    # @param node [Parser::AST::Node]
-    # @param multi_keys [Array<Symbol>]
+    # @param multi_keys [Array<Symbol, String>]
     # @return [Object] actual value.
     def actual_value(multi_keys)
       multi_keys.inject(self) { |n, key| n.send(key) if n }
@@ -705,6 +784,7 @@ module Parser::AST
       multi_keys.inject(rules) { |o, key| o[key] }
     end
 
+    # Wrap the string with single or double quote.
     def wrap_quote(string)
       if string.include?("'")
         "\"#{string}\""
@@ -713,6 +793,7 @@ module Parser::AST
       end
     end
 
+    # Unwrap the quote from the string.
     def unwrap_quote(string)
       if (string[0] == '"' && string[-1] == '"') || (string[0] == "'" && string[-1] == "'")
         string[1...-1]
