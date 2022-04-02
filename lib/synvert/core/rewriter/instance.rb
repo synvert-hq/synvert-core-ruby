@@ -135,25 +135,16 @@ module Synvert::Core
     #   end
     # @param rules [Hash] rules to find mathing ast nodes.
     # @param options [Hash] optional
-    # @option stop_when_match [Boolean] set if stop_when_match or not
+    # @option stop_when_match [Boolean] set if stop when match, default is false
+    # @option direct [Boolean] set if find direct matching ast nodes, default is false
     # @yield run on the matching nodes.
-    def within_node(rules, options = nil, &block)
-      options ||= { stop_when_match: false }
+    def within_node(rules, options = {}, &block)
+      options[:stop_when_match] ||= false
+      options[:direct] ||= false
       Rewriter::WithinScope.new(self, rules, options, &block).process
     end
 
     alias with_node within_node
-
-    # Parse +within_direct_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to find direct matching ast nodes,
-    # then continue operating on each matching ast node.
-    #
-    # @param rules [Hash] rules to find mathing ast nodes.
-    # @param block [Block] block code to continue operating on the matching nodes.
-    def within_direct_node(rules, &block)
-      Rewriter::WithinScope.new(self, rules, { direct: true }, &block).process
-    end
-
-    alias with_direct_node within_direct_node
 
     # Parse +goto_node+ dsl, it creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
     # then continue operating on the child node.

@@ -58,8 +58,6 @@ Scopes:
 
 * [within_node](./Synvert/Core/Rewriter/Instance.html#within_node-instance_method) - recursively find matching ast nodes
 * [with_node](./Synvert/Core/Rewriter/Instance.html#with_node-instance_method) - alias to within_node
-* [within_direct_node](./Synvert/Core/Rewriter/Instance.html#within_direct_node-instance_method) - find direct matching ast nodes
-* [with_direct_node](./Synvert/Core/Rewriter/Instance.html#with_direct_node-instance_method) - alias to with_direct_node
 * [goto_node](./Synvert/Core/Rewriter/Instance.html#goto_node-instance_method) - go to a child node
 
 Conditions:
