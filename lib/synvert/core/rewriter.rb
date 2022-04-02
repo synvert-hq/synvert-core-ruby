@@ -187,7 +187,7 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse `description` dsl, it sets description of the rewrite.
+    # Parse +description+ dsl, it sets description of the rewrite.
     # Or get description.
     # @example
     #   Synvert::Rewriter.new 'rspec', 'use_new_syntax' do
@@ -203,7 +203,7 @@ module Synvert::Core
       end
     end
 
-    # Parse `if_ruby` dsl, it checks if ruby version is greater than or equal to the specified ruby version.
+    # Parse +if_ruby+ dsl, it checks if ruby version is greater than or equal to the specified ruby version.
     # @example
     #   Synvert::Rewriter.new 'ruby', 'new_safe_navigation_operator' do
     #     if_ruby '2.3.0'
@@ -213,7 +213,7 @@ module Synvert::Core
       @ruby_version = Rewriter::RubyVersion.new(version)
     end
 
-    # Parse `if_gem` dsl, it compares version of the specified gem.
+    # Parse +if_gem+ dsl, it compares version of the specified gem.
     # @example
     #   Synvert::Rewriter.new 'rails', 'upgrade_5_2_to_6_0' do
     #     if_gem 'rails', '>= 6.0'
@@ -224,7 +224,7 @@ module Synvert::Core
       @gem_spec = Rewriter::GemSpec.new(name, version)
     end
 
-    # Parse `within_files` dsl, it finds specified files.
+    # Parse +within_files+ dsl, it finds specified files.
     # It creates a {Synvert::Core::Rewriter::Instance} to rewrite code.
     # @example
     #   Synvert::Rewriter.new 'rspec', 'be_close_to_be_within' do
@@ -242,10 +242,10 @@ module Synvert::Core
       Rewriter::Instance.new(self, Array(file_patterns), &block).process
     end
 
-    # Parse `within_file` dsl, it finds a specifiled file.
+    # Parse +within_file+ dsl, it finds a specifiled file.
     alias within_file within_files
 
-    # Parses `add_file` dsl, it adds a new file.
+    # Parses +add_file+ dsl, it adds a new file.
     # @example
     #   Synvert::Rewriter.new 'rails', 'add_application_record' do
     #     add_file 'app/models/application_record.rb', <<~EOS
@@ -269,7 +269,7 @@ module Synvert::Core
       File.write(filepath, content)
     end
 
-    # Parses `remove_file` dsl, it removes a file.
+    # Parses +remove_file+ dsl, it removes a file.
     # @example
     #   Synvert::Rewriter.new 'rails', 'upgrade_4_0_to_4_1' do
     #     remove_file 'config/initializers/secret_token.rb'
@@ -282,7 +282,7 @@ module Synvert::Core
       File.delete(file_path) if File.exist?(file_path)
     end
 
-    # Parse `add_snippet` dsl, it calls anther rewriter.
+    # Parse +add_snippet+ dsl, it calls anther rewriter.
     # @example
     #   Synvert::Rewriter.new 'minitest', 'better_syntax' do
     #     add_snippet 'minitest', 'assert_empty'
@@ -305,7 +305,7 @@ module Synvert::Core
       @sub_snippets << self.class.call(group.to_s, name.to_s, @sandbox)
     end
 
-    # Parse `helper_method` dsl, it defines helper method for {Synvert::Core::Rewriter::Instance}.
+    # Parse +helper_method+ dsl, it defines helper method for {Synvert::Core::Rewriter::Instance}.
     # @example
     #   Synvert::Rewriter.new 'rails', 'convert_active_record_dirty_5_0_to_5_1' do
     #     helper_method :find_callbacks_and_convert do |callback_names, callback_changes|
@@ -322,7 +322,7 @@ module Synvert::Core
       @helpers << { name: name, block: block }
     end
 
-    # Parse `todo` dsl, it sets todo of the rewriter.
+    # Parse +todo+ dsl, it sets todo of the rewriter.
     # Or get todo.
     # @example
     #   Synvert::Rewriter.new 'rails', 'upgrade_3_2_to_4_0' do

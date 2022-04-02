@@ -127,7 +127,7 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse `within_node` dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
+    # Parse +within_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
     # then continue operating on each matching ast node.
     # @example
     #   # matches User.find_by_login('test')
@@ -144,7 +144,7 @@ module Synvert::Core
 
     alias with_node within_node
 
-    # Parse `within_direct_node` dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to find direct matching ast nodes,
+    # Parse +within_direct_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to find direct matching ast nodes,
     # then continue operating on each matching ast node.
     #
     # @param rules [Hash] rules to find mathing ast nodes.
@@ -155,7 +155,7 @@ module Synvert::Core
 
     alias with_direct_node within_direct_node
 
-    # Parse `goto_node` dsl, it creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
+    # Parse +goto_node+ dsl, it creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
     # then continue operating on the child node.
     # @example
     #   # head status: 406
@@ -169,7 +169,7 @@ module Synvert::Core
       Rewriter::GotoScope.new(self, child_node_name, &block).process
     end
 
-    # Parse `if_exist_node` dsl, it creates a {Synvert::Core::Rewriter::IfExistCondition} to check
+    # Parse +if_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::IfExistCondition} to check
     # if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.
     # @example
     #   # Klass.any_instance.stub(:message)
@@ -183,7 +183,7 @@ module Synvert::Core
       Rewriter::IfExistCondition.new(self, rules, &block).process
     end
 
-    # Parse `unless_exist_node` dsl, it creates a {Synvert::Core::Rewriter::UnlessExistCondition} to check
+    # Parse +unless_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::UnlessExistCondition} to check
     # if matching nodes doesn't exist in the child nodes, if so, then continue operating on each matching ast node.
     # @example
     #   # obj.stub(:message)
@@ -197,7 +197,7 @@ module Synvert::Core
       Rewriter::UnlessExistCondition.new(self, rules, &block).process
     end
 
-    # Parse `if_only_exist_node` dsl, it creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
+    # Parse +if_only_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
     # if current node has only one child node and the child node matches rules,
     # if so, then continue operating on each matching ast node.
     # @example
@@ -212,7 +212,7 @@ module Synvert::Core
       Rewriter::IfOnlyExistCondition.new(self, rules, &block).process
     end
 
-    # Parse `append` dsl, it creates a {Synvert::Core::Rewriter::AppendAction} to
+    # Parse +append+ dsl, it creates a {Synvert::Core::Rewriter::AppendAction} to
     # append the code to the bottom of current node body.
     # @example
     #   # def teardown
@@ -231,7 +231,7 @@ module Synvert::Core
       @actions << Rewriter::AppendAction.new(self, code).process
     end
 
-    # Parse `prepend` dsl, it creates a {Synvert::Core::Rewriter::PrependAction} to
+    # Parse +prepend+ dsl, it creates a {Synvert::Core::Rewriter::PrependAction} to
     # prepend the code to the top of current node body.
     # @example
     #   # def setup
@@ -250,7 +250,7 @@ module Synvert::Core
       @actions << Rewriter::PrependAction.new(self, code).process
     end
 
-    # Parse `insert` dsl, it creates a {Synvert::Core::Rewriter::InsertAction} to insert code.
+    # Parse +insert+ dsl, it creates a {Synvert::Core::Rewriter::InsertAction} to insert code.
     # @example
     #   # open('http://test.com')
     #   # =>
@@ -265,7 +265,7 @@ module Synvert::Core
       @actions << Rewriter::InsertAction.new(self, code, at: at, to: to).process
     end
 
-    # Parse `insert_after` dsl, it creates a {Synvert::Core::Rewriter::InsertAfterAction} to
+    # Parse +insert_after+ dsl, it creates a {Synvert::Core::Rewriter::InsertAfterAction} to
     # insert the code next to the current node.
     # @example
     #   # Synvert::Application.config.secret_token = "0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e"
@@ -280,7 +280,7 @@ module Synvert::Core
       @actions << Rewriter::InsertAfterAction.new(self, code).process
     end
 
-    # Parse `replace_with` dsl, it creates a {Synvert::Core::Rewriter::ReplaceWithAction} to
+    # Parse +replace_with+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceWithAction} to
     # replace the whole code of current node.
     # @example
     #   # obj.stub(:foo => 1, :bar => 2)
@@ -294,7 +294,7 @@ module Synvert::Core
       @actions << Rewriter::ReplaceWithAction.new(self, code).process
     end
 
-    # Parse `replace` dsl, it creates a {Synvert::Core::Rewriter::ReplaceAction} to
+    # Parse +replace+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceAction} to
     # replace the code of specified child nodes.
     # @example
     #   # assert(object.empty?)
@@ -310,7 +310,7 @@ module Synvert::Core
       @actions << Rewriter::ReplaceAction.new(self, *selectors, with: with).process
     end
 
-    # Parse `replace_erb_stmt_with_expr` dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
+    # Parse +replace_erb_stmt_with_expr+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
     # replace erb stmt code to expr code.
     # @example
     #   # <% form_for post do |f| %>
@@ -325,7 +325,7 @@ module Synvert::Core
       @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self).process
     end
 
-    # Parse `remove` dsl, it creates a {Synvert::Core::Rewriter::RemoveAction} to remove current node.
+    # Parse +remove+ dsl, it creates a {Synvert::Core::Rewriter::RemoveAction} to remove current node.
     # @example
     #   with_node type: 'send', message: { in: %w[puts p] } do
     #     remove
@@ -334,7 +334,7 @@ module Synvert::Core
       @actions << Rewriter::RemoveAction.new(self).process
     end
 
-    # Parse `delete` dsl, it creates a {Synvert::Core::Rewriter::DeleteAction} to delete child nodes.
+    # Parse +delete+ dsl, it creates a {Synvert::Core::Rewriter::DeleteAction} to delete child nodes.
     # @example
     #   # FactoryBot.create(...)
     #   # =>
@@ -347,7 +347,7 @@ module Synvert::Core
       @actions << Rewriter::DeleteAction.new(self, *selectors).process
     end
 
-    # Parse `wrap` dsl, it creates a {Synvert::Core::Rewriter::WrapAction} to
+    # Parse +wrap+ dsl, it creates a {Synvert::Core::Rewriter::WrapAction} to
     # wrap current node with code.
     # @example
     #   # class Foobar
@@ -366,7 +366,7 @@ module Synvert::Core
       @actions << Rewriter::WrapAction.new(self, with: with, indent: indent).process
     end
 
-    # Parse `warn` dsl, it creates a {Synvert::Core::Rewriter::Warning} to save warning message.
+    # Parse +warn+ dsl, it creates a {Synvert::Core::Rewriter::Warning} to save warning message.
     # @example
     #   within_files 'vendor/plugins' do
     #     warn 'Rails::Plugin is deprecated and will be removed in Rails 4.0. Instead of adding plugins to vendor/plugins use gems or bundler with path or git dependencies.'
@@ -377,7 +377,8 @@ module Synvert::Core
     end
 
     # Match any value but nil.
-    #
+    # @example
+    #   type: 'hash', nothing_value: 'true', status_value: any_value
     # @return [Synvert::Core::Rewriter::AnyValue]
     def any_value
       Rewriter::AnyValue.new

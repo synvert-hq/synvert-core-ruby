@@ -2,7 +2,32 @@
 
 module Parser::AST
   # Extend Parser::AST::Node.
-  # @see https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb
+  # {https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb}
+  #
+  # Rules
+  #
+  # Synvert compares ast nodes with key / value pairs, each ast node has
+  # multiple attributes, e.g. +receiver+, +message+ and +arguments+, it
+  # matches only when all of key / value pairs match.
+  #
+  # +type: 'send', message: :include, arguments: ['FactoryGirl::Syntax::Methods']+
+  #
+  # Synvert does comparison based on the value type
+  #
+  # 1. if value is a symbol, then compares ast node value as symbol, e.g. +message: :include+
+  # 2. if value is a string, then compares ast node original source code, e.g. +name: 'Synvert::Application'+
+  # 3. if value is a regexp, then compares ast node original source code, e.g. +message: /find_all_by_/+
+  # 4. if value is an array, then compares each ast node, e.g. +arguments: ['FactoryGirl::Syntax::Methods']+
+  # 5. if value is nil, then check if ast node is nil, e.g. +arguments: [nil]+
+  # 6. if value is true or false, then check if ast node is :true or :false, e.g. +arguments: [false]+
+  # 7. if value is ast, then compare ast node directly, e.g. +to_ast: Parser::CurrentRuby.parse("self.class.serialized_attributes")+
+  #
+  # It can also compare nested key / value pairs, like
+  #
+  # +type: 'send', receiver: { type: 'send', receiver: { type: 'send', message: 'config' }, message: 'active_record' }, message: 'identity_map='+
+  #
+  # Source Code to Ast Node
+  # {https://synvert-playground.xinminlabs.com}
   class Node
     # Get the name of node.
     # It supports :arg, :blockarg, :class, :const, :cvar, :def, :defs, :ivar,
@@ -531,8 +556,9 @@ module Parser::AST
     end
 
     # Match node with rules.
-    # It provides some additional keywords to match rules, [any, contain, not, in, not_in, gt, gte, lt, lte].
+    # It provides some additional keywords to match rules, +any+, +contain+, +not+, +in+, +not_in+, +gt+, +gte+, +lt+, +lte+.
     # @example
+    #   type: 'send', arguments: { any: 'Lifo::ShowExceptions' }
     #   type: { in: ['send', 'csend'] }
     #   type: :send, arguments: { length: { gt: 2 } }
     # @param rules [Hash] rules to match.
