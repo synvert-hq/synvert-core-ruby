@@ -1,8 +1,11 @@
 # CHANGELOG
 
-## 0.63.1 (2022-02-26)
+## 0.64.0 (2022-04-02)
 
 * Read absolute path of Gemfile.lock
+* Remove unused `Node#to_s`
+* Yardoc comments
+* Drop `within_direct_node(rules)`, use `within_node(rules, { direct: true })` instead
 
 ## 0.63.0 (2022-02-26)
 
