@@ -7,9 +7,9 @@ module Synvert::Core
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param code [String] to be inserted
-    # @param at [String] position to insert, beginning or end, default is beginning
+    # @param at [String] position to insert, beginning or end
     # @param to [<Symbol|String>] name of child node
-    def initialize(instance, code, at:, to: nil)
+    def initialize(instance, code, at: 'end', to: nil)
       super(instance, code)
       @at = at
       @to = to
