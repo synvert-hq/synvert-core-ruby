@@ -299,12 +299,6 @@ module Parser::AST
       super
     end
 
-    def to_s
-      if :mlhs == type
-        "(#{children.map(&:name).join(', ')})"
-      end
-    end
-
     def debug_info
       "\n" +
         [

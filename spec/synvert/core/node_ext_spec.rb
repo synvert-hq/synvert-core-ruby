@@ -404,13 +404,6 @@ describe Parser::AST::Node do
     end
   end
 
-  describe '#to_s' do
-    it 'gets for mlhs node' do
-      node = parse('var.each { |(param1, param2)| }')
-      expect(node.arguments.first.to_s).to eq '(param1, param2)'
-    end
-  end
-
   describe '#filename' do
     it 'gets file name' do
       source = 'foobar'
