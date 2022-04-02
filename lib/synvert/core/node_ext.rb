@@ -497,13 +497,13 @@ module Parser::AST
               if child_nested_child_name
                 return child_direct_child_node.child_node_range(child_nested_child_name)
               elsif child_direct_child_node
-                return (
+                return 
                   Parser::Source::Range.new(
                     '(string)',
                     child_direct_child_node.loc.expression.begin_pos,
                     child_direct_child_node.loc.expression.end_pos
                   )
-                )
+                
               else
                 raise Synvert::Core::MethodNotSupported,
                       "child_node_range is not handled for #{debug_info}, child_name: #{child_name}"
