@@ -27,7 +27,7 @@ module Parser::AST
   # +type: 'send', receiver: { type: 'send', receiver: { type: 'send', message: 'config' }, message: 'active_record' }, message: 'identity_map='+
   #
   # Source Code to Ast Node
-  # {https://synvert-playground.xinminlabs.com}
+  # {https://synvert-playground.xinminlabs.com?language=ruby}
   class Node
     # Get the name of node.
     # It supports :arg, :blockarg, :class, :const, :cvar, :def, :defs, :ivar,
