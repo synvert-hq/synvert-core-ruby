@@ -17,12 +17,7 @@ module Synvert::Core
 
     describe '#process' do
       it 'gets matching nodes' do
-        source =
-          '
-          RSpec.configure do |config|
-            config.include EmailSpec::Helpers
-          end
-        '
+        source = ' RSpec.configure do |config| config.include EmailSpec::Helpers end '
         node = Parser::CurrentRuby.parse(source)
         instance = double(current_node: node)
         run = false

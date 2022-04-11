@@ -24,8 +24,10 @@ module Synvert::Core
 
     # Calculate the begin the end positions.
     def calculate_position
-      @begin_pos = @selectors.map { |selector| @node.child_node_range(selector).begin_pos }.min
-      @end_pos = @selectors.map { |selector| @node.child_node_range(selector).end_pos }.max
+      @begin_pos = @selectors.map { |selector| @node.child_node_range(selector).begin_pos }
+                             .min
+      @end_pos = @selectors.map { |selector| @node.child_node_range(selector).end_pos }
+                           .max
     end
   end
 end

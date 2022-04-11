@@ -13,13 +13,13 @@ module Synvert::Core
             }
           </style>
         <%end%>
-        
+
         <%
           foo = 'bar'
           post = Post.find(:first)
           bar = 'foo'
         %>
-        
+
         <% if User.current &&
               User.current.admin %>
           <%= rounded_content("page") do %>

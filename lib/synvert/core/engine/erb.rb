@@ -43,11 +43,13 @@ module Synvert::Core
         end
 
         def decode_html_output(source)
-          source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text(Regexp.last_match(1)) }.gsub(
-            /@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/mo
-          ) { reverse_escape_text(Regexp.last_match(1)) }.gsub(
-            /@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/mo
-          ) { reverse_escape_text(Regexp.last_match(1)) }
+          source.gsub(/@output_buffer.safe_append='(.+?)'.freeze;/m) { reverse_escape_text(Regexp.last_match(1)) }
+                .gsub(
+                  /@output_buffer.safe_append=\((.+?)\);#{ERUBY_EXPR_SPLITTER}/mo
+                ) { reverse_escape_text(Regexp.last_match(1)) }
+                .gsub(
+                  /@output_buffer.safe_append=(.+?)\s+(do|\{)(\s*\|[^|]*\|)?\s*#{ERUBY_EXPR_SPLITTER}/mo
+                ) { reverse_escape_text(Regexp.last_match(1)) }
         end
 
         def remove_erubis_buf(source)
@@ -64,6 +66,7 @@ module Synvert::Core
 
     # borrowed from rails
     class Erubis < ::Erubis::Eruby
+      BLOCK_EXPR = /\s+(do|\{)(\s*\|[^|]*\|)?\s*\Z/
       def add_preamble(src)
         @newline_pending = 0
         src << '@output_buffer = output_buffer || ActionView::OutputBuffer.new;'
@@ -94,8 +97,6 @@ module Synvert::Core
           super
         end
       end
-
-      BLOCK_EXPR = /\s+(do|\{)(\s*\|[^|]*\|)?\s*\Z/
 
       def add_expr_literal(src, code)
         flush_newline_if_pending(src)

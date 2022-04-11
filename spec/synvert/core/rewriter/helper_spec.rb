@@ -4,7 +4,10 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::Helper do
-    let(:dummy_instance) { Class.new { include Rewriter::Helper }.new }
+    let(:dummy_instance) {
+      Class.new { include Rewriter::Helper }
+           .new
+    }
     let(:instance) do
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new rewriter, 'spec/**/*_spec.rb' do
