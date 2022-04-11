@@ -21,8 +21,9 @@ module Synvert::Core
     # @return [String] rewritten code.
     def rewritten_code
       "#{@code}\n#{' ' * @indent}" +
-      @node.to_source.split("\n").map { |line| "  #{line}" }.join("\n") +
-      "\n#{' ' * @indent}end"
+        @node.to_source.split("\n").map { |line| "  #{line}" }
+             .join("\n") +
+        "\n#{' ' * @indent}end"
     end
 
     private

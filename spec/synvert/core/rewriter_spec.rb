@@ -191,7 +191,8 @@ module Synvert::Core
           Rewriter.new 'group', 'name' do
             add_snippet :group, :not_exist
           end
-        expect { rewriter.process }.to raise_error(RewriterNotFound)
+        expect { rewriter.process }
+          .to raise_error(RewriterNotFound)
       end
     end
 
@@ -248,7 +249,8 @@ module Synvert::Core
       end
 
       it 'raises RewriterNotFound if rewriter not found' do
-        expect { Rewriter.call 'group', 'rewriter' }.to raise_error(RewriterNotFound)
+        expect { Rewriter.call 'group', 'rewriter' }
+          .to raise_error(RewriterNotFound)
       end
 
       context 'available' do

@@ -17,8 +17,8 @@ module Synvert::Core
     # @return [String] rewritten code.
     def rewritten_code
       @node.loc.expression.source_buffer.source[begin_pos...end_pos]
-        .sub(Engine::ERUBY_STMT_SPLITTER, '@output_buffer.append= ')
-        .sub(Engine::ERUBY_STMT_SPLITTER, Engine::ERUBY_EXPR_SPLITTER)
+           .sub(Engine::ERUBY_STMT_SPLITTER, '@output_buffer.append= ')
+           .sub(Engine::ERUBY_STMT_SPLITTER, Engine::ERUBY_EXPR_SPLITTER)
     end
 
     private

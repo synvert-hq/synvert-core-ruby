@@ -7,6 +7,18 @@ module Synvert::Core
   # One instance can contain one or many {Synvert::Core::Rewriter::Scope} and {Synvert::Rewriter::Condition}.
   class Rewriter::Instance
     include Rewriter::Helper
+    # Initialize an Instance.
+    #
+    # @param rewriter [Synvert::Core::Rewriter]
+    # @param file_patterns [Array<String>] pattern list to find files, e.g. ['spec/**/*_spec.rb']
+    # @yield block code to find nodes, match conditions and rewrite code.
+    def initialize(rewriter, file_patterns, &block)
+      @rewriter = rewriter
+      @actions = []
+      @file_patterns = file_patterns
+      @block = block
+      rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
+    end
 
     class << self
       # Get file source.
@@ -67,19 +79,6 @@ module Synvert::Core
     # Current file source
     def file_source
       self.class.file_source(current_file)
-    end
-
-    # Initialize an Instance.
-    #
-    # @param rewriter [Synvert::Core::Rewriter]
-    # @param file_patterns [Array<String>] pattern list to find files, e.g. ['spec/**/*_spec.rb']
-    # @yield block code to find nodes, match conditions and rewrite code.
-    def initialize(rewriter, file_patterns, &block)
-      @rewriter = rewriter
-      @actions = []
-      @file_patterns = file_patterns
-      @block = block
-      rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 
     # Process the instance.

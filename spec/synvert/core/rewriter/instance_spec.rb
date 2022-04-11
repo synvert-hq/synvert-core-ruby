@@ -91,7 +91,10 @@ module Synvert::Core
 
     it 'parses append' do
       action = double
-      expect(Rewriter::AppendAction).to receive(:new).with(instance, 'include FactoryGirl::Syntax::Methods').and_return(action)
+      expect(Rewriter::AppendAction).to receive(:new).with(
+        instance,
+        'include FactoryGirl::Syntax::Methods'
+      ).and_return(action)
       expect(action).to receive(:process)
       instance.append 'include FactoryGirl::Syntax::Methods'
     end
@@ -108,14 +111,24 @@ module Synvert::Core
 
     it 'parses insert at end' do
       action = double
-      expect(Rewriter::InsertAction).to receive(:new).with(instance, '.first', at: 'end', to: 'receiver').and_return(action)
+      expect(Rewriter::InsertAction).to receive(:new).with(
+        instance,
+        '.first',
+        at: 'end',
+        to: 'receiver'
+      ).and_return(action)
       expect(action).to receive(:process)
       instance.insert '.first', to: 'receiver'
     end
 
     it 'parses insert at beginning' do
       action = double
-      expect(Rewriter::InsertAction).to receive(:new).with(instance, 'URI.', at: 'beginning', to: nil).and_return(action)
+      expect(Rewriter::InsertAction).to receive(:new).with(
+        instance,
+        'URI.',
+        at: 'beginning',
+        to: nil
+      ).and_return(action)
       expect(action).to receive(:process)
       instance.insert 'URI.', at: 'beginning'
     end
