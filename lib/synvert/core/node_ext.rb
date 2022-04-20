@@ -311,7 +311,7 @@ module Parser::AST
     # Return the exact value of node.
     # It supports :array, :begin, :erange, :false, :float, :irange, :int, :str, :sym and :true nodes.
     # @example
-    #   node # s(:array, s(:str, "str"), s(:sym, :str)) ["str", :str]
+    #   node # s(:array, s(:str, "str"), s(:sym, :str))
     #   node.to_value # ['str', :str]
     # @return [Object] exact value.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
@@ -323,6 +323,8 @@ module Parser::AST
         true
       when :false
         false
+      when :nil
+        nil
       when :array
         children.map(&:to_value)
       when :irange

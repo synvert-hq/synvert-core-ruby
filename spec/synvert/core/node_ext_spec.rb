@@ -388,6 +388,11 @@ describe Parser::AST::Node do
       expect(node.to_value).to be_falsey
     end
 
+    it 'gets for nil' do
+      node = parse('nil')
+      expect(node.to_value).to be_nil
+    end
+
     it 'gets for irange' do
       node = parse('(1..10)')
       expect(node.to_value).to eq(1..10)
@@ -869,7 +874,7 @@ describe Parser::AST::Node do
         expect(range.to_range).to eq(16...27)
       end
 
-      it "checks array' value" do
+      it "checks array's value" do
         node = parse('factory :admin, class: User do; end')
         range = node.child_node_range('caller.arguments.second.class_value')
         expect(range.to_range).to eq(23...27)
