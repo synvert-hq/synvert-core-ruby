@@ -14,8 +14,9 @@ rule
     | selector { Compiler::Expression.new(val[0]) }
 
   selector
-    : tNODE_TYPE attribute_list { Compiler::Selector.new(val[0], val[1]) }
-    | tNODE_TYPE { Compiler::Selector.new(val[0]) }
+    : tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
+    | tNODE_TYPE { Compiler::Selector.new(node_type: val[0]) }
+    | attribute_list { Compiler::Selector.new(attribute_list: val[0]) }
     ;
 
   attribute_list

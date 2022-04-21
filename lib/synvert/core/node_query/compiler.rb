@@ -131,13 +131,14 @@ module Synvert::Core::NodeQuery
     end
 
     class Selector
-      def initialize(node_type, attribute_list = nil)
+      def initialize(node_type: nil, attribute_list: nil)
         @node_type = node_type
         @attribute_list = attribute_list
       end
 
       def match?(node)
-        node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type && (!@attribute_list || @attribute_list.match?(node))
+        (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
+        (!@attribute_list || @attribute_list.match?(node))
       end
 
       def to_s
@@ -168,7 +169,7 @@ module Synvert::Core::NodeQuery
       end
 
       def match?(node)
-        @value.match?(node.send(@key))
+        @value.match?(node.child_node_by_name(@key))
       end
 
       def to_s
@@ -196,7 +197,11 @@ module Synvert::Core::NodeQuery
       end
 
       def match?(node)
-        @value == node.to_value
+        if node.is_a?(::Parser::AST::Node)
+          @value == node.to_value
+        else
+          @value == node.to_f
+        end
       end
 
       def to_s
@@ -210,7 +215,11 @@ module Synvert::Core::NodeQuery
       end
 
       def match?(node)
-        @value == node.to_value
+        if node.is_a?(::Parser::AST::Node)
+          @value == node.to_value
+        else
+          @value == node.to_i
+        end
       end
 
       def to_s

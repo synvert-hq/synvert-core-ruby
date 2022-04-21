@@ -150,6 +150,37 @@ module Synvert::Core::NodeQuery
         ]
         assert_tokens source, expected_tokens
       end
+
+      it 'matches deep nested value' do
+        source = <<~EOS
+          .send[
+            arguments=[size=2][first=.str][last=.str]
+          ]
+        EOS
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tLEFT_SQUARE, "["],
+          [:tKEY, "arguments"],
+          [:tEQUAL, "="],
+          [:tLEFT_SQUARE, "["],
+          [:tKEY, "size"],
+          [:tEQUAL, "="],
+          [:tINTEGER, 2],
+          [:tRIGHT_SQUARE, "]"],
+          [:tLEFT_SQUARE, "["],
+          [:tKEY, "first"],
+          [:tEQUAL, "="],
+          [:tNODE_TYPE, "str"],
+          [:tRIGHT_SQUARE, "]"],
+          [:tLEFT_SQUARE, "["],
+          [:tKEY, "last"],
+          [:tEQUAL, "="],
+          [:tNODE_TYPE, "str"],
+          [:tRIGHT_SQUARE, "]"],
+          [:tRIGHT_SQUARE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
     end
 
     context 'attribute condition' do
