@@ -2,18 +2,30 @@
 
 module Synvert::Core::NodeQuery
   class Compiler
+    class InvalidOperator < StandardError; end
+
     module Comparable
-      def match?(node, operation)
-        case operation
-        when :not_equal
+      SIMPLE_VALID_OPERATORS = [:==, :!=]
+      NUMBER_VALID_OPERATORS = [:==, :!=, :>, :>=, :<, :<=]
+      REGEXP_OPERATORS = [:=~, :!~]
+
+      def match?(node, operator)
+        raise InvalidOperator, "invalid operator #{operator}" unless valid_operator?(operator)
+
+        case operator
+        when :!=
           actual_value(node) != expected_value
-        when :greater_than
+        when :=~
+          actual_value(node) =~ expected_value
+        when :!~
+          actual_value(node) !~ expected_value
+        when :>
           actual_value(node) > expected_value
-        when :greater_than_or_equal
+        when :>=
           actual_value(node) >= expected_value
-        when :less_than
+        when :<
           actual_value(node) < expected_value
-        when :less_than_or_equal
+        when :<=
           actual_value(node) <= expected_value
         else
           actual_value(node) == expected_value
@@ -26,6 +38,10 @@ module Synvert::Core::NodeQuery
 
       def expected_value
         @value
+      end
+
+      def valid_operator?(operator)
+        valid_operators.include?(operator)
       end
     end
 
@@ -163,9 +179,9 @@ module Synvert::Core::NodeQuery
         @attribute_list = attribute_list
       end
 
-      def match?(node, operation=:equal)
+      def match?(node, operator = :==)
         (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
-        (!@attribute_list || @attribute_list.match?(node, operation))
+        (!@attribute_list || @attribute_list.match?(node, operator))
       end
 
       def to_s
@@ -179,8 +195,8 @@ module Synvert::Core::NodeQuery
         @attribute_list = attribute_list
       end
 
-      def match?(node, operation=:equal)
-        @attribute.match?(node, operation) && (!@attribute_list || @attribute_list.match?(node, operation))
+      def match?(node, operator = :==)
+        @attribute.match?(node, operator) && (!@attribute_list || @attribute_list.match?(node, operator))
       end
 
       def to_s
@@ -189,28 +205,32 @@ module Synvert::Core::NodeQuery
     end
 
     class Attribute
-      def initialize(key, value, operation: :equal)
+      def initialize(key, value, operator: :==)
         @key = key
         @value = value
-        @operation = operation
+        @operator = operator
       end
 
-      def match?(node, operation=:equal)
+      def match?(node, operator = :==)
         @value.base_node = node if @value.is_a?(AttributeValue)
-        node && @value.match?(node.child_node_by_name(@key), @operation)
+        node && @value.match?(node.child_node_by_name(@key), @operator)
       end
 
       def to_s
-        case @operation
-        when :not_equal
+        case @operator
+        when :!=
           "#{@key}!=#{@value}"
-        when :greater_than
+        when :=~
+          "#{@key}=~#{@value}"
+        when :!~
+          "#{@key}!~#{@value}"
+        when :>
           "#{@key}>#{@value}"
-        when :greater_than_or_equal
+        when :>=
           "#{@key}>=#{@value}"
-        when :less_than
+        when :<
           "#{@key}<#{@value}"
-        when :less_than_or_equal
+        when :<=
           "#{@key}<=#{@value}"
         else
           "#{@key}=#{@value}"
@@ -235,6 +255,10 @@ module Synvert::Core::NodeQuery
         base_node.child_node_by_name(@value).to_source
       end
 
+      def valid_operators
+        SIMPLE_VALID_OPERATORS
+      end
+
       def to_s
         "{{#{@value}}}"
       end
@@ -249,6 +273,10 @@ module Synvert::Core::NodeQuery
 
       def to_s
         @value.to_s
+      end
+
+      def valid_operators
+        SIMPLE_VALID_OPERATORS
       end
     end
 
@@ -265,6 +293,10 @@ module Synvert::Core::NodeQuery
         else
           node.to_f
         end
+      end
+
+      def valid_operators
+        NUMBER_VALID_OPERATORS
       end
 
       def to_s
@@ -287,6 +319,10 @@ module Synvert::Core::NodeQuery
         end
       end
 
+      def valid_operators
+        NUMBER_VALID_OPERATORS
+      end
+
       def to_s
         @value.to_s
       end
@@ -303,6 +339,10 @@ module Synvert::Core::NodeQuery
         node
       end
 
+      def valid_operators
+        SIMPLE_VALID_OPERATORS
+      end
+
       def to_s
         'nil'
       end
@@ -315,12 +355,16 @@ module Synvert::Core::NodeQuery
         @value = value
       end
 
-      def match?(node, operation)
+      def match?(node, operator)
         if node.is_a?(::Parser::AST::Node)
           @value.match(node.to_source)
         else
           @value.match(node.to_s)
         end
+      end
+
+      def valid_operators
+        REGEXP_OPERATORS
       end
 
       def to_s
@@ -333,6 +377,10 @@ module Synvert::Core::NodeQuery
 
       def initialize(value)
         @value = value
+      end
+
+      def valid_operators
+        SIMPLE_VALID_OPERATORS
       end
 
       def to_s
@@ -356,6 +404,10 @@ module Synvert::Core::NodeQuery
         end
       end
 
+      def valid_operators
+        SIMPLE_VALID_OPERATORS
+      end
+
       def to_s
         ":#{@value}"
       end
@@ -374,6 +426,10 @@ module Synvert::Core::NodeQuery
         else
           node.to_s
         end
+      end
+
+      def valid_operators
+        SIMPLE_VALID_OPERATORS
       end
 
       def to_s

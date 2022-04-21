@@ -92,6 +92,11 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq node.body
       end
 
+      it 'matches not equal' do
+        expression = parser.parse('.def[name!=foobar]')
+        expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
+      end
+
       it 'matches descendant node' do
         expression = parser.parse('.class .send[message=:create]')
         expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
@@ -115,6 +120,10 @@ module Synvert::Core::NodeQuery
       it 'matches arguments.size' do
         expression = parser.parse('.send[arguments.size=2]')
         expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+        expression = parser.parse('.send[arguments.size>2]')
+        expect(expression.query_nodes(node)).to eq []
+        expression = parser.parse('.send[arguments.size>=2]')
+        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
       end
 
       it 'matches arguments' do
@@ -123,7 +132,7 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches regexp value' do
-        expression = parser.parse('.def[name=/foo/]')
+        expression = parser.parse('.def[name=~/foo/]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.last]
       end
 

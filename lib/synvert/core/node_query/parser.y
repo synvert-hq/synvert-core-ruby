@@ -3,7 +3,7 @@ options no_result_var
 token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE
-      tEQUAL tNOT_EQUAL tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL
+      tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL
       tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
@@ -25,12 +25,14 @@ rule
     ;
 
   attribute
-    : tKEY tNOT_EQUAL value { Compiler::Attribute.new(val[0], val[2], operation: :not_equal) }
-    | tKEY tGREATER_THAN_OR_EQUAL value { Compiler::Attribute.new(val[0], val[2], operation: :greater_than_or_equal) }
-    | tKEY tGREATER_THAN value { Compiler::Attribute.new(val[0], val[2], operation: :greater_than) }
-    | tKEY tLESS_THAN_OR_EQUAL value { Compiler::Attribute.new(val[0], val[2], operation: :less_than_or_equal) }
-    | tKEY tLESS_THAN value { Compiler::Attribute.new(val[0], val[2], operation: :less_than) }
-    | tKEY tEQUAL value { Compiler::Attribute.new(val[0], val[2], operation: :equal) }
+    : tKEY tNOT_EQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :!=) }
+    | tKEY tNOT_MATCH value { Compiler::Attribute.new(val[0], val[2], operator: :!~) }
+    | tKEY tMATCH value { Compiler::Attribute.new(val[0], val[2], operator: :=~) }
+    | tKEY tGREATER_THAN_OR_EQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :>=) }
+    | tKEY tGREATER_THAN value { Compiler::Attribute.new(val[0], val[2], operator: :>) }
+    | tKEY tLESS_THAN_OR_EQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :<=) }
+    | tKEY tLESS_THAN value { Compiler::Attribute.new(val[0], val[2], operator: :<) }
+    | tKEY tEQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :==) }
 
   value
     : selector
@@ -57,13 +59,6 @@ end
 
     def next_token
       @lexer.next_token
-    end
-
-    def on_error type, val, values
-      super
-    rescue Racc::ParseError
-      trace = values.each_with_index.map{|l, i| "#{' ' * i}#{l}"}
-      raise ParseError, "\nparse error on value #{val.inspect}\n#{trace.join("\n")}"
     end
 ---- header
 require_relative "./compiler"
