@@ -32,7 +32,7 @@ module Synvert::Core::NodeQuery
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
-          [:tIDENTIFIER, "create"],
+          [:tIDENTIFIER_VALUE, "create"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
@@ -110,6 +110,19 @@ module Synvert::Core::NodeQuery
           [:tKEY, "value"],
           [:tEQUAL, "="],
           [:tBOOLEAN, true],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
+      it 'identifier can contain !' do
+        source = '.send[message=create!]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tEQUAL, "="],
+          [:tIDENTIFIER_VALUE, "create!"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
@@ -193,7 +206,7 @@ module Synvert::Core::NodeQuery
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tNOT_EQUAL, "!="],
-          [:tIDENTIFIER, "create"],
+          [:tIDENTIFIER_VALUE, "create"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens

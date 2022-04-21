@@ -10,6 +10,7 @@ macros
   CLOSE_ATTR_VALUE  /\}\}/
   NODE_TYPE         /\.[a-z]+/
   IDENTIFIER        /[\.\w]+/
+  IDENTIFIER_VALUE  /[\.\w!]+/
   SYMBOL            /:\w+/
   INTEGER           /\d+/
   FLOAT             /\d+\.\d+/
@@ -56,7 +57,7 @@ rules
 :VALUE       /~/                       { [:tSUBSEQUENT_SIBLING, text] }
 :VALUE       /\+/                      { [:tNEXT_SIBLING, text] }
 :VALUE       /#{OPEN_ATTRIBUTE}/       { @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
-:VALUE       /#{IDENTIFIER}/           { [:tIDENTIFIER, text] }
+:VALUE       /#{IDENTIFIER_VALUE}/     { [:tIDENTIFIER_VALUE, text] }
 :ATTR_VALUE  /#{CLOSE_ATTR_VALUE}/     { @state = :VALUE; [:tCLOSE_ATTR_VALUE, text] }
 :ATTR_VALUE  /#{IDENTIFIER}/           { [:tATTR_VALUE, text] }
 inner

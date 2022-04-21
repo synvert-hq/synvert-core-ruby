@@ -1,6 +1,6 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
-token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER
+token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE
       tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL
@@ -44,7 +44,7 @@ rule
     | tREGEXP { Compiler::Regexp.new(val[0]) }
     | tSTRING { Compiler::String.new(val[0]) }
     | tSYMBOL { Compiler::Symbol.new(val[0]) }
-    | tIDENTIFIER { Compiler::Identifier.new(val[0]) }
+    | tIDENTIFIER_VALUE { Compiler::Identifier.new(val[0]) }
 end
 
 ---- inner
