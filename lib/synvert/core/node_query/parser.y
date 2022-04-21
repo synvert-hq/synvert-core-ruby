@@ -40,6 +40,7 @@ rule
     | tREGEXP { Compiler::Regexp.new(val[0]) }
     | tSTRING { Compiler::String.new(val[0]) }
     | tSYMBOL { Compiler::Symbol.new(val[0]) }
+    | tIDENTIFIER { Compiler::Identifier.new(val[0]) }
 end
 
 ---- inner
