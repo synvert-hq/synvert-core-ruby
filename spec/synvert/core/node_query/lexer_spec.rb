@@ -129,7 +129,12 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches nested value' do
-        source = '.send[receiver=.send[message=:create]]'
+        source = <<~EOS
+          .send[
+            receiver=
+              .send[message=:create]
+          ]
+        EOS
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tLEFT_SQUARE, "["],
