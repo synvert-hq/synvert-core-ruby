@@ -29,11 +29,11 @@ module Synvert::Core::NodeQuery
         source = '.send[message=create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
           [:tIDENTIFIER, "create"],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -42,11 +42,11 @@ module Synvert::Core::NodeQuery
         source = '.send[receiver=nil]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "receiver"],
           [:tEQUAL, "="],
           [:tNIL, nil],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -55,11 +55,11 @@ module Synvert::Core::NodeQuery
         source = '.send[message="create"]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
           [:tSTRING, "create"],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -68,11 +68,11 @@ module Synvert::Core::NodeQuery
         source = '.send[message=:create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -80,11 +80,11 @@ module Synvert::Core::NodeQuery
       it 'matches integer' do
         source = '[value=1]'
         expected_tokens = [
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tEQUAL, "="],
           [:tINTEGER, 1],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -93,11 +93,11 @@ module Synvert::Core::NodeQuery
         source = '.send[value=1.1]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tEQUAL, "="],
           [:tFLOAT, 1.1],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -106,11 +106,11 @@ module Synvert::Core::NodeQuery
         source = '.send[value=true]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tEQUAL, "="],
           [:tBOOLEAN, true],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -119,11 +119,26 @@ module Synvert::Core::NodeQuery
         source = '.send[message=/create/i]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
           [:tREGEXP, /create/i],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
+      it 'matches attribute value' do
+        source = '.pair[key={{value}}]'
+        expected_tokens = [
+          [:tNODE_TYPE, "pair"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "key"],
+          [:tEQUAL, "="],
+          [:tOPEN_ATTR_VALUE, "{{"],
+          [:tATTR_VALUE, "value"],
+          [:tCLOSE_ATTR_VALUE, "}}"],
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -137,16 +152,16 @@ module Synvert::Core::NodeQuery
         EOS
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "receiver"],
           [:tEQUAL, "="],
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -159,25 +174,25 @@ module Synvert::Core::NodeQuery
         EOS
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
           [:tEQUAL, "="],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "size"],
           [:tEQUAL, "="],
           [:tINTEGER, 2],
-          [:tRIGHT_SQUARE, "]"],
-          [:tLEFT_SQUARE, "["],
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "first"],
           [:tEQUAL, "="],
           [:tNODE_TYPE, "str"],
-          [:tRIGHT_SQUARE, "]"],
-          [:tLEFT_SQUARE, "["],
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "last"],
           [:tEQUAL, "="],
           [:tNODE_TYPE, "str"],
-          [:tRIGHT_SQUARE, "]"],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -188,11 +203,11 @@ module Synvert::Core::NodeQuery
         source = '.send[message != create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tNOT_EQUAL, "!="],
           [:tIDENTIFIER, "create"],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -200,11 +215,11 @@ module Synvert::Core::NodeQuery
       it 'matches >' do
         source = '[value > 1]'
         expected_tokens = [
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tGREATER_THAN, ">"],
           [:tINTEGER, 1],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -212,11 +227,11 @@ module Synvert::Core::NodeQuery
       it 'matches <' do
         source = '[value < 1]'
         expected_tokens = [
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tLESS_THAN, "<"],
           [:tINTEGER, 1],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -224,11 +239,11 @@ module Synvert::Core::NodeQuery
       it 'matches >=' do
         source = '[value >= 1]'
         expected_tokens = [
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tGREATER_THAN_OR_EQUAL, ">="],
           [:tINTEGER, 1],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -236,11 +251,11 @@ module Synvert::Core::NodeQuery
       it 'matches <=' do
         source = '[value <= 1]'
         expected_tokens = [
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
           [:tLESS_THAN_OR_EQUAL, "<="],
           [:tINTEGER, 1],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -251,11 +266,11 @@ module Synvert::Core::NodeQuery
         source = '.send[receiver.message=:create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "receiver.message"],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -266,12 +281,12 @@ module Synvert::Core::NodeQuery
         source = '.send[arguments:first-child=:create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
           [:tINDEX, 0],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -280,12 +295,12 @@ module Synvert::Core::NodeQuery
         source = '.send[arguments:last-child=:create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
           [:tINDEX, -1],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -294,12 +309,12 @@ module Synvert::Core::NodeQuery
         source = '.send[arguments:nth-child(1)=:create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
           [:tINDEX, 0],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end
@@ -308,12 +323,12 @@ module Synvert::Core::NodeQuery
         source = '.send[arguments:nth-last-child(1)=:create]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
-          [:tLEFT_SQUARE, "["],
+          [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
           [:tINDEX, -1],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tRIGHT_SQUARE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
       end

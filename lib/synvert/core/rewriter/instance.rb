@@ -126,6 +126,17 @@ module Synvert::Core
     # DSL #
     #######
 
+    # Parse +find_node+ dsl, it uses {Synvert::Core::NodeQuery::Parser} to parse the query string,
+    # and uses {Synvert::Core::NodeQuery::Compiler} to query matching nodes,
+    # then run the block on each matching node.
+    def find_node(query_string, &block)
+      NodeQuery::Parser.new.parse(query_string).query_nodes(current_node).each do |node|
+        self.process_with_node(node) do
+          self.instance_eval(&block)
+        end
+      end
+    end
+
     # Parse +within_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
     # then continue operating on each matching ast node.
     # @example

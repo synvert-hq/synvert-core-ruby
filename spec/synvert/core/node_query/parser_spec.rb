@@ -51,6 +51,7 @@ module Synvert::Core::NodeQuery
             end
 
             def foobar
+              { a: a, b: b }
             end
           end
         EOS
@@ -99,6 +100,11 @@ module Synvert::Core::NodeQuery
       it 'matches regexp value' do
         expression = parser.parse('.def[name=/foo/]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.last]
+      end
+
+      it 'matches attribute value' do
+        expression = parser.parse('.pair[key={{value}}]')
+        expect(expression.query_nodes(node)).to eq node.body.last.body.first.children
       end
     end
   end

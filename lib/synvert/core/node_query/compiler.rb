@@ -169,11 +169,28 @@ module Synvert::Core::NodeQuery
       end
 
       def match?(node)
-        @value.match?(node.child_node_by_name(@key))
+        @value.base_node = node if @value.is_a?(AttributeValue)
+        node && @value.match?(node.child_node_by_name(@key))
       end
 
       def to_s
         "#{@key}=#{@value}"
+      end
+    end
+
+    class AttributeValue
+      attr_accessor :base_node
+
+      def initialize(value)
+        @value = value
+      end
+
+      def match?(node)
+        base_node.child_node_by_name(@value).to_source == node.to_source
+      end
+
+      def to_s
+        "{{#{@value}}}"
       end
     end
 

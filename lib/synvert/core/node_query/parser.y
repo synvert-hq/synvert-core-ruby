@@ -2,9 +2,9 @@ class Synvert::Core::NodeQuery::Parser
 options no_result_var
 token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
-      tLEFT_SQUARE tRIGHT_SQUARE
+      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE
       tEQUAL tNOT_EQUAL tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL
-      tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
+      tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
     : selector tCHILD selector { Compiler::Expression.new(val[0], val[2], relationship: :child) }
@@ -20,8 +20,8 @@ rule
     ;
 
   attribute_list
-    : tLEFT_SQUARE attribute tRIGHT_SQUARE attribute_list { Compiler::AttributeList.new(val[1], val[3]) }
-    | tLEFT_SQUARE attribute tRIGHT_SQUARE { Compiler::AttributeList.new(val[1]) }
+    : tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE attribute_list { Compiler::AttributeList.new(val[1], val[3]) }
+    | tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE { Compiler::AttributeList.new(val[1]) }
     ;
 
   attribute
@@ -34,6 +34,7 @@ rule
 
   value
     : selector
+    | tOPEN_ATTR_VALUE tATTR_VALUE tCLOSE_ATTR_VALUE { Compiler::AttributeValue.new(val[1]) }
     | tBOOLEAN { Compiler::Boolean.new(val[0]) }
     | tFLOAT { Compiler::Float.new(val[0]) }
     | tINTEGER { Compiler::Integer.new(val[0])}
