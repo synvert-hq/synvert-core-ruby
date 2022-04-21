@@ -10,6 +10,7 @@ require 'active_support/core_ext/object'
 require 'active_support/core_ext/array'
 require 'erubis'
 require 'set'
+require 'synvert/core/array_ext'
 require 'synvert/core/node_ext'
 
 module Synvert
