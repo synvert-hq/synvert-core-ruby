@@ -433,9 +433,6 @@ module Parser::AST
 
         return child_node if child_node.is_a?(Parser::AST::Node)
 
-        # arguments
-        return nil if child_node.empty?
-
         return child_node
       end
 

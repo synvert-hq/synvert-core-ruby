@@ -77,6 +77,7 @@ module Synvert::Core::NodeQuery
 
             def foobar
               { a: a, b: b }
+              foo.merge(bar)
             end
           end
         EOS
@@ -139,6 +140,11 @@ module Synvert::Core::NodeQuery
       it 'matches attribute value' do
         expression = parser.parse('.pair[key={{value}}]')
         expect(expression.query_nodes(node)).to eq node.body.last.body.first.children
+      end
+
+      it 'matches' do
+        expression = parser.parse('.send[receiver=foo][message=merge]')
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.second]
       end
     end
   end

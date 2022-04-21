@@ -422,7 +422,7 @@ module Synvert::Core::NodeQuery
 
       def actual_value(node)
         if node.is_a?(::Parser::AST::Node)
-          node.type == :const && node.children.last.to_s
+          node.to_source
         else
           node.to_s
         end
