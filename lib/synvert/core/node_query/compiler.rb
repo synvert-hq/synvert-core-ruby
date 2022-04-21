@@ -9,7 +9,7 @@ module Synvert::Core::NodeQuery
         @relationship = relationship
       end
 
-      def find_nodes(node)
+      def query_nodes(node)
         case @relationship
         when :descendant
           find_nodes_with_descendant_relationship(node, match?(node))
