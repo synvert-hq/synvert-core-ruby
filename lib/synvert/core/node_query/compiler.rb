@@ -211,7 +211,7 @@ module Synvert::Core::NodeQuery
         @operator = operator
       end
 
-      def match?(node, operator = :==)
+      def match?(node, _operator = :==)
         @value.base_node = node if @value.is_a?(AttributeValue)
         node && @value.match?(node.child_node_by_name(@key), @operator)
       end
@@ -355,7 +355,7 @@ module Synvert::Core::NodeQuery
         @value = value
       end
 
-      def match?(node, operator)
+      def match?(node, _operator)
         if node.is_a?(::Parser::AST::Node)
           @value.match(node.to_source)
         else
