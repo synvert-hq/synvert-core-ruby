@@ -2,6 +2,33 @@
 
 module Synvert::Core::NodeQuery
   class Compiler
+    module Comparable
+      def match?(node, operation)
+        case operation
+        when :not_equal
+          actual_value(node) != expected_value
+        when :greater_than
+          actual_value(node) > expected_value
+        when :greater_than_or_equal
+          actual_value(node) >= expected_value
+        when :less_than
+          actual_value(node) < expected_value
+        when :less_than_or_equal
+          actual_value(node) <= expected_value
+        else
+          actual_value(node) == expected_value
+        end
+      end
+
+      def actual_value(node)
+        node.to_value
+      end
+
+      def expected_value
+        @value
+      end
+    end
+
     class Expression
       def initialize(selector, another_selector = nil, relationship: nil)
         @selector = selector
@@ -136,9 +163,9 @@ module Synvert::Core::NodeQuery
         @attribute_list = attribute_list
       end
 
-      def match?(node)
+      def match?(node, operation=:equal)
         (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
-        (!@attribute_list || @attribute_list.match?(node))
+        (!@attribute_list || @attribute_list.match?(node, operation))
       end
 
       def to_s
@@ -152,8 +179,8 @@ module Synvert::Core::NodeQuery
         @attribute_list = attribute_list
       end
 
-      def match?(node)
-        @attribute.match?(node) && (!@attribute_list || @attribute_list.match?(node))
+      def match?(node, operation=:equal)
+        @attribute.match?(node, operation) && (!@attribute_list || @attribute_list.match?(node, operation))
       end
 
       def to_s
@@ -168,25 +195,44 @@ module Synvert::Core::NodeQuery
         @operation = operation
       end
 
-      def match?(node)
+      def match?(node, operation=:equal)
         @value.base_node = node if @value.is_a?(AttributeValue)
-        node && @value.match?(node.child_node_by_name(@key))
+        node && @value.match?(node.child_node_by_name(@key), @operation)
       end
 
       def to_s
-        "#{@key}=#{@value}"
+        case @operation
+        when :not_equal
+          "#{@key}!=#{@value}"
+        when :greater_than
+          "#{@key}>#{@value}"
+        when :greater_than_or_equal
+          "#{@key}>=#{@value}"
+        when :less_than
+          "#{@key}<#{@value}"
+        when :less_than_or_equal
+          "#{@key}<=#{@value}"
+        else
+          "#{@key}=#{@value}"
+        end
       end
     end
 
     class AttributeValue
+      include Comparable
+
       attr_accessor :base_node
 
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
-        base_node.child_node_by_name(@value).to_source == node.to_source
+      def actual_value(node)
+        node.to_source
+      end
+
+      def expected_value
+        base_node.child_node_by_name(@value).to_source
       end
 
       def to_s
@@ -195,12 +241,10 @@ module Synvert::Core::NodeQuery
     end
 
     class Boolean
+      include Comparable
+
       def initialize(value)
         @value = value
-      end
-
-      def match?(node)
-        @value == node.to_value
       end
 
       def to_s
@@ -209,15 +253,17 @@ module Synvert::Core::NodeQuery
     end
 
     class Float
+      include Comparable
+
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
+      def actual_value(node)
         if node.is_a?(::Parser::AST::Node)
-          @value == node.to_value
+          node.to_value
         else
-          @value == node.to_f
+          node.to_f
         end
       end
 
@@ -227,15 +273,17 @@ module Synvert::Core::NodeQuery
     end
 
     class Integer
+      include Comparable
+
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
+      def actual_value(node)
         if node.is_a?(::Parser::AST::Node)
-          @value == node.to_value
+          node.to_value
         else
-          @value == node.to_i
+          node.to_i
         end
       end
 
@@ -245,12 +293,14 @@ module Synvert::Core::NodeQuery
     end
 
     class Nil
+      include Comparable
+
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
-        @value == node.to_value
+      def actual_value(node)
+        node
       end
 
       def to_s
@@ -259,11 +309,13 @@ module Synvert::Core::NodeQuery
     end
 
     class Regexp
+      include Comparable
+
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
+      def match?(node, operation)
         if node.is_a?(::Parser::AST::Node)
           @value.match(node.to_source)
         else
@@ -277,12 +329,10 @@ module Synvert::Core::NodeQuery
     end
 
     class String
+      include Comparable
+
       def initialize(value)
         @value = value
-      end
-
-      def match?(node)
-        @value == node.to_value
       end
 
       def to_s
@@ -292,15 +342,17 @@ module Synvert::Core::NodeQuery
 
     # Symbol node represents a symbol value.
     class Symbol
+      include Comparable
+
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
+      def actual_value(node)
         if node.is_a?(::Parser::AST::Node)
-          @value == node.to_value
+          node.to_value
         else
-          @value == node
+          node
         end
       end
 
@@ -310,15 +362,17 @@ module Synvert::Core::NodeQuery
     end
 
     class Identifier
+      include Comparable
+
       def initialize(value)
         @value = value
       end
 
-      def match?(node)
+      def actual_value(node)
         if node.is_a?(::Parser::AST::Node)
-          node.type == :const && node.children.last.to_s == @value
+          node.type == :const && node.children.last.to_s
         else
-          node.to_s == @value
+          node.to_s
         end
       end
 

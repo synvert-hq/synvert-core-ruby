@@ -38,6 +38,31 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses not equal operator' do
+      source = '.send[receiver=.send[message!=:create]]'
+      assert_parser(source)
+    end
+
+    it 'parses greater than operator' do
+      source = '.send[receiver=.send[arguments.size>1]]'
+      assert_parser(source)
+    end
+
+    it 'parses greater than or equal operator' do
+      source = '.send[receiver=.send[arguments.size>=1]]'
+      assert_parser(source)
+    end
+
+    it 'parses less than operator' do
+      source = '.send[receiver=.send[arguments.size<1]]'
+      assert_parser(source)
+    end
+
+    it 'parses less than or equal operator' do
+      source = '.send[receiver=.send[arguments.size<=1]]'
+      assert_parser(source)
+    end
+
     describe '#query_nodes' do
       let(:node) {
         parse(<<~EOS)
