@@ -7,11 +7,11 @@ token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE
       tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
-    : selector tCHILD selector { Compiler::Expression.new(val[0], val[2], relationship: :child) }
-    | selector tSUBSEQUENT_SIBLING selector { Compiler::Expression.new(val[0], val[2], relationship: :sebsequent_sibling) }
-    | selector tNEXT_SIBLING selector { Compiler::Expression.new(val[0], val[2], relationship: :next_sibling) }
-    | selector selector { Compiler::Expression.new(val[0], val[1], relationship: :descendant) }
-    | selector { Compiler::Expression.new(val[0]) }
+    : selector tCHILD selector { Compiler::Expression.new(selector: val[0], another_selector: val[2], relationship: :child) }
+    | selector tSUBSEQUENT_SIBLING selector { Compiler::Expression.new(selector: val[0], another_selector: val[2], relationship: :sebsequent_sibling) }
+    | selector tNEXT_SIBLING selector { Compiler::Expression.new(selector: val[0], another_selector: val[2], relationship: :next_sibling) }
+    | selector selector { Compiler::Expression.new(selector: val[0], another_selector: val[1], relationship: :descendant) }
+    | selector { Compiler::Expression.new(selector: val[0]) }
 
   selector
     : tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
@@ -20,31 +20,31 @@ rule
     ;
 
   attribute_list
-    : tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE attribute_list { Compiler::AttributeList.new(val[1], val[3]) }
-    | tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE { Compiler::AttributeList.new(val[1]) }
+    : tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE attribute_list { Compiler::AttributeList.new(attribute: val[1], attribute_list: val[3]) }
+    | tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE { Compiler::AttributeList.new(attribute: val[1]) }
     ;
 
   attribute
-    : tKEY tNOT_EQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :!=) }
-    | tKEY tNOT_MATCH value { Compiler::Attribute.new(val[0], val[2], operator: :!~) }
-    | tKEY tMATCH value { Compiler::Attribute.new(val[0], val[2], operator: :=~) }
-    | tKEY tGREATER_THAN_OR_EQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :>=) }
-    | tKEY tGREATER_THAN value { Compiler::Attribute.new(val[0], val[2], operator: :>) }
-    | tKEY tLESS_THAN_OR_EQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :<=) }
-    | tKEY tLESS_THAN value { Compiler::Attribute.new(val[0], val[2], operator: :<) }
-    | tKEY tEQUAL value { Compiler::Attribute.new(val[0], val[2], operator: :==) }
+    : tKEY tNOT_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :!=) }
+    | tKEY tNOT_MATCH value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :!~) }
+    | tKEY tMATCH value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :=~) }
+    | tKEY tGREATER_THAN_OR_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :>=) }
+    | tKEY tGREATER_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :>) }
+    | tKEY tLESS_THAN_OR_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<=) }
+    | tKEY tLESS_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<) }
+    | tKEY tEQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :==) }
 
   value
     : selector
-    | tOPEN_ATTR_VALUE tATTR_VALUE tCLOSE_ATTR_VALUE { Compiler::AttributeValue.new(val[1]) }
-    | tBOOLEAN { Compiler::Boolean.new(val[0]) }
-    | tFLOAT { Compiler::Float.new(val[0]) }
-    | tINTEGER { Compiler::Integer.new(val[0])}
-    | tNIL { Compiler::Nil.new(val[0]) }
-    | tREGEXP { Compiler::Regexp.new(val[0]) }
-    | tSTRING { Compiler::String.new(val[0]) }
-    | tSYMBOL { Compiler::Symbol.new(val[0]) }
-    | tIDENTIFIER_VALUE { Compiler::Identifier.new(val[0]) }
+    | tOPEN_ATTR_VALUE tATTR_VALUE tCLOSE_ATTR_VALUE { Compiler::AttributeValue.new(value: val[1]) }
+    | tBOOLEAN { Compiler::Boolean.new(value: val[0]) }
+    | tFLOAT { Compiler::Float.new(value: val[0]) }
+    | tINTEGER { Compiler::Integer.new(value: val[0])}
+    | tNIL { Compiler::Nil.new(value: val[0]) }
+    | tREGEXP { Compiler::Regexp.new(value: val[0]) }
+    | tSTRING { Compiler::String.new(value: val[0]) }
+    | tSYMBOL { Compiler::Symbol.new(value: val[0]) }
+    | tIDENTIFIER_VALUE { Compiler::Identifier.new(value: val[0]) }
 end
 
 ---- inner

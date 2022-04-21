@@ -46,7 +46,7 @@ module Synvert::Core::NodeQuery
     end
 
     class Expression
-      def initialize(selector, another_selector = nil, relationship: nil)
+      def initialize(selector:, another_selector: nil, relationship: nil)
         @selector = selector
         @another_selector = another_selector
         @relationship = relationship
@@ -190,7 +190,7 @@ module Synvert::Core::NodeQuery
     end
 
     class AttributeList
-      def initialize(attribute, attribute_list = nil)
+      def initialize(attribute:, attribute_list: nil)
         @attribute = attribute
         @attribute_list = attribute_list
       end
@@ -205,7 +205,7 @@ module Synvert::Core::NodeQuery
     end
 
     class Attribute
-      def initialize(key, value, operator: :==)
+      def initialize(key:, value:, operator: :==)
         @key = key
         @value = value
         @operator = operator
@@ -243,7 +243,7 @@ module Synvert::Core::NodeQuery
 
       attr_accessor :base_node
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -267,7 +267,7 @@ module Synvert::Core::NodeQuery
     class Boolean
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -283,7 +283,7 @@ module Synvert::Core::NodeQuery
     class Float
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -307,7 +307,7 @@ module Synvert::Core::NodeQuery
     class Integer
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -331,7 +331,7 @@ module Synvert::Core::NodeQuery
     class Nil
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -351,7 +351,7 @@ module Synvert::Core::NodeQuery
     class Regexp
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -375,7 +375,7 @@ module Synvert::Core::NodeQuery
     class String
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -392,7 +392,7 @@ module Synvert::Core::NodeQuery
     class Symbol
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
@@ -416,7 +416,7 @@ module Synvert::Core::NodeQuery
     class Identifier
       include Comparable
 
-      def initialize(value)
+      def initialize(value:)
         @value = value
       end
 
