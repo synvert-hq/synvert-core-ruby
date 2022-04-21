@@ -181,7 +181,7 @@ module Synvert::Core::NodeQuery
 
       def match?(node, operator = :==)
         (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
-        (!@attribute_list || @attribute_list.match?(node, operator))
+          (!@attribute_list || @attribute_list.match?(node, operator))
       end
 
       def to_s
