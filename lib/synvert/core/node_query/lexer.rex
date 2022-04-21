@@ -27,11 +27,13 @@ rules
              /#{OPEN_ATTRIBUTE}/       { @nested_count += 1; @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
 :KEY         /\s+/
 :KEY         /!=/                      { @state = :VALUE; [:tNOT_EQUAL, text] }
+:KEY         /=~/                      { @state = :VALUE; [:tMATCH, text] }
+:KEY         /!~/                      { @state = :VALUE; [:tNOT_MATCH, text] }
 :KEY         />=/                      { @state = :VALUE; [:tGREATER_THAN_OR_EQUAL, text] }
 :KEY         /<=/                      { @state = :VALUE; [:tLESS_THAN_OR_EQUAL, text] }
-:KEY         /=/                       { @state = :VALUE; [:tEQUAL, text] }
 :KEY         />/                       { @state = :VALUE; [:tGREATER_THAN, text] }
 :KEY         /</                       { @state = :VALUE; [:tLESS_THAN, text] }
+:KEY         /=/                       { @state = :VALUE; [:tEQUAL, text] }
 :KEY         /:first-child/            { [:tINDEX, 0] }
 :KEY         /:last-child/             { [:tINDEX, -1] }
 :KEY         /:nth-child\(\d+\)/       { [:tINDEX, text.sub(':nth-child(', '').to_i - 1] }

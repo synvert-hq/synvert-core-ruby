@@ -115,19 +115,6 @@ module Synvert::Core::NodeQuery
         assert_tokens source, expected_tokens
       end
 
-      it 'matches regex' do
-        source = '.send[message=/create/i]'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tOPEN_ATTRIBUTE, "["],
-          [:tKEY, "message"],
-          [:tEQUAL, "="],
-          [:tREGEXP, /create/i],
-          [:tCLOSE_ATTRIBUTE, "]"]
-        ]
-        assert_tokens source, expected_tokens
-      end
-
       it 'matches attribute value' do
         source = '.pair[key={{value}}]'
         expected_tokens = [
@@ -255,6 +242,32 @@ module Synvert::Core::NodeQuery
           [:tKEY, "value"],
           [:tLESS_THAN_OR_EQUAL, "<="],
           [:tINTEGER, 1],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
+      it 'matches =~' do
+        source = '.send[message=~/create/i]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tMATCH, "=~"],
+          [:tREGEXP, /create/i],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
+      it 'matches !~' do
+        source = '.send[message!~/create/i]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tNOT_MATCH, "!~"],
+          [:tREGEXP, /create/i],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
