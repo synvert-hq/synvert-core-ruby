@@ -52,6 +52,10 @@ module Synvert::Core::NodeQuery
         @relationship = relationship
       end
 
+      def filter(nodes)
+        @selector.filter(nodes)
+      end
+
       # If @relationship is nil, it will match in all recursive child nodes and return matching nodes.
       # If @relationship is :decendant, it will match in all recursive child nodes.
       # If @relationship is :child, it will match in direct child nodes.
@@ -65,7 +69,7 @@ module Synvert::Core::NodeQuery
           return matching_nodes
         end
 
-        matching_nodes.map do |matching_node|
+        expression_nodes = matching_nodes.map do |matching_node|
           case @relationship
           when :descendant
             nodes = []
@@ -79,6 +83,7 @@ module Synvert::Core::NodeQuery
             matching_node.siblings.map { |sibling_node| @expression.query_nodes(sibling_node, false) }.flatten
           end
         end.flatten
+        @expression.filter(expression_nodes)
       end
 
       def to_s
@@ -104,7 +109,7 @@ module Synvert::Core::NodeQuery
             nodes << child_node if @selector.match?(child_node)
           end
         end
-        nodes
+        filter(nodes)
       end
     end
 
@@ -113,6 +118,12 @@ module Synvert::Core::NodeQuery
         @node_type = node_type
         @attribute_list = attribute_list
         @index = index
+      end
+
+      def filter(nodes)
+        return nodes if @index.nil?
+
+        nodes[@index] ? [nodes[@index]] : []
       end
 
       def match?(node, operator = :==)

@@ -118,6 +118,26 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq node.body
       end
 
+      it 'matches first def node' do
+        expression = parser.parse('.def:first-child')
+        expect(expression.query_nodes(node)).to eq [node.body.first]
+      end
+
+      it 'matches last def node' do
+        expression = parser.parse('.class .def:last-child')
+        expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches nth-child node' do
+        expression = parser.parse('.def:nth-child(2)')
+        expect(expression.query_nodes(node)).to eq [node.body.second]
+      end
+
+      it 'matches nth-last-child node' do
+        expression = parser.parse('.def:nth-last-child(2)')
+        expect(expression.query_nodes(node)).to eq [node.body[-2]]
+      end
+
       it 'matches not equal' do
         expression = parser.parse('.def[name!=foobar]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
