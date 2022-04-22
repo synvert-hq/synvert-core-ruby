@@ -174,9 +174,10 @@ module Synvert::Core::NodeQuery
     end
 
     class Selector
-      def initialize(node_type: nil, attribute_list: nil)
+      def initialize(node_type: nil, attribute_list: nil, index: nil)
         @node_type = node_type
         @attribute_list = attribute_list
+        @index = index
       end
 
       def match?(node, operator = :==)
@@ -185,7 +186,21 @@ module Synvert::Core::NodeQuery
       end
 
       def to_s
-        ".#{@node_type}#{@attribute_list}"
+        str = ".#{@node_type}#{@attribute_list}"
+        return str unless @index
+
+        case @index
+        when 0
+          str + ':first-child'
+        when -1
+          str + ':last-child'
+        when (1..)
+          str + ":nth-child(#{@index + 1})"
+        when (...-1)
+          str + ":nth-last-child(#{-@index})"
+        else
+          str
+        end
       end
     end
 

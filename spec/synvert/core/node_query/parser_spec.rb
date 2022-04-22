@@ -23,6 +23,26 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses :first-child' do
+      source = '.class .def:first-child'
+      assert_parser(source)
+    end
+
+    it 'parses :last-child' do
+      source = '.class .def:last-child'
+      assert_parser(source)
+    end
+
+    it 'parses :nth-child(n)' do
+      source = '.class .def:nth-child(2)'
+      assert_parser(source)
+    end
+
+    it 'parses :nth-last-child(n)' do
+      source = '.class .def:nth-last-child(2)'
+      assert_parser(source)
+    end
+
     it 'parses multiple attributes' do
       source = '.send[receiver=nil][message=:create]'
       assert_parser(source)
