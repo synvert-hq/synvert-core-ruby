@@ -304,57 +304,57 @@ module Synvert::Core::NodeQuery
 
     context 'position' do
       it 'matches :first-child' do
-        source = '.send[arguments:first-child=:create]'
+        source = '.send[arguments=:create]:first-child'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tINDEX, 0],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tINDEX, 0]
         ]
         assert_tokens source, expected_tokens
       end
 
       it 'matches :last-child' do
-        source = '.send[arguments:last-child=:create]'
+        source = '.send[arguments=:create]:last-child'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tINDEX, -1],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tINDEX, -1]
         ]
         assert_tokens source, expected_tokens
       end
 
       it 'matches :nth-child(1)' do
-        source = '.send[arguments:nth-child(1)=:create]'
+        source = '.send[arguments=:create]:nth-child(1)'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tINDEX, 0],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tINDEX, 0]
         ]
         assert_tokens source, expected_tokens
       end
 
       it 'matches :nth-last-child(1)' do
-        source = '.send[arguments:nth-last-child(1)=:create]'
+        source = '.send[arguments=:create]:nth-last-child(1)'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tINDEX, -1],
           [:tEQUAL, "="],
           [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"]
+          [:tCLOSE_ATTRIBUTE, "]"],
+          [:tINDEX, -1]
         ]
         assert_tokens source, expected_tokens
       end

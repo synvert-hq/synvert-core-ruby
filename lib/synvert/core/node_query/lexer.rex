@@ -1,8 +1,5 @@
 class Synvert::Core::NodeQuery::Lexer
 
-start
-  @nested_count = 0
-
 macros
   OPEN_ATTRIBUTE    /\[/
   CLOSE_ATTRIBUTE   /\]/
@@ -21,6 +18,10 @@ rules
 
 # [:state]   pattern                   [actions]
              /\s+/
+             /:first-child/            { [:tINDEX, 0] }
+             /:last-child/             { [:tINDEX, -1] }
+             /:nth-child\(\d+\)/       { [:tINDEX, text.sub(':nth-child(', '').to_i - 1] }
+             /:nth-last-child\(\d+\)/  { [:tINDEX, -text.sub(':nth-last-child(', '').to_i] }
              /#{NODE_TYPE}/            { [:tNODE_TYPE, text[1..]] }
              />/                       { [:tCHILD, text] }
              /~/                       { [:tSUBSEQUENT_SIBLING, text] }
@@ -35,10 +36,6 @@ rules
 :KEY         />/                       { @state = :VALUE; [:tGREATER_THAN, text] }
 :KEY         /</                       { @state = :VALUE; [:tLESS_THAN, text] }
 :KEY         /=/                       { @state = :VALUE; [:tEQUAL, text] }
-:KEY         /:first-child/            { [:tINDEX, 0] }
-:KEY         /:last-child/             { [:tINDEX, -1] }
-:KEY         /:nth-child\(\d+\)/       { [:tINDEX, text.sub(':nth-child(', '').to_i - 1] }
-:KEY         /:nth-last-child\(\d+\)/  { [:tINDEX, -text.sub(':nth-last-child(', '').to_i] }
 :KEY         /#{IDENTIFIER}/           { [:tKEY, text] }
 :VALUE       /\s+/
 :VALUE       /#{OPEN_ATTR_VALUE}/      { @state = :ATTR_VALUE; [:tOPEN_ATTR_VALUE, text] }
@@ -56,10 +53,15 @@ rules
 :VALUE       />/                       { [:tCHILD, text] }
 :VALUE       /~/                       { [:tSUBSEQUENT_SIBLING, text] }
 :VALUE       /\+/                      { [:tNEXT_SIBLING, text] }
-:VALUE       /#{OPEN_ATTRIBUTE}/       { @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
+:VALUE       /#{OPEN_ATTRIBUTE}/       { @nested_count += 1; @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
 :VALUE       /#{IDENTIFIER_VALUE}/     { [:tIDENTIFIER_VALUE, text] }
 :ATTR_VALUE  /#{CLOSE_ATTR_VALUE}/     { @state = :VALUE; [:tCLOSE_ATTR_VALUE, text] }
 :ATTR_VALUE  /#{IDENTIFIER}/           { [:tATTR_VALUE, text] }
+
 inner
+  def initialize
+    @nested_count = 0
+  end
+
   def do_parse; end
 end
