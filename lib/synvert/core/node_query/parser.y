@@ -7,10 +7,10 @@ token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX
       tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
-    : selector tCHILD selector { Compiler::Expression.new(selector: val[0], another_selector: val[2], relationship: :child) }
-    | selector tSUBSEQUENT_SIBLING selector { Compiler::Expression.new(selector: val[0], another_selector: val[2], relationship: :sebsequent_sibling) }
-    | selector tNEXT_SIBLING selector { Compiler::Expression.new(selector: val[0], another_selector: val[2], relationship: :next_sibling) }
-    | selector selector { Compiler::Expression.new(selector: val[0], another_selector: val[1], relationship: :descendant) }
+    : selector tCHILD expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :child) }
+    | selector tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :subsequent_sibling) }
+    | selector tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :next_sibling) }
+    | selector expression { Compiler::Expression.new(selector: val[0], expression: val[1], relationship: :descendant) }
     | selector { Compiler::Expression.new(selector: val[0]) }
 
   selector

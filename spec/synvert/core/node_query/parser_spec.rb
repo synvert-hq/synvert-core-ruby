@@ -18,6 +18,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses three selectors' do
+      source = '.class[name=Synvert] .def[name="foobar"] .send[message=create]'
+      assert_parser(source)
+    end
+
     it 'parses child selector' do
       source = '.class[name=Synvert] > .def[name="foobar"]'
       assert_parser(source)
@@ -120,6 +125,11 @@ module Synvert::Core::NodeQuery
 
       it 'matches descendant node' do
         expression = parser.parse('.class .send[message=:create]')
+        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+      end
+
+      it 'matches three level descendant node' do
+        expression = parser.parse('.class .def .send[message=:create]')
         expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
       end
 

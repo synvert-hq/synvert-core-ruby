@@ -46,128 +46,63 @@ module Synvert::Core::NodeQuery
     end
 
     class Expression
-      def initialize(selector:, another_selector: nil, relationship: nil)
+      def initialize(selector:, expression: nil, relationship: nil)
         @selector = selector
-        @another_selector = another_selector
+        @expression = expression
         @relationship = relationship
       end
 
-      def query_nodes(node)
-        case @relationship
-        when :descendant
-          find_nodes_with_descendant_relationship(node, match?(node))
-        when :child
-          find_nodes_with_child_relationship(node, match?(node))
-        when :next_sibling
-          find_nodes_with_next_sibling_relationship(node)
-        when :sebsequent_sibling
-          find_nodes_with_subsequent_sibling_relationship(node)
-        else
-          find_nodes_with_nil_relationship(node)
+      # If @relationship is nil, it will match in all recursive child nodes and return matching nodes.
+      # If @relationship is :decendant, it will match in all recursive child nodes.
+      # If @relationship is :child, it will match in direct child nodes.
+      # If @relationship is :next_sibling, it try to match next sibling node.
+      # If @relationship is :subsequent_sibling, it will match in all sibling nodes.
+      # @param node [Parser::AST::Node] node to match
+      # @param descendant_match [Boolean] whether to match in descendant nodes, default is true
+      def query_nodes(node, descendant_match = true)
+        matching_nodes =  find_nodes_with_nil_relationship(node, descendant_match)
+        if @relationship.nil?
+          return matching_nodes
         end
-      end
 
-      def match?(node)
-        @selector.match?(node)
-      end
-
-      def another_match?(node)
-        @another_selector.match?(node)
+        matching_nodes.map do |matching_node|
+          case @relationship
+          when :descendant
+            nodes = []
+            matching_node.recursive_children { |child_node| nodes += @expression.query_nodes(child_node, false) }
+            nodes
+          when :child
+            matching_node.children.map { |child_node| @expression.query_nodes(child_node, false) }.flatten
+          when :next_sibling
+            @expression.query_nodes(matching_node.siblings.first, false)
+          when :subsequent_sibling
+            matching_node.siblings.map { |sibling_node| @expression.query_nodes(sibling_node, false) }.flatten
+          end
+        end.flatten
       end
 
       def to_s
-        return @selector.to_s unless @another_selector
+        return @selector.to_s unless @expression
 
         result = [@selector]
         case @relationship
         when :child then result << '>'
-        when :sebsequent_sibling then result << '~'
+        when :subsequent_sibling then result << '~'
         when :next_sibling then result << '+'
         end
-        result << @another_selector
+        result << @expression
         result.map(&:to_s).join(' ')
       end
 
       private
 
-      def find_nodes_with_descendant_relationship(node, ancestor_match = false)
+      def find_nodes_with_nil_relationship(node, descendant_match)
         nodes = []
-        if ancestor_match
+        nodes << node if @selector.match?(node)
+        if descendant_match
           node.recursive_children do |child_node|
-            if another_match?(child_node)
-              nodes << child_node
-            end
+            nodes << child_node if @selector.match?(child_node)
           end
-        else
-          node.recursive_children do |child_node|
-            if match?(child_node)
-              nodes += find_nodes_with_descendant_relationship(child_node, true)
-            end
-          end
-        end
-        nodes
-      end
-
-      def find_nodes_with_child_relationship(node, parent_match = false)
-        nodes = []
-        if parent_match
-          node.children.each do |child_node|
-            if child_node.is_a?(::Parser::AST::Node)
-              match = another_match?(child_node)
-              nodes << child_node if match
-              nodes += find_nodes_with_child_relationship(child_node, match)
-            end
-          end
-        else
-          node.children.each do |child_node|
-            if child_node.is_a?(::Parser::AST::Node)
-              nodes += find_nodes_with_child_relationship(child_node, match?(child_node))
-            end
-          end
-        end
-        nodes
-      end
-
-      def find_nodes_with_next_sibling_relationship(node)
-        nodes = []
-        first_match = false
-        node.children.each do |child_node|
-          if !first_match && match?(child_node)
-            first_match = true
-          elsif first_match && another_match?(child_node)
-            first_match = false
-            nodes << child_node
-          else
-            first_match = false
-          end
-          if child_node.is_a?(::Parser::AST::Node)
-            nodes += find_nodes_with_next_sibling_relationship(child_node)
-          end
-        end
-        nodes
-      end
-
-      def find_nodes_with_subsequent_sibling_relationship(node)
-        nodes = []
-        first_match = false
-        node.children.each do |child_node|
-          if !first_match && match?(child_node)
-            first_match = true
-          elsif first_match && another_match?(child_node)
-            nodes << child_node
-          end
-          if child_node.is_a?(::Parser::AST::Node)
-            nodes += find_nodes_with_subsequent_sibling_relationship(child_node)
-          end
-        end
-        nodes
-      end
-
-      def find_nodes_with_nil_relationship(node)
-        nodes = []
-        nodes << node if match?(node)
-        node.recursive_children do |child_node|
-          nodes << child_node if match?(child_node)
         end
         nodes
       end
