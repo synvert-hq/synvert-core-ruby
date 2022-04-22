@@ -35,7 +35,8 @@ module Parser::AST
     def initialize(type, children = [], properties = {})
       @mutable_attributes = {}
       super
-      children.each do |child_node|
+      # children could be nil for s(:array)
+      Array(children).each do |child_node|
         if child_node.is_a?(Parser::AST::Node)
           child_node.parent = self
         end
