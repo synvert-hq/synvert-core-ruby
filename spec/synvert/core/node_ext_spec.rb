@@ -3,6 +3,25 @@
 require 'spec_helper'
 
 describe Parser::AST::Node do
+  describe '#parent' do
+    it 'gets parent node' do
+      node = parse('FactoryBot.create(:user)')
+      child_node = node.children.first
+      expect(child_node.parent).to eq node
+    end
+  end
+
+  describe '#siblings' do
+    it 'gets sibling nodes' do
+      node = parse(<<~EOS)
+        def foobar; end
+        def foo; end
+        def bar; end
+      EOS
+      expect(node.children.first.siblings).to eq [node.children.second, node.children.last]
+    end
+  end
+
   describe '#name' do
     it 'gets for class node' do
       node = parse('class Synvert; end')

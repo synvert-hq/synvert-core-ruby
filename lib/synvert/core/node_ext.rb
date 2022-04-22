@@ -29,6 +29,38 @@ module Parser::AST
   # Source Code to Ast Node
   # {https://synvert-playground.xinminlabs.com?language=ruby}
   class Node
+    # Initialize a Node.
+    #
+    # It extends Parser::AST::Node and set parent for its child nodes.
+    def initialize(type, children = [], properties = {})
+      @mutable_attributes = {}
+      super
+      children.each do |child_node|
+        if child_node.is_a?(Parser::AST::Node)
+          child_node.parent = self
+        end
+      end
+    end
+
+    # Get the parent node.
+    # @return [Parser::AST::Node] parent node.
+    def parent
+      @mutable_attributes[:parent]
+    end
+
+    # Set the parent node.
+    # @params node [Parser::AST::Node] parent node.
+    def parent=(node)
+      @mutable_attributes[:parent] = node
+    end
+
+    # Get the sibling nodes.
+    # @return [Array<Parser::AST::Node>] sibling nodes.
+    def siblings
+      index = parent.children.index(self)
+      parent.children[index + 1..]
+    end
+
     # Get the name of node.
     # It supports :arg, :blockarg, :class, :const, :cvar, :def, :defs, :ivar,
     # :lvar, :mlhs, :module and :restarg nodes.
