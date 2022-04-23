@@ -16,7 +16,7 @@ macros
   NIL                  /nil/
   REGEXP_BODY          /(?:[^\/]|\\\/)*/
   REGEXP               /\/(#{REGEXP_BODY})(?<!\\)\/([imxo]*)/
-  SYMBOL               /:\w+/
+  SYMBOL               /:[\w!]+/
   TRUE                 /true/
   SINGLE_QUOTE_STRING  /'(.+?)'/
   DOUBLE_QUOTE_STRING  /"(.+?)"/
