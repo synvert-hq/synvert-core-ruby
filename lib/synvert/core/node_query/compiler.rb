@@ -38,7 +38,11 @@ module Synvert::Core::NodeQuery
       end
 
       def actual_value(node)
-        node.to_value
+        if node.is_a?(::Parser::AST::Node)
+          node.to_value
+        else
+          node
+        end
       end
 
       def expected_value
@@ -216,14 +220,6 @@ module Synvert::Core::NodeQuery
         @rest = rest
       end
 
-      def actual_value(node)
-        if node.is_a?(::Parser::AST::Node)
-          node.to_value
-        else
-          node
-        end
-      end
-
       def expected_value
         if @rest
           [@value, *@rest.expected_value]
@@ -290,14 +286,6 @@ module Synvert::Core::NodeQuery
         @value = value
       end
 
-      def actual_value(node)
-        if node.is_a?(::Parser::AST::Node)
-          node.to_value
-        else
-          node.to_f
-        end
-      end
-
       def valid_operators
         NUMBER_VALID_OPERATORS
       end
@@ -314,14 +302,6 @@ module Synvert::Core::NodeQuery
         @value = value
       end
 
-      def actual_value(node)
-        if node.is_a?(::Parser::AST::Node)
-          node.to_value
-        else
-          node.to_i
-        end
-      end
-
       def valid_operators
         NUMBER_VALID_OPERATORS
       end
@@ -336,10 +316,6 @@ module Synvert::Core::NodeQuery
 
       def initialize(value:)
         @value = value
-      end
-
-      def actual_value(node)
-        node
       end
 
       def valid_operators
@@ -397,14 +373,6 @@ module Synvert::Core::NodeQuery
 
       def initialize(value:)
         @value = value
-      end
-
-      def actual_value(node)
-        if node.is_a?(::Parser::AST::Node)
-          node.to_value
-        else
-          node
-        end
       end
 
       def valid_operators
