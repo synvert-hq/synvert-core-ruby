@@ -64,6 +64,19 @@ module Synvert::Core::NodeQuery
         assert_tokens source, expected_tokens
       end
 
+      it 'matches "[]"' do
+        source = '.send[message="[]"]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tEQUAL, "="],
+          [:tSTRING, "[]"],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
       it 'matches symbol' do
         source = '.send[message=:create]'
         expected_tokens = [

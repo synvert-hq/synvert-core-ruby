@@ -113,6 +113,7 @@ module Synvert::Core::NodeQuery
             def foobar(a, b)
               { a: a, b: b }
               foo.merge(bar)
+              arr[index]
             end
           end
         EOS
@@ -230,6 +231,11 @@ module Synvert::Core::NodeQuery
       it 'matches identifier' do
         expression = parser.parse('.send[receiver=foo][message=merge]')
         expect(expression.query_nodes(node)).to eq [node.body.last.body.second]
+      end
+
+      it 'matches []' do
+        expression = parser.parse('.send[message="[]"]')
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.third]
       end
     end
   end
