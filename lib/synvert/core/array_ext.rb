@@ -13,7 +13,7 @@ class Array
     return child_direct_child_node if child_direct_child_node
 
     raise Synvert::Core::MethodNotSupported,
-          "child_node_by_name is not handled for #{debug_info}, child_name: #{child_name}"
+          "child_node_by_name is not handled for #{map(&:debug_info).join("\n")}, child_name: #{child_name}"
   end
 
   # Get the source range of child node.
@@ -35,7 +35,7 @@ class Array
       )
     else
       raise Synvert::Core::MethodNotSupported,
-            "child_node_range is not handled for #{debug_info}, child_name: #{child_name}"
+            "child_node_range is not handled for #{map(&:debug_info).join("\n")}, child_name: #{child_name}"
     end
   end
 end
