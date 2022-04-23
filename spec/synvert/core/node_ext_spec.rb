@@ -148,17 +148,17 @@ describe Parser::AST::Node do
   describe '#arguments' do
     it 'gets for def node' do
       node = parse('def test(foo, bar); foo + bar; end')
-      expect(node.arguments.type).to eq :args
+      expect(node.arguments.map(&:type)).to eq [:arg, :arg]
     end
 
     it 'gets for defs node' do
       node = parse('def self.test(foo, bar); foo + bar; end')
-      expect(node.arguments.type).to eq :args
+      expect(node.arguments.map(&:type)).to eq [:arg, :arg]
     end
 
     it 'gets for block node' do
       node = parse('RSpec.configure do |config|; end')
-      expect(node.arguments.type).to eq :args
+      expect(node.arguments.map(&:type)).to eq [:arg]
     end
 
     it 'gets for send node' do

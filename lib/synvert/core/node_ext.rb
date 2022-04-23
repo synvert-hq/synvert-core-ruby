@@ -156,9 +156,9 @@ module Parser::AST
     def arguments
       case type
       when :def, :block
-        children[1]
+        children[1].children
       when :defs
-        children[2]
+        children[2].children
       when :send, :csend
         children[2..-1]
       when :defined?
@@ -480,7 +480,7 @@ module Parser::AST
     def child_node_range(child_name)
       case [type, child_name.to_sym]
       when %i[block pipes], %i[def parentheses], %i[defs parentheses]
-        Parser::Source::Range.new('(string)', arguments.loc.expression.begin_pos, arguments.loc.expression.end_pos)
+        Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos - 1, arguments.last.loc.expression.end_pos + 1)
       when %i[block arguments], %i[def arguments], %i[defs arguments]
         Parser::Source::Range.new(
           '(string)',
@@ -702,7 +702,7 @@ module Parser::AST
       if type == :block && caller.type == :send && caller.receiver.nil? && caller.message == :lambda
         new_source = to_source
         if arguments.size > 1
-          new_source = new_source[0...arguments.loc.begin.to_range.begin - 1] + new_source[arguments.loc.end.to_range.end..-1]
+          new_source = new_source[0...arguments.first.loc.expression.begin_pos - 2] + new_source[arguments.last.loc.expression.end_pos + 1..-1]
           new_source = new_source.sub('lambda', "->(#{arguments.map(&:to_source).join(', ')})")
         else
           new_source = new_source.sub('lambda', '->')
