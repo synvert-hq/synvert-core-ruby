@@ -104,7 +104,6 @@ module Synvert::Core::NodeQuery
             matching_node.siblings.map { |sibling_node| @expression.query_nodes(sibling_node, false) }.flatten
           end
         end.flatten
-        @expression.filter(expression_nodes)
       end
 
       def to_s

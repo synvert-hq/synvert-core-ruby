@@ -107,7 +107,7 @@ module Synvert::Core::NodeQuery
             end
 
             def bar
-              FactoryGirl.create(:user, name: 'bar')
+              FactoryBot.create(:user, name: 'bar')
             end
 
             def foobar(a, b)
@@ -133,8 +133,13 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq [node.body.first]
       end
 
+      it 'matches nested first node' do
+        expression = parser.parse('.def[arguments.size=0] .send:first-child')
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.first, node.body.second.body.first]
+      end
+
       it 'matches last def node' do
-        expression = parser.parse('.class .def:last-child')
+        expression = parser.parse('.def:last-child')
         expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
