@@ -7,7 +7,8 @@ module Synvert::Core::NodeQuery
     module Comparable
       SIMPLE_VALID_OPERATORS = [:==, :!=]
       NUMBER_VALID_OPERATORS = [:==, :!=, :>, :>=, :<, :<=]
-      REGEXP_OPERATORS = [:=~, :!~]
+      ARRAY_VALID_OPERATORS = [:in]
+      REGEXP_VALID_OPERATORS = [:=~, :!~]
 
       def match?(node, operator)
         raise InvalidOperator, "invalid operator #{operator}" unless valid_operator?(operator)
@@ -27,6 +28,8 @@ module Synvert::Core::NodeQuery
           actual_value(node) < expected_value
         when :<=
           actual_value(node) <= expected_value
+        when :in
+          expected_value.any? { |expected| expected.match?(node, :==) }
         else
           actual_value(node) == expected_value
         end
@@ -193,9 +196,44 @@ module Synvert::Core::NodeQuery
           "#{@key}<#{@value}"
         when :<=
           "#{@key}<=#{@value}"
+        when :in
+          "#{@key} in (#{@value})"
         else
           "#{@key}=#{@value}"
         end
+      end
+    end
+
+    class ArrayValue
+      include Comparable
+
+      def initialize(value:, rest: nil)
+        @value = value
+        @rest = rest
+      end
+
+      def actual_value(node)
+        if node.is_a?(::Parser::AST::Node)
+          node.to_value
+        else
+          node
+        end
+      end
+
+      def expected_value
+        if @rest
+          [@value, *@rest.expected_value]
+        else
+          [@value]
+        end
+      end
+
+      def valid_operators
+        ARRAY_VALID_OPERATORS
+      end
+
+      def to_s
+        [@value, @rest].compact.join(', ')
       end
     end
 
@@ -325,7 +363,7 @@ module Synvert::Core::NodeQuery
       end
 
       def valid_operators
-        REGEXP_OPERATORS
+        REGEXP_VALID_OPERATORS
       end
 
       def to_s

@@ -88,6 +88,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses in operator' do
+      source = '.def[name in (foo, bar)]'
+      assert_parser(source)
+    end
+
     describe '#query_nodes' do
       let(:node) {
         parse(<<~EOS)
@@ -143,6 +148,11 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
       end
 
+      it 'matches in' do
+        expression = parser.parse('.def[name in (foo, bar)]')
+        expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
+      end
+
       it 'matches descendant node' do
         expression = parser.parse('.class .send[message=:create]')
         expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
@@ -192,7 +202,7 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq node.body.last.body.first.children
       end
 
-      it 'matches' do
+      it 'matches identifier' do
         expression = parser.parse('.send[receiver=foo][message=merge]')
         expect(expression.query_nodes(node)).to eq [node.body.last.body.second]
       end

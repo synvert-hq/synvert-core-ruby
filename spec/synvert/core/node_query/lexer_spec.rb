@@ -285,6 +285,23 @@ module Synvert::Core::NodeQuery
         ]
         assert_tokens source, expected_tokens
       end
+
+      it 'matches IN' do
+        source = '.send[message IN (create, build)]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tIN, "IN"],
+          [:tOPEN_ARRAY, "("],
+          [:tIDENTIFIER_VALUE, "create"],
+          [:tCOMMA, ","],
+          [:tIDENTIFIER_VALUE, "build"],
+          [:tCLOSE_ARRAY, ")"],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
     end
 
     context 'nested attribute' do
