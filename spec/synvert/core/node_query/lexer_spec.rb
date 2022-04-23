@@ -302,6 +302,23 @@ module Synvert::Core::NodeQuery
         ]
         assert_tokens source, expected_tokens
       end
+
+      it 'matches NOT IN' do
+        source = '.send[message NOT IN (create, build)]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tNOT_IN, "NOT IN"],
+          [:tOPEN_ARRAY, "("],
+          [:tIDENTIFIER_VALUE, "create"],
+          [:tCOMMA, ","],
+          [:tIDENTIFIER_VALUE, "build"],
+          [:tCLOSE_ARRAY, ")"],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
     end
 
     context 'nested attribute' do

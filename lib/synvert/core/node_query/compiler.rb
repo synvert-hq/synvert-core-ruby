@@ -7,7 +7,7 @@ module Synvert::Core::NodeQuery
     module Comparable
       SIMPLE_VALID_OPERATORS = [:==, :!=]
       NUMBER_VALID_OPERATORS = [:==, :!=, :>, :>=, :<, :<=]
-      ARRAY_VALID_OPERATORS = [:in]
+      ARRAY_VALID_OPERATORS = [:in, :not_in]
       REGEXP_VALID_OPERATORS = [:=~, :!~]
 
       def match?(node, operator)
@@ -30,6 +30,8 @@ module Synvert::Core::NodeQuery
           actual_value(node) <= expected_value
         when :in
           expected_value.any? { |expected| expected.match?(node, :==) }
+        when :not_in
+          expected_value.all? { |expected| expected.match?(node, :!=) }
         else
           actual_value(node) == expected_value
         end
@@ -198,6 +200,8 @@ module Synvert::Core::NodeQuery
           "#{@key}<=#{@value}"
         when :in
           "#{@key} in (#{@value})"
+        when :not_in
+          "#{@key} not in (#{@value})"
         else
           "#{@key}=#{@value}"
         end

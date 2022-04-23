@@ -93,6 +93,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses not_in operator' do
+      source = '.def[name not in (foo, bar)]'
+      assert_parser(source)
+    end
+
     describe '#query_nodes' do
       let(:node) {
         parse(<<~EOS)
@@ -149,8 +154,13 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches in' do
-        expression = parser.parse('.def[name in (foo, bar)]')
+        expression = parser.parse('.def[name IN (foo, bar)]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
+      end
+
+      it 'matches not in' do
+        expression = parser.parse('.def[name NOT IN (foo, bar)]')
+        expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
       it 'matches descendant node' do

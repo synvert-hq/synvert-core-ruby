@@ -3,7 +3,7 @@ options no_result_var
 token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE tOPEN_ARRAY tCLOSE_ARRAY tCOMMA
-      tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN
+      tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN tNOT_IN
       tARRAY_VALUE tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
@@ -36,6 +36,7 @@ rule
     | tKEY tLESS_THAN_OR_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<=) }
     | tKEY tLESS_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<) }
     | tKEY tEQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :==) }
+    | tKEY tNOT_IN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :not_in) }
     | tKEY tIN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :in) }
 
   array_value

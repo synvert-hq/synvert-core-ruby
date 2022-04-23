@@ -43,6 +43,7 @@ rules
 :KEY          />/                       { @state = :VALUE; [:tGREATER_THAN, text] }
 :KEY          /</                       { @state = :VALUE; [:tLESS_THAN, text] }
 :KEY          /=/                       { @state = :VALUE; [:tEQUAL, text] }
+:KEY          /not in/i                 { @state = :ARRAY_VALUE; [:tNOT_IN, text] }
 :KEY          /in/i                     { @state = :ARRAY_VALUE; [:tIN, text] }
 :KEY          /#{IDENTIFIER}/           { [:tKEY, text] }
 :VALUE        /\s+/
