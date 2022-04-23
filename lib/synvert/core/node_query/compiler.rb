@@ -259,11 +259,20 @@ module Synvert::Core::NodeQuery
       end
 
       def actual_value(node)
-        node.to_source
+        if node.is_a?(::Parser::AST::Node)
+          node.to_source
+        else
+          node
+        end
       end
 
       def expected_value
-        base_node.child_node_by_name(@value).to_source
+        node = base_node.child_node_by_name(@value)
+        if node.is_a?(::Parser::AST::Node)
+          node.to_source
+        else
+          node
+        end
       end
 
       def valid_operators
