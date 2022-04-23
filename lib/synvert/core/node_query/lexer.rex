@@ -43,11 +43,12 @@ rules
 :KEY          />/                       { @state = :VALUE; [:tGREATER_THAN, text] }
 :KEY          /</                       { @state = :VALUE; [:tLESS_THAN, text] }
 :KEY          /=/                       { @state = :VALUE; [:tEQUAL, text] }
-:KEY          /not in/i                 { @state = :ARRAY_VALUE; [:tNOT_IN, text] }
-:KEY          /in/i                     { @state = :ARRAY_VALUE; [:tIN, text] }
+:KEY          /not in/i                 { @state = :VALUE; [:tNOT_IN, text] }
+:KEY          /in/i                     { @state = :VALUE; [:tIN, text] }
 :KEY          /#{IDENTIFIER}/           { [:tKEY, text] }
 :VALUE        /\s+/
 :VALUE        /#{OPEN_ATTR_VALUE}/      { @state = :ATTR_VALUE; [:tOPEN_ATTR_VALUE, text] }
+:VALUE        /#{OPEN_ARRAY}/           { @state = :ARRAY_VALUE; [:tOPEN_ARRAY, text] }
 :VALUE        /#{CLOSE_ATTRIBUTE}/      { @nested_count -= 1; @state = @nested_count == 0 ? nil : :VALUE; [:tCLOSE_ATTRIBUTE, text] }
 :VALUE        /#{NIL}/                  { [:tNIL, nil] }
 :VALUE        /#{TRUE}/                 { [:tBOOLEAN, true] }
@@ -68,7 +69,6 @@ rules
 :ATTR_VALUE   /#{IDENTIFIER}/           { [:tATTR_VALUE, text] }
 :ARRAY_VALUE  /\s+/
 :ARRAY_VALUE  /,/                       { [:tCOMMA, text] }
-:ARRAY_VALUE  /#{OPEN_ARRAY}/           { [:tOPEN_ARRAY, text] }
 :ARRAY_VALUE  /#{CLOSE_ARRAY}/          { @state = :VALUE; [:tCLOSE_ARRAY, text] }
 :ARRAY_VALUE  /#{NIL}/                  { [:tNIL, nil] }
 :ARRAY_VALUE  /#{TRUE}/                 { [:tBOOLEAN, true] }

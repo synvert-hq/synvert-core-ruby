@@ -7,7 +7,7 @@ module Synvert::Core::NodeQuery
     module Comparable
       SIMPLE_VALID_OPERATORS = [:==, :!=]
       NUMBER_VALID_OPERATORS = [:==, :!=, :>, :>=, :<, :<=]
-      ARRAY_VALID_OPERATORS = [:in, :not_in]
+      ARRAY_VALID_OPERATORS = [:==, :!=, :in, :not_in]
       REGEXP_VALID_OPERATORS = [:=~, :!~]
 
       def match?(node, operator)
@@ -15,7 +15,13 @@ module Synvert::Core::NodeQuery
 
         case operator
         when :!=
-          actual_value(node) != expected_value
+          if expected_value.is_a?(Array)
+            actual = actual_value(node)
+            !actual.is_a?(Array) || actual.size != expected_value.size ||
+              actual.any? { |actual_node| expected_value.all? { |expected_node| expected_node.match?(actual_node, :!=) } }
+          else
+            actual_value(node) != expected_value
+          end
         when :=~
           actual_value(node) =~ expected_value
         when :!~
@@ -33,7 +39,13 @@ module Synvert::Core::NodeQuery
         when :not_in
           expected_value.all? { |expected| expected.match?(node, :!=) }
         else
-          actual_value(node) == expected_value
+          if expected_value.is_a?(Array)
+            actual = actual_value(node)
+            actual.is_a?(Array) && actual.size == expected_value.size &&
+              actual.all? { |actual_node| expected_value.any? { |expected_node| expected_node.match?(actual_node, :==) } }
+          else
+            actual_value(node) == expected_value
+          end
         end
       end
 

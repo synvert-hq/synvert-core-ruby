@@ -11,6 +11,16 @@ module Synvert::Core
       Rewriter::Instance.new(rewriter, ['file pattern'])
     }
 
+    it 'parses find_node' do
+      scope = double
+      block = proc {}
+      expect(Rewriter::QueryScope).to receive(:new)
+        .with(instance, '.send[message=create]', &block)
+        .and_return(scope)
+      expect(scope).to receive(:process)
+      instance.find_node('.send[message=create]', &block)
+    end
+
     it 'parses within_node' do
       scope = double
       block = proc {}

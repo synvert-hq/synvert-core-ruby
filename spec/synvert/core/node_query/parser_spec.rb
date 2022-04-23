@@ -110,7 +110,7 @@ module Synvert::Core::NodeQuery
               FactoryGirl.create(:user, name: 'bar')
             end
 
-            def foobar
+            def foobar(a, b)
               { a: a, b: b }
               foo.merge(bar)
             end
@@ -161,6 +161,16 @@ module Synvert::Core::NodeQuery
       it 'matches not in' do
         expression = parser.parse('.def[name NOT IN (foo, bar)]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches equal array' do
+        expression = parser.parse('.def[arguments=(a, b)]')
+        expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches not equal array' do
+        expression = parser.parse('.def[arguments!=(a, b)]')
+        expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
       end
 
       it 'matches descendant node' do

@@ -126,15 +126,16 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse +find_node+ dsl, it uses {Synvert::Core::NodeQuery::Parser} to parse the query string,
-    # and uses {Synvert::Core::NodeQuery::Compiler} to query matching nodes,
-    # then run the block on each matching node.
+    # Parse +find_node+ dsl, it creates {Synvert::Core::Rewriter::QueryScope} to recursively find matching ast nodes,
+    # then continue operating on each matching ast node.
+    # @example
+    #   # matches FactoryBot.create(:user)
+    #   find_node '.send[receiver=FactoryBot][message=create][arguments.size=1]' do
+    #   end
+    # @param query_string [String] query string to find matching ast nodes.
+    # @yield run on the matching nodes.
     def find_node(query_string, &block)
-      NodeQuery::Parser.new.parse(query_string).query_nodes(current_node).each do |node|
-        self.process_with_node(node) do
-          self.instance_eval(&block)
-        end
-      end
+      Rewriter::QueryScope.new(self, query_string, &block).process
     end
 
     # Parse +within_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
