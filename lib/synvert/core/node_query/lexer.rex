@@ -1,20 +1,25 @@
 class Synvert::Core::NodeQuery::Lexer
 
 macros
-  OPEN_ATTRIBUTE    /\[/
-  CLOSE_ATTRIBUTE   /\]/
-  OPEN_ARRAY        /\(/
-  CLOSE_ARRAY       /\)/
-  OPEN_ATTR_VALUE   /{{/
-  CLOSE_ATTR_VALUE  /}}/
-  NODE_TYPE         /\.[a-z]+/
-  IDENTIFIER        /[\.\w]+/
-  IDENTIFIER_VALUE  /[\.\w!]+/
-  SYMBOL            /:\w+/
-  INTEGER           /\d+/
-  FLOAT             /\d+\.\d+/
-  REGEXP_BODY       /(?:[^\/]|\\\/)*/
-  REGEXP            /\/(#{REGEXP_BODY})(?<!\\)\/([imxo]*)/
+  OPEN_ATTRIBUTE       /\[/
+  CLOSE_ATTRIBUTE      /\]/
+  OPEN_ARRAY           /\(/
+  CLOSE_ARRAY          /\)/
+  OPEN_ATTR_VALUE      /{{/
+  CLOSE_ATTR_VALUE     /}}/
+  NODE_TYPE            /\.[a-z]+/
+  IDENTIFIER           /[\.\w]+/
+  IDENTIFIER_VALUE     /[\.\w!]+/
+  FALSE                /false/
+  FLOAT                /\d+\.\d+/
+  INTEGER              /\d+/
+  NIL                  /nil/
+  REGEXP_BODY          /(?:[^\/]|\\\/)*/
+  REGEXP               /\/(#{REGEXP_BODY})(?<!\\)\/([imxo]*)/
+  SYMBOL               /:\w+/
+  TRUE                 /true/
+  SINGLE_QUOTE_STRING  /'(.+?)'/
+  DOUBLE_QUOTE_STRING  /"(.+?)"/
 
 rules
 
@@ -43,15 +48,15 @@ rules
 :VALUE        /\s+/
 :VALUE        /#{OPEN_ATTR_VALUE}/      { @state = :ATTR_VALUE; [:tOPEN_ATTR_VALUE, text] }
 :VALUE        /#{CLOSE_ATTRIBUTE}/      { @nested_count -= 1; @state = @nested_count == 0 ? nil : :VALUE; [:tCLOSE_ATTRIBUTE, text] }
-:VALUE        /nil/                     { [:tNIL, nil] }
-:VALUE        /true/                    { [:tBOOLEAN, true] }
-:VALUE        /false/                   { [:tBOOLEAN, false] }
+:VALUE        /#{NIL}/                  { [:tNIL, nil] }
+:VALUE        /#{TRUE}/                 { [:tBOOLEAN, true] }
+:VALUE        /#{FALSE}/                { [:tBOOLEAN, false] }
 :VALUE        /#{SYMBOL}/               { [:tSYMBOL, text[1..-1].to_sym] }
 :VALUE        /#{FLOAT}/                { [:tFLOAT, text.to_f] }
 :VALUE        /#{INTEGER}/              { [:tINTEGER, text.to_i] }
 :VALUE        /#{REGEXP}/               { [:tREGEXP, eval(text)] }
-:VALUE        /"(.+?)"/                 { [:tSTRING, text[1...-1]] }
-:VALUE        /'(.+?)'/                 { [:tSTRING, text[1...-1]] }
+:VALUE        /#{DOUBLE_QUOTE_STRING}/  { [:tSTRING, text[1...-1]] }
+:VALUE        /#{SINGLE_QUOTE_STRING}/  { [:tSTRING, text[1...-1]] }
 :VALUE        /#{NODE_TYPE}/            { [:tNODE_TYPE, text[1..]] }
 :VALUE        />/                       { [:tCHILD, text] }
 :VALUE        /~/                       { [:tSUBSEQUENT_SIBLING, text] }
@@ -64,15 +69,15 @@ rules
 :ARRAY_VALUE  /,/                       { [:tCOMMA, text] }
 :ARRAY_VALUE  /#{OPEN_ARRAY}/           { [:tOPEN_ARRAY, text] }
 :ARRAY_VALUE  /#{CLOSE_ARRAY}/          { @state = :VALUE; [:tCLOSE_ARRAY, text] }
-:ARRAY_VALUE  /nil/                     { [:tNIL, nil] }
-:ARRAY_VALUE  /true/                    { [:tBOOLEAN, true] }
-:ARRAY_VALUE  /false/                   { [:tBOOLEAN, false] }
+:ARRAY_VALUE  /#{NIL}/                  { [:tNIL, nil] }
+:ARRAY_VALUE  /#{TRUE}/                 { [:tBOOLEAN, true] }
+:ARRAY_VALUE  /#{FALSE}/                { [:tBOOLEAN, false] }
 :ARRAY_VALUE  /#{SYMBOL}/               { [:tSYMBOL, text[1..-1].to_sym] }
 :ARRAY_VALUE  /#{FLOAT}/                { [:tFLOAT, text.to_f] }
 :ARRAY_VALUE  /#{INTEGER}/              { [:tINTEGER, text.to_i] }
 :ARRAY_VALUE  /#{REGEXP}/               { [:tREGEXP, eval(text)] }
-:ARRAY_VALUE  /"(.+?)"/                 { [:tSTRING, text[1...-1]] }
-:ARRAY_VALUE  /'(.+?)'/                 { [:tSTRING, text[1...-1]] }
+:ARRAY_VALUE  /#{DOUBLE_QUOTE_STRING}/  { [:tSTRING, text[1...-1]] }
+:ARRAY_VALUE  /#{SINGLE_QUOTE_STRING}/  { [:tSTRING, text[1...-1]] }
 :ARRAY_VALUE  /#{IDENTIFIER_VALUE}/     { [:tIDENTIFIER_VALUE, text] }
 
 inner
