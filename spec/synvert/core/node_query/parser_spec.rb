@@ -48,6 +48,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses :has selector' do
+      source = '.class:has(> .def)'
+      assert_parser(source)
+    end
+
     it 'parses multiple attributes' do
       source = '.send[receiver=nil][message=:create]'
       assert_parser(source)
@@ -202,6 +207,11 @@ module Synvert::Core::NodeQuery
       it 'matches sebsequent sibling node' do
         expression = parser.parse('.def[name=foo] ~ .def[name=foobar]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches has selector' do
+        expression = parser.parse('.def:has(> .send[receiver=FactoryBot])')
+        expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
       end
 
       it 'matches arguments.size' do

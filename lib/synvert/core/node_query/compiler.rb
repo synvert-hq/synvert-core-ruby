@@ -67,7 +67,7 @@ module Synvert::Core::NodeQuery
     end
 
     class Expression
-      def initialize(selector:, expression: nil, relationship: nil)
+      def initialize(selector: nil, expression: nil, relationship: nil)
         @selector = selector
         @expression = expression
         @relationship = relationship
@@ -75,6 +75,10 @@ module Synvert::Core::NodeQuery
 
       def filter(nodes)
         @selector.filter(nodes)
+      end
+
+      def match?(node)
+        !query_nodes(node).empty?
       end
 
       # If @relationship is nil, it will match in all recursive child nodes and return matching nodes.
@@ -85,7 +89,7 @@ module Synvert::Core::NodeQuery
       # @param node [Parser::AST::Node] node to match
       # @param descendant_match [Boolean] whether to match in descendant nodes, default is true
       def query_nodes(node, descendant_match = true)
-        matching_nodes =  find_nodes_with_nil_relationship(node, descendant_match)
+        matching_nodes =  find_nodes_without_relationship(node, descendant_match)
         if @relationship.nil?
           return matching_nodes
         end
@@ -109,7 +113,8 @@ module Synvert::Core::NodeQuery
       def to_s
         return @selector.to_s unless @expression
 
-        result = [@selector]
+        result = []
+        result << @selector if @selector
         case @relationship
         when :child then result << '>'
         when :subsequent_sibling then result << '~'
@@ -121,7 +126,9 @@ module Synvert::Core::NodeQuery
 
       private
 
-      def find_nodes_with_nil_relationship(node, descendant_match)
+      def find_nodes_without_relationship(node, descendant_match)
+        return [node] unless @selector
+
         nodes = []
         nodes << node if @selector.match?(node)
         if descendant_match
@@ -134,10 +141,11 @@ module Synvert::Core::NodeQuery
     end
 
     class Selector
-      def initialize(node_type: nil, attribute_list: nil, index: nil)
+      def initialize(node_type: nil, attribute_list: nil, index: nil, has_expression: nil)
         @node_type = node_type
         @attribute_list = attribute_list
         @index = index
+        @has_expression = has_expression
       end
 
       def filter(nodes)
@@ -148,12 +156,15 @@ module Synvert::Core::NodeQuery
 
       def match?(node, operator = :==)
         (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
-        (!@attribute_list || @attribute_list.match?(node, operator))
+        (!@attribute_list || @attribute_list.match?(node, operator)) &&
+        (!@has_expression || @has_expression.match?(node))
       end
 
       def to_s
         str = ".#{@node_type}#{@attribute_list}"
-        return str unless @index
+        return str if !@index && !@has_expression
+
+        return "#{str}:has(#{@has_expression.to_s})" if @has_expression
 
         case @index
         when 0

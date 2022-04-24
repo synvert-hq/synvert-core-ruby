@@ -5,6 +5,8 @@ macros
   CLOSE_ATTRIBUTE      /\]/
   OPEN_ARRAY           /\(/
   CLOSE_ARRAY          /\)/
+  OPEN_SELECTOR        /\(/
+  CLOSE_SELECTOR       /\)/
   OPEN_ATTR_VALUE      /{{/
   CLOSE_ATTR_VALUE     /}}/
   NODE_TYPE            /\.[a-z]+/
@@ -29,10 +31,13 @@ rules
               /:last-child/             { [:tINDEX, -1] }
               /:nth-child\(\d+\)/       { [:tINDEX, text.sub(':nth-child(', '').to_i - 1] }
               /:nth-last-child\(\d+\)/  { [:tINDEX, -text.sub(':nth-last-child(', '').to_i] }
+              /:has/                    { [:tHAS, text[1..-1]] }
               /#{NODE_TYPE}/            { [:tNODE_TYPE, text[1..]] }
               />/                       { [:tCHILD, text] }
               /~/                       { [:tSUBSEQUENT_SIBLING, text] }
               /\+/                      { [:tNEXT_SIBLING, text] }
+              /#{OPEN_SELECTOR}/        { [:tOPEN_SELECTOR, text] }
+              /#{CLOSE_SELECTOR}/       { [:tCLOSE_SELECTOR, text] }
               /#{OPEN_ATTRIBUTE}/       { @nested_count += 1; @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
 :KEY          /\s+/
 :KEY          /!=/                      { @state = :VALUE; [:tNOT_EQUAL, text] }

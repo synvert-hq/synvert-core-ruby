@@ -483,5 +483,20 @@ module Synvert::Core::NodeQuery
         assert_tokens source, expected_tokens
       end
     end
+
+    context ':has' do
+      it 'matches' do
+        source = '.class:has(> .def)'
+        expected_tokens = [
+          [:tNODE_TYPE, "class"],
+          [:tHAS, "has"],
+          [:tOPEN_SELECTOR, "("],
+          [:tCHILD, ">"],
+          [:tNODE_TYPE, "def"],
+          [:tCLOSE_SELECTOR, ")"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+    end
   end
 end

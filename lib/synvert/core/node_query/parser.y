@@ -1,8 +1,8 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
-token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX
+token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tHAS tCOMMA
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
-      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE tOPEN_ARRAY tCLOSE_ARRAY tCOMMA
+      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
       tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN tNOT_IN
       tARRAY_VALUE tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
@@ -12,11 +12,17 @@ rule
     | selector tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :next_sibling) }
     | selector expression { Compiler::Expression.new(selector: val[0], expression: val[1], relationship: :descendant) }
     | selector { Compiler::Expression.new(selector: val[0]) }
+    | tCHILD expression { Compiler::Expression.new(expression: val[1], relationship: :child) }
+    | tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(expression: val[1], relationship: :subsequent_sibling) }
+    | tNEXT_SIBLING expression { Compiler::Expression.new(expression: val[1], relationship: :next_sibling) }
 
   selector
     : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }
     | tNODE_TYPE tINDEX { Compiler::Selector.new(node_type: val[0], index: val[1]) }
     | attribute_list tINDEX { Compiler::Selector.new(attribute_list: val[0], index: val[1]) }
+    | tNODE_TYPE attribute_list tHAS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], has_expression: val[4]) }
+    | tNODE_TYPE tHAS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], has_expression: val[3]) }
+    | attribute_list tHAS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(attribute_list: val[0], has_expression: val[3]) }
     | tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
     | tNODE_TYPE { Compiler::Selector.new(node_type: val[0]) }
     | attribute_list { Compiler::Selector.new(attribute_list: val[0]) }
