@@ -11,7 +11,7 @@ module Synvert::Core::NodeQuery::Compiler
     def actual_value(node)
       if node.is_a?(::Parser::AST::Node)
         node.to_source
-      elsif node.is_a?(Array)
+      elsif node.is_a?(::Array)
         node.map { |n| actual_value(n) }
       else
         node.to_s

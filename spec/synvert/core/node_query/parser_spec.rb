@@ -247,6 +247,8 @@ module Synvert::Core::NodeQuery
       it 'matches regexp value' do
         expression = parser.parse('.def[name=~/foo/]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.last]
+        expression = parser.parse('.def[name!~/bar/]')
+        expect(expression.query_nodes(node)).to eq [node.body.first]
       end
 
       it 'matches attribute value' do

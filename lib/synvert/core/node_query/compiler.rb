@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core::NodeQuery::Compiler
-  autoload :ArrayValue, 'synvert/core/node_query/compiler/array_value'
+  autoload :Array, 'synvert/core/node_query/compiler/array'
   autoload :AttributeList, 'synvert/core/node_query/compiler/attribute_list'
   autoload :AttributeValue, 'synvert/core/node_query/compiler/attribute_value'
   autoload :Attribute, 'synvert/core/node_query/compiler/attribute'

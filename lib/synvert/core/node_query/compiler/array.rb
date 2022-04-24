@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core::NodeQuery::Compiler
-  class ArrayValue
+  class Array
     include Comparable
 
     def initialize(value: nil, rest: nil)

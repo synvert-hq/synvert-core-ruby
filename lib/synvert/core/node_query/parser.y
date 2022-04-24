@@ -43,18 +43,18 @@ rule
     | tKEY tLESS_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<) }
     | tKEY tEQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :==) }
     | tKEY tINCLUDES value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :includes) }
-    | tKEY tNOT_EQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :!=) }
-    | tKEY tEQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :==) }
-    | tKEY tNOT_IN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :not_in) }
-    | tKEY tIN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :in) }
+    | tKEY tNOT_EQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :!=) }
+    | tKEY tEQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :==) }
+    | tKEY tNOT_IN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :not_in) }
+    | tKEY tIN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :in) }
     | tKEY tNOT_EQUAL tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :!=) }
     | tKEY tEQUAL tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :==) }
     | tKEY tNOT_IN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :not_in) }
     | tKEY tIN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :in) }
 
   array_value
-    : value tCOMMA array_value { Compiler::ArrayValue.new(value: val[0], rest: val[2]) }
-    | value { Compiler::ArrayValue.new(value: val[0]) }
+    : value tCOMMA array_value { Compiler::Array.new(value: val[0], rest: val[2]) }
+    | value { Compiler::Array.new(value: val[0]) }
 
   value
     : selector
