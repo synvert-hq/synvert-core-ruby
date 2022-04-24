@@ -82,5 +82,3 @@ end
     def next_token
       @lexer.next_token
     end
----- header
-require_relative "./compiler"
