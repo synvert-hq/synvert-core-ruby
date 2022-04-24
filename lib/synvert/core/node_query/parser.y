@@ -43,6 +43,10 @@ rule
     | tKEY tLESS_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<) }
     | tKEY tEQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :==) }
     | tKEY tINCLUDES value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :includes) }
+    | tKEY tNOT_EQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :!=) }
+    | tKEY tEQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :==) }
+    | tKEY tNOT_IN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :not_in) }
+    | tKEY tIN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::ArrayValue.new, operator: :in) }
     | tKEY tNOT_EQUAL tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :!=) }
     | tKEY tEQUAL tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :==) }
     | tKEY tNOT_IN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :not_in) }

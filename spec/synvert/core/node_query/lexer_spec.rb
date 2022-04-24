@@ -299,6 +299,20 @@ module Synvert::Core::NodeQuery
         assert_tokens source, expected_tokens
       end
 
+      it 'matche empty array' do
+        source = '.send[arguments=()]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "arguments"],
+          [:tEQUAL, "="],
+          [:tOPEN_ARRAY, "("],
+          [:tCLOSE_ARRAY, ")"],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
       it 'matche equal array' do
         source = '.send[arguments=(:create)]'
         expected_tokens = [

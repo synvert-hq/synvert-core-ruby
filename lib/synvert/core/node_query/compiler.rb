@@ -241,17 +241,16 @@ module Synvert::Core::NodeQuery
     class ArrayValue
       include Comparable
 
-      def initialize(value:, rest: nil)
+      def initialize(value: nil, rest: nil)
         @value = value
         @rest = rest
       end
 
       def expected_value
-        if @rest
-          [@value, *@rest.expected_value]
-        else
-          [@value]
-        end
+        expected = []
+        expected.push(@value) if @value
+        expected += @rest.expected_value if @rest
+        expected
       end
 
       def valid_operators
