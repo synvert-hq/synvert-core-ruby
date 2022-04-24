@@ -3,10 +3,10 @@
 module Synvert::Core::NodeQuery::Compiler
   autoload :Array, 'synvert/core/node_query/compiler/array'
   autoload :AttributeList, 'synvert/core/node_query/compiler/attribute_list'
-  autoload :AttributeValue, 'synvert/core/node_query/compiler/attribute_value'
   autoload :Attribute, 'synvert/core/node_query/compiler/attribute'
   autoload :Boolean, 'synvert/core/node_query/compiler/boolean'
   autoload :Comparable, 'synvert/core/node_query/compiler/comparable'
+  autoload :DynamicAttribute, 'synvert/core/node_query/compiler/dynamic_attribute'
   autoload :Expression, 'synvert/core/node_query/compiler/expression'
   autoload :Float, 'synvert/core/node_query/compiler/float'
   autoload :Identifier, 'synvert/core/node_query/compiler/identifier'

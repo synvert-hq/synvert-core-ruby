@@ -9,7 +9,7 @@ module Synvert::Core::NodeQuery::Compiler
     end
 
     def match?(node, operator = :==)
-      @value.base_node = node if @value.is_a?(AttributeValue)
+      @value.base_node = node if @value.is_a?(DynamicAttribute)
       node && @value.match?(node.child_node_by_name(@key), @operator)
     end
 

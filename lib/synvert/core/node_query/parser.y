@@ -2,9 +2,9 @@ class Synvert::Core::NodeQuery::Parser
 options no_result_var
 token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tHAS tCOMMA
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
-      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ATTR_VALUE tCLOSE_ATTR_VALUE tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
+      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
       tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN tNOT_IN tINCLUDES
-      tARRAY_VALUE tATTR_VALUE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
+      tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
     : selector tCHILD expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :child) }
@@ -58,7 +58,7 @@ rule
 
   value
     : selector
-    | tOPEN_ATTR_VALUE tATTR_VALUE tCLOSE_ATTR_VALUE { Compiler::AttributeValue.new(value: val[1]) }
+    | tOPEN_DYNAMIC_ATTRIBUTE tDYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE { Compiler::DynamicAttribute.new(value: val[1]) }
     | tBOOLEAN { Compiler::Boolean.new(value: val[0]) }
     | tFLOAT { Compiler::Float.new(value: val[0]) }
     | tINTEGER { Compiler::Integer.new(value: val[0])}

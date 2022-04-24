@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core::NodeQuery::Compiler
-  class AttributeValue
+  class DynamicAttribute
     include Comparable
 
     attr_accessor :base_node
