@@ -11,7 +11,7 @@ macros
   CLOSE_ATTR_VALUE     /}}/
   NODE_TYPE            /\.[a-z]+/
   IDENTIFIER           /[\.\w]+/
-  IDENTIFIER_VALUE     /[\.\w!]+/
+  IDENTIFIER_VALUE     /[\.\w!&]+/
   FALSE                /false/
   FLOAT                /\d+\.\d+/
   INTEGER              /\d+/
@@ -48,6 +48,7 @@ rules
 :KEY          />/                       { @state = :VALUE; [:tGREATER_THAN, text] }
 :KEY          /</                       { @state = :VALUE; [:tLESS_THAN, text] }
 :KEY          /=/                       { @state = :VALUE; [:tEQUAL, text] }
+:KEY          /includes/i               { @state = :VALUE; [:tINCLUDES, text] }
 :KEY          /not in/i                 { @state = :VALUE; [:tNOT_IN, text] }
 :KEY          /in/i                     { @state = :VALUE; [:tIN, text] }
 :KEY          /#{IDENTIFIER}/           { [:tKEY, text] }

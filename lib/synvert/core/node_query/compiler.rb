@@ -5,8 +5,8 @@ module Synvert::Core::NodeQuery
     class InvalidOperator < StandardError; end
 
     module Comparable
-      SIMPLE_VALID_OPERATORS = [:==, :!=]
-      NUMBER_VALID_OPERATORS = [:==, :!=, :>, :>=, :<, :<=]
+      SIMPLE_VALID_OPERATORS = [:==, :!=, :includes]
+      NUMBER_VALID_OPERATORS = [:==, :!=, :>, :>=, :<, :<=, :includes]
       ARRAY_VALID_OPERATORS = [:==, :!=, :in, :not_in]
       REGEXP_VALID_OPERATORS = [:=~, :!~]
 
@@ -38,6 +38,8 @@ module Synvert::Core::NodeQuery
           expected_value.any? { |expected| expected.match?(node, :==) }
         when :not_in
           expected_value.all? { |expected| expected.match?(node, :!=) }
+        when :includes
+          actual_value(node).any? { |actual| actual == expected_value }
         else
           if expected_value.is_a?(Array)
             actual = actual_value(node)
@@ -228,6 +230,8 @@ module Synvert::Core::NodeQuery
           "#{@key} in (#{@value})"
         when :not_in
           "#{@key} not in (#{@value})"
+        when :includes
+          "#{@key} includes #{@value}"
         else
           "#{@key}=#{@value}"
         end
@@ -433,6 +437,8 @@ module Synvert::Core::NodeQuery
       def actual_value(node)
         if node.is_a?(::Parser::AST::Node)
           node.to_source
+        elsif node.is_a?(Array)
+          node.map { |n| actual_value(n) }
         else
           node.to_s
         end

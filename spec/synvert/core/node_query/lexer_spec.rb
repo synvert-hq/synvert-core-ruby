@@ -362,6 +362,19 @@ module Synvert::Core::NodeQuery
         ]
         assert_tokens source, expected_tokens
       end
+
+      it 'matches INCLUDES' do
+        source = '.send[arguments INCLUDES &block]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "arguments"],
+          [:tINCLUDES, "INCLUDES"],
+          [:tIDENTIFIER_VALUE, "&block"],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
     end
 
     context 'nested attribute' do

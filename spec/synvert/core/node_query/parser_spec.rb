@@ -103,6 +103,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses includes operator' do
+      source = '.def[arguments includes &block]'
+      assert_parser(source)
+    end
+
     describe '#query_nodes' do
       let(:node) {
         parse(<<~EOS)
@@ -171,6 +176,11 @@ module Synvert::Core::NodeQuery
 
       it 'matches not in' do
         expression = parser.parse('.def[name NOT IN (foo, bar)]')
+        expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches includes' do
+        expression = parser.parse('.def[arguments INCLUDES a]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
