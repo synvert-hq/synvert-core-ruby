@@ -11,7 +11,7 @@ macros
   CLOSE_ATTR_VALUE     /}}/
   NODE_TYPE            /\.[a-z]+/
   IDENTIFIER           /[\.\w]+/
-  IDENTIFIER_VALUE     /[\.\w!&]+/
+  IDENTIFIER_VALUE     /[\.\w!&:]+/
   FALSE                /false/
   FLOAT                /\d+\.\d+/
   INTEGER              /\d+/
