@@ -187,11 +187,17 @@ module Synvert::Core::NodeQuery
       it 'matches equal array' do
         expression = parser.parse('.def[arguments=(a, b)]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
+
+        expression = parser.parse('.def[arguments=(b, a)]')
+        expect(expression.query_nodes(node)).to eq []
       end
 
       it 'matches not equal array' do
         expression = parser.parse('.def[arguments!=(a, b)]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
+
+        expression = parser.parse('.def[arguments!=(b, a)]')
+        expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second, node.body.last]
       end
 
       it 'matches descendant node' do

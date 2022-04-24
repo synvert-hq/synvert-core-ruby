@@ -18,7 +18,7 @@ module Synvert::Core::NodeQuery
           if expected_value.is_a?(Array)
             actual = actual_value(node)
             !actual.is_a?(Array) || actual.size != expected_value.size ||
-              actual.any? { |actual_node| expected_value.all? { |expected_node| expected_node.match?(actual_node, :!=) } }
+              actual.zip(expected_value).any? { |actual_node, expected_node| expected_node.match?(actual_node, :!=) }
           else
             actual_value(node) != expected_value
           end
@@ -44,7 +44,7 @@ module Synvert::Core::NodeQuery
           if expected_value.is_a?(Array)
             actual = actual_value(node)
             actual.is_a?(Array) && actual.size == expected_value.size &&
-              actual.all? { |actual_node| expected_value.any? { |expected_node| expected_node.match?(actual_node, :==) } }
+              actual.zip(expected_value).all? { |actual_node, expected_node| expected_node.match?(actual_node, :==) }
           else
             actual_value(node) == expected_value
           end
