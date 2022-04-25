@@ -57,6 +57,18 @@ module Synvert::Core
         scope.process
         expect(block_nodes.size).to eq 2
       end
+
+      it 'raises ParseError' do
+        scope = described_class.new(instance, 'hello world') {}
+        expect {
+          scope.process
+        }.to raise_error(NodeQuery::Compiler::ParseError)
+
+        scope = described_class.new(instance, '.type[key IN value]') {}
+        expect {
+          scope.process
+        }.to raise_error(NodeQuery::Compiler::ParseError)
+      end
     end
   end
 end

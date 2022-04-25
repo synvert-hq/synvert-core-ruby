@@ -17,6 +17,7 @@ module Synvert::Core
     #
     # It checks the current node and iterates all child nodes,
     # then run the block code on each matching node.
+    # @raise [Synvert::Core::NodeQuery::Compiler::ParseError] if the query string is invalid.
     def process
       current_node = @instance.current_node
       return unless current_node
@@ -28,6 +29,8 @@ module Synvert::Core
           end
         end
       end
+    rescue NodeQuery::Lexer::ScanError, Racc::ParseError => e
+      raise NodeQuery::Compiler::ParseError, "Invalid query string: #{@query_string}"
     end
   end
 end

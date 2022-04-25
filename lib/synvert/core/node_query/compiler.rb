@@ -2,6 +2,8 @@
 
 module Synvert::Core::NodeQuery::Compiler
   autoload :InvalidOperatorError, 'synvert/core/node_query/compiler/invalid_operator_error'
+  autoload :ParseError, 'synvert/core/node_query/compiler/parse_error'
+
   autoload :Comparable, 'synvert/core/node_query/compiler/comparable'
 
   autoload :Expression, 'synvert/core/node_query/compiler/expression'

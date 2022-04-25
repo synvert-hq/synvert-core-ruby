@@ -134,6 +134,7 @@ module Synvert::Core
     #   end
     # @param query_string [String] query string to find matching ast nodes.
     # @yield run on the matching nodes.
+    # @raise [Synvert::Core::NodeQuery::Compiler::ParseError] if query string is invalid.
     def find_node(query_string, &block)
       Rewriter::QueryScope.new(self, query_string, &block).process
     end
