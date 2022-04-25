@@ -43,10 +43,8 @@ module Synvert::Core::NodeQuery::Compiler
         str + ':last-child'
       when (1..)
         str + ":nth-child(#{@index + 1})"
-      when (...-1)
+      else # ...-1
         str + ":nth-last-child(#{-@index})"
-      else
-        str
       end
     end
   end
