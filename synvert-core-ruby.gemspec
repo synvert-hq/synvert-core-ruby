@@ -14,7 +14,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/xinminlabs/synvert-core-ruby"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = `git ls-files -z`.split("\x0") +
+                       %w[lib/synvert/core/node_query/lexer.rex.rb lib/synvert/core/node_query/parser.racc.rb]
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
