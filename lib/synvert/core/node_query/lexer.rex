@@ -11,14 +11,14 @@ macros
   CLOSE_DYNAMIC_ATTRIBUTE  /}}/
   NODE_TYPE                /\.[a-z]+/
   IDENTIFIER               /[\.\w]+/
-  IDENTIFIER_VALUE         /[\.\w!&:\?]+/
+  IDENTIFIER_VALUE         /[\.\w!&:\?<>=]+/
   FALSE                    /false/
   FLOAT                    /\d+\.\d+/
   INTEGER                  /\d+/
   NIL                      /nil/
   REGEXP_BODY              /(?:[^\/]|\\\/)*/
   REGEXP                   /\/(#{REGEXP_BODY})(?<!\\)\/([imxo]*)/
-  SYMBOL                   /:[\w!]+/
+  SYMBOL                   /:[\w!\?<>=]+/
   TRUE                     /true/
   SINGLE_QUOTE_STRING      /'(.+?)'/
   DOUBLE_QUOTE_STRING      /"(.+?)"/
