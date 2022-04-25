@@ -17,9 +17,7 @@ module Synvert::Core::NodeQuery
     context 'ast node type' do
       it 'matches node type' do
         source = '.send'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"]
-        ]
+        expected_tokens = [[:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -467,10 +465,7 @@ module Synvert::Core::NodeQuery
     context 'descendant' do
       it 'matches' do
         source = '.class .send'
-        expected_tokens = [
-          [:tNODE_TYPE, "class"],
-          [:tNODE_TYPE, "send"]
-        ]
+        expected_tokens = [[:tNODE_TYPE, "class"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -478,11 +473,7 @@ module Synvert::Core::NodeQuery
     context 'child' do
       it 'matches' do
         source = '.def > .send'
-        expected_tokens = [
-          [:tNODE_TYPE, "def"],
-          [:tCHILD, ">"],
-          [:tNODE_TYPE, "send"]
-        ]
+        expected_tokens = [[:tNODE_TYPE, "def"], [:tCHILD, ">"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -490,11 +481,7 @@ module Synvert::Core::NodeQuery
     context 'subsequent sibling' do
       it 'matches' do
         source = '.send ~ .send'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tSUBSEQUENT_SIBLING, "~"],
-          [:tNODE_TYPE, "send"]
-        ]
+        expected_tokens = [[:tNODE_TYPE, "send"], [:tSUBSEQUENT_SIBLING, "~"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -502,11 +489,7 @@ module Synvert::Core::NodeQuery
     context 'next sibling' do
       it 'matches' do
         source = '.send + .send'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tNEXT_SIBLING, "+"],
-          [:tNODE_TYPE, "send"]
-        ]
+        expected_tokens = [[:tNODE_TYPE, "send"], [:tNEXT_SIBLING, "+"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
