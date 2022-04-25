@@ -480,7 +480,11 @@ module Parser::AST
     def child_node_range(child_name)
       case [type, child_name.to_sym]
       when %i[block pipes], %i[def parentheses], %i[defs parentheses]
-        Parser::Source::Range.new('(string)', arguments.first.loc.expression.begin_pos - 1, arguments.last.loc.expression.end_pos + 1)
+        Parser::Source::Range.new(
+          '(string)',
+          arguments.first.loc.expression.begin_pos - 1,
+          arguments.last.loc.expression.end_pos + 1
+        )
       when %i[block arguments], %i[def arguments], %i[defs arguments]
         Parser::Source::Range.new(
           '(string)',
