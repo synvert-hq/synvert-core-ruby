@@ -11,7 +11,7 @@ macros
   CLOSE_DYNAMIC_ATTRIBUTE  /}}/
   NODE_TYPE                /\.[a-z]+/
   IDENTIFIER               /[\.\w]+/
-  IDENTIFIER_VALUE         /[\.\w!&:]+/
+  IDENTIFIER_VALUE         /[\.\w!&:\?]+/
   FALSE                    /false/
   FLOAT                    /\d+\.\d+/
   INTEGER                  /\d+/
