@@ -34,7 +34,7 @@ module Synvert::Core::NodeQuery::Compiler
       str = ".#{@node_type}#{@attribute_list}"
       return str if !@index && !@has_expression
 
-      return "#{str}:has(#{@has_expression.to_s})" if @has_expression
+      return "#{str}:has(#{@has_expression})" if @has_expression
 
       case @index
       when 0
