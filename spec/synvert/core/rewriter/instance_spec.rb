@@ -14,9 +14,7 @@ module Synvert::Core
     it 'parses find_node' do
       scope = double
       block = proc {}
-      expect(Rewriter::QueryScope).to receive(:new)
-        .with(instance, '.send[message=create]', &block)
-        .and_return(scope)
+      expect(Rewriter::QueryScope).to receive(:new).with(instance, '.send[message=create]', &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.find_node('.send[message=create]', &block)
     end

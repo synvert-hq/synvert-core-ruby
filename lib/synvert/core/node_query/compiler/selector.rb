@@ -26,8 +26,8 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] the node
     def match?(node, _operator = :==)
       (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
-      (!@attribute_list || @attribute_list.match?(node)) &&
-      (!@has_expression || @has_expression.match?(node))
+        (!@attribute_list || @attribute_list.match?(node)) &&
+        (!@has_expression || @has_expression.match?(node))
     end
 
     def to_s
