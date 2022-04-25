@@ -66,9 +66,6 @@ rules
 :VALUE              /#{DOUBLE_QUOTE_STRING}/      { [:tSTRING, text[1...-1]] }
 :VALUE              /#{SINGLE_QUOTE_STRING}/      { [:tSTRING, text[1...-1]] }
 :VALUE              /#{NODE_TYPE}/                { [:tNODE_TYPE, text[1..]] }
-:VALUE              />/                           { [:tCHILD, text] }
-:VALUE              /~/                           { [:tSUBSEQUENT_SIBLING, text] }
-:VALUE              /\+/                          { [:tNEXT_SIBLING, text] }
 :VALUE              /#{OPEN_ATTRIBUTE}/           { @nested_count += 1; @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
 :VALUE              /#{IDENTIFIER_VALUE}/         { [:tIDENTIFIER_VALUE, text] }
 :DYNAMIC_ATTRIBUTE  /#{CLOSE_DYNAMIC_ATTRIBUTE}/  { @state = :VALUE; [:tCLOSE_DYNAMIC_ATTRIBUTE, text] }

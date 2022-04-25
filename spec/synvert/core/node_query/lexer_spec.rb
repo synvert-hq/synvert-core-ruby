@@ -153,13 +153,35 @@ module Synvert::Core::NodeQuery
       end
 
       it 'identifier can contain <, >, =' do
-        source = '.send[message=<=>]'
+        source = '.send[message=<]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
           [:tEQUAL, "="],
-          [:tIDENTIFIER_VALUE, "<=>"],
+          [:tIDENTIFIER_VALUE, "<"],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+
+        source = '.send[message==]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tEQUAL, "="],
+          [:tIDENTIFIER_VALUE, "="],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+
+        source = '.send[message=>]'
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "message"],
+          [:tEQUAL, "="],
+          [:tIDENTIFIER_VALUE, ">"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens
