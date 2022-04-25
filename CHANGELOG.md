@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.0 (2022-04-25)
+
+* Introduce new node query language
+* Drop ruby 2.5 support
+
 ## 0.64.0 (2022-04-02)
 
 * Read absolute path of Gemfile.lock
