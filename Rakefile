@@ -19,3 +19,4 @@ rule '.racc.rb' => '.y' do |t|
 end
 
 task :default => :spec
+task :spec => :generate
