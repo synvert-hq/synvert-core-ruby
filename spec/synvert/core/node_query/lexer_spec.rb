@@ -187,6 +187,19 @@ module Synvert::Core::NodeQuery
         assert_tokens source, expected_tokens
       end
 
+      it 'matches empty string' do
+        source = ".send[arguments.first='']"
+        expected_tokens = [
+          [:tNODE_TYPE, "send"],
+          [:tOPEN_ATTRIBUTE, "["],
+          [:tKEY, "arguments.first"],
+          [:tEQUAL, "="],
+          [:tSTRING, ""],
+          [:tCLOSE_ATTRIBUTE, "]"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+
       it 'matches attribute value' do
         source = '.pair[key={{value}}]'
         expected_tokens = [

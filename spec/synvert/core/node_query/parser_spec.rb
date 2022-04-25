@@ -108,6 +108,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses empty string' do
+      source = '.send[arguments.first=""]'
+      assert_parser(source)
+    end
+
     describe '#query_nodes' do
       let(:node) {
         parse(<<~EOS)
