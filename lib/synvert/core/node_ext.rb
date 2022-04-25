@@ -50,7 +50,7 @@ module Parser::AST
     end
 
     # Set the parent node.
-    # @params node [Parser::AST::Node] parent node.
+    # @param node [Parser::AST::Node] parent node.
     def parent=(node)
       @mutable_attributes[:parent] = node
     end

@@ -14,6 +14,7 @@ module Synvert::Core
     end
 
     # Find out the matching nodes.
+    #
     # It checks the current node and iterates all child nodes,
     # then run the block code on each matching node.
     def process

@@ -11,7 +11,7 @@ module Synvert::Core::NodeQuery::Compiler
     # Check if the actual value matches the expected value.
     #
     # @param node [Parser::AST::Node] node to calculate actual value
-    # @param operator [Symbol] operator to compare with expected value, operator can be `:==`, `:!=`, `:>`, `:>=`, `:<`, `:<=`, `:includes`, `:in`, `:not_in`, `:=~`, `!~`
+    # @param operator [Symbol] operator to compare with expected value, operator can be <code>:==</code>, <code>:!=</code>, <code>:></code>, <code>:>=</code>, <code>:<</code>, <code>:<=</code>, <code>:includes</code>, <code>:in</code>, <code>:not_in</code>, <code>:=~</code>, <code>!~</code>
     # @return [Boolean] true if actual value matches the expected value
     # @raise [Synvert::Core::NodeQuery::Compiler::InvalidOperatorError] if operator is invalid
     def match?(node, operator)
@@ -56,6 +56,7 @@ module Synvert::Core::NodeQuery::Compiler
     end
 
     # Get the actual value from ast node.
+    # @return if node is a {Parser::AST::Node}, return the node value, otherwise, return the node itself.
     def actual_value(node)
       if node.is_a?(::Parser::AST::Node)
         node.to_value

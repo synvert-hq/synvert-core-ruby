@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
 module Synvert::Core::NodeQuery::Compiler
+  # AttributeList contains one or more {Synvert::Core::NodeQuery::Compiler::Attribute}.
   class AttributeList
-    def initialize(attribute:, attribute_list: nil)
+    # Initialize a AttributeList.
+    # @param attribute [Synvert::Core::NodeQuery::Compiler::Attribute] the attribute
+    # @param rest [Synvert::Core::NodeQuery::Compiler::AttributeList] the rest attribute list
+    def initialize(attribute:, rest: nil)
       @attribute = attribute
-      @attribute_list = attribute_list
+      @rest = rest
     end
 
-    def match?(node, operator = :==)
-      @attribute.match?(node, operator) && (!@attribute_list || @attribute_list.match?(node, operator))
+    # Check if the node matches the attribute list.
+    # @return [Boolean]
+    def match?(node)
+      @attribute.match?(node) && (!@rest || @rest.match?(node))
     end
 
     def to_s
-      "[#{@attribute}]#{@attribute_list}"
+      "[#{@attribute}]#{@rest}"
     end
   end
 end

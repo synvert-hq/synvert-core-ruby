@@ -7,14 +7,14 @@ token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tHAS tCOMM
       tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
-    : selector tCHILD expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :child) }
-    | selector tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :subsequent_sibling) }
-    | selector tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], expression: val[2], relationship: :next_sibling) }
-    | selector expression { Compiler::Expression.new(selector: val[0], expression: val[1], relationship: :descendant) }
+    : selector tCHILD expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :child) }
+    | selector tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :subsequent_sibling) }
+    | selector tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :next_sibling) }
+    | selector expression { Compiler::Expression.new(selector: val[0], rest: val[1], relationship: :descendant) }
     | selector { Compiler::Expression.new(selector: val[0]) }
-    | tCHILD expression { Compiler::Expression.new(expression: val[1], relationship: :child) }
-    | tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(expression: val[1], relationship: :subsequent_sibling) }
-    | tNEXT_SIBLING expression { Compiler::Expression.new(expression: val[1], relationship: :next_sibling) }
+    | tCHILD expression { Compiler::Expression.new(rest: val[1], relationship: :child) }
+    | tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(rest: val[1], relationship: :subsequent_sibling) }
+    | tNEXT_SIBLING expression { Compiler::Expression.new(rest: val[1], relationship: :next_sibling) }
 
   selector
     : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }
@@ -29,7 +29,7 @@ rule
     ;
 
   attribute_list
-    : tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE attribute_list { Compiler::AttributeList.new(attribute: val[1], attribute_list: val[3]) }
+    : tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE attribute_list { Compiler::AttributeList.new(attribute: val[1], rest: val[3]) }
     | tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE { Compiler::AttributeList.new(attribute: val[1]) }
     ;
 
