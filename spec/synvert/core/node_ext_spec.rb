@@ -1027,4 +1027,39 @@ describe Parser::AST::Node do
       end
     end
   end
+
+  describe '#to_hash' do
+    it 'gets hash' do
+      node = parse(<<~EOS)
+        class Synvert
+          def foobar(foo, bar)
+            foo + bar
+          end
+        end
+      EOS
+      expect(node.to_hash).to eq({
+        type: :class,
+        parent_class: nil,
+        name: {
+          type: :const,
+          parent_const: nil,
+          name: :Synvert
+        },
+        body: [{
+          type: :def,
+          name: :foobar,
+          arguments: [
+            { type: :arg, name: :foo},
+            { type: :arg, name: :bar}
+          ],
+          body: [{
+            type: :send,
+            receiver: { name: :foo, type: :lvar },
+            message: :+,
+            arguments: [{ name: :bar, type: :lvar }]
+          }]
+        }]
+      })
+    end
+  end
 end

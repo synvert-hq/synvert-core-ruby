@@ -108,7 +108,7 @@ module Parser::AST
     # It supports :and, :cvagn, :lvasgn, :masgn, :or and :or_asgn nodes.
     # @example
     #   node # s(:or_asgn, s(:lvasgn, :a), s(:int, 1))
-    #   node.left_value # a
+    #   node.left_value # :a
     # @return [Parser::AST::Node] left value of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
     def left_value
@@ -614,6 +614,28 @@ module Parser::AST
       else
         to_source
       end
+    end
+
+    # Convert node to a hash, so that it can be converted to a json.
+    def to_hash
+      result = { type: type }
+      if TYPE_CHILDREN[type]
+        TYPE_CHILDREN[type].each do |key|
+          value = send(key)
+          result[key] =
+            case value
+            when Array
+              value.map { |v| v.respond_to?(:to_hash) ? v.to_hash : v }
+            when Parser::AST::Node
+              value.to_hash
+            else
+              value
+            end
+        end
+      else
+        result[:children] = children.map { |c| c.respond_to?(:to_hash) ? c.to_hash : c }
+      end
+      result
     end
 
     private
