@@ -76,11 +76,6 @@ describe Parser::AST::Node do
       expect(node.name).to eq :@@foo
     end
 
-    it 'gets for mlhs node' do
-      node = parse('var.each { |(param1, param2)| }')
-      expect(node.arguments.first.name).to eq node.arguments.first
-    end
-
     it 'gets for restarg node' do
       node = parse('object.each { |*entry| }')
       expect(node.arguments.first.name).to eq :entry
@@ -115,16 +110,6 @@ describe Parser::AST::Node do
     it 'gets for csend node' do
       node = parse('user&.update(name: name)')
       expect(node.message).to eq :update
-    end
-
-    it 'gets for super node' do
-      node = parse('super(params)')
-      expect(node.message).to eq :super
-    end
-
-    it 'gets for zuper node' do
-      node = parse('super do; end')
-      expect(node.caller.message).to eq :super
     end
   end
 

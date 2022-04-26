@@ -29,9 +29,39 @@ module Parser::AST
   # Source Code to Ast Node
   # {https://synvert-playground.xinminlabs.com/ruby}
   class Node
+    TYPE_CHILDREN = {
+      and: %i[left_value right_value],
+      arg: %i[name],
+      begin: %i[body],
+      block: %i[caller arguments body],
+      blockarg: %i[name],
+      const: %i[parent_const name],
+      class: %i[name parent_class body],
+      csend: %i[receiver message arguments],
+      cvasgn: %i[left_value right_value],
+      cvar: %i[name],
+      def: %i[name arguments body],
+      definded?: %i[arguments],
+      defs: %i[self name arguments body],
+      hash: %i[pairs],
+      ivasgn: %i[left_value right_value],
+      ivar: %i[name],
+      lvar: %i[name],
+      lvasgn: %i[left_value right_value],
+      masgn: %i[left_value right_value],
+      module: %i[name body],
+      or: %i[left_value right_value],
+      or_asgn: %i[left_value right_value],
+      pair: %i[key value],
+      restarg: %i[name],
+      send: %i[receiver message arguments],
+      super: %i[arguments],
+      zsuper: %i[]
+    }
+
     # Initialize a Node.
     #
-    # It extends Parser::AST::Node and set parent for its child nodes.
+    # It extends {Parser::AST::Node} and set parent for its child nodes.
     def initialize(type, children = [], properties = {})
       @mutable_attributes = {}
       super
@@ -62,88 +92,32 @@ module Parser::AST
       parent.children[index + 1..]
     end
 
-    # Get the name of node.
-    # It supports :arg, :blockarg, :class, :const, :cvar, :def, :defs, :ivar,
-    # :lvar, :mlhs, :module and :restarg nodes.
-    # @example
-    #   node # => s(:class, s(:const, nil, :Synvert), nil, nil)
-    #   node.name # => s(:const, nil, :Synvert)
-    # @return [Parser::AST::Node] name of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def name
-      case type
-      when :class, :module, :def, :arg, :blockarg, :restarg, :lvar, :ivar, :cvar
-        children[0]
-      when :defs, :const
-        children[1]
-      when :mlhs
-        self
-      else
-        raise Synvert::Core::MethodNotSupported, "name is not handled for #{debug_info}"
+    # Dyamically defined method
+    # caller, key, left_value, message, name, parent_class, parent_const, receivr, rgith_value and value.
+    # based on const TYPE_CHILDREN.
+    %i[caller key left_value message name parent_class parent_const receiver right_value value].each do |method_name|
+      define_method(method_name) do
+        index = TYPE_CHILDREN[type]&.index(method_name)
+        return children[index] if index
+
+        raise Synvert::Core::MethodNotSupported, "#{method_name} is not handled for #{debug_info}"
       end
     end
 
-    # Get parent_class of node.
-    # It supports :class node.
+    # Return the left value of node.
+    # It supports :and, :cvagn, :lvasgn, :masgn, :or and :or_asgn nodes.
     # @example
-    #   node # s(:class, s(:const, nil, :Post), s(:const, s(:const, nil, :ActiveRecord), :Base), nil)
-    #   node.parent_class # s(:const, s(:const, nil, :ActiveRecord), :Base)
-    # @return [Parser::AST::Node] parent_class of node.
+    #   node # s(:or_asgn, s(:lvasgn, :a), s(:int, 1))
+    #   node.left_value # a
+    # @return [Parser::AST::Node] left value of node.
     # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def parent_class
-      if :class == type
-        children[1]
-      else
-        raise Synvert::Core::MethodNotSupported, "parent_class is not handled for #{debug_info}"
-      end
-    end
+    def left_value
+      return children[0].children[0] if type == :or_asgn
 
-    # Get parent constant of node.
-    # It supports :const node.
-    # @example
-    #   node # s(:const, s(:const, nil, :Synvert), :Node)
-    #   node.parent_const # s(:const, nil, :Synvert)
-    # @return [Parser::AST::Node] parent const of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def parent_const
-      if :const == type
-        children[0]
-      else
-        raise Synvert::Core::MethodNotSupported, "parent_const is not handled for #{debug_info}"
-      end
-    end
+      index = TYPE_CHILDREN[type]&.index(:left_value)
+      return children[index] if index
 
-    # Get receiver of node.
-    # It support :csend and :send nodes.
-    # @example
-    #   node # s(:send, s(:const, nil, :FactoryGirl), :create, s(:sym, :post))
-    #   node.receiver # s(:const, nil, :FactoryGirl)
-    # @return [Parser::AST::Node] receiver of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def receiver
-      if %i[csend send].include?(type)
-        children[0]
-      else
-        raise Synvert::Core::MethodNotSupported, "receiver is not handled for #{debug_info}"
-      end
-    end
-
-    # Get message of node.
-    # It support :csend, :send, :super and :zsuper nodes.
-    # @example
-    #   node # s(:send, s(:const, nil, :FactoryGirl), :create, s(:sym, :post))
-    #   node.message # :create
-    # @return [Symbol] mesage of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def message
-      case type
-      when :super, :zsuper
-        :super
-      when :send, :csend
-        children[1]
-      else
-        raise Synvert::Core::MethodNotSupported, "message is not handled for #{debug_info}"
-      end
+      raise Synvert::Core::MethodNotSupported, "#{left_value} is not handled for #{debug_info}"
     end
 
     # Get arguments of node.
@@ -165,21 +139,6 @@ module Parser::AST
         children
       else
         raise Synvert::Core::MethodNotSupported, "arguments is not handled for #{debug_info}"
-      end
-    end
-
-    # Get caller of node.
-    # It support :block node.
-    # @example
-    #   node # s(:block, s(:send, s(:const, nil, :RSpec), :configure), s(:args, s(:arg, :config)), nil)
-    #   node.caller # s(:send, s(:const, nil, :RSpec), :configure)
-    # @return [Parser::AST::Node] caller of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def caller
-      if :block == type
-        children[0]
-      else
-        raise Synvert::Core::MethodNotSupported, "caller is not handled for #{debug_info}"
       end
     end
 
@@ -278,66 +237,6 @@ module Parser::AST
         value_node&.value
       else
         raise Synvert::Core::MethodNotSupported, "hash_value is not handled for #{debug_info}"
-      end
-    end
-
-    # Get key node of hash :pair node.
-    # @example
-    #   node # s(:pair, s(:sym, :foo), s(:str, "bar"))
-    #   node.key # s(:sym, :foo)
-    # @return [Parser::AST::Node] key of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def key
-      if :pair == type
-        children.first
-      else
-        raise Synvert::Core::MethodNotSupported, "key is not handled for #{debug_info}"
-      end
-    end
-
-    # Get value node of hash :pair node.
-    # @example
-    #   node # s(:pair, s(:sym, :foo), s(:str, "bar"))
-    #   node.value # s(:str, "bar")
-    # @return [Parser::AST::Node] value of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def value
-      if :pair == type
-        children.last
-      else
-        raise Synvert::Core::MethodNotSupported, "value is not handled for #{debug_info}"
-      end
-    end
-
-    # Return the left value of node.
-    # It supports :and, :cvagn, :lvasgn, :masgn, :or and :or_asgn nodes.
-    # @example
-    #   node # s(:masgn, s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b)), s(:array, s(:int, 1), s(:int, 2)))
-    #   node.left_value # s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b))
-    # @return [Parser::AST::Node] left value of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def left_value
-      if %i[masgn lvasgn ivasgn cvasgn and or].include? type
-        children[0]
-      elsif :or_asgn == type
-        children[0].children[0]
-      else
-        raise Synvert::Core::MethodNotSupported, "left_value is not handled for #{debug_info}"
-      end
-    end
-
-    # Return the right value of node.
-    # It supports :cvasgn, :ivasgn, :lvasgn, :masgn, :or and :or_asgn nodes.
-    # @example
-    #   node # s(:masgn, s(:mlhs, s(:lvasgn, :a), s(:lvasgn, :b)), s(:array, s(:int, 1), s(:int, 2)))
-    #   node.right_value # s(:array, s(:int, 1), s(:int, 2))
-    # @return [Array<Parser::AST::Node>] right value of node.
-    # @raise [Synvert::Core::MethodNotSupported] if calls on other node.
-    def right_value
-      if %i[masgn lvasgn ivasgn cvasgn or_asgn and or].include? type
-        children[1]
-      else
-        raise Synvert::Core::MethodNotSupported, "right_value is not handled for #{debug_info}"
       end
     end
 
