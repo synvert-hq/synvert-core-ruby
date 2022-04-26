@@ -53,6 +53,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses :not_has selector' do
+      source = '.class:not_has(> .def)'
+      assert_parser(source)
+    end
+
     it 'parses multiple attributes' do
       source = '.send[receiver=nil][message=:create]'
       assert_parser(source)
@@ -233,6 +238,11 @@ module Synvert::Core::NodeQuery
       it 'matches has selector' do
         expression = parser.parse('.def:has(> .send[receiver=FactoryBot])')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
+      end
+
+      it 'matches not_has selector' do
+        expression = parser.parse('.def:not_has(> .send[receiver=FactoryBot])')
+        expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
       it 'matches arguments.size' do

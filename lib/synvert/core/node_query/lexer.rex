@@ -31,7 +31,8 @@ rules
                     /:last-child/                 { [:tINDEX, -1] }
                     /:nth-child\(\d+\)/           { [:tINDEX, text.sub(':nth-child(', '').to_i - 1] }
                     /:nth-last-child\(\d+\)/      { [:tINDEX, -text.sub(':nth-last-child(', '').to_i] }
-                    /:has/                        { [:tHAS, text[1..-1]] }
+                    /:has/                        { [:tPSEUDO_CLASS, text[1..-1]] }
+                    /:not_has/                    { [:tPSEUDO_CLASS, text[1..-1]] }
                     /#{NODE_TYPE}/                { [:tNODE_TYPE, text[1..]] }
                     />/                           { [:tCHILD, text] }
                     /~/                           { [:tSUBSEQUENT_SIBLING, text] }

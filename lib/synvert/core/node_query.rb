@@ -19,6 +19,7 @@
 #
 # It also supports some custom selectors:
 #
+# * not_has: +.class:not_has(.def)+, it's same as +:not(:has())+ in css, just to make implementation easy.
 # * nested selector: +.send[arguments = [size = 2][first = .sym][last = .hash]]+
 # * array value: +.send[arguments = (a, b)]+
 # * IN operator: +.send[message IN (try, try!)]+

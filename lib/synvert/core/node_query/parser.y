@@ -1,6 +1,6 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
-token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tHAS tCOMMA
+token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CLASS tCOMMA
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
       tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN tNOT_IN tINCLUDES
@@ -20,9 +20,9 @@ rule
     : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }
     | tNODE_TYPE tINDEX { Compiler::Selector.new(node_type: val[0], index: val[1]) }
     | attribute_list tINDEX { Compiler::Selector.new(attribute_list: val[0], index: val[1]) }
-    | tNODE_TYPE attribute_list tHAS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], has_expression: val[4]) }
-    | tNODE_TYPE tHAS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], has_expression: val[3]) }
-    | attribute_list tHAS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(attribute_list: val[0], has_expression: val[3]) }
+    | tNODE_TYPE attribute_list tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], pseudo_class: val[2], pseudo_expression: val[4]) }
+    | tNODE_TYPE tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], pseudo_class: val[1], pseudo_expression: val[3]) }
+    | attribute_list tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(attribute_list: val[0], pseudo_class: val[1], pseudo_expression: val[3]) }
     | tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
     | tNODE_TYPE { Compiler::Selector.new(node_type: val[0]) }
     | attribute_list { Compiler::Selector.new(attribute_list: val[0]) }

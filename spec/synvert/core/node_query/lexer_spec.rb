@@ -560,7 +560,22 @@ module Synvert::Core::NodeQuery
         source = '.class:has(> .def)'
         expected_tokens = [
           [:tNODE_TYPE, "class"],
-          [:tHAS, "has"],
+          [:tPSEUDO_CLASS, "has"],
+          [:tOPEN_SELECTOR, "("],
+          [:tCHILD, ">"],
+          [:tNODE_TYPE, "def"],
+          [:tCLOSE_SELECTOR, ")"]
+        ]
+        assert_tokens source, expected_tokens
+      end
+    end
+
+    context ':not_has' do
+      it 'matches' do
+        source = '.class:not_has(> .def)'
+        expected_tokens = [
+          [:tNODE_TYPE, "class"],
+          [:tPSEUDO_CLASS, "not_has"],
           [:tOPEN_SELECTOR, "("],
           [:tCHILD, ">"],
           [:tNODE_TYPE, "def"],
