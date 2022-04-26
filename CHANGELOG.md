@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.1.0 (2022-04-26)
+
+* Dynamic define Node methods by `TYPE_CHILDREN` const
+* Add `Node#to_hash`
+* Parse empty string in node query language
+* Identifier value can contain `?`, `<`, `=`, `>` in node query language
+
 ## 1.0.0 (2022-04-25)
 
 * Introduce new node query language
