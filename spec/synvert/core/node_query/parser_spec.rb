@@ -134,6 +134,7 @@ module Synvert::Core::NodeQuery
               { a: a, b: b }
               foo.merge(bar)
               arr[index]
+              call('')
             end
           end
         EOS
@@ -279,6 +280,11 @@ module Synvert::Core::NodeQuery
       it 'matches []' do
         expression = parser.parse('.send[message="[]"]')
         expect(expression.query_nodes(node)).to eq [node.body.last.body.third]
+      end
+
+      it 'matches empty string' do
+        expression = parser.parse('.send[message=call][arguments.first=""]')
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.last]
       end
     end
   end
