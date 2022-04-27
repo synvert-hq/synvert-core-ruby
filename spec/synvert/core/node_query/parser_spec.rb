@@ -259,11 +259,19 @@ module Synvert::Core::NodeQuery
 
       it 'matches arguments.size' do
         expression = parser.parse('.def .send[arguments.size=2]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last, node.body.third.body.fourth]
+        expect(expression.query_nodes(node)).to eq [
+          node.body.first.body.last,
+          node.body.second.body.last,
+          node.body.third.body.fourth
+        ]
         expression = parser.parse('.def .send[arguments.size>2]')
         expect(expression.query_nodes(node)).to eq []
         expression = parser.parse('.def .send[arguments.size>=2]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last, node.body.third.body.fourth]
+        expect(expression.query_nodes(node)).to eq [
+          node.body.first.body.last,
+          node.body.second.body.last,
+          node.body.third.body.fourth
+        ]
       end
 
       it 'matches arguments' do
