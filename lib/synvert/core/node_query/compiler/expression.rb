@@ -31,6 +31,10 @@ module Synvert::Core::NodeQuery::Compiler
     # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
     def query_nodes(node, descendant_match: true)
+      if node.is_a?(::Array)
+        return node.map { |each_node| query_nodes(each_node, descendant_match: descendant_match) }.flatten
+      end
+
       matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
       if @relationship.nil?
         return matching_nodes
@@ -45,8 +49,13 @@ module Synvert::Core::NodeQuery::Compiler
           }
           nodes
         when :child
-          matching_node.children.map { |child_node| @rest.query_nodes(child_node, descendant_match: false) }
-                       .flatten
+          matching_node.children.map { |child_node|
+            if child_node.is_a?(::Parser::AST::Node) && child_node.type == :begin
+              child_node.children.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+            else
+              @rest.query_nodes(child_node, descendant_match: false)
+            end
+          }.flatten
         when :next_sibling
           @rest.query_nodes(matching_node.siblings.first, descendant_match: false)
         when :subsequent_sibling
