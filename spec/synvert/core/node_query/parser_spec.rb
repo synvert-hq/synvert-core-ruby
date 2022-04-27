@@ -145,6 +145,7 @@ module Synvert::Core::NodeQuery
               foo.merge(bar)
               arr[index]
               arr[index] = value
+              nil?
               call('')
             end
           end
@@ -304,6 +305,11 @@ module Synvert::Core::NodeQuery
       it 'matches []=' do
         expression = parser.parse('.send[message=:[]=]')
         expect(expression.query_nodes(node)).to eq [node.body.last.body.fourth]
+      end
+
+      it 'matches nil and nil?' do
+        expression = parser.parse('.send[receiver=nil][message=nil?]')
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.fifth]
       end
 
       it 'matches empty string' do

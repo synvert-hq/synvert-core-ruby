@@ -61,6 +61,7 @@ rules
 :VALUE              /#{OPEN_DYNAMIC_ATTRIBUTE}/   { @state = :DYNAMIC_ATTRIBUTE; [:tOPEN_DYNAMIC_ATTRIBUTE, text] }
 :VALUE              /#{OPEN_ARRAY}/               { @state = :ARRAY_VALUE; [:tOPEN_ARRAY, text] }
 :VALUE              /#{CLOSE_ATTRIBUTE}/          { @nested_count -= 1; @state = @nested_count == 0 ? nil : :VALUE; [:tCLOSE_ATTRIBUTE, text] }
+:VALUE              /#{NIL}\?/                    { [:tIDENTIFIER_VALUE, text] }
 :VALUE              /#{NIL}/                      { [:tNIL, nil] }
 :VALUE              /#{TRUE}/                     { [:tBOOLEAN, true] }
 :VALUE              /#{FALSE}/                    { [:tBOOLEAN, false] }
@@ -78,6 +79,7 @@ rules
 :ARRAY_VALUE        /\s+/
 :ARRAY_VALUE        /,/                           { [:tCOMMA, text] }
 :ARRAY_VALUE        /#{CLOSE_ARRAY}/              { @state = :VALUE; [:tCLOSE_ARRAY, text] }
+:ARRAY_VALUE        /#{NIL}\?/                    { [:tIDENTIFIER_VALUE, text] }
 :ARRAY_VALUE        /#{NIL}/                      { [:tNIL, nil] }
 :ARRAY_VALUE        /#{TRUE}/                     { [:tBOOLEAN, true] }
 :ARRAY_VALUE        /#{FALSE}/                    { [:tBOOLEAN, false] }
