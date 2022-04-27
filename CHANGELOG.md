@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.1 (2022-04-27)
+
+* Parse empty string properly in node query language
+* Parse `[]` and `[]=` properly in node query language
+
 ## 1.1.0 (2022-04-26)
 
 * Dynamic define Node methods by `TYPE_CHILDREN` const
