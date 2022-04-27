@@ -118,6 +118,16 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses []=' do
+      source = '.send[message=[]=]'
+      assert_parser(source)
+    end
+
+    it 'parses :[]' do
+      source = '.send[message=:[]]'
+      assert_parser(source)
+    end
+
     describe '#query_nodes' do
       let(:node) {
         parse(<<~EOS)
@@ -134,6 +144,7 @@ module Synvert::Core::NodeQuery
               { a: a, b: b }
               foo.merge(bar)
               arr[index]
+              arr[index] = value
               call('')
             end
           end
@@ -213,17 +224,17 @@ module Synvert::Core::NodeQuery
 
       it 'matches descendant node' do
         expression = parser.parse('.class .send[message=:create]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
       it 'matches three level descendant node' do
         expression = parser.parse('.class .def .send[message=:create]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
       it 'matches child node' do
         expression = parser.parse('.def > .send[message=:create]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
       it 'matches next sibling node' do
@@ -247,17 +258,17 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches arguments.size' do
-        expression = parser.parse('.send[arguments.size=2]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
-        expression = parser.parse('.send[arguments.size>2]')
+        expression = parser.parse('.def .send[arguments.size=2]')
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last, node.body.third.body.fourth]
+        expression = parser.parse('.def .send[arguments.size>2]')
         expect(expression.query_nodes(node)).to eq []
-        expression = parser.parse('.send[arguments.size>=2]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+        expression = parser.parse('.def .send[arguments.size>=2]')
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last, node.body.third.body.fourth]
       end
 
       it 'matches arguments' do
         expression = parser.parse('.send[arguments=[size=2][first=.sym][last=.hash]]')
-        expect(expression.query_nodes(node)).to eq [node.body.first.children.last, node.body.second.children.last]
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
       it 'matches regexp value' do
@@ -278,8 +289,13 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches []' do
-        expression = parser.parse('.send[message="[]"]')
+        expression = parser.parse('.send[message=[]]')
         expect(expression.query_nodes(node)).to eq [node.body.last.body.third]
+      end
+
+      it 'matches []=' do
+        expression = parser.parse('.send[message=:[]=]')
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.fourth]
       end
 
       it 'matches empty string' do

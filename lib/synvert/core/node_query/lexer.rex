@@ -54,6 +54,10 @@ rules
 :KEY                /in/i                         { @state = :VALUE; [:tIN, text] }
 :KEY                /#{IDENTIFIER}/               { [:tKEY, text] }
 :VALUE              /\s+/
+:VALUE              /\[\]=/                       { [:tIDENTIFIER_VALUE, text] }
+:VALUE              /\[\]/                        { [:tIDENTIFIER_VALUE, text] }
+:VALUE              /:\[\]=/                      { [:tSYMBOL, text[1..-1].to_sym] }
+:VALUE              /:\[\]/                       { [:tSYMBOL, text[1..-1].to_sym] }
 :VALUE              /#{OPEN_DYNAMIC_ATTRIBUTE}/   { @state = :DYNAMIC_ATTRIBUTE; [:tOPEN_DYNAMIC_ATTRIBUTE, text] }
 :VALUE              /#{OPEN_ARRAY}/               { @state = :ARRAY_VALUE; [:tOPEN_ARRAY, text] }
 :VALUE              /#{CLOSE_ATTRIBUTE}/          { @nested_count -= 1; @state = @nested_count == 0 ? nil : :VALUE; [:tCLOSE_ATTRIBUTE, text] }
