@@ -28,6 +28,11 @@ module Synvert::Core::NodeQuery
       assert_parser(source)
     end
 
+    it 'parses scope' do
+      source = '.block <body> > .send'
+      assert_parser(source)
+    end
+
     it 'parses :first-child' do
       source = '.class .def:first-child'
       assert_parser(source)
@@ -246,6 +251,14 @@ module Synvert::Core::NodeQuery
       it 'matches sebsequent sibling node' do
         expression = parser.parse('.def[name=foo] ~ .def[name=foobar]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches goto scope' do
+        expression = parser.parse('.def <body> > .send[message=:create]')
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
+
+        expression = parser.parse('.def <body> .send[message=:create]')
+        expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
       it 'matches has selector' do

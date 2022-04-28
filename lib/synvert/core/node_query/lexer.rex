@@ -7,6 +7,8 @@ macros
   CLOSE_ARRAY              /\)/
   OPEN_SELECTOR            /\(/
   CLOSE_SELECTOR           /\)/
+  OPEN_GOTO_SCOPE          /</
+  CLOSE_GOTO_SCOPE         />/
   OPEN_DYNAMIC_ATTRIBUTE   /{{/
   CLOSE_DYNAMIC_ATTRIBUTE  /}}/
   NODE_TYPE                /\.[a-z]+/
@@ -39,7 +41,11 @@ rules
                     /\+/                          { [:tNEXT_SIBLING, text] }
                     /#{OPEN_SELECTOR}/            { [:tOPEN_SELECTOR, text] }
                     /#{CLOSE_SELECTOR}/           { [:tCLOSE_SELECTOR, text] }
+                    /#{OPEN_GOTO_SCOPE}/          { @state = :GOTO_SCOPE; [:tOPEN_GOTO_SCOPE, text] }
                     /#{OPEN_ATTRIBUTE}/           { @nested_count += 1; @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
+:GOTO_SCOPE         /\s+/
+:GOTO_SCOPE         /#{IDENTIFIER}/               { [:tIDENTIFIER, text] }
+:GOTO_SCOPE         /#{CLOSE_GOTO_SCOPE}/         { @state = nil; [:tCLOSE_GOTO_SCOPE, text] }
 :KEY                /\s+/
 :KEY                /!=/                          { @state = :VALUE; [:tNOT_EQUAL, text] }
 :KEY                /=~/                          { @state = :VALUE; [:tMATCH, text] }

@@ -5,10 +5,12 @@ module Synvert::Core::NodeQuery::Compiler
   class Expression
     # Initialize a Expression.
     # @param selector [Synvert::Core::NodeQuery::Compiler::Selector] the selector
+    # @param goto_scope [String] goto scope
     # @param rest [Synvert::Core::NodeQuery::Compiler::Expression] the rest expression
     # @param relationship [Symbol] the relationship between the selector and rest expression, it can be <code>:descendant</code>, <code>:child</code>, <code>:next_sibling</code>, <code>:subsequent_sibling</code> or <code>nil</code>.
-    def initialize(selector: nil, rest: nil, relationship: nil)
+    def initialize(selector: nil, goto_scope: nil, rest: nil, relationship: nil)
       @selector = selector
+      @goto_scope = goto_scope
       @rest = rest
       @relationship = relationship
     end
@@ -38,6 +40,7 @@ module Synvert::Core::NodeQuery::Compiler
       matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
       return matching_nodes if @relationship.nil?
 
+      matching_nodes = matching_nodes.map { |matching_node| matching_node.send(@goto_scope) } if @goto_scope
       send("find_nodes_with_#{@relationship}_relationship", matching_nodes)
     end
 
@@ -46,6 +49,7 @@ module Synvert::Core::NodeQuery::Compiler
 
       result = []
       result << @selector if @selector
+      result << "<#{@goto_scope}>" if @goto_scope
       case @relationship
       when :child then result << '>'
       when :subsequent_sibling then result << '~'
@@ -78,9 +82,15 @@ module Synvert::Core::NodeQuery::Compiler
     def find_nodes_with_descendant_relationship(matching_nodes)
       matching_nodes.map do |matching_node|
         nodes = []
-        matching_node.recursive_children { |child_node|
-          nodes += @rest.query_nodes(child_node, descendant_match: false)
-        }
+        if matching_node.respond_to?(:recursive_children)
+          matching_node.recursive_children { |child_node|
+            nodes += @rest.query_nodes(child_node, descendant_match: false)
+          }
+        else # array of nodes
+          matching_node.each do |child_node|
+            nodes += @rest.query_nodes(child_node, descendant_match: false)
+          end
+        end
         nodes
       end.flatten
     end
@@ -89,13 +99,15 @@ module Synvert::Core::NodeQuery::Compiler
     # @param matching_nodes [Array<Parser::AST::Node>] matching nodes
     def find_nodes_with_child_relationship(matching_nodes)
       matching_nodes.map do |matching_node|
-        matching_node.children.map do |child_node|
-          if child_node.is_a?(::Parser::AST::Node) && child_node.type == :begin
-            child_node.children.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
-          else
+        if matching_node.respond_to?(:children)
+          matching_node.children.map do |child_node|
             @rest.query_nodes(child_node, descendant_match: false)
-          end
-        end.flatten
+          end.flatten
+        else # array of nodes
+          matching_node.map do |child_node|
+            @rest.query_nodes(child_node, descendant_match: false)
+          end.flatten
+        end
       end.flatten
     end
 

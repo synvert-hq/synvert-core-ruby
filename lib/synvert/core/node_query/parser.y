@@ -2,12 +2,17 @@ class Synvert::Core::NodeQuery::Parser
 options no_result_var
 token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CLASS tCOMMA
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
-      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
+      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE
+      tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR tOPEN_GOTO_SCOPE tCLOSE_GOTO_SCOPE
       tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN tNOT_IN tINCLUDES
       tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
-    : selector tCHILD expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :child) }
+    : selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE tCHILD expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[5], relationship: :child) }
+    | selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[5], relationship: :subsequent_sibling) }
+    | selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[5], relationship: :next_sibling) }
+    | selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[4], relationship: :descendant) }
+    | selector tCHILD expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :child) }
     | selector tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :subsequent_sibling) }
     | selector tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :next_sibling) }
     | selector expression { Compiler::Expression.new(selector: val[0], rest: val[1], relationship: :descendant) }
