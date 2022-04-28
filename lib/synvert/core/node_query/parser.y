@@ -8,18 +8,12 @@ token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CL
       tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
-    : selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE tCHILD expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[5], relationship: :child) }
-    | selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[5], relationship: :subsequent_sibling) }
-    | selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[5], relationship: :next_sibling) }
-    | selector tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE expression { Compiler::Expression.new(selector: val[0], goto_scope: val[2], rest: val[4], relationship: :descendant) }
-    | selector tCHILD expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :child) }
-    | selector tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :subsequent_sibling) }
-    | selector tNEXT_SIBLING expression { Compiler::Expression.new(selector: val[0], rest: val[2], relationship: :next_sibling) }
-    | selector expression { Compiler::Expression.new(selector: val[0], rest: val[1], relationship: :descendant) }
-    | selector { Compiler::Expression.new(selector: val[0]) }
-    | tCHILD expression { Compiler::Expression.new(rest: val[1], relationship: :child) }
+    : tCHILD expression { Compiler::Expression.new(rest: val[1], relationship: :child) }
     | tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(rest: val[1], relationship: :subsequent_sibling) }
     | tNEXT_SIBLING expression { Compiler::Expression.new(rest: val[1], relationship: :next_sibling) }
+    | tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE expression { Compiler::Expression.new(goto_scope: val[1], rest: val[3]) }
+    | selector expression { Compiler::Expression.new(selector: val[0], rest: val[1]) }
+    | selector { Compiler::Expression.new(selector: val[0]) }
 
   selector
     : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }

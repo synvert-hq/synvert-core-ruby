@@ -33,19 +33,28 @@ module Synvert::Core::NodeQuery::Compiler
     # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
     def query_nodes(node, descendant_match: true)
-      if node.is_a?(::Array)
-        return node.map { |each_node| query_nodes(each_node, descendant_match: descendant_match) }.flatten
+      if @goto_scope
+        @goto_scope.split('.').each { |scope| node = node.send(scope) }
+        return @rest.query_nodes(node, descendant_match: descendant_match)
+      end
+
+      case @relationship
+      when :child
+        if node.is_a?(::Array)
+          return node.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+        else
+          return node.children.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+        end
+      when :next_sibling
+        return @rest.query_nodes(node.siblings.first, descendant_match: false)
+      when :subsequent_sibling
+        return node.siblings.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
       end
 
       matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
-      return matching_nodes if @relationship.nil?
+      return matching_nodes if @rest.nil?
 
-      if @goto_scope
-        matching_nodes = matching_nodes.map do |matching_node|
-          @goto_scope.split('.').inject(matching_node) { |matching_node, scope| matching_node.send(scope) }
-        end
-      end
-      send("find_nodes_with_#{@relationship}_relationship", matching_nodes)
+      matching_nodes.map { |matching_node| @rest.query_nodes(matching_node, descendant_match: descendant_match) }.flatten
     end
 
     def to_s
@@ -69,6 +78,10 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] node to match
     # @param descendant_match [Boolean] whether to match in descendant node
     def find_nodes_without_relationship(node, descendant_match: true)
+      if node.is_a?(::Array)
+        return node.map { |each_node| find_nodes_without_relationship(each_node, descendant_match: descendant_match) }.flatten
+      end
+
       return [node] unless @selector
 
       nodes = []
@@ -79,58 +92,6 @@ module Synvert::Core::NodeQuery::Compiler
         end
       end
       @selector.filter(nodes)
-    end
-
-    # Find nodes with descendant relationship.
-    # @param matching_nodes [Array<Parser::AST::Node>] matching nodes
-    def find_nodes_with_descendant_relationship(matching_nodes)
-      matching_nodes.map do |matching_node|
-        nodes = []
-        if matching_node.respond_to?(:recursive_children)
-          matching_node.recursive_children { |child_node|
-            nodes += @rest.query_nodes(child_node, descendant_match: false)
-          }
-        else # array of nodes
-          matching_node.each do |child_node|
-            nodes += @rest.query_nodes(child_node, descendant_match: false)
-          end
-        end
-        nodes
-      end.flatten
-    end
-
-    # Find nodes with child relationship.
-    # @param matching_nodes [Array<Parser::AST::Node>] matching nodes
-    def find_nodes_with_child_relationship(matching_nodes)
-      matching_nodes.map do |matching_node|
-        if matching_node.respond_to?(:children)
-          matching_node.children.map do |child_node|
-            @rest.query_nodes(child_node, descendant_match: false)
-          end.flatten
-        else # array of nodes
-          matching_node.map do |child_node|
-            @rest.query_nodes(child_node, descendant_match: false)
-          end.flatten
-        end
-      end.flatten
-    end
-
-    # Find nodes with next sibling relationship.
-    # @param matching_nodes [Array<Parser::AST::Node>] matching nodes
-    def find_nodes_with_next_sibling_relationship(matching_nodes)
-      matching_nodes.map do |matching_node|
-        @rest.query_nodes(matching_node.siblings.first, descendant_match: false)
-      end.flatten
-    end
-
-    # Find nodes with subsequent sibling relationship.
-    # @param matching_nodes [Array<Parser::AST::Node>] matching nodes
-    def find_nodes_with_subsequent_sibling_relationship(matching_nodes)
-      matching_nodes.map do |matching_node|
-        matching_node.siblings.map do |sibling_node|
-          @rest.query_nodes(sibling_node, descendant_match: false)
-        end.flatten
-      end.flatten
     end
   end
 end
