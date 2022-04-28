@@ -147,12 +147,18 @@ module Synvert::Core::NodeQuery
 
             def foobar(a, b)
               { a: a, b: b }
-              foo.merge(bar)
               arr[index]
               arr[index] = value
               nil?
               call('')
             end
+          end
+        EOS
+      }
+
+      let(:test_node) {
+        parse(<<~EOS)
+          RSpec.describe Synvert do
           end
         EOS
       }
@@ -261,6 +267,11 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
+      it 'matches multiple goto scope' do
+        expression = parser.parse('.block <caller.arguments> .const[name=Synvert]')
+        expect(expression.query_nodes(test_node)).to eq [test_node.caller.arguments.first]
+      end
+
       it 'matches has selector' do
         expression = parser.parse('.def:has(> .send[receiver=FactoryBot])')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
@@ -276,7 +287,7 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq [
           node.body.first.body.last,
           node.body.second.body.last,
-          node.body.third.body.fourth
+          node.body.third.body.third
         ]
         expression = parser.parse('.def .send[arguments.size>2]')
         expect(expression.query_nodes(node)).to eq []
@@ -284,7 +295,7 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq [
           node.body.first.body.last,
           node.body.second.body.last,
-          node.body.third.body.fourth
+          node.body.third.body.third
         ]
       end
 
@@ -305,24 +316,19 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq node.body.last.body.first.children
       end
 
-      it 'matches identifier' do
-        expression = parser.parse('.send[receiver=foo][message=merge]')
-        expect(expression.query_nodes(node)).to eq [node.body.last.body.second]
-      end
-
       it 'matches []' do
         expression = parser.parse('.send[message=[]]')
-        expect(expression.query_nodes(node)).to eq [node.body.last.body.third]
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.second]
       end
 
       it 'matches []=' do
         expression = parser.parse('.send[message=:[]=]')
-        expect(expression.query_nodes(node)).to eq [node.body.last.body.fourth]
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.third]
       end
 
       it 'matches nil and nil?' do
         expression = parser.parse('.send[receiver=nil][message=nil?]')
-        expect(expression.query_nodes(node)).to eq [node.body.last.body.fifth]
+        expect(expression.query_nodes(node)).to eq [node.body.last.body.fourth]
       end
 
       it 'matches empty string' do

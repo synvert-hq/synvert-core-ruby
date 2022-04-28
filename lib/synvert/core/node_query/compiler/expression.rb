@@ -40,7 +40,11 @@ module Synvert::Core::NodeQuery::Compiler
       matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
       return matching_nodes if @relationship.nil?
 
-      matching_nodes = matching_nodes.map { |matching_node| matching_node.send(@goto_scope) } if @goto_scope
+      if @goto_scope
+        matching_nodes = matching_nodes.map do |matching_node|
+          @goto_scope.split('.').inject(matching_node) { |matching_node, scope| matching_node.send(scope) }
+        end
+      end
       send("find_nodes_with_#{@relationship}_relationship", matching_nodes)
     end
 
