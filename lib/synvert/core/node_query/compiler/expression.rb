@@ -40,7 +40,8 @@ module Synvert::Core::NodeQuery::Compiler
       matching_nodes = find_nodes_without_relationship(node, descendant_match)
       return matching_nodes if @rest.nil?
 
-      matching_nodes.map { |matching_node| find_nodes_by_rest(matching_node, descendant_match ) }.flatten
+      matching_nodes.map { |matching_node| find_nodes_by_rest(matching_node, descendant_match) }
+                    .flatten
     end
 
     def to_s
@@ -75,14 +76,17 @@ module Synvert::Core::NodeQuery::Compiler
       case @relationship
       when :child
         if node.is_a?(::Array)
-          return node.map { |each_node| find_nodes_by_rest(each_node) }.flatten
+          return node.map { |each_node| find_nodes_by_rest(each_node) }
+                     .flatten
         else
-          return node.children.map { |each_node| find_nodes_by_rest(each_node) }.flatten
+          return node.children.map { |each_node| find_nodes_by_rest(each_node) }
+                     .flatten
         end
       when :next_sibling
         return find_nodes_by_rest(node.siblings.first)
       when :subsequent_sibling
-        return node.siblings.map { |each_node| find_nodes_by_rest(each_node) }.flatten
+        return node.siblings.map { |each_node| find_nodes_by_rest(each_node) }
+                   .flatten
       when :has
         return @rest.match?(node) ? [node] : []
       when :not_has
