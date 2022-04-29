@@ -442,7 +442,7 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches IN' do
-        source = '.send[message IN (create, build)]'
+        source = '.send[message IN (create build)]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
@@ -450,7 +450,6 @@ module Synvert::Core::NodeQuery
           [:tIN, "IN"],
           [:tOPEN_ARRAY, "("],
           [:tIDENTIFIER_VALUE, "create"],
-          [:tCOMMA, ","],
           [:tIDENTIFIER_VALUE, "build"],
           [:tCLOSE_ARRAY, ")"],
           [:tCLOSE_ATTRIBUTE, "]"]
@@ -459,7 +458,7 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches NOT IN' do
-        source = '.send[message NOT IN (create, build)]'
+        source = '.send[message NOT IN (create build)]'
         expected_tokens = [
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
@@ -467,7 +466,6 @@ module Synvert::Core::NodeQuery
           [:tNOT_IN, "NOT IN"],
           [:tOPEN_ARRAY, "("],
           [:tIDENTIFIER_VALUE, "create"],
-          [:tCOMMA, ","],
           [:tIDENTIFIER_VALUE, "build"],
           [:tCLOSE_ARRAY, ")"],
           [:tCLOSE_ATTRIBUTE, "]"]

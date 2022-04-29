@@ -83,7 +83,6 @@ rules
 :DYNAMIC_ATTRIBUTE  /#{CLOSE_DYNAMIC_ATTRIBUTE}/  { @state = :VALUE; [:tCLOSE_DYNAMIC_ATTRIBUTE, text] }
 :DYNAMIC_ATTRIBUTE  /#{IDENTIFIER}/               { [:tDYNAMIC_ATTRIBUTE, text] }
 :ARRAY_VALUE        /\s+/
-:ARRAY_VALUE        /,/                           { [:tCOMMA, text] }
 :ARRAY_VALUE        /#{CLOSE_ARRAY}/              { @state = :VALUE; [:tCLOSE_ARRAY, text] }
 :ARRAY_VALUE        /#{NIL}\?/                    { [:tIDENTIFIER_VALUE, text] }
 :ARRAY_VALUE        /#{NIL}/                      { [:tNIL, nil] }

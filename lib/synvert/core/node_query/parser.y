@@ -1,6 +1,6 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
-token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CLASS tCOMMA
+token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CLASS
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE
       tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR tOPEN_GOTO_SCOPE tCLOSE_GOTO_SCOPE
@@ -50,7 +50,7 @@ rule
     | tKEY tIN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :in) }
 
   array_value
-    : value tCOMMA array_value { Compiler::Array.new(value: val[0], rest: val[2]) }
+    : value array_value { Compiler::Array.new(value: val[0], rest: val[1]) }
     | value { Compiler::Array.new(value: val[0]) }
 
   value

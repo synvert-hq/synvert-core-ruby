@@ -28,7 +28,7 @@ module Synvert::Core::NodeQuery::Compiler
     end
 
     def to_s
-      [@value, @rest].compact.join(', ')
+      [@value, @rest].compact.join(' ')
     end
   end
 end

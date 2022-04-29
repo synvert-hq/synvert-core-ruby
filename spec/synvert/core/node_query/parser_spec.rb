@@ -109,12 +109,12 @@ module Synvert::Core::NodeQuery
     end
 
     it 'parses in operator' do
-      source = '.def[name in (foo, bar)]'
+      source = '.def[name in (foo bar)]'
       assert_parser(source)
     end
 
     it 'parses not_in operator' do
-      source = '.def[name not in (foo, bar)]'
+      source = '.def[name not in (foo bar)]'
       assert_parser(source)
     end
 
@@ -209,12 +209,12 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches in' do
-        expression = parser.parse('.def[name IN (foo, bar)]')
+        expression = parser.parse('.def[name IN (foo bar)]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
       end
 
       it 'matches not in' do
-        expression = parser.parse('.def[name NOT IN (foo, bar)]')
+        expression = parser.parse('.def[name NOT IN (foo bar)]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
@@ -224,18 +224,18 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches equal array' do
-        expression = parser.parse('.def[arguments=(a, b)]')
+        expression = parser.parse('.def[arguments=(a b)]')
         expect(expression.query_nodes(node)).to eq [node.body.last]
 
-        expression = parser.parse('.def[arguments=(b, a)]')
+        expression = parser.parse('.def[arguments=(b a)]')
         expect(expression.query_nodes(node)).to eq []
       end
 
       it 'matches not equal array' do
-        expression = parser.parse('.def[arguments!=(a, b)]')
+        expression = parser.parse('.def[arguments!=(a b)]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second]
 
-        expression = parser.parse('.def[arguments!=(b, a)]')
+        expression = parser.parse('.def[arguments!=(b a)]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.second, node.body.last]
       end
 
