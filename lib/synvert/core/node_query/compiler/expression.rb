@@ -49,6 +49,10 @@ module Synvert::Core::NodeQuery::Compiler
         return @rest.query_nodes(node.siblings.first, descendant_match: false)
       when :subsequent_sibling
         return node.siblings.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+      when :has
+        return @rest.match?(node) ? [node] : []
+      when :not_has
+        return !@rest.match?(node) ? [node] : []
       end
 
       matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
@@ -61,15 +65,17 @@ module Synvert::Core::NodeQuery::Compiler
       return @selector.to_s unless @rest
 
       result = []
-      result << @selector if @selector
+      result << @selector.to_s if @selector
       result << "<#{@goto_scope}>" if @goto_scope
       case @relationship
-      when :child then result << '>'
-      when :subsequent_sibling then result << '~'
-      when :next_sibling then result << '+'
+      when :child then result << "> #{@rest}"
+      when :subsequent_sibling then result << "~ #{@rest}"
+      when :next_sibling then result << "+ #{@rest}"
+      when :has then result << ":has(#{@rest})"
+      when :not_has then result << ":not_has(#{@rest})"
+      else result << @rest.to_s
       end
-      result << @rest
-      result.map(&:to_s).join(' ')
+      result.join(' ')
     end
 
     private

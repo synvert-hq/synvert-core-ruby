@@ -33,21 +33,24 @@ module Synvert::Core::NodeQuery::Compiler
     end
 
     def to_s
-      str = ".#{@node_type}#{@attribute_list}"
-      return str if !@index && !@pseudo_class
-
-      return "#{str}:#{@pseudo_class}(#{@pseudo_expression})" if @pseudo_class
-
-      case @index
-      when 0
-        str + ':first-child'
-      when -1
-        str + ':last-child'
-      when (1..)
-        str + ":nth-child(#{@index + 1})"
-      else # ...-1
-        str + ":nth-last-child(#{-@index})"
+      result = []
+      result << ".#{@node_type}" if @node_type
+      result << @attribute_list.to_s if @attribute_list
+      result << ":#{@pseudo_class}(#{@pseudo_expression})" if @pseudo_class
+      if @index
+        result <<
+          case @index
+          when 0
+            ':first-child'
+          when -1
+            ':last-child'
+          when (1..)
+            ":nth-child(#{@index + 1})"
+          else # ...-1
+            ":nth-last-child(#{-@index})"
+          end
       end
+      result.join('')
     end
   end
 end

@@ -54,12 +54,17 @@ module Synvert::Core::NodeQuery
     end
 
     it 'parses :has selector' do
-      source = '.class:has(> .def)'
+      source = '.class :has(> .def)'
       assert_parser(source)
     end
 
     it 'parses :not_has selector' do
-      source = '.class:not_has(> .def)'
+      source = '.class :not_has(> .def)'
+      assert_parser(source)
+    end
+
+    it 'parses root :has selector' do
+      source = ':has(.def)'
       assert_parser(source)
     end
 
@@ -280,6 +285,11 @@ module Synvert::Core::NodeQuery
       it 'matches not_has selector' do
         expression = parser.parse('.def:not_has(> .send[receiver=FactoryBot])')
         expect(expression.query_nodes(node)).to eq [node.body.last]
+      end
+
+      it 'matches root has selector' do
+        expression = parser.parse(':has(.def[name=foobar])')
+        expect(expression.query_nodes(node)).to eq [node]
       end
 
       it 'matches arguments.size' do

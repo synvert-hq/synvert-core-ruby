@@ -12,6 +12,7 @@ rule
     | tSUBSEQUENT_SIBLING expression { Compiler::Expression.new(rest: val[1], relationship: :subsequent_sibling) }
     | tNEXT_SIBLING expression { Compiler::Expression.new(rest: val[1], relationship: :next_sibling) }
     | tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE expression { Compiler::Expression.new(goto_scope: val[1], rest: val[3]) }
+    | tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Expression.new(relationship: val[0].to_sym, rest: val[2]) }
     | selector expression { Compiler::Expression.new(selector: val[0], rest: val[1]) }
     | selector { Compiler::Expression.new(selector: val[0]) }
 
@@ -19,9 +20,6 @@ rule
     : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }
     | tNODE_TYPE tINDEX { Compiler::Selector.new(node_type: val[0], index: val[1]) }
     | attribute_list tINDEX { Compiler::Selector.new(attribute_list: val[0], index: val[1]) }
-    | tNODE_TYPE attribute_list tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], pseudo_class: val[2], pseudo_expression: val[4]) }
-    | tNODE_TYPE tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(node_type: val[0], pseudo_class: val[1], pseudo_expression: val[3]) }
-    | attribute_list tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Selector.new(attribute_list: val[0], pseudo_class: val[1], pseudo_expression: val[3]) }
     | tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
     | tNODE_TYPE { Compiler::Selector.new(node_type: val[0]) }
     | attribute_list { Compiler::Selector.new(attribute_list: val[0]) }
