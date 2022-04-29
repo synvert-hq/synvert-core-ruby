@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.2.0 (2022-04-29)
+
+* Remove comma in NQL array value
+* Parse pseduo class without selector in NQL
+* Parse multiple goto scope in NQL
+* Parse `nil?` in NQL
+
 ## 1.1.1 (2022-04-27)
 
 * Parse empty string properly in node query language
