@@ -32,15 +32,15 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] node to match
     # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
-    def query_nodes(node, descendant_match: true)
+    def query_nodes(node, descendant_match = true)
       return find_nodes_by_goto_scope(node) if @goto_scope
 
       return find_nodes_by_relationship(node) if @relationship
 
-      matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
+      matching_nodes = find_nodes_without_relationship(node, descendant_match)
       return matching_nodes if @rest.nil?
 
-      matching_nodes.map { |matching_node| find_nodes_by_rest(matching_node, descendant_match: descendant_match ) }.flatten
+      matching_nodes.map { |matching_node| find_nodes_by_rest(matching_node, descendant_match ) }.flatten
     end
 
     def to_s
@@ -66,7 +66,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] node to match
     def find_nodes_by_goto_scope(node)
       @goto_scope.split('.').each { |scope| node = node.send(scope) }
-      @rest.query_nodes(node, descendant_match: false)
+      @rest.query_nodes(node, false)
     end
 
     # Find ndoes by @relationship
@@ -93,17 +93,17 @@ module Synvert::Core::NodeQuery::Compiler
     # Find nodes by @rest
     # @param node [Parser::AST::Node] node to match
     # @param descendant_match [Boolean] whether to match in descendant node
-    def find_nodes_by_rest(node, descendant_match: false)
-      @rest.query_nodes(node, descendant_match: descendant_match)
+    def find_nodes_by_rest(node, descendant_match = false)
+      @rest.query_nodes(node, descendant_match)
     end
 
     # Find nodes with nil relationship.
     # @param node [Parser::AST::Node] node to match
     # @param descendant_match [Boolean] whether to match in descendant node
-    def find_nodes_without_relationship(node, descendant_match: true)
+    def find_nodes_without_relationship(node, descendant_match = true)
       if node.is_a?(::Array)
         return node.map { |each_node|
-          find_nodes_without_relationship(each_node, descendant_match: descendant_match)
+          find_nodes_without_relationship(each_node, descendant_match)
         }.flatten
       end
 
