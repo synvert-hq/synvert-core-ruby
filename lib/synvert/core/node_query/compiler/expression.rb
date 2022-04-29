@@ -41,14 +41,17 @@ module Synvert::Core::NodeQuery::Compiler
       case @relationship
       when :child
         if node.is_a?(::Array)
-          return node.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+          return node.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }
+                     .flatten
         else
-          return node.children.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+          return node.children.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }
+                     .flatten
         end
       when :next_sibling
         return @rest.query_nodes(node.siblings.first, descendant_match: false)
       when :subsequent_sibling
-        return node.siblings.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }.flatten
+        return node.siblings.map { |each_node| @rest.query_nodes(each_node, descendant_match: false) }
+                   .flatten
       when :has
         return @rest.match?(node) ? [node] : []
       when :not_has
@@ -58,7 +61,10 @@ module Synvert::Core::NodeQuery::Compiler
       matching_nodes = find_nodes_without_relationship(node, descendant_match: descendant_match)
       return matching_nodes if @rest.nil?
 
-      matching_nodes.map { |matching_node| @rest.query_nodes(matching_node, descendant_match: descendant_match) }.flatten
+      matching_nodes.map { |matching_node|
+        @rest.query_nodes(matching_node, descendant_match: descendant_match)
+      }
+                    .flatten
     end
 
     def to_s
@@ -85,7 +91,10 @@ module Synvert::Core::NodeQuery::Compiler
     # @param descendant_match [Boolean] whether to match in descendant node
     def find_nodes_without_relationship(node, descendant_match: true)
       if node.is_a?(::Array)
-        return node.map { |each_node| find_nodes_without_relationship(each_node, descendant_match: descendant_match) }.flatten
+        return node.map { |each_node|
+                 find_nodes_without_relationship(each_node, descendant_match: descendant_match)
+               }
+                   .flatten
       end
 
       return [node] unless @selector
