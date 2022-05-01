@@ -95,7 +95,19 @@ module Parser::AST
     # Dyamically defined method
     # caller, key, left_value, message, name, pairs, parent_class, parent_const, receivr, rgith_value and value.
     # based on const TYPE_CHILDREN.
-    %i[caller key left_value message name pairs parent_class parent_const receiver right_value value].each do |method_name|
+    %i[
+      caller
+      key
+      left_value
+      message
+      name
+      pairs
+      parent_class
+      parent_const
+      receiver
+      right_value
+      value
+    ].each do |method_name|
       define_method(method_name) do
         index = TYPE_CHILDREN[type]&.index(method_name)
         return children[index] if index
