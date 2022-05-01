@@ -5,10 +5,10 @@
 # It supports the following selectors:
 #
 # * AST node type: +.class+, +.send+
-# * attribute value: +[receiver = nil]+, +[message = create]+
-# * attribute regex: <code>[key=~/\A:([^'"]+)\z/]</code>, <code>[key!~/\A:([^'"]+)\z/]</code>
-# * attribute conditions: +[message != nil]+, +[value > 1]+, +[value >= 1]+, +[value < 1]+, +[value <= 1]+
-# * nested attribute: +[caller.message = map]+, +[arguments.size = 2]+
+# * attribute value: +.send[receiver = nil]+, +.send[message = create]+
+# * attribute regex: <code>.send[key=~/\A:([^'"]+)\z/]</code>, <code>.send[key!~/\A:([^'"]+)\z/]</code>
+# * attribute conditions: +.send[message != nil]+, +.send[value > 1]+, +.send[value >= 1]+, +.send[value < 1]+, +.send[value <= 1]+
+# * nested attribute: +.send[caller.message = map]+, +.send[arguments.size = 2]+
 # * first or last child: +.def:first-child+, +.send:last-child+
 # * nth-child or nth-last-child: +.def:nth-child(2)+, +.send:nth-last-child(2)+
 # * descendant: +.class .send+
@@ -21,9 +21,9 @@
 #
 # * not_has: +.class:not_has(.def)+, it's same as +:not(:has())+ in css, just to make implementation easy.
 # * nested selector: +.send[arguments = [size = 2][first = .sym][last = .hash]]+
-# * array value: +.send[arguments = (a, b)]+
-# * IN operator: +.send[message IN (try, try!)]+
-# * NOT IN operator: +.send[message NOT IN (create, build)]+
+# * array value: +.send[arguments = (a b)]+
+# * IN operator: +.send[message IN (try try!)]+
+# * NOT IN operator: +.send[message NOT IN (create build)]+
 # * INCLUDES operator: +.send[arguments INCLUDES &block]+
 # * dynamic attribute value: +.hash > .pair[key={{value}}]+
 #
