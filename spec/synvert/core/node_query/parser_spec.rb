@@ -310,7 +310,7 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches arguments' do
-        expression = parser.parse('.send[arguments=[size=2][first=.sym][last=.hash]]')
+        expression = parser.parse('.send[arguments.size=2][arguments.first=.sym][arguments.last=.hash]')
         expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 

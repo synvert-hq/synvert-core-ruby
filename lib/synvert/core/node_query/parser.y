@@ -19,10 +19,8 @@ rule
   selector
     : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }
     | tNODE_TYPE tINDEX { Compiler::Selector.new(node_type: val[0], index: val[1]) }
-    | attribute_list tINDEX { Compiler::Selector.new(attribute_list: val[0], index: val[1]) }
     | tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
     | tNODE_TYPE { Compiler::Selector.new(node_type: val[0]) }
-    | attribute_list { Compiler::Selector.new(attribute_list: val[0]) }
     ;
 
   attribute_list
