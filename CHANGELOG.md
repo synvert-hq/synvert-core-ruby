@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.2.1 (2022-05-01)
+
+* Selector always after a node type in NQL
+* Define `pairs` method for `hash` ndoe
+
 ## 1.2.0 (2022-04-29)
 
 * Remove comma in NQL array value
