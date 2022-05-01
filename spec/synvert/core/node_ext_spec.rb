@@ -1033,7 +1033,7 @@ describe Parser::AST::Node do
       node = parse(<<~EOS)
         class Synvert
           def foobar(foo, bar)
-            foo + bar
+            { foo => bar }
           end
         end
       EOS
@@ -1056,10 +1056,12 @@ describe Parser::AST::Node do
               ],
               body: [
                 {
-                  type: :send,
-                  receiver: { name: :foo, type: :lvar },
-                  message: :+,
-                  arguments: [{ name: :bar, type: :lvar }]
+                  type: :hash,
+                  pairs: {
+                    type: :pair,
+                    key: { type: :lvar, name: :foo },
+                    value: { type: :lvar, name: :bar }
+                  }
                 }
               ]
             }
