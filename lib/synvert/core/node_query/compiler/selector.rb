@@ -9,7 +9,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param index [Integer] the index
     # @param pseudo_class [String] the pseudo class, can be <code>has</code> or <code>not_has</code>
     # @param pseudo_expression [Synvert::Core::NodeQuery::Compiler::Expression] the pseudo expression
-    def initialize(node_type: nil, attribute_list: nil, index: nil, pseudo_class: nil, pseudo_expression: nil)
+    def initialize(node_type:, attribute_list: nil, index: nil, pseudo_class: nil, pseudo_expression: nil)
       @node_type = node_type
       @attribute_list = attribute_list
       @index = index
@@ -27,14 +27,13 @@ module Synvert::Core::NodeQuery::Compiler
     # Check if node matches the selector.
     # @param node [Parser::AST::Node] the node
     def match?(node, _operator = :==)
-      (!@node_type || (node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type)) &&
+      node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type &&
         (!@attribute_list || @attribute_list.match?(node)) &&
         (!@pseudo_class || (@pseudo_class == 'has' && @pseudo_expression.match?(node)) || (@pseudo_class == 'not_has' && !@pseudo_expression.match?(node)))
     end
 
     def to_s
-      result = []
-      result << ".#{@node_type}" if @node_type
+      result = [".#{@node_type}"]
       result << @attribute_list.to_s if @attribute_list
       result << ":#{@pseudo_class}(#{@pseudo_expression})" if @pseudo_class
       if @index
