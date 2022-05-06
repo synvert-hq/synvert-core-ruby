@@ -22,8 +22,8 @@ macros
   REGEXP                   /\/(#{REGEXP_BODY})(?<!\\)\/([imxo]*)/
   SYMBOL                   /:[\w!\?<>=]+/
   TRUE                     /true/
-  SINGLE_QUOTE_STRING      /'(.*?)'/
-  DOUBLE_QUOTE_STRING      /"(.*?)"/
+  SINGLE_QUOTE_STRING      /'.*?'/
+  DOUBLE_QUOTE_STRING      /".*?"/
 
 rules
 
