@@ -1,141 +1,143 @@
 require 'spec_helper'
 
+def assert_parser(source)
+  expect(parser.parse(source).to_s).to eq source
+end
+
 module Synvert::Core::NodeQuery
   RSpec.describe Parser do
     let(:parser) { described_class.new }
 
-    def assert_parser(source)
-      expect(parser.parse(source).to_s).to eq source
-    end
+    describe '#toString' do
+      it 'parses one selector' do
+        source = '.send[message=:create]'
+        assert_parser(source)
+      end
 
-    it 'parses one selector' do
-      source = '.send[message=:create]'
-      assert_parser(source)
-    end
+      it 'parses two selectors' do
+        source = '.class[name=Synvert] .def[name="foobar"]'
+        assert_parser(source)
+      end
 
-    it 'parses two selectors' do
-      source = '.class[name=Synvert] .def[name="foobar"]'
-      assert_parser(source)
-    end
+      it 'parses three selectors' do
+        source = '.class[name=Synvert] .def[name="foobar"] .send[message=create]'
+        assert_parser(source)
+      end
 
-    it 'parses three selectors' do
-      source = '.class[name=Synvert] .def[name="foobar"] .send[message=create]'
-      assert_parser(source)
-    end
+      it 'parses child selector' do
+        source = '.class[name=Synvert] > .def[name="foobar"]'
+        assert_parser(source)
+      end
 
-    it 'parses child selector' do
-      source = '.class[name=Synvert] > .def[name="foobar"]'
-      assert_parser(source)
-    end
+      it 'parses scope' do
+        source = '.block <body> > .send'
+        assert_parser(source)
+      end
 
-    it 'parses scope' do
-      source = '.block <body> > .send'
-      assert_parser(source)
-    end
+      it 'parses :first-child' do
+        source = '.class .def:first-child'
+        assert_parser(source)
+      end
 
-    it 'parses :first-child' do
-      source = '.class .def:first-child'
-      assert_parser(source)
-    end
+      it 'parses :last-child' do
+        source = '.class .def:last-child'
+        assert_parser(source)
+      end
 
-    it 'parses :last-child' do
-      source = '.class .def:last-child'
-      assert_parser(source)
-    end
+      it 'parses :nth-child(n)' do
+        source = '.class .def:nth-child(2)'
+        assert_parser(source)
+      end
 
-    it 'parses :nth-child(n)' do
-      source = '.class .def:nth-child(2)'
-      assert_parser(source)
-    end
+      it 'parses :nth-last-child(n)' do
+        source = '.class .def:nth-last-child(2)'
+        assert_parser(source)
+      end
 
-    it 'parses :nth-last-child(n)' do
-      source = '.class .def:nth-last-child(2)'
-      assert_parser(source)
-    end
+      it 'parses :has selector' do
+        source = '.class :has(> .def)'
+        assert_parser(source)
+      end
 
-    it 'parses :has selector' do
-      source = '.class :has(> .def)'
-      assert_parser(source)
-    end
+      it 'parses :not_has selector' do
+        source = '.class :not_has(> .def)'
+        assert_parser(source)
+      end
 
-    it 'parses :not_has selector' do
-      source = '.class :not_has(> .def)'
-      assert_parser(source)
-    end
+      it 'parses root :has selector' do
+        source = ':has(.def)'
+        assert_parser(source)
+      end
 
-    it 'parses root :has selector' do
-      source = ':has(.def)'
-      assert_parser(source)
-    end
+      it 'parses multiple attributes' do
+        source = '.send[receiver=nil][message=:create]'
+        assert_parser(source)
+      end
 
-    it 'parses multiple attributes' do
-      source = '.send[receiver=nil][message=:create]'
-      assert_parser(source)
-    end
+      it 'parses nested attributes' do
+        source = '.send[receiver.message=:create]'
+        assert_parser(source)
+      end
 
-    it 'parses nested attributes' do
-      source = '.send[receiver.message=:create]'
-      assert_parser(source)
-    end
+      it 'parses selector value' do
+        source = '.send[receiver=.send[message=:create]]'
+        assert_parser(source)
+      end
 
-    it 'parses selector value' do
-      source = '.send[receiver=.send[message=:create]]'
-      assert_parser(source)
-    end
+      it 'parses not equal operator' do
+        source = '.send[receiver=.send[message!=:create]]'
+        assert_parser(source)
+      end
 
-    it 'parses not equal operator' do
-      source = '.send[receiver=.send[message!=:create]]'
-      assert_parser(source)
-    end
+      it 'parses greater than operator' do
+        source = '.send[receiver=.send[arguments.size>1]]'
+        assert_parser(source)
+      end
 
-    it 'parses greater than operator' do
-      source = '.send[receiver=.send[arguments.size>1]]'
-      assert_parser(source)
-    end
+      it 'parses greater than or equal operator' do
+        source = '.send[receiver=.send[arguments.size>=1]]'
+        assert_parser(source)
+      end
 
-    it 'parses greater than or equal operator' do
-      source = '.send[receiver=.send[arguments.size>=1]]'
-      assert_parser(source)
-    end
+      it 'parses less than operator' do
+        source = '.send[receiver=.send[arguments.size<1]]'
+        assert_parser(source)
+      end
 
-    it 'parses less than operator' do
-      source = '.send[receiver=.send[arguments.size<1]]'
-      assert_parser(source)
-    end
+      it 'parses less than or equal operator' do
+        source = '.send[receiver=.send[arguments.size<=1]]'
+        assert_parser(source)
+      end
 
-    it 'parses less than or equal operator' do
-      source = '.send[receiver=.send[arguments.size<=1]]'
-      assert_parser(source)
-    end
+      it 'parses in operator' do
+        source = '.def[name in (foo bar)]'
+        assert_parser(source)
+      end
 
-    it 'parses in operator' do
-      source = '.def[name in (foo bar)]'
-      assert_parser(source)
-    end
+      it 'parses not_in operator' do
+        source = '.def[name not in (foo bar)]'
+        assert_parser(source)
+      end
 
-    it 'parses not_in operator' do
-      source = '.def[name not in (foo bar)]'
-      assert_parser(source)
-    end
+      it 'parses includes operator' do
+        source = '.def[arguments includes &block]'
+        assert_parser(source)
+      end
 
-    it 'parses includes operator' do
-      source = '.def[arguments includes &block]'
-      assert_parser(source)
-    end
+      it 'parses empty string' do
+        source = '.send[arguments.first=""]'
+        assert_parser(source)
+      end
 
-    it 'parses empty string' do
-      source = '.send[arguments.first=""]'
-      assert_parser(source)
-    end
+      it 'parses []=' do
+        source = '.send[message=[]=]'
+        assert_parser(source)
+      end
 
-    it 'parses []=' do
-      source = '.send[message=[]=]'
-      assert_parser(source)
-    end
-
-    it 'parses :[]' do
-      source = '.send[message=:[]]'
-      assert_parser(source)
+      it 'parses :[]' do
+        source = '.send[message=:[]]'
+        assert_parser(source)
+      end
     end
 
     describe '#query_nodes' do
