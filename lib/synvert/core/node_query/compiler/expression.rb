@@ -40,8 +40,8 @@ module Synvert::Core::NodeQuery::Compiler
       matching_nodes = find_nodes_without_relationship(node, descendant_match)
       return matching_nodes if @rest.nil?
 
-      matching_nodes.map { |matching_node| find_nodes_by_rest(matching_node, descendant_match) }
-                    .flatten
+      matching_nodes.flat_map { |matching_node| find_nodes_by_rest(matching_node, descendant_match) }
+
     end
 
     def to_s
@@ -76,17 +76,17 @@ module Synvert::Core::NodeQuery::Compiler
       case @relationship
       when :child
         if node.is_a?(::Array)
-          return node.map { |each_node| find_nodes_by_rest(each_node) }
-                     .flatten
+          return node.flat_map { |each_node| find_nodes_by_rest(each_node) }
+
         else
-          return node.children.map { |each_node| find_nodes_by_rest(each_node) }
-                     .flatten
+          return node.children.flat_map { |each_node| find_nodes_by_rest(each_node) }
+
         end
       when :next_sibling
         return find_nodes_by_rest(node.siblings.first)
       when :subsequent_sibling
-        return node.siblings.map { |each_node| find_nodes_by_rest(each_node) }
-                   .flatten
+        return node.siblings.flat_map { |each_node| find_nodes_by_rest(each_node) }
+
       when :has
         return @rest.match?(node) ? [node] : []
       when :not_has
@@ -106,9 +106,9 @@ module Synvert::Core::NodeQuery::Compiler
     # @param descendant_match [Boolean] whether to match in descendant node
     def find_nodes_without_relationship(node, descendant_match = true)
       if node.is_a?(::Array)
-        return node.map { |each_node|
+        return node.flat_map { |each_node|
           find_nodes_without_relationship(each_node, descendant_match)
-        }.flatten
+        }
       end
 
       return [node] unless @selector
