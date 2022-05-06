@@ -41,7 +41,6 @@ module Synvert::Core::NodeQuery::Compiler
       return matching_nodes if @rest.nil?
 
       matching_nodes.flat_map { |matching_node| find_nodes_by_rest(matching_node, descendant_match) }
-
     end
 
     def to_s
