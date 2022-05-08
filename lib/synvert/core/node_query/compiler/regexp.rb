@@ -15,14 +15,14 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] the node
     # @param operator [Symbol] the operator
     # @return [Boolean] true if the regexp value matches the node value, otherwise, false.
-    def match?(node, operator = :=~)
+    def match?(node, operator = '=~')
       match =
         if node.is_a?(::Parser::AST::Node)
           @value.match(node.to_source)
         else
           @value.match(node.to_s)
         end
-      operator == :=~ ? match : !match
+      operator == '=~' ? match : !match
     end
 
     # Get valid operators.

@@ -47,17 +47,17 @@ rules
 :GOTO_SCOPE         /#{IDENTIFIER}/               { [:tIDENTIFIER, text] }
 :GOTO_SCOPE         /#{CLOSE_GOTO_SCOPE}/         { @state = nil; [:tCLOSE_GOTO_SCOPE, text] }
 :KEY                /\s+/
-:KEY                /!=/                          { @state = :VALUE; [:tNOT_EQUAL, text] }
-:KEY                /=~/                          { @state = :VALUE; [:tMATCH, text] }
-:KEY                /!~/                          { @state = :VALUE; [:tNOT_MATCH, text] }
-:KEY                />=/                          { @state = :VALUE; [:tGREATER_THAN_OR_EQUAL, text] }
-:KEY                /<=/                          { @state = :VALUE; [:tLESS_THAN_OR_EQUAL, text] }
-:KEY                />/                           { @state = :VALUE; [:tGREATER_THAN, text] }
-:KEY                /</                           { @state = :VALUE; [:tLESS_THAN, text] }
-:KEY                /=/                           { @state = :VALUE; [:tEQUAL, text] }
-:KEY                /includes/i                   { @state = :VALUE; [:tINCLUDES, text] }
-:KEY                /not in/i                     { @state = :VALUE; [:tNOT_IN, text] }
-:KEY                /in/i                         { @state = :VALUE; [:tIN, text] }
+:KEY                /!=/                          { @state = :VALUE; [:tOPERATOR, '!='] }
+:KEY                /=~/                          { @state = :VALUE; [:tOPERATOR, '=~'] }
+:KEY                /!~/                          { @state = :VALUE; [:tOPERATOR, '!~'] }
+:KEY                />=/                          { @state = :VALUE; [:tOPERATOR, '>='] }
+:KEY                /<=/                          { @state = :VALUE; [:tOPERATOR, '<='] }
+:KEY                />/                           { @state = :VALUE; [:tOPERATOR, '>'] }
+:KEY                /</                           { @state = :VALUE; [:tOPERATOR, '<'] }
+:KEY                /=/                           { @state = :VALUE; [:tOPERATOR, '=='] }
+:KEY                /includes/i                   { @state = :VALUE; [:tOPERATOR, 'includes'] }
+:KEY                /not in/i                     { @state = :VALUE; [:tOPERATOR, 'not_in'] }
+:KEY                /in/i                         { @state = :VALUE; [:tOPERATOR, 'in'] }
 :KEY                /#{IDENTIFIER}/               { [:tKEY, text] }
 :VALUE              /\s+/
 :VALUE              /\[\]=/                       { [:tIDENTIFIER_VALUE, text] }

@@ -26,7 +26,7 @@ module Synvert::Core::NodeQuery::Compiler
 
     # Check if node matches the selector.
     # @param node [Parser::AST::Node] the node
-    def match?(node, _operator = :==)
+    def match?(node, _operator = '==')
       node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type &&
         (!@attribute_list || @attribute_list.match?(node)) &&
         (!@pseudo_class || (@pseudo_class == 'has' && @pseudo_expression.match?(node)) || (@pseudo_class == 'not_has' && !@pseudo_expression.match?(node)))

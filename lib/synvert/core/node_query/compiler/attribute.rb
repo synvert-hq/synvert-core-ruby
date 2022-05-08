@@ -7,7 +7,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param key [String] the key
     # @param value the value can be any class implement {Synvert::Core::NodeQuery::Compiler::Comparable}
     # @param operator [Symbol] the operator
-    def initialize(key:, value:, operator: :==)
+    def initialize(key:, value:, operator: '==')
       @key = key
       @value = value
       @operator = operator
@@ -23,25 +23,25 @@ module Synvert::Core::NodeQuery::Compiler
 
     def to_s
       case @operator
-      when :!=
+      when '!='
         "#{@key}!=#{@value}"
-      when :=~
+      when '=~'
         "#{@key}=~#{@value}"
-      when :!~
+      when '!~'
         "#{@key}!~#{@value}"
-      when :>
+      when '>'
         "#{@key}>#{@value}"
-      when :>=
+      when '>='
         "#{@key}>=#{@value}"
-      when :<
+      when '<'
         "#{@key}<#{@value}"
-      when :<=
+      when '<='
         "#{@key}<=#{@value}"
-      when :in
+      when 'in'
         "#{@key} in (#{@value})"
-      when :not_in
+      when 'not_in'
         "#{@key} not in (#{@value})"
-      when :includes
+      when 'includes'
         "#{@key} includes #{@value}"
       else
         "#{@key}=#{@value}"

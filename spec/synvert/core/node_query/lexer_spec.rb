@@ -29,7 +29,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "create"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -42,7 +42,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "receiver"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tNIL, nil],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -55,7 +55,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSTRING, "create"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -68,7 +68,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSTRING, "[]"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -81,7 +81,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -93,7 +93,7 @@ module Synvert::Core::NodeQuery
         expected_tokens = [
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tINTEGER, 1],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -106,7 +106,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tFLOAT, 1.1],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -119,7 +119,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tBOOLEAN, true],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -132,7 +132,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "create!"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -145,7 +145,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "empty?"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -158,7 +158,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "<"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -169,7 +169,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "="],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -180,7 +180,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, ">"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -193,7 +193,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments.first"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSTRING, ""],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -206,7 +206,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "[]"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -219,7 +219,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :[]=],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -232,7 +232,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tIDENTIFIER_VALUE, "nil?"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -245,7 +245,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "pair"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "key"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tOPEN_DYNAMIC_ATTRIBUTE, "{{"],
           [:tDYNAMIC_ATTRIBUTE, "value"],
           [:tCLOSE_DYNAMIC_ATTRIBUTE, "}}"],
@@ -265,11 +265,11 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "receiver"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tCLOSE_ATTRIBUTE, "]"]
@@ -287,20 +287,20 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "size"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tINTEGER, 2],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "first"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tNODE_TYPE, "str"],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "last"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tNODE_TYPE, "str"],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tCLOSE_ATTRIBUTE, "]"]
@@ -316,7 +316,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tNOT_EQUAL, "!="],
+          [:tOPERATOR, "!="],
           [:tIDENTIFIER_VALUE, "create"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -328,7 +328,7 @@ module Synvert::Core::NodeQuery
         expected_tokens = [
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tGREATER_THAN, ">"],
+          [:tOPERATOR, ">"],
           [:tINTEGER, 1],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -340,7 +340,7 @@ module Synvert::Core::NodeQuery
         expected_tokens = [
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tLESS_THAN, "<"],
+          [:tOPERATOR, "<"],
           [:tINTEGER, 1],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -352,7 +352,7 @@ module Synvert::Core::NodeQuery
         expected_tokens = [
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tGREATER_THAN_OR_EQUAL, ">="],
+          [:tOPERATOR, ">="],
           [:tINTEGER, 1],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -364,7 +364,7 @@ module Synvert::Core::NodeQuery
         expected_tokens = [
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "value"],
-          [:tLESS_THAN_OR_EQUAL, "<="],
+          [:tOPERATOR, "<="],
           [:tINTEGER, 1],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -377,7 +377,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tMATCH, "=~"],
+          [:tOPERATOR, "=~"],
           [:tREGEXP, /create/i],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -390,7 +390,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tNOT_MATCH, "!~"],
+          [:tOPERATOR, "!~"],
           [:tREGEXP, /create/i],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -403,7 +403,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tOPEN_ARRAY, "("],
           [:tCLOSE_ARRAY, ")"],
           [:tCLOSE_ATTRIBUTE, "]"]
@@ -417,7 +417,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tOPEN_ARRAY, "("],
           [:tSYMBOL, :create],
           [:tCLOSE_ARRAY, ")"],
@@ -432,7 +432,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tNOT_EQUAL, "!="],
+          [:tOPERATOR, "!="],
           [:tOPEN_ARRAY, "("],
           [:tSYMBOL, :create],
           [:tCLOSE_ARRAY, ")"],
@@ -447,7 +447,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tIN, "IN"],
+          [:tOPERATOR, "in"],
           [:tOPEN_ARRAY, "("],
           [:tIDENTIFIER_VALUE, "create"],
           [:tIDENTIFIER_VALUE, "build"],
@@ -463,7 +463,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "message"],
-          [:tNOT_IN, "NOT IN"],
+          [:tOPERATOR, "not_in"],
           [:tOPEN_ARRAY, "("],
           [:tIDENTIFIER_VALUE, "create"],
           [:tIDENTIFIER_VALUE, "build"],
@@ -479,7 +479,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tINCLUDES, "INCLUDES"],
+          [:tOPERATOR, "includes"],
           [:tIDENTIFIER_VALUE, "&block"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -494,7 +494,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "receiver.message"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
@@ -509,7 +509,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tINDEX, 0]
@@ -523,7 +523,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tINDEX, -1]
@@ -537,7 +537,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tINDEX, 0]
@@ -551,7 +551,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "send"],
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "arguments"],
-          [:tEQUAL, "="],
+          [:tOPERATOR, "=="],
           [:tSYMBOL, :create],
           [:tCLOSE_ATTRIBUTE, "]"],
           [:tINDEX, -1]

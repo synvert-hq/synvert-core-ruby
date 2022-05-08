@@ -4,8 +4,7 @@ token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CL
       tCHILD tSUBSEQUENT_SIBLING tNEXT_SIBLING
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE
       tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR tOPEN_GOTO_SCOPE tCLOSE_GOTO_SCOPE
-      tEQUAL tNOT_EQUAL tMATCH tNOT_MATCH tGREATER_THAN tGREATER_THAN_OR_EQUAL tLESS_THAN tLESS_THAN_OR_EQUAL tIN tNOT_IN tINCLUDES
-      tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
+      tOPERATOR tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
     : tCHILD expression { Compiler::Expression.new(rest: val[1], relationship: :child) }
@@ -29,23 +28,9 @@ rule
     ;
 
   attribute
-    : tKEY tNOT_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :!=) }
-    | tKEY tNOT_MATCH value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :!~) }
-    | tKEY tMATCH value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :=~) }
-    | tKEY tGREATER_THAN_OR_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :>=) }
-    | tKEY tGREATER_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :>) }
-    | tKEY tLESS_THAN_OR_EQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<=) }
-    | tKEY tLESS_THAN value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :<) }
-    | tKEY tEQUAL value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :==) }
-    | tKEY tINCLUDES value { Compiler::Attribute.new(key: val[0], value: val[2], operator: :includes) }
-    | tKEY tNOT_EQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :!=) }
-    | tKEY tEQUAL tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :==) }
-    | tKEY tNOT_IN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :not_in) }
-    | tKEY tIN tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: :in) }
-    | tKEY tNOT_EQUAL tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :!=) }
-    | tKEY tEQUAL tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :==) }
-    | tKEY tNOT_IN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :not_in) }
-    | tKEY tIN tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: :in) }
+    : tKEY tOPERATOR value { Compiler::Attribute.new(key: val[0], value: val[2], operator: val[1]) }
+    | tKEY tOPERATOR tOPEN_ARRAY tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: Compiler::Array.new, operator: val[1]) }
+    | tKEY tOPERATOR tOPEN_ARRAY array_value tCLOSE_ARRAY { Compiler::Attribute.new(key: val[0], value: val[3], operator: val[1]) }
 
   array_value
     : value array_value { Compiler::Array.new(value: val[0], rest: val[1]) }
