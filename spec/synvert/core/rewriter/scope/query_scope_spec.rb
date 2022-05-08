@@ -59,15 +59,15 @@ module Synvert::Core
       end
 
       it 'raises ParseError' do
-        scope = described_class.new(instance, 'hello world') {}
+        scope = described_class.new(instance, 'synvert') {}
         expect {
           scope.process
         }.to raise_error(NodeQuery::Compiler::ParseError)
 
-        scope = described_class.new(instance, '.type[key IN value]') {}
+        scope = described_class.new(instance, '.send[receiver IN FactoryGirl]') {}
         expect {
           scope.process
-        }.to raise_error(NodeQuery::Compiler::ParseError)
+        }.to raise_error(NodeQuery::Compiler::InvalidOperatorError)
       end
     end
   end
