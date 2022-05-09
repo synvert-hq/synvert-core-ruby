@@ -47,6 +47,7 @@ rules
 :GOTO_SCOPE         /#{IDENTIFIER}/               { [:tIDENTIFIER, text] }
 :GOTO_SCOPE         /#{CLOSE_GOTO_SCOPE}/         { @state = nil; [:tCLOSE_GOTO_SCOPE, text] }
 :KEY                /\s+/
+:KEY                /\*=/                         { @state = :VALUE; [:tOPERATOR, '*='] }
 :KEY                /!=/                          { @state = :VALUE; [:tOPERATOR, '!='] }
 :KEY                /=~/                          { @state = :VALUE; [:tOPERATOR, '=~'] }
 :KEY                /!~/                          { @state = :VALUE; [:tOPERATOR, '!~'] }

@@ -13,7 +13,7 @@ module Synvert::Core::NodeQuery::Compiler
 
     # Get valid operators.
     def valid_operators
-      SIMPLE_VALID_OPERATORS
+      STRING_VALID_OPERATORS
     end
 
     def to_s

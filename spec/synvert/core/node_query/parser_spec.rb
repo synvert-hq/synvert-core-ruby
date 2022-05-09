@@ -84,6 +84,11 @@ module Synvert::Core::NodeQuery
         assert_parser(source)
       end
 
+      it 'parses contain operator' do
+        source = '.def[name*=oob]'
+        assert_parser(source)
+      end
+
       it 'parses not equal operator' do
         source = '.send[receiver=.send[message!=:create]]'
         assert_parser(source)
@@ -203,6 +208,11 @@ module Synvert::Core::NodeQuery
       it 'matches nth-last-child node' do
         expression = parser.parse('.def:nth-last-child(2)')
         expect(expression.query_nodes(node)).to eq [node.body[-2]]
+      end
+
+      it 'matches contain' do
+        expression = parser.parse('.def[name*=oob]')
+        expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
       it 'matches not equal' do

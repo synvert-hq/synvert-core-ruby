@@ -23,20 +23,8 @@ module Synvert::Core::NodeQuery::Compiler
 
     def to_s
       case @operator
-      when '!='
-        "#{@key}!=#{@value}"
-      when '=~'
-        "#{@key}=~#{@value}"
-      when '!~'
-        "#{@key}!~#{@value}"
-      when '>'
-        "#{@key}>#{@value}"
-      when '>='
-        "#{@key}>=#{@value}"
-      when '<'
-        "#{@key}<#{@value}"
-      when '<='
-        "#{@key}<=#{@value}"
+      when '*=', '!=', '=~', '!~', '>=', '>', '<=', '<'
+        "#{@key}#{@operator}#{@value}"
       when 'in'
         "#{@key} in (#{@value})"
       when 'not_in'
