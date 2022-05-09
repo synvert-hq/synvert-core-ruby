@@ -4,7 +4,7 @@ module Synvert::Core::NodeQuery::Compiler
   # Compare acutal value with expected value.
   module Comparable
     SIMPLE_VALID_OPERATORS = ['==', '!=', 'includes']
-    STRING_VALID_OPERATORS = ['==', '!=', '*=', 'includes']
+    STRING_VALID_OPERATORS = ['==', '!=', '^=', '*=', 'includes']
     NUMBER_VALID_OPERATORS = ['==', '!=', '>', '>=', '<', '<=', 'includes']
     ARRAY_VALID_OPERATORS = ['==', '!=', 'in', 'not_in']
     REGEXP_VALID_OPERATORS = ['=~', '!~']
@@ -31,6 +31,8 @@ module Synvert::Core::NodeQuery::Compiler
         actual_value(node) =~ expected_value
       when '!~'
         actual_value(node) !~ expected_value
+      when '^='
+        actual_value(node).start_with?(expected_value)
       when '*='
         actual_value(node).include?(expected_value)
       when '>'

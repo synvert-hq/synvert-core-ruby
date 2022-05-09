@@ -84,6 +84,11 @@ module Synvert::Core::NodeQuery
         assert_parser(source)
       end
 
+      it 'parses start with operator' do
+        source = '.def[name^=oob]'
+        assert_parser(source)
+      end
+
       it 'parses contain operator' do
         source = '.def[name*=oob]'
         assert_parser(source)
@@ -208,6 +213,11 @@ module Synvert::Core::NodeQuery
       it 'matches nth-last-child node' do
         expression = parser.parse('.def:nth-last-child(2)')
         expect(expression.query_nodes(node)).to eq [node.body[-2]]
+      end
+
+      it 'matches start with' do
+        expression = parser.parse('.def[name^=foo]')
+        expect(expression.query_nodes(node)).to eq [node.body.first, node.body.last]
       end
 
       it 'matches contain' do
