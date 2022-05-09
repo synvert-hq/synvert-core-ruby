@@ -85,12 +85,17 @@ module Synvert::Core::NodeQuery
       end
 
       it 'parses start with operator' do
-        source = '.def[name^=oob]'
+        source = '.def[name^=synvert]'
+        assert_parser(source)
+      end
+
+      it 'parses end with operator' do
+        source = '.def[name$=synvert]'
         assert_parser(source)
       end
 
       it 'parses contain operator' do
-        source = '.def[name*=oob]'
+        source = '.def[name*=synvert]'
         assert_parser(source)
       end
 
@@ -218,6 +223,11 @@ module Synvert::Core::NodeQuery
       it 'matches start with' do
         expression = parser.parse('.def[name^=foo]')
         expect(expression.query_nodes(node)).to eq [node.body.first, node.body.last]
+      end
+
+      it 'matches end with' do
+        expression = parser.parse('.def[name$=bar]')
+        expect(expression.query_nodes(node)).to eq [node.body.second, node.body.last]
       end
 
       it 'matches contain' do
