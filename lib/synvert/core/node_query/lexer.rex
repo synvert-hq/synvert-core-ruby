@@ -36,9 +36,9 @@ rules
                     /:has/                        { [:tPSEUDO_CLASS, text[1..-1]] }
                     /:not_has/                    { [:tPSEUDO_CLASS, text[1..-1]] }
                     /#{NODE_TYPE}/                { [:tNODE_TYPE, text[1..]] }
-                    />/                           { [:tCHILD, text] }
-                    /~/                           { [:tSUBSEQUENT_SIBLING, text] }
-                    /\+/                          { [:tNEXT_SIBLING, text] }
+                    />/                           { [:tRELATIONSHIP, text] }
+                    /~/                           { [:tRELATIONSHIP, text] }
+                    /\+/                          { [:tRELATIONSHIP, text] }
                     /#{OPEN_SELECTOR}/            { [:tOPEN_SELECTOR, text] }
                     /#{CLOSE_SELECTOR}/           { [:tCLOSE_SELECTOR, text] }
                     /#{OPEN_GOTO_SCOPE}/          { @state = :GOTO_SCOPE; [:tOPEN_GOTO_SCOPE, text] }

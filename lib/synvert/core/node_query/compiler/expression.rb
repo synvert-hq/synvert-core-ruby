@@ -7,7 +7,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param selector [Synvert::Core::NodeQuery::Compiler::Selector] the selector
     # @param goto_scope [String] goto scope
     # @param rest [Synvert::Core::NodeQuery::Compiler::Expression] the rest expression
-    # @param relationship [Symbol] the relationship between the selector and rest expression, it can be <code>:descendant</code>, <code>:child</code>, <code>:next_sibling</code>, <code>:subsequent_sibling</code> or <code>nil</code>.
+    # @param relationship [Symbol] the relationship between the selector and rest expression, it can be descendant <code>nil</code>, child <code>></code>, next sibling <code>+</code> or subsequent sibing <code>~</code>.
     def initialize(selector: nil, goto_scope: nil, rest: nil, relationship: nil)
       @selector = selector
       @goto_scope = goto_scope
@@ -25,10 +25,10 @@ module Synvert::Core::NodeQuery::Compiler
     # Query nodes by the expression.
     #
     # * If relationship is nil, it will match in all recursive child nodes and return matching nodes.
-    # * If relationship is :decendant, it will match in all recursive child nodes.
-    # * If relationship is :child, it will match in direct child nodes.
-    # * If relationship is :next_sibling, it try to match next sibling node.
-    # * If relationship is :subsequent_sibling, it will match in all sibling nodes.
+    # * If relationship is decendant, it will match in all recursive child nodes.
+    # * If relationship is child, it will match in direct child nodes.
+    # * If relationship is next sibling, it try to match next sibling node.
+    # * If relationship is subsequent sibling, it will match in all sibling nodes.
     # @param node [Parser::AST::Node] node to match
     # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
@@ -50,9 +50,9 @@ module Synvert::Core::NodeQuery::Compiler
       result << @selector.to_s if @selector
       result << "<#{@goto_scope}>" if @goto_scope
       case @relationship
-      when :child then result << "> #{@rest}"
-      when :subsequent_sibling then result << "~ #{@rest}"
-      when :next_sibling then result << "+ #{@rest}"
+      when '>' then result << "> #{@rest}"
+      when '~' then result << "~ #{@rest}"
+      when '+' then result << "+ #{@rest}"
       when :has then result << ":has(#{@rest})"
       when :not_has then result << ":not_has(#{@rest})"
       else result << @rest.to_s
@@ -73,7 +73,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] node to match
     def find_nodes_by_relationship(node)
       case @relationship
-      when :child
+      when '>'
         if node.is_a?(::Array)
           return node.flat_map { |each_node| find_nodes_by_rest(each_node) }
 
@@ -81,9 +81,9 @@ module Synvert::Core::NodeQuery::Compiler
           return node.children.flat_map { |each_node| find_nodes_by_rest(each_node) }
 
         end
-      when :next_sibling
+      when '+'
         return find_nodes_by_rest(node.siblings.first)
-      when :subsequent_sibling
+      when '~'
         return node.siblings.flat_map { |each_node| find_nodes_by_rest(each_node) }
 
       when :has
