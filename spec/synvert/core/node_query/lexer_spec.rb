@@ -571,7 +571,7 @@ module Synvert::Core::NodeQuery
     context 'child' do
       it 'matches' do
         source = '.def > .send'
-        expected_tokens = [[:tNODE_TYPE, "def"], [:tCHILD, ">"], [:tNODE_TYPE, "send"]]
+        expected_tokens = [[:tNODE_TYPE, "def"], [:tRELATIONSHIP, ">"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -579,7 +579,7 @@ module Synvert::Core::NodeQuery
     context 'subsequent sibling' do
       it 'matches' do
         source = '.send ~ .send'
-        expected_tokens = [[:tNODE_TYPE, "send"], [:tSUBSEQUENT_SIBLING, "~"], [:tNODE_TYPE, "send"]]
+        expected_tokens = [[:tNODE_TYPE, "send"], [:tRELATIONSHIP, "~"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -587,7 +587,7 @@ module Synvert::Core::NodeQuery
     context 'next sibling' do
       it 'matches' do
         source = '.send + .send'
-        expected_tokens = [[:tNODE_TYPE, "send"], [:tNEXT_SIBLING, "+"], [:tNODE_TYPE, "send"]]
+        expected_tokens = [[:tNODE_TYPE, "send"], [:tRELATIONSHIP, "+"], [:tNODE_TYPE, "send"]]
         assert_tokens source, expected_tokens
       end
     end
@@ -599,7 +599,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "class"],
           [:tPSEUDO_CLASS, "has"],
           [:tOPEN_SELECTOR, "("],
-          [:tCHILD, ">"],
+          [:tRELATIONSHIP, ">"],
           [:tNODE_TYPE, "def"],
           [:tCLOSE_SELECTOR, ")"]
         ]
@@ -614,7 +614,7 @@ module Synvert::Core::NodeQuery
           [:tNODE_TYPE, "class"],
           [:tPSEUDO_CLASS, "not_has"],
           [:tOPEN_SELECTOR, "("],
-          [:tCHILD, ">"],
+          [:tRELATIONSHIP, ">"],
           [:tNODE_TYPE, "def"],
           [:tCLOSE_SELECTOR, ")"]
         ]
@@ -630,7 +630,7 @@ module Synvert::Core::NodeQuery
           [:tOPEN_GOTO_SCOPE, "<"],
           [:tIDENTIFIER, "body"],
           [:tCLOSE_GOTO_SCOPE, ">"],
-          [:tCHILD, ">"],
+          [:tRELATIONSHIP, ">"],
           [:tNODE_TYPE, "def"]
         ]
         assert_tokens source, expected_tokens

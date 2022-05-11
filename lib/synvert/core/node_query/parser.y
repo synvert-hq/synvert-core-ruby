@@ -6,23 +6,24 @@ token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CL
       tOPERATOR tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
-    : tRELATIONSHIP expression { Compiler::Expression.new(rest: val[1], relationship: val[0]) }
-    | tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE expression { Compiler::Expression.new(goto_scope: val[1], rest: val[3]) }
-    | tPSEUDO_CLASS tOPEN_SELECTOR expression tCLOSE_SELECTOR { Compiler::Expression.new(relationship: val[0].to_sym, rest: val[2]) }
-    | selector expression { Compiler::Expression.new(selector: val[0], rest: val[1]) }
+    : selector expression { Compiler::Expression.new(selector: val[0], rest: val[1]) }
     | selector { Compiler::Expression.new(selector: val[0]) }
 
   selector
-    : tNODE_TYPE attribute_list tINDEX { Compiler::Selector.new(node_type: val[0], attribute_list: val[1], index: val[2]) }
-    | tNODE_TYPE tINDEX { Compiler::Selector.new(node_type: val[0], index: val[1]) }
-    | tNODE_TYPE attribute_list { Compiler::Selector.new(node_type: val[0], attribute_list: val[1]) }
-    | tNODE_TYPE { Compiler::Selector.new(node_type: val[0]) }
-    ;
+    : simple_selector { Compiler::Selector.new(simple_selector: val[0]) }
+    | simple_selector tINDEX { Compiler::Selector.new(simple_selector: val[0], index: val[1]) }
+    | simple_selector tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(simple_selector: val[0], pseudo_class: val[1], pseudo_selector: val[3]) }
+    | tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(pseudo_class: val[0], pseudo_selector: val[2]) }
+    | tRELATIONSHIP selector { Compiler::Selector.new(relationship: val[0], rest: val[1]) }
+    | tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE selector { Compiler::Selector.new(goto_scope: val[1], rest: val[3]) }
+
+  simple_selector
+    : tNODE_TYPE { Compiler::SimpleSelector.new(node_type: val[0]) }
+    | tNODE_TYPE attribute_list { Compiler::SimpleSelector.new(node_type: val[0], attribute_list: val[1]) }
 
   attribute_list
     : tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE attribute_list { Compiler::AttributeList.new(attribute: val[1], rest: val[3]) }
     | tOPEN_ATTRIBUTE attribute tCLOSE_ATTRIBUTE { Compiler::AttributeList.new(attribute: val[1]) }
-    ;
 
   attribute
     : tKEY tOPERATOR value { Compiler::Attribute.new(key: val[0], value: val[2], operator: val[1]) }
@@ -34,7 +35,7 @@ rule
     | value { Compiler::Array.new(value: val[0]) }
 
   value
-    : selector
+    : simple_selector
     | tOPEN_DYNAMIC_ATTRIBUTE tDYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE { Compiler::DynamicAttribute.new(value: val[1]) }
     | tBOOLEAN { Compiler::Boolean.new(value: val[0]) }
     | tFLOAT { Compiler::Float.new(value: val[0]) }

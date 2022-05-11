@@ -4,38 +4,68 @@ module Synvert::Core::NodeQuery::Compiler
   # Selector used to match nodes, it combines by node type and/or attribute list, plus index or has expression.
   class Selector
     # Initialize a Selector.
-    # @param node_type [String] the node type
+    # @param goto_scope [String] goto scope
+    # @param relationship [Symbol] the relationship between the selectors, it can be descendant <code>nil</code>, child <code>></code>, next sibling <code>+</code> or subsequent sibing <code>~</code>.
+    # @param rest [Synvert::Core::NodeQuery::Compiler::Selector] the rest selector
+    # @param simple_selector [Synvert::Core::NodeQuery::Compiler::SimpleSelector] the simple selector
     # @param attribute_list [Synvert::Core::NodeQuery::Compiler::AttributeList] the attribute list
     # @param index [Integer] the index
     # @param pseudo_class [String] the pseudo class, can be <code>has</code> or <code>not_has</code>
-    # @param pseudo_expression [Synvert::Core::NodeQuery::Compiler::Expression] the pseudo expression
-    def initialize(node_type:, attribute_list: nil, index: nil, pseudo_class: nil, pseudo_expression: nil)
-      @node_type = node_type
-      @attribute_list = attribute_list
+    # @param pseudo_selector [Synvert::Core::NodeQuery::Compiler::Expression] the pseudo selector
+    def initialize(goto_scope: nil, relationship: nil, rest: nil, simple_selector: nil, index: nil, pseudo_class: nil, pseudo_selector: nil)
+      @goto_scope = goto_scope
+      @relationship = relationship
+      @rest = rest
+      @simple_selector = simple_selector
       @index = index
       @pseudo_class = pseudo_class
-      @pseudo_expression = pseudo_expression
-    end
-
-    # Filter nodes by index.
-    def filter(nodes)
-      return nodes if @index.nil?
-
-      nodes[@index] ? [nodes[@index]] : []
+      @pseudo_selector = pseudo_selector
     end
 
     # Check if node matches the selector.
     # @param node [Parser::AST::Node] the node
-    def match?(node, _operator = '==')
-      node.is_a?(::Parser::AST::Node) && @node_type.to_sym == node.type &&
-        (!@attribute_list || @attribute_list.match?(node)) &&
-        (!@pseudo_class || (@pseudo_class == 'has' && @pseudo_expression.match?(node)) || (@pseudo_class == 'not_has' && !@pseudo_expression.match?(node)))
+    def match?(node)
+      node.is_a?(::Parser::AST::Node) &&
+        (!@simple_selector || @simple_selector.match?(node)) &&
+        match_pseudo_class?(node)
+    end
+
+    # Query nodes by the selector.
+    #
+    # * If relationship is nil, it will match in all recursive child nodes and return matching nodes.
+    # * If relationship is decendant, it will match in all recursive child nodes.
+    # * If relationship is child, it will match in direct child nodes.
+    # * If relationship is next sibling, it try to match next sibling node.
+    # * If relationship is subsequent sibling, it will match in all sibling nodes.
+    # @param node [Parser::AST::Node] node to match
+    # @param descendant_match [Boolean] whether to match in descendant node
+    # @return [Array<Parser::AST::Node>] matching nodes.
+    def query_nodes(node, descendant_match = true)
+      return find_nodes_by_relationship(node) if @relationship
+
+      if node.is_a?(::Array)
+        return node.flat_map { |child_node| query_nodes(child_node, descendant_match) }
+      end
+
+      return find_nodes_by_goto_scope(node) if @goto_scope
+
+      nodes = []
+      nodes << node if match?(node)
+      if descendant_match
+        node.recursive_children do |child_node|
+          nodes << child_node if match?(child_node)
+        end
+      end
+      filter(nodes)
     end
 
     def to_s
-      result = [".#{@node_type}"]
-      result << @attribute_list.to_s if @attribute_list
-      result << ":#{@pseudo_class}(#{@pseudo_expression})" if @pseudo_class
+      result = []
+      result << "<#{@goto_scope}> " if @goto_scope
+      result << "#{@relationship} " if @relationship
+      result << @rest.to_s if @rest
+      result << @simple_selector.to_s if @simple_selector
+      result << ":#{@pseudo_class}(#{@pseudo_selector})" if @pseudo_class
       if @index
         result <<
           case @index
@@ -50,6 +80,59 @@ module Synvert::Core::NodeQuery::Compiler
           end
       end
       result.join('')
+    end
+
+    private
+
+    # Find nodes by @goto_scope
+    # @param node [Parser::AST::Node] node to match
+    def find_nodes_by_goto_scope(node)
+      @goto_scope.split('.').each { |scope| node = node.send(scope) }
+      @rest.query_nodes(node, false)
+    end
+
+    # Find ndoes by @relationship
+    # @param node [Parser::AST::Node] node to match
+    def find_nodes_by_relationship(node)
+      nodes = []
+      case @relationship
+      when '>'
+        if node.is_a?(::Array)
+          node.each do |child_node|
+            nodes << child_node if @rest.match?(child_node)
+          end
+        else
+          node.children.each do |child_node|
+            nodes << child_node if @rest.match?(child_node)
+          end
+        end
+      when '+'
+        next_sibling = node.siblings.first
+        nodes << next_sibling if @rest.match?(next_sibling)
+      when '~'
+        node.siblings.each do |sibling_node|
+          nodes << sibling_node if @rest.match?(sibling_node)
+        end
+      end
+      return filter(nodes)
+    end
+
+    def match_pseudo_class?(node)
+      case @pseudo_class
+      when 'has'
+        !@pseudo_selector.query_nodes(node, false).empty?
+      when 'not_has'
+        @pseudo_selector.query_nodes(node, false).empty?
+      else
+        true
+      end
+    end
+
+    # Filter nodes by index.
+    def filter(nodes)
+      return nodes if @index.nil?
+
+      nodes[@index] ? [nodes[@index]] : []
     end
   end
 end
