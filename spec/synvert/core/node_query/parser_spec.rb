@@ -319,6 +319,11 @@ module Synvert::Core::NodeQuery
         expect(expression.query_nodes(node)).to eq [node.body.last]
       end
 
+      it 'matches root has selector' do
+        expression = parser.parse(':has(.def[name=foobar])')
+        expect(expression.query_nodes(node)).to eq [node]
+      end
+
       it 'matches arguments.size' do
         expression = parser.parse('.def .send[arguments.size=2]')
         expect(expression.query_nodes(node)).to eq [

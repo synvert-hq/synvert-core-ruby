@@ -51,7 +51,7 @@ module Synvert::Core::NodeQuery::Compiler
 
       nodes = []
       nodes << node if match?(node)
-      if descendant_match
+      if descendant_match && @simple_selector
         node.recursive_children do |child_node|
           nodes << child_node if match?(child_node)
         end
@@ -120,9 +120,9 @@ module Synvert::Core::NodeQuery::Compiler
     def match_pseudo_class?(node)
       case @pseudo_class
       when 'has'
-        !@pseudo_selector.query_nodes(node, false).empty?
+        !@pseudo_selector.query_nodes(node).empty?
       when 'not_has'
-        @pseudo_selector.query_nodes(node, false).empty?
+        @pseudo_selector.query_nodes(node).empty?
       else
         true
       end
