@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.3.0 (2022-05-12)
+
+* Support `*=`, `^=` and `$=` operators
+* Simplify RELATIONSHIP parser
+* Rewrite compiler, let the selector to query nodes
+
 ## 1.2.1 (2022-05-01)
 
 * Selector always after a node type in NQL
