@@ -71,7 +71,7 @@ module Synvert::Core
       condition = double
       block = proc {}
       expect(Rewriter::IfExistCondition).to receive(:new)
-        .with(instance, type: 'send', message: 'create', &block)
+        .with(instance, { type: 'send', message: 'create' }, &block)
         .and_return(condition)
       expect(condition).to receive(:process)
       instance.if_exist_node(type: 'send', message: 'create', &block)
@@ -81,7 +81,7 @@ module Synvert::Core
       condition = double
       block = proc {}
       expect(Rewriter::UnlessExistCondition).to receive(:new)
-        .with(instance, type: 'send', message: 'create', &block)
+        .with(instance, { type: 'send', message: 'create' }, &block)
         .and_return(condition)
       expect(condition).to receive(:process)
       instance.unless_exist_node(type: 'send', message: 'create', &block)
@@ -91,7 +91,7 @@ module Synvert::Core
       condition = double
       block = proc {}
       expect(Rewriter::IfOnlyExistCondition).to receive(:new)
-        .with(instance, type: 'send', message: 'create', &block)
+        .with(instance, { type: 'send', message: 'create' }, &block)
         .and_return(condition)
       expect(condition).to receive(:process)
       instance.if_only_exist_node(type: 'send', message: 'create', &block)

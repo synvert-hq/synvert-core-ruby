@@ -23,14 +23,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "activesupport"
   spec.add_runtime_dependency "erubis"
   spec.add_runtime_dependency "parser"
-
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-rspec"
-  spec.add_development_dependency "guard-rake"
-  spec.add_development_dependency "oedipus_lex"
-  spec.add_development_dependency "racc"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec", "3.10.0"
-  spec.add_development_dependency "rspec-mocks", "3.10.2" # rspec-mocks 3.10.3 breaks tests
 end
