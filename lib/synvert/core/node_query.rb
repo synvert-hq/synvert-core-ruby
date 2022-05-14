@@ -9,12 +9,10 @@
 # * attribute regex: <code>.send[key=~/\A:([^'"]+)\z/]</code>, <code>.send[key!~/\A:([^'"]+)\z/]</code>
 # * attribute conditions: +.send[message != nil]+, +.send[value > 1]+, +.send[value >= 1]+, +.send[value < 1]+, +.send[value <= 1]+
 # * nested attribute: +.send[caller.message = map]+, +.send[arguments.size = 2]+
-# * first or last child: +.def:first-child+, +.send:last-child+
-# * nth-child or nth-last-child: +.def:nth-child(2)+, +.send:nth-last-child(2)+
 # * descendant: +.class .send+
 # * child: +.class > .def+
-# * following sibling: <code>.def:first-child + .def</code>
-# * subsequnt sibling: +.def:first-child ~ .def+
+# * following sibling: <code>.def + .def</code>
+# * subsequnt sibling: +.def ~ .def+
 # * has: +.class:has(.def)+
 #
 # It also supports some custom selectors:

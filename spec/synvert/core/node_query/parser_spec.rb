@@ -34,26 +34,6 @@ module Synvert::Core::NodeQuery
         assert_parser(source)
       end
 
-      it 'parses :first-child' do
-        source = '.class .def:first-child'
-        assert_parser(source)
-      end
-
-      it 'parses :last-child' do
-        source = '.class .def:last-child'
-        assert_parser(source)
-      end
-
-      it 'parses :nth-child(n)' do
-        source = '.class .def:nth-child(2)'
-        assert_parser(source)
-      end
-
-      it 'parses :nth-last-child(n)' do
-        source = '.class .def:nth-last-child(2)'
-        assert_parser(source)
-      end
-
       it 'parses :has selector' do
         source = '.class:has(> .def)'
         assert_parser(source)
@@ -193,31 +173,6 @@ module Synvert::Core::NodeQuery
       it 'matches def node' do
         expression = parser.parse('.def')
         expect(expression.query_nodes(node)).to eq node.body
-      end
-
-      it 'matches first def node' do
-        expression = parser.parse('.def:first-child')
-        expect(expression.query_nodes(node)).to eq [node.body.first]
-      end
-
-      it 'matches nested first node' do
-        expression = parser.parse('.def[arguments.size=0] .send:first-child')
-        expect(expression.query_nodes(node)).to eq [node.body.first.body.first, node.body.second.body.first]
-      end
-
-      it 'matches last def node' do
-        expression = parser.parse('.def:last-child')
-        expect(expression.query_nodes(node)).to eq [node.body.last]
-      end
-
-      it 'matches nth-child node' do
-        expression = parser.parse('.def:nth-child(2)')
-        expect(expression.query_nodes(node)).to eq [node.body.second]
-      end
-
-      it 'matches nth-last-child node' do
-        expression = parser.parse('.def:nth-last-child(2)')
-        expect(expression.query_nodes(node)).to eq [node.body[-2]]
       end
 
       it 'matches start with' do

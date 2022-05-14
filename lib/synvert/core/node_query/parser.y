@@ -1,6 +1,6 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
-token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tINDEX tPSEUDO_CLASS tRELATIONSHIP
+token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tPSEUDO_CLASS tRELATIONSHIP
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE
       tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR tOPEN_GOTO_SCOPE tCLOSE_GOTO_SCOPE
       tOPERATOR tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
@@ -11,7 +11,6 @@ rule
 
   selector
     : simple_selector { Compiler::Selector.new(simple_selector: val[0]) }
-    | simple_selector tINDEX { Compiler::Selector.new(simple_selector: val[0], index: val[1]) }
     | simple_selector tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(simple_selector: val[0], pseudo_class: val[1], pseudo_selector: val[3]) }
     | tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(pseudo_class: val[0], pseudo_selector: val[2]) }
     | tRELATIONSHIP selector { Compiler::Selector.new(relationship: val[0], rest: val[1]) }

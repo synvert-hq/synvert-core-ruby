@@ -29,10 +29,6 @@ rules
 
 # [:state]          pattern                       [actions]
                     /\s+/
-                    /:first-child/                { [:tINDEX, 0] }
-                    /:last-child/                 { [:tINDEX, -1] }
-                    /:nth-child\(\d+\)/           { [:tINDEX, text.sub(':nth-child(', '').to_i - 1] }
-                    /:nth-last-child\(\d+\)/      { [:tINDEX, -text.sub(':nth-last-child(', '').to_i] }
                     /:has/                        { [:tPSEUDO_CLASS, text[1..-1]] }
                     /:not_has/                    { [:tPSEUDO_CLASS, text[1..-1]] }
                     /#{NODE_TYPE}/                { [:tNODE_TYPE, text[1..]] }

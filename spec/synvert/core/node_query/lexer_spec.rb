@@ -502,64 +502,6 @@ module Synvert::Core::NodeQuery
       end
     end
 
-    context 'position' do
-      it 'matches :first-child' do
-        source = '.send[arguments=:create]:first-child'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tOPEN_ATTRIBUTE, "["],
-          [:tKEY, "arguments"],
-          [:tOPERATOR, "=="],
-          [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"],
-          [:tINDEX, 0]
-        ]
-        assert_tokens source, expected_tokens
-      end
-
-      it 'matches :last-child' do
-        source = '.send[arguments=:create]:last-child'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tOPEN_ATTRIBUTE, "["],
-          [:tKEY, "arguments"],
-          [:tOPERATOR, "=="],
-          [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"],
-          [:tINDEX, -1]
-        ]
-        assert_tokens source, expected_tokens
-      end
-
-      it 'matches :nth-child(1)' do
-        source = '.send[arguments=:create]:nth-child(1)'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tOPEN_ATTRIBUTE, "["],
-          [:tKEY, "arguments"],
-          [:tOPERATOR, "=="],
-          [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"],
-          [:tINDEX, 0]
-        ]
-        assert_tokens source, expected_tokens
-      end
-
-      it 'matches :nth-last-child(1)' do
-        source = '.send[arguments=:create]:nth-last-child(1)'
-        expected_tokens = [
-          [:tNODE_TYPE, "send"],
-          [:tOPEN_ATTRIBUTE, "["],
-          [:tKEY, "arguments"],
-          [:tOPERATOR, "=="],
-          [:tSYMBOL, :create],
-          [:tCLOSE_ATTRIBUTE, "]"],
-          [:tINDEX, -1]
-        ]
-        assert_tokens source, expected_tokens
-      end
-    end
-
     context 'descendant' do
       it 'matches' do
         source = '.class .send'

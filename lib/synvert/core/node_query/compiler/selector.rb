@@ -9,15 +9,13 @@ module Synvert::Core::NodeQuery::Compiler
     # @param rest [Synvert::Core::NodeQuery::Compiler::Selector] the rest selector
     # @param simple_selector [Synvert::Core::NodeQuery::Compiler::SimpleSelector] the simple selector
     # @param attribute_list [Synvert::Core::NodeQuery::Compiler::AttributeList] the attribute list
-    # @param index [Integer] the index
     # @param pseudo_class [String] the pseudo class, can be <code>has</code> or <code>not_has</code>
     # @param pseudo_selector [Synvert::Core::NodeQuery::Compiler::Expression] the pseudo selector
-    def initialize(goto_scope: nil, relationship: nil, rest: nil, simple_selector: nil, index: nil, pseudo_class: nil, pseudo_selector: nil)
+    def initialize(goto_scope: nil, relationship: nil, rest: nil, simple_selector: nil, pseudo_class: nil, pseudo_selector: nil)
       @goto_scope = goto_scope
       @relationship = relationship
       @rest = rest
       @simple_selector = simple_selector
-      @index = index
       @pseudo_class = pseudo_class
       @pseudo_selector = pseudo_selector
     end
@@ -56,7 +54,7 @@ module Synvert::Core::NodeQuery::Compiler
           nodes << child_node if match?(child_node)
         end
       end
-      filter(nodes)
+      nodes
     end
 
     def to_s
@@ -66,19 +64,6 @@ module Synvert::Core::NodeQuery::Compiler
       result << @rest.to_s if @rest
       result << @simple_selector.to_s if @simple_selector
       result << ":#{@pseudo_class}(#{@pseudo_selector})" if @pseudo_class
-      if @index
-        result <<
-          case @index
-          when 0
-            ':first-child'
-          when -1
-            ':last-child'
-          when (1..)
-            ":nth-child(#{@index + 1})"
-          else # ...-1
-            ":nth-last-child(#{-@index})"
-          end
-      end
       result.join('')
     end
 
@@ -114,7 +99,7 @@ module Synvert::Core::NodeQuery::Compiler
           nodes << sibling_node if @rest.match?(sibling_node)
         end
       end
-      return filter(nodes)
+      nodes
     end
 
     def match_pseudo_class?(node)
@@ -126,13 +111,6 @@ module Synvert::Core::NodeQuery::Compiler
       else
         true
       end
-    end
-
-    # Filter nodes by index.
-    def filter(nodes)
-      return nodes if @index.nil?
-
-      nodes[@index] ? [nodes[@index]] : []
     end
   end
 end
