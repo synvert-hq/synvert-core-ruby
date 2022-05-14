@@ -167,9 +167,9 @@ module Synvert::Core
 
     it 'parses remove' do
       action = double
-      expect(Rewriter::RemoveAction).to receive(:new).with(instance).and_return(action)
+      expect(Rewriter::RemoveAction).to receive(:new).with(instance, { and_comma: true }).and_return(action)
       expect(action).to receive(:process)
-      instance.remove
+      instance.remove and_comma: true
     end
 
     it 'parses remove' do
