@@ -24,10 +24,12 @@ module Synvert::Core::NodeQuery::Compiler
     # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
     def query_nodes(node, descendant_match = true)
-      matching_nodes = find_nodes_by_selector(node, descendant_match)
+      matching_nodes = @selector.query_nodes(node, descendant_match)
       return matching_nodes if @rest.nil?
 
-      matching_nodes.flat_map { |matching_node| find_nodes_by_rest(matching_node, descendant_match) }
+      matching_nodes.flat_map do |matching_node|
+        @rest.query_nodes(matching_node, descendant_match)
+      end
     end
 
     def to_s
@@ -35,24 +37,6 @@ module Synvert::Core::NodeQuery::Compiler
       result << @selector.to_s if @selector
       result << @rest.to_s if @rest
       result.join(' ')
-    end
-
-    private
-
-    # Find nodes by @rest
-    # @param node [Parser::AST::Node] node to match
-    # @param descendant_match [Boolean] whether to match in descendant node
-    def find_nodes_by_rest(node, descendant_match = false)
-      @rest.query_nodes(node, descendant_match)
-    end
-
-    # Find nodes with nil relationship.
-    # @param node [Parser::AST::Node] node to match
-    # @param descendant_match [Boolean] whether to match in descendant node
-    def find_nodes_by_selector(node, descendant_match = true)
-      return Array(node) if !@selector
-
-      @selector.query_nodes(node, descendant_match)
     end
   end
 end
