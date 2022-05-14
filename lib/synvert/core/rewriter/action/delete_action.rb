@@ -7,9 +7,11 @@ module Synvert::Core
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param selectors [Array<Symbol, String>] used to select child nodes
-    def initialize(instance, *selectors)
+    # @option and_comma [Boolean] delete extra comma.
+    def initialize(instance, *selectors, and_comma: false)
       super(instance, nil)
       @selectors = selectors
+      @and_comma = and_comma
     end
 
     # The rewritten code, always empty string.
@@ -26,7 +28,7 @@ module Synvert::Core
       @end_pos = @selectors.map { |selector| @node.child_node_range(selector) }
                            .compact.map(&:end_pos).max
       squeeze_spaces
-      remove_comma
+      remove_comma if @and_comma
     end
   end
 end

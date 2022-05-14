@@ -6,8 +6,11 @@ module Synvert::Core
     # Initialize a RemoveAction.
     #
     # @param instance [Synvert::Core::Rewriter::RemoveAction]
-    def initialize(instance)
+    # @param options [Hash] options.
+    # @option and_comma [Boolean] delete extra comma.
+    def initialize(instance, and_comma: false)
       super(instance, nil)
+      @and_comma = and_comma
     end
 
     # The rewritten code, always empty string.
@@ -27,7 +30,7 @@ module Synvert::Core
         @begin_pos = @node.loc.expression.begin_pos
         @end_pos = @node.loc.expression.end_pos
         squeeze_spaces
-        remove_comma
+        remove_comma if @and_command
       end
     end
 

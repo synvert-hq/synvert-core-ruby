@@ -333,8 +333,10 @@ module Synvert::Core
     #   with_node type: 'send', message: { in: %w[puts p] } do
     #     remove
     #   end
-    def remove
-      @actions << Rewriter::RemoveAction.new(self).process
+    # @param options [Hash] options.
+    # @option and_comma [Boolean] delete extra comma.
+    def remove(**options)
+      @actions << Rewriter::RemoveAction.new(self, **options).process
     end
 
     # Parse +delete+ dsl, it creates a {Synvert::Core::Rewriter::DeleteAction} to delete child nodes.
@@ -346,8 +348,10 @@ module Synvert::Core
     #     delete :receiver, :dot
     #   end
     # @param selectors [Array<Symbol>] selector names of child node.
-    def delete(*selectors)
-      @actions << Rewriter::DeleteAction.new(self, *selectors).process
+    # @param options [Hash]
+    # @option and_comma [Boolean] delete extra comma.
+    def delete(*selectors, **options)
+      @actions << Rewriter::DeleteAction.new(self, *selectors, **options).process
     end
 
     # Parse +wrap+ dsl, it creates a {Synvert::Core::Rewriter::WrapAction} to
