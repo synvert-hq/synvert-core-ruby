@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.1 (2022-05-14)
+
+* Add `add_comma` option to remove extra comma
+
 ## 1.3.0 (2022-05-12)
 
 * Support `*=`, `^=` and `$=` operators
