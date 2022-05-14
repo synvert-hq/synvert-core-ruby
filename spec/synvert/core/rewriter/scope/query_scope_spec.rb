@@ -64,6 +64,13 @@ module Synvert::Core
           scope.process
         }.to raise_error(NodeQuery::Compiler::ParseError)
 
+        scope = described_class.new(instance, '.block <caller.arguments> .hash') {}
+        expect {
+          scope.process
+        }.to raise_error(NodeQuery::Compiler::ParseError)
+      end
+
+      it 'raises InvalidOperatorError' do
         scope = described_class.new(instance, '.send[receiver IN FactoryGirl]') {}
         expect {
           scope.process
