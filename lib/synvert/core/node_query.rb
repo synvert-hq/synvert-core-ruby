@@ -24,6 +24,7 @@
 # * NOT IN operator: +.send[message NOT IN (create build)]+
 # * INCLUDES operator: +.send[arguments INCLUDES &block]+
 # * dynamic attribute value: +.hash > .pair[key={{value}}]+
+# * goto scope: +.class body > .def+
 #
 # @example
 #   # it matches methods call nodes, like `puts message` or `p message`

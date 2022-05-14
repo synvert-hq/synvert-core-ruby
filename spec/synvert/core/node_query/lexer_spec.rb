@@ -566,12 +566,10 @@ module Synvert::Core::NodeQuery
 
     context 'goto_scope' do
       it 'matches' do
-        source = '.block <body> > .def'
+        source = '.block body > .def'
         expected_tokens = [
           [:tNODE_TYPE, "block"],
-          [:tOPEN_GOTO_SCOPE, "<"],
-          [:tIDENTIFIER, "body"],
-          [:tCLOSE_GOTO_SCOPE, ">"],
+          [:tGOTO_SCOPE, "body"],
           [:tRELATIONSHIP, ">"],
           [:tNODE_TYPE, "def"]
         ]

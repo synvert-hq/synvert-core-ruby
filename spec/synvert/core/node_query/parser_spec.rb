@@ -30,7 +30,7 @@ module Synvert::Core::NodeQuery
       end
 
       it 'parses scope' do
-        source = '.block <body> > .send'
+        source = '.block body > .send'
         assert_parser(source)
       end
 
@@ -252,15 +252,15 @@ module Synvert::Core::NodeQuery
       end
 
       it 'matches goto scope' do
-        expression = parser.parse('.def <body> > .send[message=:create]')
+        expression = parser.parse('.def body > .send[message=:create]')
         expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
 
-        expression = parser.parse('.def <body> .send[message=:create]')
+        expression = parser.parse('.def body .send[message=:create]')
         expect(expression.query_nodes(node)).to eq [node.body.first.body.last, node.body.second.body.last]
       end
 
       it 'matches multiple goto scope' do
-        expression = parser.parse('.block <caller.arguments> .const[name=Synvert]')
+        expression = parser.parse('.block caller.arguments .const[name=Synvert]')
         expect(expression.query_nodes(test_node)).to eq [test_node.caller.arguments.first]
       end
 

@@ -59,7 +59,7 @@ module Synvert::Core::NodeQuery::Compiler
 
     def to_s
       result = []
-      result << "<#{@goto_scope}> " if @goto_scope
+      result << "#{@goto_scope} " if @goto_scope
       result << "#{@relationship} " if @relationship
       result << @rest.to_s if @rest
       result << @simple_selector.to_s if @simple_selector

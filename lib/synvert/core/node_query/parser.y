@@ -1,8 +1,8 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
-token tNODE_TYPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tPSEUDO_CLASS tRELATIONSHIP
+token tNODE_TYPE tGOTO_SCOPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tPSEUDO_CLASS tRELATIONSHIP
       tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE
-      tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR tOPEN_GOTO_SCOPE tCLOSE_GOTO_SCOPE
+      tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
       tOPERATOR tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
@@ -14,7 +14,7 @@ rule
     | simple_selector tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(simple_selector: val[0], pseudo_class: val[1], pseudo_selector: val[3]) }
     | tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(pseudo_class: val[0], pseudo_selector: val[2]) }
     | tRELATIONSHIP selector { Compiler::Selector.new(relationship: val[0], rest: val[1]) }
-    | tOPEN_GOTO_SCOPE tIDENTIFIER tCLOSE_GOTO_SCOPE selector { Compiler::Selector.new(goto_scope: val[1], rest: val[3]) }
+    | tGOTO_SCOPE selector { Compiler::Selector.new(goto_scope: val[0], rest: val[1]) }
 
   simple_selector
     : tNODE_TYPE { Compiler::SimpleSelector.new(node_type: val[0]) }
