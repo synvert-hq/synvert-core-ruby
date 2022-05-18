@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Synvert::Core::NodeQuery::Compiler
-  # SimpleSelector used to match nodes, it combines by node type and/or attribute list.
-  class SimpleSelector
-    # Initialize a SimpleSelector.
+  # BasicSelector used to match nodes, it combines by node type and/or attribute list.
+  class BasicSelector
+    # Initialize a BasicSelector.
     # @param node_type [String] the node type
     # @param attribute_list [Synvert::Core::NodeQuery::Compiler::AttributeList] the attribute list
     def initialize(node_type:, attribute_list: nil)
@@ -20,8 +20,7 @@ module Synvert::Core::NodeQuery::Compiler
     end
 
     def to_s
-      result = []
-      result << ".#{@node_type}" if @node_type
+      result = [".#{@node_type}"]
       result << @attribute_list.to_s if @attribute_list
       result.join('')
     end

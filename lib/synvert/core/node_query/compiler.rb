@@ -8,7 +8,7 @@ module Synvert::Core::NodeQuery::Compiler
 
   autoload :Expression, 'synvert/core/node_query/compiler/expression'
   autoload :Selector, 'synvert/core/node_query/compiler/selector'
-  autoload :SimpleSelector, 'synvert/core/node_query/compiler/simple_selector'
+  autoload :BasicSelector, 'synvert/core/node_query/compiler/basic_selector'
   autoload :AttributeList, 'synvert/core/node_query/compiler/attribute_list'
   autoload :Attribute, 'synvert/core/node_query/compiler/attribute'
 

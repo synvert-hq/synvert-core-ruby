@@ -7,15 +7,15 @@ module Synvert::Core::NodeQuery::Compiler
     # @param goto_scope [String] goto scope
     # @param relationship [Symbol] the relationship between the selectors, it can be descendant <code>nil</code>, child <code>></code>, next sibling <code>+</code> or subsequent sibing <code>~</code>.
     # @param rest [Synvert::Core::NodeQuery::Compiler::Selector] the rest selector
-    # @param simple_selector [Synvert::Core::NodeQuery::Compiler::SimpleSelector] the simple selector
+    # @param basic_selector [Synvert::Core::NodeQuery::Compiler::BasicSelector] the simple selector
     # @param attribute_list [Synvert::Core::NodeQuery::Compiler::AttributeList] the attribute list
     # @param pseudo_class [String] the pseudo class, can be <code>has</code> or <code>not_has</code>
     # @param pseudo_selector [Synvert::Core::NodeQuery::Compiler::Expression] the pseudo selector
-    def initialize(goto_scope: nil, relationship: nil, rest: nil, simple_selector: nil, pseudo_class: nil, pseudo_selector: nil)
+    def initialize(goto_scope: nil, relationship: nil, rest: nil, basic_selector: nil, pseudo_class: nil, pseudo_selector: nil)
       @goto_scope = goto_scope
       @relationship = relationship
       @rest = rest
-      @simple_selector = simple_selector
+      @basic_selector = basic_selector
       @pseudo_class = pseudo_class
       @pseudo_selector = pseudo_selector
     end
@@ -24,7 +24,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] the node
     def match?(node)
       node.is_a?(::Parser::AST::Node) &&
-        (!@simple_selector || @simple_selector.match?(node)) &&
+        (!@basic_selector || @basic_selector.match?(node)) &&
         match_pseudo_class?(node)
     end
 
@@ -49,7 +49,7 @@ module Synvert::Core::NodeQuery::Compiler
 
       nodes = []
       nodes << node if match?(node)
-      if descendant_match && @simple_selector
+      if descendant_match && @basic_selector
         node.recursive_children do |child_node|
           nodes << child_node if match?(child_node)
         end
@@ -62,7 +62,7 @@ module Synvert::Core::NodeQuery::Compiler
       result << "#{@goto_scope} " if @goto_scope
       result << "#{@relationship} " if @relationship
       result << @rest.to_s if @rest
-      result << @simple_selector.to_s if @simple_selector
+      result << @basic_selector.to_s if @basic_selector
       result << ":#{@pseudo_class}(#{@pseudo_selector})" if @pseudo_class
       result.join('')
     end
