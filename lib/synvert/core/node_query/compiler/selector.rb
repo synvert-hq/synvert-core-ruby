@@ -23,9 +23,7 @@ module Synvert::Core::NodeQuery::Compiler
     # Check if node matches the selector.
     # @param node [Parser::AST::Node] the node
     def match?(node)
-      node.is_a?(::Parser::AST::Node) &&
-        (!@basic_selector || @basic_selector.match?(node)) &&
-        match_pseudo_class?(node)
+      node.is_a?(::Parser::AST::Node) && (!@basic_selector || @basic_selector.match?(node)) && match_pseudo_class?(node)
     end
 
     # Query nodes by the selector.
