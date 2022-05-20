@@ -11,7 +11,6 @@ rule
 
   selector
     : basic_selector { Compiler::Selector.new(basic_selector: val[0]) }
-    | basic_selector tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(basic_selector: val[0], pseudo_class: val[1], pseudo_selector: val[3]) }
     | tPSEUDO_CLASS tOPEN_SELECTOR selector tCLOSE_SELECTOR { Compiler::Selector.new(pseudo_class: val[0], pseudo_selector: val[2]) }
     | tRELATIONSHIP selector { Compiler::Selector.new(relationship: val[0], rest: val[1]) }
     | tGOTO_SCOPE selector { Compiler::Selector.new(goto_scope: val[0], rest: val[1]) }

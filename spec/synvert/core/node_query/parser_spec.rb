@@ -35,12 +35,12 @@ module Synvert::Core::NodeQuery
       end
 
       it 'parses :has selector' do
-        source = '.class:has(> .def)'
+        source = '.class :has(> .def)'
         assert_parser(source)
       end
 
       it 'parses :not_has selector' do
-        source = '.class:not_has(> .def)'
+        source = '.class :not_has(> .def)'
         assert_parser(source)
       end
 
