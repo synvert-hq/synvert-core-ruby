@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.4.0 (2022-05-21)
+
+* Drop support `:first-child` and `:last-child`
+* Redefine goto scope in nql
+* Fix shift/reduce conflict
+
 ## 1.3.1 (2022-05-14)
 
 * Add `add_comma` option to remove extra comma
