@@ -21,14 +21,13 @@ module Synvert::Core::NodeQuery::Compiler
     # Query nodes by the selector and the rest expression.
     #
     # @param node [Parser::AST::Node] node to match
-    # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
-    def query_nodes(node, descendant_match = true)
-      matching_nodes = @selector.query_nodes(node, descendant_match)
+    def query_nodes(node)
+      matching_nodes = @selector.query_nodes(node)
       return matching_nodes if @rest.nil?
 
       matching_nodes.flat_map do |matching_node|
-        @rest.query_nodes(matching_node, descendant_match)
+        @rest.query_nodes(matching_node)
       end
     end
 

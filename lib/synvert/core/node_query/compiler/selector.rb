@@ -34,20 +34,19 @@ module Synvert::Core::NodeQuery::Compiler
     # * If relationship is next sibling, it try to match next sibling node.
     # * If relationship is subsequent sibling, it will match in all sibling nodes.
     # @param node [Parser::AST::Node] node to match
-    # @param descendant_match [Boolean] whether to match in descendant node
     # @return [Array<Parser::AST::Node>] matching nodes.
-    def query_nodes(node, descendant_match = true)
+    def query_nodes(node)
       return find_nodes_by_relationship(node) if @relationship
 
       if node.is_a?(::Array)
-        return node.flat_map { |child_node| query_nodes(child_node, descendant_match) }
+        return node.flat_map { |child_node| query_nodes(child_node) }
       end
 
       return find_nodes_by_goto_scope(node) if @goto_scope
 
       nodes = []
       nodes << node if match?(node)
-      if descendant_match && @basic_selector
+      if @basic_selector
         node.recursive_children do |child_node|
           nodes << child_node if match?(child_node)
         end
@@ -71,7 +70,7 @@ module Synvert::Core::NodeQuery::Compiler
     # @param node [Parser::AST::Node] node to match
     def find_nodes_by_goto_scope(node)
       @goto_scope.split('.').each { |scope| node = node.send(scope) }
-      @rest.query_nodes(node, false)
+      @rest.query_nodes(node)
     end
 
     # Find ndoes by @relationship
