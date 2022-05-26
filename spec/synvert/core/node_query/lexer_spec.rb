@@ -246,9 +246,7 @@ module Synvert::Core::NodeQuery
           [:tOPEN_ATTRIBUTE, "["],
           [:tKEY, "key"],
           [:tOPERATOR, "=="],
-          [:tOPEN_DYNAMIC_ATTRIBUTE, "{{"],
           [:tDYNAMIC_ATTRIBUTE, "value"],
-          [:tCLOSE_DYNAMIC_ATTRIBUTE, "}}"],
           [:tCLOSE_ATTRIBUTE, "]"]
         ]
         assert_tokens source, expected_tokens

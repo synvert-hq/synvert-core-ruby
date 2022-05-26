@@ -1,8 +1,7 @@
 class Synvert::Core::NodeQuery::Parser
 options no_result_var
 token tNODE_TYPE tGOTO_SCOPE tATTRIBUTE tKEY tIDENTIFIER tIDENTIFIER_VALUE tPSEUDO_CLASS tRELATIONSHIP
-      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_DYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE
-      tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
+      tOPEN_ATTRIBUTE tCLOSE_ATTRIBUTE tOPEN_ARRAY tCLOSE_ARRAY tOPEN_SELECTOR tCLOSE_SELECTOR
       tOPERATOR tARRAY_VALUE tDYNAMIC_ATTRIBUTE tBOOLEAN tFLOAT tINTEGER tNIL tREGEXP tSTRING tSYMBOL
 rule
   expression
@@ -34,7 +33,7 @@ rule
 
   value
     : basic_selector
-    | tOPEN_DYNAMIC_ATTRIBUTE tDYNAMIC_ATTRIBUTE tCLOSE_DYNAMIC_ATTRIBUTE { Compiler::DynamicAttribute.new(value: val[1]) }
+    | tDYNAMIC_ATTRIBUTE { Compiler::DynamicAttribute.new(value: val[0]) }
     | tBOOLEAN { Compiler::Boolean.new(value: val[0]) }
     | tFLOAT { Compiler::Float.new(value: val[0]) }
     | tINTEGER { Compiler::Integer.new(value: val[0])}

@@ -58,7 +58,7 @@ rules
 :VALUE              /\[\]/                        { [:tIDENTIFIER_VALUE, text] }
 :VALUE              /:\[\]=/                      { [:tSYMBOL, text[1..-1].to_sym] }
 :VALUE              /:\[\]/                       { [:tSYMBOL, text[1..-1].to_sym] }
-:VALUE              /#{OPEN_DYNAMIC_ATTRIBUTE}/   { @state = :DYNAMIC_ATTRIBUTE; [:tOPEN_DYNAMIC_ATTRIBUTE, text] }
+:VALUE              /{{#{IDENTIFIER}}}/           { [:tDYNAMIC_ATTRIBUTE, text[2..-3]] }
 :VALUE              /#{OPEN_ARRAY}/               { @state = :ARRAY_VALUE; [:tOPEN_ARRAY, text] }
 :VALUE              /#{CLOSE_ATTRIBUTE}/          { @nested_count -= 1; @state = @nested_count == 0 ? nil : :VALUE; [:tCLOSE_ATTRIBUTE, text] }
 :VALUE              /#{NIL}\?/                    { [:tIDENTIFIER_VALUE, text] }
@@ -74,8 +74,6 @@ rules
 :VALUE              /#{NODE_TYPE}/                { [:tNODE_TYPE, text[1..]] }
 :VALUE              /#{OPEN_ATTRIBUTE}/           { @nested_count += 1; @state = :KEY; [:tOPEN_ATTRIBUTE, text] }
 :VALUE              /#{IDENTIFIER_VALUE}/         { [:tIDENTIFIER_VALUE, text] }
-:DYNAMIC_ATTRIBUTE  /#{CLOSE_DYNAMIC_ATTRIBUTE}/  { @state = :VALUE; [:tCLOSE_DYNAMIC_ATTRIBUTE, text] }
-:DYNAMIC_ATTRIBUTE  /#{IDENTIFIER}/               { [:tDYNAMIC_ATTRIBUTE, text] }
 :ARRAY_VALUE        /\s+/
 :ARRAY_VALUE        /#{CLOSE_ARRAY}/              { @state = :VALUE; [:tCLOSE_ARRAY, text] }
 :ARRAY_VALUE        /#{NIL}\?/                    { [:tIDENTIFIER_VALUE, text] }
