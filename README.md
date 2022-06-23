@@ -8,29 +8,46 @@
 Synvert core provides a set of DSLs to rewrite ruby code. e.g.
 
 ```ruby
-Synvert::Rewriter.new 'ruby', 'map_and_flatten_to_flat_map' do
+Synvert::Rewriter.new 'factory_bot', 'convert_factory_girl_to_factory_bot' do
   description <<~EOS
-    It converts `map` and `flatten` to `flat_map`
+    It converts FactoryGirl to FactoryBot
 
     ```ruby
-    enum.map do
-      # do something
-    end.flatten
+    require 'factory_girl'
+    require 'factory_girl_rails'
     ```
 
     =>
 
     ```ruby
-    enum.flat_map do
-      # do something
-    end
+    require 'factory_bot'
+    require 'factory_bot_rails'
+    ```
+
+    ```ruby
+    FactoryGirl.create(:user)
+    FactoryGirl.build(:user)
+    ```
+
+    =>
+
+    ```ruby
+    FactoryBot.create(:user)
+    FactoryBot.build(:user)
     ```
   EOS
 
-  within_files Synvert::ALL_RUBY_FILES do
-    with_node type: 'send', receiver: { type: 'block', caller: { type: 'send', message: 'map' } }, message: 'flatten', arguments: { size: 0 } do
-      delete :message, :dot
-      replace 'receiver.caller.message', with: 'flat_map'
+  within_files Synvert::RAILS_TEST_FILES do
+    find_node '.const[name=FactoryGirl]' do
+      replace_with 'FactoryBot'
+    end
+
+    find_node ".send[receiver=nil][message=require][arguments.size=1][arguments.first='factory_girl']" do
+      replace :arguments, with: "'factory_bot'"
+    end
+
+    with_node type: 'send', receiver: nil, message: 'require', arguments: { size: 1, first: "'factory_girl_rails'" } do
+      replace :arguments, with: "'factory_bot_rails'"
     end
   end
 end
@@ -56,6 +73,7 @@ DSLs are as follows
 
 Scopes:
 
+* [find_node](./Synvert/Core/Rewriter/Instance.html#find_node-instance_method) - recursively find matching ast nodes by node query language
 * [within_node](./Synvert/Core/Rewriter/Instance.html#within_node-instance_method) - recursively find matching ast nodes
 * [with_node](./Synvert/Core/Rewriter/Instance.html#with_node-instance_method) - alias to within_node
 * [goto_node](./Synvert/Core/Rewriter/Instance.html#goto_node-instance_method) - go to a child node
