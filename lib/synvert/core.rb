@@ -4,14 +4,16 @@ require 'synvert/core/version'
 require 'bundler'
 require 'parser'
 require 'parser/current'
+require_relative './core/array_ext'
+require_relative './core/node_ext'
+require 'parser_node_ext'
 require 'ast'
 require 'active_support'
 require 'active_support/core_ext/object'
 require 'active_support/core_ext/array'
 require 'erubis'
 require 'set'
-require 'synvert/core/array_ext'
-require 'synvert/core/node_ext'
+require 'node_query'
 
 module Synvert
   module Core
@@ -20,7 +22,6 @@ module Synvert
     autoload :Engine, 'synvert/core/engine'
     autoload :RewriterNotFound, 'synvert/core/exceptions'
     autoload :MethodNotSupported, 'synvert/core/exceptions'
-    autoload :NodeQuery, 'synvert/core/node_query'
   end
 end
 

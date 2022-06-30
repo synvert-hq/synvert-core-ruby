@@ -7,9 +7,6 @@ gemspec
 
 gem "guard"
 gem "guard-rspec"
-gem "guard-rake"
-gem "oedipus_lex"
-gem "racc"
 gem "rake"
 gem "rspec"
 gem "rspec-mocks"

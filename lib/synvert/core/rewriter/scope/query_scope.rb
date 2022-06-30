@@ -23,13 +23,13 @@ module Synvert::Core
       return unless current_node
 
       @instance.process_with_node(current_node) do
-        NodeQuery::Parser.new.parse(@query_string).query_nodes(current_node).each do |node|
+        NodeQuery.new(@query_string).parse(current_node).each do |node|
           @instance.process_with_node(node) do
             @instance.instance_eval(&@block)
           end
         end
       end
-    rescue NodeQuery::Lexer::ScanError, Racc::ParseError => e
+    rescue NodeQueryLexer::ScanError, Racc::ParseError => e
       raise NodeQuery::Compiler::ParseError, "Invalid query string: #{@query_string}"
     end
   end

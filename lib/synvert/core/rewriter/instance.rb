@@ -407,7 +407,7 @@ module Synvert::Core
 
         process_with_node(ast) do
           instance_eval(&@block)
-        rescue NoMethodError
+        rescue NoMethodError => e
           puts @current_node.debug_info
           raise
         end

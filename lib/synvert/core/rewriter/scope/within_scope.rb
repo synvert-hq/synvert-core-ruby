@@ -69,13 +69,13 @@ module Synvert::Core
       matching_nodes = []
       if current_node.is_a?(Parser::AST::Node)
         matching_nodes << current_node if current_node.match?(@rules)
-        current_node.recursive_children do |child_node|
+        NodeQuery::Helper.handle_recursive_child(current_node) do |child_node|
           matching_nodes << child_node if child_node.match?(@rules)
         end
       else
         current_node.each do |node|
           matching_nodes << node if node.match?(@rules)
-          node.recursive_children do |child_node|
+          NodeQuery::Helper.handle_recursive_child(node) do |child_node|
             matching_nodes << child_node if child_node.match?(@rules)
           end
         end
@@ -93,7 +93,7 @@ module Synvert::Core
           matching_nodes << current_node
           return matching_nodes
         end
-        current_node.recursive_children do |child_node|
+        NodeQuery::Helper.handle_recursive_child(current_node) do |child_node|
           if child_node.match?(@rules)
             matching_nodes << child_node
             next :stop
@@ -105,7 +105,7 @@ module Synvert::Core
             matching_nodes << node
             next
           end
-          node.recursive_children do |child_node|
+          NodeQuery::Helper.handle_recursive_child(node) do |child_node|
             if child_node.match?(@rules)
               matching_nodes << child_node
               next :stop

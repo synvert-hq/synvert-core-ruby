@@ -10,7 +10,7 @@ module Synvert::Core
     # return [Boolean]
     def match?
       match = false
-      @instance.current_node.recursive_children do |child_node|
+      NodeQuery::Helper.handle_recursive_child(@instance.current_node) do |child_node|
         match ||= child_node&.match?(@rules)
       end
       !match
