@@ -14,6 +14,7 @@ require 'active_support/core_ext/array'
 require 'erubis'
 require 'set'
 require 'node_query'
+require 'node_mutation'
 
 module Synvert
   module Core

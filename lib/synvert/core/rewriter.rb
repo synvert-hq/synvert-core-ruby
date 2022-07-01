@@ -8,18 +8,6 @@ module Synvert::Core
   # One Rewriter checks if the depndency version matches, and it can contain one or many {Synvert::Core::Rewriter::Instance},
   # which define the behavior what files and what codes to detect and rewrite to what code.
   class Rewriter
-    autoload :Action, 'synvert/core/rewriter/action'
-    autoload :AppendAction, 'synvert/core/rewriter/action/append_action'
-    autoload :DeleteAction, 'synvert/core/rewriter/action/delete_action'
-    autoload :InsertAction, 'synvert/core/rewriter/action/insert_action'
-    autoload :InsertAfterAction, 'synvert/core/rewriter/action/insert_after_action'
-    autoload :RemoveAction, 'synvert/core/rewriter/action/remove_action'
-    autoload :PrependAction, 'synvert/core/rewriter/action/prepend_action'
-    autoload :ReplaceAction, 'synvert/core/rewriter/action/replace_action'
-    autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
-    autoload :ReplaceWithAction, 'synvert/core/rewriter/action/replace_with_action'
-    autoload :WrapAction, 'synvert/core/rewriter/action/wrap_action'
-
     autoload :Warning, 'synvert/core/rewriter/warning'
 
     autoload :Instance, 'synvert/core/rewriter/instance'

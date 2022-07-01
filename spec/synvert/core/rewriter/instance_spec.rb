@@ -4,8 +4,6 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::Instance do
-    before { Rewriter::Instance.reset }
-
     let(:instance) {
       rewriter = Rewriter.new('foo', 'bar')
       Rewriter::Instance.new(rewriter, ['file pattern'])
@@ -98,97 +96,73 @@ module Synvert::Core
     end
 
     it 'parses append' do
-      action = double
-      expect(Rewriter::AppendAction).to receive(:new).with(
-        instance,
-        'include FactoryGirl::Syntax::Methods'
-      ).and_return(action)
-      expect(action).to receive(:process)
-      instance.append 'include FactoryGirl::Syntax::Methods'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:append).with(instance.current_node, 'Foobar')
+      instance.append 'Foobar'
     end
 
     it 'parses prepend' do
-      action = double
-      expect(Rewriter::PrependAction).to receive(:new).with(
-        instance,
-        '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-      ).and_return(action)
-      expect(action).to receive(:process)
-      instance.prepend '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:prepend).with(instance.current_node, 'Foobar')
+      instance.prepend 'Foobar'
     end
 
     it 'parses insert at end' do
-      action = double
-      expect(Rewriter::InsertAction).to receive(:new).with(
-        instance,
-        '.first',
-        at: 'end',
-        to: 'receiver'
-      ).and_return(action)
-      expect(action).to receive(:process)
-      instance.insert '.first', to: 'receiver'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, 'Foobar', at: 'end', to: 'receiver')
+      instance.insert 'Foobar', to: 'receiver'
     end
 
     it 'parses insert at beginning' do
-      action = double
-      expect(Rewriter::InsertAction).to receive(:new).with(
-        instance,
-        'URI.',
-        at: 'beginning',
-        to: nil
-      ).and_return(action)
-      expect(action).to receive(:process)
-      instance.insert 'URI.', at: 'beginning'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, 'Foobar', at: 'beginning', to: nil)
+      instance.insert 'Foobar', at: 'beginning'
     end
 
     it 'parses insert_after' do
-      action = double
-      expect(Rewriter::InsertAfterAction).to receive(:new).with(
-        instance,
-        '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-      ).and_return(action)
-      expect(action).to receive(:process)
-      instance.insert_after '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:insert_after).with(instance.current_node, 'Foobar')
+      instance.insert_after 'Foobar'
     end
 
     it 'parses replace_with' do
-      action = double
-      expect(Rewriter::ReplaceWithAction).to receive(:new).with(instance, 'create {{arguments}}').and_return(action)
-      expect(action).to receive(:process)
-      instance.replace_with 'create {{arguments}}'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:replace_with).with(instance.current_node, 'Foobar')
+      instance.replace_with 'Foobar'
     end
 
     it 'parses replace with' do
-      action = double
-      expect(Rewriter::ReplaceAction).to receive(:new).with(instance, :message, with: 'test').and_return(action)
-      expect(action).to receive(:process)
-      instance.replace :message, with: 'test'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:replace).with(instance.current_node, :message, with: 'Foobar')
+      instance.replace :message, with: 'Foobar'
     end
 
     it 'parses remove' do
-      action = double
-      expect(Rewriter::RemoveAction).to receive(:new).with(instance, { and_comma: true }).and_return(action)
-      expect(action).to receive(:process)
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:remove).with(instance.current_node, and_comma: true)
       instance.remove and_comma: true
     end
 
-    it 'parses remove' do
-      action = double
-      expect(Rewriter::DeleteAction).to receive(:new).with(
-        instance,
-        :dot,
-        :message,
-        { and_comma: true }
-      ).and_return(action)
-      expect(action).to receive(:process)
+    it 'parses delete' do
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:delete).with(instance.current_node, :dot, :message, and_comma: true)
       instance.delete :dot, :message, and_comma: true
     end
 
     it 'parses wrap with' do
-      action = double
-      expect(Rewriter::WrapAction).to receive(:new).with(instance, with: 'module Foo', indent: nil).and_return(action)
-      expect(action).to receive(:process)
-      instance.wrap with: 'module Foo'
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:wrap).with(instance.current_node, with: 'module Foobar')
+      instance.wrap with: 'module Foobar'
     end
 
     it 'parses warn' do
@@ -251,32 +225,6 @@ module Synvert::Core
         instance.process
       end
 
-      it 'does not read file if already read' do
-        instance =
-          Rewriter::Instance.new rewriter, ['spec/spec_helper.rb'] do
-            with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
-              unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
-                insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
-              end
-            end
-          end
-        input = <<~EOS
-          RSpec.configure do |config|
-            config.include FactoryGirl::Syntax::Methods
-          end
-        EOS
-        output = <<~EOS
-          RSpec.configure do |config|
-            config.include FactoryGirl::Syntax::Methods
-          end
-        EOS
-        expect(Dir).to receive(:glob).with('./spec/spec_helper.rb').and_return(['spec/spec_helper.rb']).twice
-        expect(File).to receive(:read).with('spec/spec_helper.rb', encoding: 'UTF-8').and_return(input).once
-        expect(File).not_to receive(:write).with('spec/spec_helper.rb', output)
-        instance.process
-        instance.process
-      end
-
       it 'updates file_source and file_ast when writing a file' do
         instance =
           Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
@@ -305,32 +253,6 @@ module Synvert::Core
         instance.process
         instance.process
         expect(rewriter.affected_files).to be_include('spec/models/post_spec.rb')
-      end
-    end
-
-    describe '#get_conflict_actions' do
-      let(:rewriter) { Rewriter.new('foo', 'bar') }
-
-      it 'has no conflict' do
-        action1 = double(begin_pos: 10, end_pos: 20)
-        action2 = double(begin_pos: 30, end_pos: 40)
-        action3 = double(begin_pos: 50, end_pos: 60)
-        instance = Rewriter::Instance.new rewriter, ['spec/spec_helper.rb']
-        instance.instance_variable_set :@actions, [action1, action2, action3]
-        conflict_actions = instance.send(:get_conflict_actions)
-        expect(conflict_actions).to eq []
-        expect(instance.instance_variable_get(:@actions)).to eq [action1, action2, action3]
-      end
-
-      it 'has no conflict' do
-        action1 = double(begin_pos: 30, end_pos: 40)
-        action2 = double(begin_pos: 50, end_pos: 60)
-        action3 = double(begin_pos: 10, end_pos: 20)
-        instance = Rewriter::Instance.new rewriter, ['spec/spec_helper.rb']
-        instance.instance_variable_set :@actions, [action1, action2, action3]
-        conflict_actions = instance.send(:get_conflict_actions)
-        expect(conflict_actions).to eq [action2, action1]
-        expect(instance.instance_variable_get(:@actions)).to eq [action3]
       end
     end
 

@@ -18,10 +18,7 @@ module Synvert::Core
 
     let(:node) { Parser::CurrentRuby.parse(source) }
 
-    before do
-      Rewriter::Instance.reset
-      instance.current_node = node
-    end
+    before { instance.current_node = node }
 
     describe '#process' do
       it 'not call block if no matching node' do

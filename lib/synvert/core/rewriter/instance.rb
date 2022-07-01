@@ -20,66 +20,13 @@ module Synvert::Core
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 
-    class << self
-      # Get file source.
-      #
-      # @param file_path [String] file path
-      # @return [String] file source
-      def file_source(file_path)
-        @file_source ||= {}
-        @file_source[file_path] ||=
-          begin
-            source = File.read(file_path, encoding: 'UTF-8')
-            source = Engine::ERB.encode(source) if /\.erb$/.match?(file_path)
-            source
-          end
-      end
-
-      # Get file ast.
-      #
-      # @param file_path [String] file path
-      # @return [String] ast node for file
-      def file_ast(file_path)
-        @file_ast ||= {}
-        @file_ast[file_path] ||=
-          begin
-            buffer = Parser::Source::Buffer.new file_path
-            buffer.source = file_source(file_path)
-
-            parser = Parser::CurrentRuby.new
-            parser.reset
-            parser.parse buffer
-          end
-      end
-
-      # Write source to file and remove cached file source and ast.
-      #
-      # @param file_path [String] file path
-      # @param source [String] file source
-      def write_file(file_path, source)
-        source = Engine::ERB.decode(source) if /\.erb/.match?(file_path)
-        File.write(file_path, source.gsub(/ +\n/, "\n"))
-        @file_source[file_path] = nil
-        @file_ast[file_path] = nil
-      end
-
-      # Reset file source and ast.
-      def reset
-        @file_source = {}
-        @file_ast = {}
-      end
-    end
-
     # @!attribute [rw] current_node
     #   @return current parsing node
     # @!attribute [rw] current_file
     #   @return current filename
-    attr_accessor :current_node, :current_file
-
-    # Current file source
-    def file_source
-      self.class.file_source(current_file)
-    end
+    # @!attribute [rw] current_mutation
+    #   @return current mutation
+    attr_accessor :current_node, :current_file, :current_mutation
 
     # Process the instance.
     # It finds specified files, for each file, it executes the block code, rewrites the original code,
@@ -231,7 +178,7 @@ module Synvert::Core
     #   end
     # @param code [String] code need to be appended.
     def append(code)
-      @actions << Rewriter::AppendAction.new(self, code).process
+      @current_mutation.append(@current_node, code)
     end
 
     # Parse +prepend+ dsl, it creates a {Synvert::Core::Rewriter::PrependAction} to
@@ -250,7 +197,7 @@ module Synvert::Core
     #   end
     # @param code [String] code need to be prepended.
     def prepend(code)
-      @actions << Rewriter::PrependAction.new(self, code).process
+      @current_mutation.prepend(@current_node, code)
     end
 
     # Parse +insert+ dsl, it creates a {Synvert::Core::Rewriter::InsertAction} to insert code.
@@ -265,7 +212,7 @@ module Synvert::Core
     # @param at [String] insert position, beginning or end
     # @param to [String] where to insert, if it is nil, will insert to current node.
     def insert(code, at: 'end', to: nil)
-      @actions << Rewriter::InsertAction.new(self, code, at: at, to: to).process
+      @current_mutation.insert(@current_node, code, at: at, to: to)
     end
 
     # Parse +insert_after+ dsl, it creates a {Synvert::Core::Rewriter::InsertAfterAction} to
@@ -280,7 +227,7 @@ module Synvert::Core
     #   end
     # @param code [String] code need to be inserted.
     def insert_after(code)
-      @actions << Rewriter::InsertAfterAction.new(self, code).process
+      @current_mutation.insert_after(@current_node, code)
     end
 
     # Parse +replace_with+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceWithAction} to
@@ -294,7 +241,7 @@ module Synvert::Core
     #   end
     # @param code [String] code need to be replaced with.
     def replace_with(code)
-      @actions << Rewriter::ReplaceWithAction.new(self, code).process
+      @current_mutation.replace_with(@current_node, code)
     end
 
     # Parse +replace+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceAction} to
@@ -310,22 +257,7 @@ module Synvert::Core
     # @param selectors [Array<Symbol>] selector names of child node.
     # @param with [String] code need to be replaced with.
     def replace(*selectors, with:)
-      @actions << Rewriter::ReplaceAction.new(self, *selectors, with: with).process
-    end
-
-    # Parse +replace_erb_stmt_with_expr+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
-    # replace erb stmt code to expr code.
-    # @example
-    #   # <% form_for post do |f| %>
-    #   # <% end %>
-    #   # =>
-    #   # <%= form_for post do |f| %>
-    #   # <% end %>
-    #   with_node type: 'block', caller: { type: 'send', receiver: nil, message: 'form_for' } do
-    #     replace_erb_stmt_with_expr
-    #   end
-    def replace_erb_stmt_with_expr
-      @actions << Rewriter::ReplaceErbStmtWithExprAction.new(self).process
+      @current_mutation.replace(@current_node, *selectors, with: with)
     end
 
     # Parse +remove+ dsl, it creates a {Synvert::Core::Rewriter::RemoveAction} to remove current node.
@@ -336,7 +268,7 @@ module Synvert::Core
     # @param options [Hash] options.
     # @option and_comma [Boolean] delete extra comma.
     def remove(**options)
-      @actions << Rewriter::RemoveAction.new(self, **options).process
+      @current_mutation.remove(@current_node, **options)
     end
 
     # Parse +delete+ dsl, it creates a {Synvert::Core::Rewriter::DeleteAction} to delete child nodes.
@@ -351,7 +283,7 @@ module Synvert::Core
     # @param options [Hash]
     # @option and_comma [Boolean] delete extra comma.
     def delete(*selectors, **options)
-      @actions << Rewriter::DeleteAction.new(self, *selectors, **options).process
+      @current_mutation.delete(@current_node, *selectors, **options)
     end
 
     # Parse +wrap+ dsl, it creates a {Synvert::Core::Rewriter::WrapAction} to
@@ -368,9 +300,8 @@ module Synvert::Core
     #     wrap with: 'module Synvert'
     #   end
     # @param with [String] code need to be wrapped with.
-    # @param indent [Integer, nil] number of whitespaces.
-    def wrap(with:, indent: nil)
-      @actions << Rewriter::WrapAction.new(self, with: with, indent: indent).process
+    def wrap(with:)
+      @current_mutation.wrap(@current_node, with: with)
     end
 
     # Parse +warn+ dsl, it creates a {Synvert::Core::Rewriter::Warning} to save warning message.
@@ -397,65 +328,48 @@ module Synvert::Core
     #
     # @param file_path [String]
     def process_file(file_path)
-      begin
-        puts file_path if Configuration.show_run_process
-        conflict_actions = []
-        source = +self.class.file_source(file_path)
-        ast = self.class.file_ast(file_path)
+      puts file_path if Configuration.show_run_process
 
-        @current_file = file_path
+      @current_file = file_path
+      while true
+        source = File.read(file_path, encoding: 'UTF-8')
+        @current_mutation = NodeMutation.new(file_path, source)
+        begin
+          node = parse_code(file_path, source)
 
-        process_with_node(ast) do
-          instance_eval(&@block)
-        rescue NoMethodError => e
-          puts @current_node.debug_info
-          raise
-        end
-
-        if @actions.length > 0
-          @actions.sort_by! { |action| [action.begin_pos, action.end_pos] }
-          conflict_actions = get_conflict_actions
-          @actions.reverse_each do |action|
-            source[action.begin_pos...action.end_pos] = action.rewritten_code
+          process_with_node(node) do
+            instance_eval(&@block)
+          rescue NoMethodError => e
+            puts node.debug_info
+            raise
           end
-          @actions = []
 
-          update_file(file_path, source)
+          unless @current_mutation.actions.empty?
+            @rewriter.add_affected_file(file_path)
+          end
+          result = @current_mutation.process
+          unless result.conflict
+            break
+          end
+        rescue Parser::SyntaxError
+          puts "[Warn] file #{file_path} was not parsed correctly."
+          # do nothing, iterate next file
         end
-      rescue Parser::SyntaxError
-        puts "[Warn] file #{file_path} was not parsed correctly."
-        # do nothing, iterate next file
-      end while !conflict_actions.empty?
-    end
-
-    # It changes source code from bottom to top, and it can change source code twice at the same time,
-    # So if there is an overlap between two actions, it removes the conflict actions and operate them in the next loop.
-    def get_conflict_actions
-      i = @actions.length - 1
-      j = i - 1
-      conflict_actions = []
-      return if i < 0
-
-      begin_pos = @actions[i].begin_pos
-      while j > -1
-        if begin_pos < @actions[j].end_pos
-          conflict_actions << @actions.delete_at(j)
-        else
-          i = j
-          begin_pos = @actions[i].begin_pos
-        end
-        j -= 1
       end
-      conflict_actions
     end
 
-    # It updates a file with new source code.
+    # Parse code ast node.
     #
-    # @param file_path [String] the file path
-    # @param source [String] the new source code
-    def update_file(file_path, source)
-      self.class.write_file(file_path, source)
-      @rewriter.add_affected_file(file_path)
+    # @param file_path [String] file path
+    # @param file_path [String] file path
+    # @return [Node] ast node for file
+    def parse_code(file_path, source)
+      buffer = Parser::Source::Buffer.new file_path
+      buffer.source = source
+
+      parser = Parser::CurrentRuby.new
+      parser.reset
+      parser.parse buffer
     end
   end
 end

@@ -15,7 +15,3 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-
-lib/synvert/core/node_query/lexer.rex.rb
-lib/synvert/core/node_query/parser.racc.rb
-lib/synvert/core/node_query/parser.output

@@ -14,10 +14,7 @@ module Synvert::Core
     EOS
 
     let(:node) { Parser::CurrentRuby.parse(source) }
-    before do
-      Rewriter::Instance.reset
-      instance.current_node = node
-    end
+    before { instance.current_node = node }
 
     describe '#process' do
       it 'call block with child node' do
