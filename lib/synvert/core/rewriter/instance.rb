@@ -230,6 +230,21 @@ module Synvert::Core
       @current_mutation.insert_after(@current_node, code)
     end
 
+    # Parse +replace_erb_stmt_with_expr+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
+    # replace erb stmt code to expr code.
+    # @example
+    #   # <% form_for post do |f| %>
+    #   # <% end %>
+    #   # =>
+    #   # <%= form_for post do |f| %>
+    #   # <% end %>
+    #   with_node type: 'block', caller: { type: 'send', receiver: nil, message: 'form_for' } do
+    #     replace_erb_stmt_with_expr
+    #   end
+    def replace_erb_stmt_with_expr
+      @current_mutation.actions << Rewriter::ReplaceErbStmtWithExprAction.new(@current_node).process
+    end
+
     # Parse +replace_with+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceWithAction} to
     # replace the whole code of current node.
     # @example
@@ -332,8 +347,8 @@ module Synvert::Core
 
       @current_file = file_path
       while true
-        source = File.read(file_path, encoding: 'UTF-8')
-        @current_mutation = NodeMutation.new(file_path, source)
+        source = read_source(file_path)
+        @current_mutation = NodeMutation.new(source)
         begin
           node = parse_code(file_path, source)
 
@@ -349,18 +364,34 @@ module Synvert::Core
             raise
           end
 
-          unless @current_mutation.actions.empty?
-            @rewriter.add_affected_file(file_path)
-          end
           result = @current_mutation.process
-          unless result.conflict
-            break
+          if result.affected?
+            @rewriter.add_affected_file(file_path)
+            write_source(file_path, result.new_source)
           end
+          break unless result.conflicted?
         rescue Parser::SyntaxError
           puts "[Warn] file #{file_path} was not parsed correctly."
           # do nothing, iterate next file
         end
       end
+    end
+
+    # Read file source.
+    # @param file_path [String] file path
+    # @return [String] file source
+    def read_source(file_path)
+      source = File.read(file_path, encoding: 'UTF-8')
+      source = Engine::Erb.encode(source) if /\.erb$/.match?(file_path)
+      source
+    end
+
+    # Write file source to file.
+    # @param file_path [String] file path
+    # @param source [String] file source
+    def write_source(file_path, source)
+      source = Engine::Erb.decode(source) if /\.erb/.match?(file_path)
+      File.write(file_path, source.gsub(/ +\n/, "\n"))
     end
 
     # Parse code ast node.

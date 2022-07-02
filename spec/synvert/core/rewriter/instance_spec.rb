@@ -130,6 +130,16 @@ module Synvert::Core
       instance.insert_after 'Foobar'
     end
 
+    it 'parses replace_erb_stmt_with_expr' do
+      instance.current_mutation = double
+      instance.current_node = double
+      action = double
+      expect(instance.current_mutation).to receive(:actions).and_return([])
+      expect(Rewriter::ReplaceErbStmtWithExprAction).to receive(:new).with(instance.current_node).and_return(action)
+      expect(action).to receive(:process)
+      instance.replace_erb_stmt_with_expr
+    end
+
     it 'parses replace_with' do
       instance.current_mutation = double
       instance.current_node = double
