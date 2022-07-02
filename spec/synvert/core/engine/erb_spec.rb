@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Synvert::Core
-  describe Engine::ERB do
+  describe Engine::Erb do
     it 'encodes / decodes' do
       source = <<~EOF
         <%content_for :head do%>
@@ -34,14 +34,14 @@ module Synvert::Core
           <% end %>
         <% end %>
       EOF
-      encoded_source = Engine::ERB.encode(source)
+      encoded_source = Engine::Erb.encode(source)
       buffer = Parser::Source::Buffer.new '(test)'
       buffer.source = encoded_source
       parser = Parser::CurrentRuby.new
       parser.reset
       parser.parse buffer
 
-      expect(Engine::ERB.decode(encoded_source)).to eq source
+      expect(Engine::Erb.decode(encoded_source)).to eq source
     end
   end
 end

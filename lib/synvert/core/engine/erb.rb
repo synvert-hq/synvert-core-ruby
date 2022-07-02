@@ -7,7 +7,7 @@ module Synvert::Core
     ERUBY_EXPR_SPLITTER = ';  ;'
     ERUBY_STMT_SPLITTER = ';   ;'
 
-    class ERB
+    class Erb
       class << self
         # convert erb to ruby code.
         #
