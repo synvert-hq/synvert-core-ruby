@@ -8,6 +8,8 @@ module Synvert::Core
   # One Rewriter checks if the depndency version matches, and it can contain one or many {Synvert::Core::Rewriter::Instance},
   # which define the behavior what files and what codes to detect and rewrite to what code.
   class Rewriter
+    autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
+
     autoload :Warning, 'synvert/core/rewriter/warning'
 
     autoload :Instance, 'synvert/core/rewriter/instance'
