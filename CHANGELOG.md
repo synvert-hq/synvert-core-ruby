@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.5.0 (2022-07-02)
+
+* Abstract `node_query`
+* Abstract `node_mutation`
+* Abstract `parser_node_ext`
+
 ## 1.4.0 (2022-05-21)
 
 * Drop support `:first-child` and `:last-child`
