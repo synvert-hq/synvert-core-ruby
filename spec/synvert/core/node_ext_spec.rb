@@ -232,47 +232,4 @@ describe Parser::AST::Node do
       end
     end
   end
-
-  describe '#to_hash' do
-    it 'gets hash' do
-      node = parse(<<~EOS)
-        class Synvert
-          def foobar(foo, bar)
-            { foo => bar }
-          end
-        end
-      EOS
-      expect(node.to_hash).to eq(
-        {
-          type: :class,
-          parent_class: nil,
-          name: {
-            type: :const,
-            parent_const: nil,
-            name: :Synvert
-          },
-          body: [
-            {
-              type: :def,
-              name: :foobar,
-              arguments: [
-                { type: :arg, name: :foo },
-                { type: :arg, name: :bar }
-              ],
-              body: [
-                {
-                  type: :hash,
-                  pairs: {
-                    type: :pair,
-                    key: { type: :lvar, name: :foo },
-                    value: { type: :lvar, name: :bar }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      )
-    end
-  end
 end

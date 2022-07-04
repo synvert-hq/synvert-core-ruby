@@ -162,28 +162,6 @@ module Parser::AST
       end
     end
 
-    # Convert node to a hash, so that it can be converted to a json.
-    def to_hash
-      result = { type: type }
-      if TYPE_CHILDREN[type]
-        TYPE_CHILDREN[type].each do |key|
-          value = send(key)
-          result[key] =
-            case value
-            when Array
-              value.map { |v| v.respond_to?(:to_hash) ? v.to_hash : v }
-            when Parser::AST::Node
-              value.to_hash
-            else
-              value
-            end
-        end
-      else
-        result[:children] = children.map { |c| c.respond_to?(:to_hash) ? c.to_hash : c }
-      end
-      result
-    end
-
     private
 
     # Compare actual value with expected value.
