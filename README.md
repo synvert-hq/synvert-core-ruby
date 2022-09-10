@@ -1,6 +1,6 @@
 # synvert-core-ruby
 
-<img src="https://synvert.xinminlabs.com/img/logo_96.png" alt="logo" width="32" height="32" />
+<img src="https://synvert.net/img/logo_96.png" alt="logo" width="32" height="32" />
 
 [![AwesomeCode Status for xinminlabs/synvert-core-ruby](https://awesomecode.io/projects/033f7f02-7b22-41c3-a902-fca37f1ec72a/status)](https://awesomecode.io/repos/xinminlabs/synvert-core-ruby)
 ![Main workflow](https://github.com/xinminlabs/synvert-core-ruby/actions/workflows/main.yml/badge.svg)
