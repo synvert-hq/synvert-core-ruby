@@ -30,7 +30,7 @@ module Synvert::Core
 
     # Process the instance.
     # It finds specified files, for each file, it executes the block code, rewrites the original code,
-    # then write the code back to the original file.
+    # then writes the code back to the original file.
     def process
       @file_patterns.each do |file_pattern|
         Dir.glob(File.join(Configuration.path, file_pattern)).each do |file_path|
@@ -38,6 +38,21 @@ module Synvert::Core
 
           process_file(file_path)
         end
+      end
+    end
+
+    # Test the instance.
+    # It finds specified files, for each file, it executes the block code, tests the original code,
+    # then returns the actions.
+    def test
+      paths = @file_patterns.flat_map do |file_pattern|
+        Dir.glob(File.join(Configuration.path, file_pattern))
+      end
+
+      paths.uniq.map do |file_path|
+        next if Configuration.skip_files.include?(file_path)
+
+        { file_path: file_path }.merge(test_file(file_path))
       end
     end
 
@@ -375,6 +390,35 @@ module Synvert::Core
           puts "[Warn] file #{file_path} was not parsed correctly."
           # do nothing, iterate next file
         end
+      end
+    end
+
+    # Test one file.
+    #
+    # @param file_path [String]
+    def test_file(file_path)
+      @current_file = file_path
+      source = read_source(file_path)
+      @current_mutation = NodeMutation.new(source)
+      begin
+        node = parse_code(file_path, source)
+
+        process_with_node(node) do
+          instance_eval(&@block)
+        rescue NoMethodError => e
+          puts [
+            "error: #{e.message}",
+            "file: #{file_path}",
+            "source: #{source}",
+            "line: #{current_node.line}"
+          ].join("\n")
+          raise
+        end
+
+        @current_mutation.test
+      rescue Parser::SyntaxError
+        puts "[Warn] file #{file_path} was not parsed correctly."
+        # do nothing, iterate next file
       end
     end
 

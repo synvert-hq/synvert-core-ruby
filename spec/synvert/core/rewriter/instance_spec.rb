@@ -267,6 +267,55 @@ module Synvert::Core
       end
     end
 
+    describe '#test' do
+      let(:rewriter) { Rewriter.new('foo', 'bar') }
+
+      it 'writes new code to file' do
+        instance =
+          Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
+            with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
+              replace_with 'create {{arguments}}'
+            end
+          end
+        input = <<~EOS
+          it 'uses factory_girl' do
+            user = FactoryGirl.create :user
+            post = FactoryGirl.create :post, user: user
+            assert post.valid?
+          end
+        EOS
+        expect(Dir).to receive(:glob).with('./spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
+        expect(File).to receive(:read).with('spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
+        result = instance.test
+        expect(result[0][:file_path]).to eq 'spec/models/post_spec.rb'
+        expect(result[0][:actions]).to eq [
+          { start: 35, end: 59, new_code: 'create :user' },
+          { start: 69, end: 105, new_code: 'create :post, user: user' }
+        ]
+      end
+
+      it 'does not write if file content is not changed' do
+        instance =
+          Rewriter::Instance.new rewriter, ['spec/spec_helper.rb'] do
+            with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
+              unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
+                insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
+              end
+            end
+          end
+        input = <<~EOS
+          RSpec.configure do |config|
+            config.include FactoryGirl::Syntax::Methods
+          end
+        EOS
+        expect(Dir).to receive(:glob).with('./spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
+        expect(File).to receive(:read).with('spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
+        result = instance.test
+        expect(result[0][:file_path]).to eq 'spec/spec_helper.rb'
+        expect(result[0][:actions]).to eq []
+      end
+    end
+
     describe '#process_with_node' do
       it 'resets current_node' do
         node1 = double
