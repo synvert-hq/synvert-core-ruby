@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.6.0 (2022-09-15)
+
+* Make use of `NodeQuery` to query nodes
+* Remove `Node#to_hash`
+* Downgrade `activesupport` to < 7.0.0
+
 ## 1.5.0 (2022-07-02)
 
 * Abstract `node_query`
