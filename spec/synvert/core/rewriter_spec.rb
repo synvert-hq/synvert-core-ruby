@@ -245,7 +245,7 @@ module Synvert::Core
       it 'registers and calls rewriter in sandbox mode' do
         rewriter = Rewriter.new 'group', 'rewriter'
         expect(rewriter).to receive(:process_with_sandbox)
-        Rewriter.call 'group', 'rewriter', true
+        Rewriter.call 'group', 'rewriter', run_instance: false
       end
 
       it 'raises RewriterNotFound if rewriter not found' do

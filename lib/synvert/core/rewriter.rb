@@ -72,15 +72,16 @@ module Synvert::Core
       #
       # @param group [String] the rewriter group.
       # @param name [String] the rewriter name.
-      # @param sandbox [Boolean] if run in sandbox mode.
+      # @param options [Hash]
+      # @option options [Boolean] :run_instance (true) process the instance.
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(group, name, sandbox = false)
+      def call(group, name, options = {})
         rewriter = fetch(group, name)
-        if sandbox
-          rewriter.process_with_sandbox
-        else
+        if options[:run_instance]
           rewriter.process
+        else
+          rewriter.process_with_sandbox
         end
         rewriter
       end
@@ -137,6 +138,7 @@ module Synvert::Core
       @warnings = []
       @affected_files = Set.new
       @redo_until_no_change = false
+      @options = { run_instance: true }
       self.class.register(@group, @name, self)
     end
 
@@ -152,11 +154,11 @@ module Synvert::Core
     # Process rewriter with sandbox mode.
     # It will call the block but doesn't change any file.
     def process_with_sandbox
-      @sandbox = true
+      @options[:run_instance] = false
       begin
         process
       ensure
-        @sandbox = false
+        @options[:run_instance] = true
       end
     end
 
@@ -225,7 +227,7 @@ module Synvert::Core
     # @param file_patterns [String|Array<String>] string pattern or list of string pattern to find files, e.g. ['spec/**/*_spec.rb']
     # @param block [Block] the block to rewrite code in the matching files.
     def within_files(file_patterns, &block)
-      return if @sandbox
+      return unless @options[:run_instance]
 
       return if @ruby_version && !@ruby_version.match?
       return if @gem_spec && !@gem_spec.match?
@@ -248,7 +250,7 @@ module Synvert::Core
     # @param filename [String] file name of newly created file.
     # @param content [String] file body of newly created file.
     def add_file(filename, content)
-      return if @sandbox
+      return unless @options[:run_instance]
 
       filepath = File.join(Configuration.path, filename)
       if File.exist?(filepath)
@@ -267,7 +269,7 @@ module Synvert::Core
     #   end
     # @param filename [String] file name.
     def remove_file(filename)
-      return if @sandbox
+      return unless @options[:run_instance]
 
       file_path = File.join(Configuration.path, filename)
       File.delete(file_path) if File.exist?(file_path)
@@ -293,7 +295,7 @@ module Synvert::Core
     # @param group [String] group of another rewriter.
     # @param name [String] name of another rewriter.
     def add_snippet(group, name)
-      @sub_snippets << self.class.call(group.to_s, name.to_s, @sandbox)
+      @sub_snippets << self.class.call(group.to_s, name.to_s, @options)
     end
 
     # Parse +helper_method+ dsl, it defines helper method for {Synvert::Core::Rewriter::Instance}.
