@@ -9,11 +9,7 @@ module Synvert::Core
     #
     # @return [Boolean]
     def match?
-      match = false
-      NodeQuery::Helper.handle_recursive_child(@instance.current_node) do |child_node|
-        match ||= child_node&.match?(@rules)
-      end
-      match
+      @node_query.query_nodes(target_node, including_self: false, stop_at_first_match: true).size > 0
     end
   end
 end

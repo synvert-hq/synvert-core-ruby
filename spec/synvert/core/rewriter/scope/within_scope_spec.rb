@@ -9,9 +9,11 @@ module Synvert::Core
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
     let(:source) { <<~EOS }
-      describe Post do
-        it 'gets post' do
-          FactoryGirl.create :post
+      describe User do
+        describe 'create' do
+          it 'creates user' do
+            FactoryGirl.create :user
+          end
         end
       end
     EOS
@@ -39,7 +41,7 @@ module Synvert::Core
                                     type: 'send',
                                     receiver: 'FactoryGirl',
                                     message: 'create',
-                                    arguments: [':post'] do
+                                    arguments: [':user'] do
             run = true
             type_in_scope = node.type
           end
@@ -52,27 +54,37 @@ module Synvert::Core
       it 'matches multiple block nodes' do
         block_nodes = []
         scope =
-          Rewriter::WithinScope.new(instance, { type: 'block' }, { stop_when_match: false }) do
+          Rewriter::WithinScope.new(instance, { type: 'block' }) do
+            block_nodes << node
+          end
+        scope.process
+        expect(block_nodes.size).to eq 3
+      end
+
+      it 'matches only 2 block nodes if including_self is false' do
+        block_nodes = []
+        scope =
+          Rewriter::WithinScope.new(instance, { type: 'block' }, { including_self: false }) do
             block_nodes << node
           end
         scope.process
         expect(block_nodes.size).to eq 2
       end
 
-      it 'matches only one block node if no recursive' do
+      it 'matches only one block node if recursive is false' do
         block_nodes = []
         scope =
-          Rewriter::WithinScope.new(instance, { type: 'block' }, { stop_when_match: true }) do
+          Rewriter::WithinScope.new(instance, { type: 'block' }, { recursive: false }) do
             block_nodes << node
           end
         scope.process
         expect(block_nodes.size).to eq 1
       end
 
-      it 'matches only one direct node' do
+      it 'matches only one block node if stop_at_first_match is true' do
         block_nodes = []
         scope =
-          Rewriter::WithinScope.new(instance, { type: 'block' }, { direct: true }) do
+          Rewriter::WithinScope.new(instance, { type: 'block' }, { stop_at_first_match: true }) do
             block_nodes << node
           end
         scope.process

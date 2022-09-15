@@ -55,18 +55,6 @@ module Synvert::Core
         expect(block_nodes.size).to eq 2
       end
 
-      it 'raises ParseError' do
-        scope = described_class.new(instance, 'synvert') {}
-        expect {
-          scope.process
-        }.to raise_error(NodeQuery::Compiler::ParseError)
-
-        scope = described_class.new(instance, '.block <caller.arguments> .hash') {}
-        expect {
-          scope.process
-        }.to raise_error(NodeQuery::Compiler::ParseError)
-      end
-
       it 'raises InvalidOperatorError' do
         scope = described_class.new(instance, '.send[receiver IN FactoryGirl]') {}
         expect {

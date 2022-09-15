@@ -10,7 +10,7 @@ module Synvert::Core
     # @yield run when condition matches
     def initialize(instance, rules, &block)
       @instance = instance
-      @rules = rules
+      @node_query = NodeQuery.new(rules)
       @block = block
     end
 
@@ -26,6 +26,10 @@ module Synvert::Core
     # @abstract
     def match?
       raise NotImplementedError, 'must be implemented by subclasses'
+    end
+
+    def target_node
+      @instance.current_node
     end
   end
 end

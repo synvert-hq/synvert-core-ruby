@@ -12,16 +12,27 @@ module Synvert::Core
     it 'parses find_node' do
       scope = double
       block = proc {}
-      expect(Rewriter::QueryScope).to receive(:new).with(instance, '.send[message=create]', &block).and_return(scope)
+      expect(Rewriter::QueryScope).to receive(:new).with(instance, '.send[message=create]', {}, &block).and_return(scope)
       expect(scope).to receive(:process)
       instance.find_node('.send[message=create]', &block)
+    end
+
+    it 'raises ParseError when parsing invalid nql' do
+      block = proc {}
+      expect {
+        instance.find_node('synvert', &block)
+      }.to raise_error(NodeQuery::Compiler::ParseError)
+
+      expect {
+        instance.find_node('.block <caller.arguments> .hash', &block)
+      }.to raise_error(NodeQuery::Compiler::ParseError)
     end
 
     it 'parses within_node' do
       scope = double
       block = proc {}
       expect(Rewriter::WithinScope).to receive(:new)
-        .with(instance, { type: 'send', message: 'create' }, { stop_when_match: false, direct: false }, &block)
+        .with(instance, { type: 'send', message: 'create' }, {}, &block)
         .and_return(scope)
       expect(scope).to receive(:process)
       instance.within_node(type: 'send', message: 'create', &block)
@@ -31,30 +42,20 @@ module Synvert::Core
       scope = double
       block = proc {}
       expect(Rewriter::WithinScope).to receive(:new)
-        .with(instance, { type: 'send', message: 'create' }, { stop_when_match: false, direct: false }, &block)
+        .with(instance, { type: 'send', message: 'create' }, {}, &block)
         .and_return(scope)
       expect(scope).to receive(:process)
       instance.with_node(type: 'send', message: 'create', &block)
     end
 
-    it 'parses within_node with stop_when_match true' do
+    it 'parses within_node with stop_at_first_match true' do
       scope = double
       block = proc {}
       expect(Rewriter::WithinScope).to receive(:new)
-        .with(instance, { type: 'send', message: 'create' }, { stop_when_match: true, direct: false }, &block)
+        .with(instance, { type: 'send', message: 'create' }, { stop_at_first_match: true }, &block)
         .and_return(scope)
       expect(scope).to receive(:process)
-      instance.within_node({ type: 'send', message: 'create' }, { stop_when_match: true }, &block)
-    end
-
-    it 'parses within_node with direct true' do
-      scope = double
-      block = proc {}
-      expect(Rewriter::WithinScope).to receive(:new)
-        .with(instance, { type: 'send', message: 'create' }, { stop_when_match: false, direct: true }, &block)
-        .and_return(scope)
-      expect(scope).to receive(:process)
-      instance.within_node({ type: 'send', message: 'create' }, { direct: true }, &block)
+      instance.within_node({ type: 'send', message: 'create' }, { stop_at_first_match: true }, &block)
     end
 
     it 'parses goto_node' do

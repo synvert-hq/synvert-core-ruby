@@ -6,11 +6,14 @@ module Synvert::Core
     # Initialize a QueryScope.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param query_string [String]
+    # @param nql [String]
+    # @param options [Hash]
     # @yield run on all matching nodes
-    def initialize(instance, query_string, &block)
+    def initialize(instance, nql, options = {}, &block)
       super(instance, &block)
-      @query_string = query_string
+
+      @options = { including_self: true, stop_at_first_match: false, recursive: true }.merge(options)
+      @node_query = NodeQuery.new(nql)
     end
 
     # Find out the matching nodes.
@@ -22,15 +25,14 @@ module Synvert::Core
       current_node = @instance.current_node
       return unless current_node
 
+      matching_nodes = @node_query.query_nodes(current_node, @options)
       @instance.process_with_node(current_node) do
-        NodeQuery.new(@query_string).parse(current_node).each do |node|
+        matching_nodes.each do |node|
           @instance.process_with_node(node) do
             @instance.instance_eval(&@block)
           end
         end
       end
-    rescue NodeQueryLexer::ScanError, Racc::ParseError => e
-      raise NodeQuery::Compiler::ParseError, "Invalid query string: #{@query_string}"
     end
   end
 end

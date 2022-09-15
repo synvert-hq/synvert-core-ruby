@@ -9,7 +9,7 @@ module Synvert::Core
     #
     # @return [Boolean]
     def match?
-      @instance.current_node.body.size == 1 && @instance.current_node.body.first.match?(@rules)
+      target_node.body.size == 1 && @node_query.match_node?(target_node.body.first)
     end
   end
 end

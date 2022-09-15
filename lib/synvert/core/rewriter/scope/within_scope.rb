@@ -11,8 +11,9 @@ module Synvert::Core
     # @yield run on all matching nodes
     def initialize(instance, rules, options = {}, &block)
       super(instance, &block)
-      @rules = rules
-      @options = options
+
+      @options = { including_self: true, stop_at_first_match: false, recursive: true }.merge(options)
+      @node_query = NodeQuery.new(rules)
     end
 
     # Find out the matching nodes.
@@ -22,14 +23,7 @@ module Synvert::Core
       current_node = @instance.current_node
       return unless current_node
 
-      matching_nodes =
-        if @options[:direct]
-          find_direct_matching_nodes(current_node)
-        elsif @options[:stop_when_match]
-          find_matching_nodes(current_node)
-        else
-          find_recursive_matching_nodes(current_node)
-        end
+      matching_nodes = @node_query.query_nodes(current_node, @options)
       @instance.process_with_node current_node do
         matching_nodes.each do |matching_node|
           @instance.process_with_node matching_node do
@@ -37,83 +31,6 @@ module Synvert::Core
           end
         end
       end
-    end
-
-    private
-
-    # Find the matching nodes only in current or direct children.
-    #
-    # @param current_node [Parser::AST::Node]
-    def find_direct_matching_nodes(current_node)
-      matching_nodes = []
-      if current_node.is_a?(Parser::AST::Node)
-        if current_node.type == :begin
-          current_node.children.each do |child_node|
-            matching_nodes << child_node if child_node.match?(@rules)
-          end
-        elsif current_node.match?(@rules)
-          matching_nodes << current_node
-        end
-      else
-        current_node.each do |child_node|
-          matching_nodes << child_node if child_node.match?(@rules)
-        end
-      end
-      matching_nodes
-    end
-
-    # Find matching nodes in all recursive children.
-    #
-    # @param current_node [Parser::AST::Node]
-    def find_recursive_matching_nodes(current_node)
-      matching_nodes = []
-      if current_node.is_a?(Parser::AST::Node)
-        matching_nodes << current_node if current_node.match?(@rules)
-        NodeQuery::Helper.handle_recursive_child(current_node) do |child_node|
-          matching_nodes << child_node if child_node.match?(@rules)
-        end
-      else
-        current_node.each do |node|
-          matching_nodes << node if node.match?(@rules)
-          NodeQuery::Helper.handle_recursive_child(node) do |child_node|
-            matching_nodes << child_node if child_node.match?(@rules)
-          end
-        end
-      end
-      matching_nodes
-    end
-
-    # Find matching nodes in recursive children but do not continue on matching nodes.
-    #
-    # @param current_node [Parser::AST::Node]
-    def find_matching_nodes(current_node)
-      matching_nodes = []
-      if current_node.is_a?(Parser::AST::Node)
-        if current_node.match?(@rules)
-          matching_nodes << current_node
-          return matching_nodes
-        end
-        NodeQuery::Helper.handle_recursive_child(current_node) do |child_node|
-          if child_node.match?(@rules)
-            matching_nodes << child_node
-            next :stop
-          end
-        end
-      else
-        current_node.each do |node|
-          if node.match?(@rules)
-            matching_nodes << node
-            next
-          end
-          NodeQuery::Helper.handle_recursive_child(node) do |child_node|
-            if child_node.match?(@rules)
-              matching_nodes << child_node
-              next :stop
-            end
-          end
-        end
-      end
-      matching_nodes
     end
   end
 end
