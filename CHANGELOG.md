@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.7.0 (2022-09-16)
+
+* Add `Rewriter#test`
+* Use option `run_instance` instead of `sandbox`
+
 ## 1.6.0 (2022-09-15)
 
 * Make use of `NodeQuery` to query nodes
