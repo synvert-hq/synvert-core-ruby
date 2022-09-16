@@ -34,7 +34,7 @@ module Synvert::Core
     def process
       @file_patterns.each do |file_pattern|
         Dir.glob(File.join(Configuration.path, file_pattern)).each do |file_path|
-          next if Configuration.skip_files.include?(file_path)
+          next if Configuration.skip_paths.include?(file_path)
 
           process_file(file_path)
         end
@@ -50,7 +50,7 @@ module Synvert::Core
       end
 
       paths.uniq.map do |file_path|
-        next if Configuration.skip_files.include?(file_path)
+        next if Configuration.skip_paths.include?(file_path)
 
         test_file(file_path)
       end

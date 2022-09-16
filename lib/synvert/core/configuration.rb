@@ -5,9 +5,9 @@ module Synvert::Core
   class Configuration
     class << self
       # @!attribute [w] path
-      # @!attribute [w] skip_files
+      # @!attribute [w] skip_paths
       # @!attribute [w] show_run_process
-      attr_writer :path, :skip_files, :show_run_process
+      attr_writer :path, :skip_paths, :show_run_process
 
       # Get the path.
       #
@@ -16,11 +16,11 @@ module Synvert::Core
         @path || '.'
       end
 
-      # Get a list of skip files.
+      # Get a list of skip paths.
       #
       # @return [Array<String>] default is [].
-      def skip_files
-        @skip_files || []
+      def skip_paths
+        @skip_paths || []
       end
 
       # Check if show run process.
