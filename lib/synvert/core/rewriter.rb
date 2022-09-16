@@ -76,7 +76,7 @@ module Synvert::Core
       # @option options [Boolean] :run_instance (true) process the instance.
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(group, name, options = {})
+      def call(group, name, options = { run_instance: true })
         rewriter = fetch(group, name)
         if options[:run_instance]
           rewriter.process
