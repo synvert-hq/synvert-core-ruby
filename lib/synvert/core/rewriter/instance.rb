@@ -417,11 +417,14 @@ module Synvert::Core
     # Get file paths.
     # @return [Array<String>] file paths
     def get_file_paths
-      only_paths = Configuration.only_paths.size > 0 ? Configuration.only_paths || [""]
-      Configuration.only_paths.flat_map do |only_path|
-        @file_patterns.flat_map do |file_pattern|
-          Dir.glob(File.join(Configuration.root_path, only_path, file_pattern)).reject do |file_path|
-            Configuration.skip_paths.include?(file_path)
+      Dir.chdir(Configuration.root_path) do
+        only_paths = Configuration.only_paths.size > 0 ? Configuration.only_paths : ["."]
+        only_paths.flat_map do |only_path|
+          @file_patterns.flat_map do |file_pattern|
+            pattern = only_path == "." ? file_pattern : File.join(only_path, file_pattern)
+            Dir.glob(pattern).reject do |file_path|
+              Configuration.skip_paths.include?(file_path)
+            end
           end
         end
       end
