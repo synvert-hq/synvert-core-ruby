@@ -37,6 +37,46 @@ module Synvert::Core
       rewriter.process
     end
 
+    describe '#process' do
+      it 'rewrites the file' do
+        rewriter = Rewriter.new('group', 'name') do
+          within_files '**/*.rb' do
+            with_node node_type: 'class', name: 'Foobar' do
+              replace :name, with: 'Synvert'
+            end
+          end
+        end
+        input = "class Foobar\nend"
+        output = "class Synvert\nend"
+        FakeFS do
+          File.write("code.rb", input)
+          rewriter.process
+          expect(File.read("code.rb")).to eq output
+        end
+      end
+    end
+
+    describe '#test' do
+      it 'gets test results' do
+        rewriter = Rewriter.new('group', 'name') do
+          within_files '**/*.rb' do
+            with_node node_type: 'class', name: 'Foobar' do
+              replace :name, with: 'Synvert'
+            end
+          end
+        end
+        input = "class Foobar\nend"
+        FakeFS do
+          File.write("code.rb", input)
+          results = rewriter.test
+          expect(results[0].file_path).to eq '/code.rb'
+          expect(results[0].affected?).to be_truthy
+          expect(results[0].conflicted?).to be_falsey
+          expect(results[0].actions).to eq [OpenStruct.new(start: 6, end: 12, new_code: 'Synvert')]
+        end
+      end
+    end
+
     describe 'parses within_file' do
       it 'does nothing if if_ruby does not match' do
         expect(File).to receive(:exist?).with('./.ruby-version').and_return(true)

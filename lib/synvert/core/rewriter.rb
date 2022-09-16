@@ -138,7 +138,8 @@ module Synvert::Core
       @warnings = []
       @affected_files = Set.new
       @redo_until_no_change = false
-      @options = { run_instance: true }
+      @options = { run_instance: true, write_to_file: true }
+      @test_results = []
       self.class.register(@group, @name, self)
     end
 
@@ -160,6 +161,21 @@ module Synvert::Core
       ensure
         @options[:run_instance] = true
       end
+    end
+
+    def test
+      @options[:write_to_file] = false
+      begin
+        @affected_files = Set.new
+        instance_eval(&@block)
+
+        if !@affected_files.empty? && @redo_until_no_change # redo
+          test
+        end
+      ensure
+        @options[:write_to_file] = true
+      end
+      @test_results
     end
 
     # Add a warning.
@@ -232,7 +248,13 @@ module Synvert::Core
       return if @ruby_version && !@ruby_version.match?
       return if @gem_spec && !@gem_spec.match?
 
-      Rewriter::Instance.new(self, Array(file_patterns), &block).process
+      instance = Rewriter::Instance.new(self, Array(file_patterns), &block)
+      if @options[:write_to_file]
+        instance.process
+      else
+        results = instance.test
+        @test_results += results.select { |result| result.affected? }
+      end
     end
 
     # Parse +within_file+ dsl, it finds a specifiled file.

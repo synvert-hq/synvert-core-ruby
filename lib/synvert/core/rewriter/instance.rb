@@ -52,7 +52,7 @@ module Synvert::Core
       paths.uniq.map do |file_path|
         next if Configuration.skip_files.include?(file_path)
 
-        { file_path: file_path }.merge(test_file(file_path))
+        test_file(file_path)
       end
     end
 
@@ -415,7 +415,9 @@ module Synvert::Core
           raise
         end
 
-        @current_mutation.test
+        result = @current_mutation.test
+        result.file_path = file_path
+        result
       rescue Parser::SyntaxError
         puts "[Warn] file #{file_path} was not parsed correctly."
         # do nothing, iterate next file

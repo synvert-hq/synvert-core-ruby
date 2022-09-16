@@ -286,11 +286,11 @@ module Synvert::Core
         EOS
         expect(Dir).to receive(:glob).with('./spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
         expect(File).to receive(:read).with('spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
-        result = instance.test
-        expect(result[0][:file_path]).to eq 'spec/models/post_spec.rb'
-        expect(result[0][:actions]).to eq [
-          { start: 35, end: 59, new_code: 'create :user' },
-          { start: 69, end: 105, new_code: 'create :post, user: user' }
+        results = instance.test
+        expect(results[0].file_path).to eq 'spec/models/post_spec.rb'
+        expect(results[0].actions).to eq [
+          OpenStruct.new(start: 35, end: 59, new_code: 'create :user'),
+          OpenStruct.new(start: 69, end: 105, new_code: 'create :post, user: user')
         ]
       end
 
@@ -311,8 +311,8 @@ module Synvert::Core
         expect(Dir).to receive(:glob).with('./spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
         expect(File).to receive(:read).with('spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
         result = instance.test
-        expect(result[0][:file_path]).to eq 'spec/spec_helper.rb'
-        expect(result[0][:actions]).to eq []
+        expect(result[0].file_path).to eq 'spec/spec_helper.rb'
+        expect(result[0].actions).to eq []
       end
     end
 
