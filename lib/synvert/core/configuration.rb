@@ -4,16 +4,16 @@ module Synvert::Core
   # Synvert global configuration.
   class Configuration
     class << self
-      # @!attribute [w] path
+      # @!attribute [w] root_path
       # @!attribute [w] skip_paths
       # @!attribute [w] show_run_process
-      attr_writer :path, :skip_paths, :show_run_process
+      attr_writer :root_path, :skip_paths, :show_run_process
 
       # Get the path.
       #
       # @return [String] default is '.'
-      def path
-        @path || '.'
+      def root_path
+        @root_path || '.'
       end
 
       # Get a list of skip paths.

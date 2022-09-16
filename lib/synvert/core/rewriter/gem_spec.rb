@@ -22,12 +22,12 @@ module Synvert::Core
     #
     # @return [Boolean] true if matches, otherwise false.
     def match?
-      gemfile_lock_path = File.expand_path(File.join(Configuration.path, 'Gemfile.lock'))
+      gemfile_lock_path = File.expand_path(File.join(Configuration.root_path, 'Gemfile.lock'))
 
       # if Gemfile.lock does not exist, just ignore this check
       return true unless File.exist?(gemfile_lock_path)
 
-      ENV['BUNDLE_GEMFILE'] = Configuration.path # make sure bundler reads Gemfile.lock in the correct path
+      ENV['BUNDLE_GEMFILE'] = Configuration.root_path # make sure bundler reads Gemfile.lock in the correct path
       parser = Bundler::LockfileParser.new(File.read(gemfile_lock_path))
       parser.specs.any? { |spec| Gem::Dependency.new(@name, @version).match?(spec) }
     end

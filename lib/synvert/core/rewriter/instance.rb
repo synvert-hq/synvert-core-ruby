@@ -33,7 +33,7 @@ module Synvert::Core
     # then writes the code back to the original file.
     def process
       @file_patterns.each do |file_pattern|
-        Dir.glob(File.join(Configuration.path, file_pattern)).each do |file_path|
+        Dir.glob(File.join(Configuration.root_path, file_pattern)).each do |file_path|
           next if Configuration.skip_paths.include?(file_path)
 
           process_file(file_path)
@@ -46,7 +46,7 @@ module Synvert::Core
     # then returns the actions.
     def test
       paths = @file_patterns.flat_map do |file_pattern|
-        Dir.glob(File.join(Configuration.path, file_pattern))
+        Dir.glob(File.join(Configuration.root_path, file_pattern))
       end
 
       paths.uniq.map do |file_path|

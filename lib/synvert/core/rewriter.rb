@@ -274,7 +274,7 @@ module Synvert::Core
     def add_file(filename, content)
       return unless @options[:run_instance]
 
-      filepath = File.join(Configuration.path, filename)
+      filepath = File.join(Configuration.root_path, filename)
       if File.exist?(filepath)
         puts "File #{filepath} already exists."
         return
@@ -293,7 +293,7 @@ module Synvert::Core
     def remove_file(filename)
       return unless @options[:run_instance]
 
-      file_path = File.join(Configuration.path, filename)
+      file_path = File.join(Configuration.root_path, filename)
       File.delete(file_path) if File.exist?(file_path)
     end
 
