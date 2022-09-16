@@ -6,8 +6,9 @@ module Synvert::Core
     class << self
       # @!attribute [w] root_path
       # @!attribute [w] skip_paths
+      # @!attribute [w] only_paths
       # @!attribute [w] show_run_process
-      attr_writer :root_path, :skip_paths, :show_run_process
+      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process
 
       # Get the path.
       #
@@ -21,6 +22,13 @@ module Synvert::Core
       # @return [Array<String>] default is [].
       def skip_paths
         @skip_paths || []
+      end
+
+      # Get a list of only paths.
+      #
+      # @return [Array<String>] default is [].
+      def only_paths
+        @only_paths || []
       end
 
       # Check if show run process.

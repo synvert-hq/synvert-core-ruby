@@ -32,12 +32,8 @@ module Synvert::Core
     # It finds specified files, for each file, it executes the block code, rewrites the original code,
     # then writes the code back to the original file.
     def process
-      @file_patterns.each do |file_pattern|
-        Dir.glob(File.join(Configuration.root_path, file_pattern)).each do |file_path|
-          next if Configuration.skip_paths.include?(file_path)
-
-          process_file(file_path)
-        end
+      get_file_paths.each do |file_path|
+        process_file(file_path)
       end
     end
 
@@ -45,13 +41,7 @@ module Synvert::Core
     # It finds specified files, for each file, it executes the block code, tests the original code,
     # then returns the actions.
     def test
-      paths = @file_patterns.flat_map do |file_pattern|
-        Dir.glob(File.join(Configuration.root_path, file_pattern))
-      end
-
-      paths.uniq.map do |file_path|
-        next if Configuration.skip_paths.include?(file_path)
-
+      get_file_paths.each do |file_path|
         test_file(file_path)
       end
     end
@@ -421,6 +411,19 @@ module Synvert::Core
       rescue Parser::SyntaxError
         puts "[Warn] file #{file_path} was not parsed correctly."
         # do nothing, iterate next file
+      end
+    end
+
+    # Get file paths.
+    # @return [Array<String>] file paths
+    def get_file_paths
+      only_paths = Configuration.only_paths.size > 0 ? Configuration.only_paths || [""]
+      Configuration.only_paths.flat_map do |only_path|
+        @file_patterns.flat_map do |file_pattern|
+          Dir.glob(File.join(Configuration.root_path, only_path, file_pattern)).reject do |file_path|
+            Configuration.skip_paths.include?(file_path)
+          end
+        end
       end
     end
 
