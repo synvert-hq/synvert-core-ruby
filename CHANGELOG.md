@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.8.1 (2022-09-17)
+
+* Fix test snippet, return test results
+
 ## 1.8.0 (2022-09-17)
 
 * Rename config `path` to `root_path`
