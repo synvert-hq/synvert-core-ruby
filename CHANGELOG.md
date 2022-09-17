@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.8.0 (2022-09-17)
+
+* Rename config `path` to `root_path`
+* Rename config `skip_files` to `skip_paths`
+* Add config `only_paths`
+* Change dir to `root_path`
+
 ## 1.7.0 (2022-09-16)
 
 * Add `Rewriter#test`
