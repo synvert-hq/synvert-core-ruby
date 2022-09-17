@@ -41,7 +41,7 @@ module Synvert::Core
     # It finds specified files, for each file, it executes the block code, tests the original code,
     # then returns the actions.
     def test
-      get_file_paths.each do |file_path|
+      get_file_paths.map do |file_path|
         test_file(file_path)
       end
     end
