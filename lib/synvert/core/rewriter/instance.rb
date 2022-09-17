@@ -422,10 +422,24 @@ module Synvert::Core
         only_paths.flat_map do |only_path|
           @file_patterns.flat_map do |file_pattern|
             pattern = only_path == "." ? file_pattern : File.join(only_path, file_pattern)
-            Dir.glob(pattern).reject do |file_path|
-              Configuration.skip_paths.include?(file_path)
-            end
+            Dir.glob(pattern) - get_skip_files
           end
+        end
+      end
+    end
+
+    # Get skip files.
+    # @return [Array<String>] skip files
+    def get_skip_files
+      @skip_files ||= Configuration.skip_paths.flat_map do |skip_path|
+        if File.directory?(skip_path)
+          Dir.glob(File.join(skip_path, "**/*"))
+        elsif File.file?(skip_path)
+          [skip_path]
+        elsif skip_path.end_with?("**") || skip_path.end_with?("**/")
+          Dir.glob(File.join(skip_path, "*"))
+        else
+          Dir.glob(skip_path)
         end
       end
     end
