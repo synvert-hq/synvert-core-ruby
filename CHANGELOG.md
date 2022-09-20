@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.9.0 (2022-09-20)
+
+* Add `noop` dsl
+
 ## 1.8.1 (2022-09-17)
 
 * Fix test snippet, return test results
