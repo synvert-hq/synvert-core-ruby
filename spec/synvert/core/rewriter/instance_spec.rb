@@ -176,6 +176,13 @@ module Synvert::Core
       instance.wrap with: 'module Foobar'
     end
 
+    it 'parses noop' do
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(instance.current_mutation).to receive(:noop).with(instance.current_node)
+      instance.noop
+    end
+
     it 'parses warn' do
       expect(Rewriter::Warning).to receive(:new).with(instance, 'foobar')
       instance.warn 'foobar'

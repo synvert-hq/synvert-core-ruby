@@ -325,6 +325,11 @@ module Synvert::Core
       @current_mutation.wrap(@current_node, with: with)
     end
 
+    # Parse +noop dsl.
+    def noop
+      @current_mutation.noop(@current_node)
+    end
+
     # Parse +warn+ dsl, it creates a {Synvert::Core::Rewriter::Warning} to save warning message.
     # @example
     #   within_files 'vendor/plugins' do
