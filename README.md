@@ -96,3 +96,4 @@ Actions:
 * [replace_with](./Synvert/Core/Rewriter/Instance.html#replace_with-instance_method) - replace the whole code of current node
 * [warn](./Synvert/Core/Rewriter/Instance.html#warn-instance_method) - warn message
 * [replace_erb_stmt_with_expr](./Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method) - replace erb stmt code to expr code
+* [noop](./Synvert/Core/Rewriter/Instance.html#noop-instance_method) - no operation
