@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.9.1 (2022-09-23)
+
+* Read / write absolute path
+
 ## 1.9.0 (2022-09-20)
 
 * Add `noop` dsl
