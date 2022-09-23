@@ -213,8 +213,8 @@ module Synvert::Core
           end
         EOS
         expect(Dir).to receive(:glob).with('spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
-        expect(File).to receive(:read).with('spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
-        expect(File).to receive(:write).with('spec/models/post_spec.rb', output)
+        expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:write).with('./spec/models/post_spec.rb', output)
         instance.process
       end
 
@@ -238,8 +238,8 @@ module Synvert::Core
           end
         EOS
         expect(Dir).to receive(:glob).with('spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
-        expect(File).to receive(:read).with('spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
-        expect(File).not_to receive(:write).with('spec/spec_helper.rb', output)
+        expect(File).to receive(:read).with('./spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
+        expect(File).not_to receive(:write).with('./spec/spec_helper.rb', output)
         instance.process
       end
 
@@ -265,9 +265,9 @@ module Synvert::Core
           end
         EOS
         expect(Dir).to receive(:glob).with('spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb']).twice
-        expect(File).to receive(:read).with('spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
-        expect(File).to receive(:write).with('spec/models/post_spec.rb', output)
-        expect(File).to receive(:read).with('spec/models/post_spec.rb', encoding: 'UTF-8').and_return(output)
+        expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:write).with('./spec/models/post_spec.rb', output)
+        expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(output)
         instance.process
         instance.process
         expect(rewriter.affected_files).to be_include('spec/models/post_spec.rb')
@@ -292,7 +292,7 @@ module Synvert::Core
           end
         EOS
         expect(Dir).to receive(:glob).with('spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
-        expect(File).to receive(:read).with('spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
         results = instance.test
         expect(results[0].file_path).to eq 'spec/models/post_spec.rb'
         expect(results[0].actions).to eq [
@@ -316,7 +316,7 @@ module Synvert::Core
           end
         EOS
         expect(Dir).to receive(:glob).with('spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
-        expect(File).to receive(:read).with('spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:read).with('./spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
         result = instance.test
         expect(result[0].file_path).to eq 'spec/spec_helper.rb'
         expect(result[0].actions).to eq []

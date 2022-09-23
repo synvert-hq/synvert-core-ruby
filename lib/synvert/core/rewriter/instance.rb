@@ -356,9 +356,9 @@ module Synvert::Core
     def process_file(file_path)
       puts file_path if Configuration.show_run_process
 
-      @current_file = file_path
+      @current_file = File.join(Configuration.root_path, file_path)
       while true
-        source = read_source(file_path)
+        source = read_source(@current_file)
         @current_mutation = NodeMutation.new(source)
         begin
           node = parse_code(file_path, source)
@@ -378,7 +378,7 @@ module Synvert::Core
           result = @current_mutation.process
           if result.affected?
             @rewriter.add_affected_file(file_path)
-            write_source(file_path, result.new_source)
+            write_source(@current_file, result.new_source)
           end
           break unless result.conflicted?
         rescue Parser::SyntaxError
@@ -392,11 +392,11 @@ module Synvert::Core
     #
     # @param file_path [String]
     def test_file(file_path)
-      @current_file = file_path
-      source = read_source(file_path)
+      @current_file = File.join(Configuration.root_path, file_path)
+      source = read_source(@current_file)
       @current_mutation = NodeMutation.new(source)
       begin
-        node = parse_code(file_path, source)
+        node = parse_code(@current_file, source)
 
         process_with_node(node) do
           instance_eval(&@block)
