@@ -49,7 +49,7 @@ GEM
     method_source (1.0.0)
     minitest (5.16.3)
     nenv (0.3.0)
-    node_mutation (1.4.1)
+    node_mutation (1.4.4)
       activesupport (< 7.0.0)
       erubis
     node_query (1.6.0)
