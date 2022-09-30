@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction";
+  relpath = '../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../Synvert.html" title="Synvert (module)">Synvert</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Core.html" title="Synvert::Core (module)">Core</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span>
+     &raquo; 
+    <span class="title">ReplaceErbStmtWithExprAction</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">NodeMutation::Action</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">NodeMutation::Action</li>
+          
+            <li class="next">Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/synvert/core/rewriter/action/replace_erb_stmt_with_expr_action.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>ReplaceErbStmtWithExprAction to replace erb stmt code to expr,</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>e.g. &lt;% form_for ... %&gt; =&gt; &lt;%= form_for ... %&gt;.</code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(node)  &#x21d2; ReplaceErbStmtWithExprAction </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Initialize a ReplaceErbStmtWithExprAction.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new_code-instance_method" title="#new_code (instance method)">#<strong>new_code</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The new erb expr code.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(node)  &#x21d2; <tt><span class='object_link'><a href="" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Initialize a ReplaceErbStmtWithExprAction.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>node</span>
+      
+      
+        <span class='type'>(<tt>Synvert::Core::Rewriter::Node</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/action/replace_erb_stmt_with_expr_action.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="new_code-instance_method">
+  
+    #<strong>new_code</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The new erb expr code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>new code.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/action/replace_erb_stmt_with_expr_action.rb', line 18</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_new_code'>new_code</span>
+  <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span><span class='period'>.</span><span class='id identifier rubyid_file_content'>file_content</span><span class='lparen'>(</span><span class='ivar'>@node</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='ivar'>@start</span><span class='op'>...</span><span class='ivar'>@end</span><span class='rbracket'>]</span>
+    <span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Engine.html" title="Synvert::Core::Engine (module)">Engine</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Engine.html#ERUBY_STMT_SPLITTER-constant" title="Synvert::Core::Engine::ERUBY_STMT_SPLITTER (constant)">ERUBY_STMT_SPLITTER</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@output_buffer.append= </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Engine.html" title="Synvert::Core::Engine (module)">Engine</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Engine.html#ERUBY_STMT_SPLITTER-constant" title="Synvert::Core::Engine::ERUBY_STMT_SPLITTER (constant)">ERUBY_STMT_SPLITTER</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Engine.html" title="Synvert::Core::Engine (module)">Engine</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Engine.html#ERUBY_EXPR_SPLITTER-constant" title="Synvert::Core::Engine::ERUBY_EXPR_SPLITTER (constant)">ERUBY_EXPR_SPLITTER</a></span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Sep 30 23:50:48 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.2).
+</div>
+
+    </div>
+  </body>
+</html>

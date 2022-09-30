@@ -1,0 +1,3097 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Synvert::Core::Rewriter::Instance
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Synvert::Core::Rewriter::Instance";
+  relpath = '../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../Synvert.html" title="Synvert (module)">Synvert</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Core.html" title="Synvert::Core (module)">Core</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span>
+     &raquo; 
+    <span class="title">Instance</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Synvert::Core::Rewriter::Instance
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Synvert::Core::Rewriter::Instance</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="Helper.html" title="Synvert::Core::Rewriter::Helper (module)">Helper</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/synvert/core/rewriter/instance.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Instance is an execution unit, it finds specified ast nodes, checks if the nodes match some conditions, then add, replace or remove code.</p>
+
+<p>One instance can contain one or many <span class='object_link'><a href="Scope.html" title="Synvert::Core::Rewriter::Scope (class)">Scope</a></span> and <span class='object_link'><a href="Condition.html" title="Synvert::Core::Rewriter::Condition (class)">Condition</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_file-instance_method" title="#current_file (instance method)">#<strong>current_file</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Current filename.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_mutation-instance_method" title="#current_mutation (instance method)">#<strong>current_mutation</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Current mutation.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_node-instance_method" title="#current_node (instance method)">#<strong>current_node</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Current parsing node.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#any_value-instance_method" title="#any_value (instance method)">#<strong>any_value</strong>  &#x21d2; Synvert::Core::Rewriter::AnyValue </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Match any value but nil.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#append-instance_method" title="#append (instance method)">#<strong>append</strong>(code)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>append</code> dsl, it creates a AppendAction to append the code to the bottom of current node body.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete-instance_method" title="#delete (instance method)">#<strong>delete</strong>(*selectors, **options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>delete</code> dsl, it creates a DeleteAction to delete child nodes.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_node-instance_method" title="#find_node (instance method)">#<strong>find_node</strong>(nql, options = {}) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>find_node</code> dsl, it creates <span class='object_link'><a href="QueryScope.html" title="Synvert::Core::Rewriter::QueryScope (class)">QueryScope</a></span> to recursively find matching ast nodes, then continue operating on each matching ast node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#goto_node-instance_method" title="#goto_node (instance method)">#<strong>goto_node</strong>(child_node_name, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>goto_node</code> dsl, it creates a <span class='object_link'><a href="GotoScope.html" title="Synvert::Core::Rewriter::GotoScope (class)">GotoScope</a></span> to go to a child node, then continue operating on the child node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#if_exist_node-instance_method" title="#if_exist_node (instance method)">#<strong>if_exist_node</strong>(rules, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>if_exist_node</code> dsl, it creates a <span class='object_link'><a href="IfExistCondition.html" title="Synvert::Core::Rewriter::IfExistCondition (class)">IfExistCondition</a></span> to check if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#if_only_exist_node-instance_method" title="#if_only_exist_node (instance method)">#<strong>if_only_exist_node</strong>(rules, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>if_only_exist_node</code> dsl, it creates a <span class='object_link'><a href="IfOnlyExistCondition.html" title="Synvert::Core::Rewriter::IfOnlyExistCondition (class)">IfOnlyExistCondition</a></span> to check if current node has only one child node and the child node matches rules, if so, then continue operating on each matching ast node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(rewriter, file_patterns) { ... } &#x21d2; Instance </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Initialize an Instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#insert-instance_method" title="#insert (instance method)">#<strong>insert</strong>(code, at: &#39;end&#39;, to: nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>insert</code> dsl, it creates a InsertAction to insert code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#insert_after-instance_method" title="#insert_after (instance method)">#<strong>insert_after</strong>(code)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>insert_after</code> dsl, it creates a InsertAfterAction to insert the code next to the current node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#node-instance_method" title="#node (instance method)">#<strong>node</strong>  &#x21d2; Parser::AST::Node </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Gets current node, it allows to get current node in block code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#noop-instance_method" title="#noop (instance method)">#<strong>noop</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse +noop dsl.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prepend-instance_method" title="#prepend (instance method)">#<strong>prepend</strong>(code)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>prepend</code> dsl, it creates a PrependAction to prepend the code to the top of current node body.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Process the instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process_with_node-instance_method" title="#process_with_node (instance method)">#<strong>process_with_node</strong>(node) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set current_node to node and process.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process_with_other_node-instance_method" title="#process_with_other_node (instance method)">#<strong>process_with_other_node</strong>(node) { ... } &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set current_node properly, process and set current_node back to original current_node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove-instance_method" title="#remove (instance method)">#<strong>remove</strong>(**options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>remove</code> dsl, it creates a RemoveAction to remove current node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#replace-instance_method" title="#replace (instance method)">#<strong>replace</strong>(*selectors, with:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>replace</code> dsl, it creates a ReplaceAction to replace the code of specified child nodes.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#replace_erb_stmt_with_expr-instance_method" title="#replace_erb_stmt_with_expr (instance method)">#<strong>replace_erb_stmt_with_expr</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>replace_erb_stmt_with_expr</code> dsl, it creates a <span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span> to replace erb stmt code to expr code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#replace_with-instance_method" title="#replace_with (instance method)">#<strong>replace_with</strong>(code)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>replace_with</code> dsl, it creates a ReplaceWithAction to replace the whole code of current node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test-instance_method" title="#test (instance method)">#<strong>test</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test the instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unless_exist_node-instance_method" title="#unless_exist_node (instance method)">#<strong>unless_exist_node</strong>(rules, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>unless_exist_node</code> dsl, it creates a <span class='object_link'><a href="UnlessExistCondition.html" title="Synvert::Core::Rewriter::UnlessExistCondition (class)">UnlessExistCondition</a></span> to check if matching nodes doesn’t exist in the child nodes, if so, then continue operating on each matching ast node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#warn-instance_method" title="#warn (instance method)">#<strong>warn</strong>(message)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>warn</code> dsl, it creates a <span class='object_link'><a href="Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span> to save warning message.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#within_node-instance_method" title="#within_node (instance method)">#<strong>within_node</strong>(rules, options = {}) { ... } &#x21d2; Object </a>
+    
+
+    
+      (also: #with_node)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>within_node</code> dsl, it creates a <span class='object_link'><a href="WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span> to recursively find matching ast nodes, then continue operating on each matching ast node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#wrap-instance_method" title="#wrap (instance method)">#<strong>wrap</strong>(with:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Parse <code>wrap</code> dsl, it creates a WrapAction to wrap current node with code.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Helper.html" title="Synvert::Core::Rewriter::Helper (module)">Helper</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Helper.html#add_arguments_with_parenthesis_if_necessary-instance_method" title="Synvert::Core::Rewriter::Helper#add_arguments_with_parenthesis_if_necessary (method)">#add_arguments_with_parenthesis_if_necessary</a></span>, <span class='object_link'><a href="Helper.html#add_curly_brackets_if_necessary-instance_method" title="Synvert::Core::Rewriter::Helper#add_curly_brackets_if_necessary (method)">#add_curly_brackets_if_necessary</a></span>, <span class='object_link'><a href="Helper.html#add_receiver_if_necessary-instance_method" title="Synvert::Core::Rewriter::Helper#add_receiver_if_necessary (method)">#add_receiver_if_necessary</a></span>, <span class='object_link'><a href="Helper.html#reject_keys_from_hash-instance_method" title="Synvert::Core::Rewriter::Helper#reject_keys_from_hash (method)">#reject_keys_from_hash</a></span>, <span class='object_link'><a href="Helper.html#strip_brackets-instance_method" title="Synvert::Core::Rewriter::Helper#strip_brackets (method)">#strip_brackets</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(rewriter, file_patterns) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Initialize an Instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rewriter</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Synvert::Core::Rewriter</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file_patterns</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>pattern list to find files, e.g. [‘spec/<strong>*/</strong>_spec.rb’]</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>block code to find nodes, match conditions and rewrite code.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17
+18
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_rewriter'>rewriter</span><span class='comma'>,</span> <span class='id identifier rubyid_file_patterns'>file_patterns</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@rewriter</span> <span class='op'>=</span> <span class='id identifier rubyid_rewriter'>rewriter</span>
+  <span class='ivar'>@actions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@file_patterns</span> <span class='op'>=</span> <span class='id identifier rubyid_file_patterns'>file_patterns</span>
+  <span class='ivar'>@block</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span>
+  <span class='id identifier rubyid_rewriter'>rewriter</span><span class='period'>.</span><span class='id identifier rubyid_helpers'>helpers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_helper'>helper</span><span class='op'>|</span> <span class='id identifier rubyid_singleton_class'>singleton_class</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:define_method</span><span class='comma'>,</span> <span class='id identifier rubyid_helper'>helper</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_helper'>helper</span><span class='lbracket'>[</span><span class='symbol'>:block</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="current_file=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="current_file-instance_method">
+  
+    #<strong>current_file</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns current filename.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>current filename</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 29</span>
+
+<span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_file</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="current_mutation=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="current_mutation-instance_method">
+  
+    #<strong>current_mutation</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns current mutation.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>current mutation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 29</span>
+
+<span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_file</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="current_node=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="current_node-instance_method">
+  
+    #<strong>current_node</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns current parsing node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>current parsing node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_node'>current_node</span>
+  <span class='ivar'>@current_node</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="any_value-instance_method">
+  
+    #<strong>any_value</strong>  &#x21d2; <tt><span class='object_link'><a href="AnyValue.html" title="Synvert::Core::Rewriter::AnyValue (class)">Synvert::Core::Rewriter::AnyValue</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Match any value but nil.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>type: &#39;hash&#39;, nothing_value: &#39;true&#39;, status_value: any_value</code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="AnyValue.html" title="Synvert::Core::Rewriter::AnyValue (class)">Synvert::Core::Rewriter::AnyValue</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+347
+348
+349</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 347</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_any_value'>any_value</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="AnyValue.html" title="Synvert::Core::Rewriter::AnyValue (class)">AnyValue</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Rewriter.html#initialize-instance_method" title="Synvert::Core::Rewriter#initialize (method)">new</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="append-instance_method">
+  
+    #<strong>append</strong>(code)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>append</code> dsl, it creates a AppendAction to append the code to the bottom of current node body.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># def teardown
+</span><span class='comment'>#   clean_something
+</span><span class='comment'># end
+</span><span class='comment'># =&gt;
+</span><span class='comment'># def teardown
+</span><span class='comment'>#   clean_something
+</span><span class='comment'>#   super
+</span><span class='comment'># end
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>def</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>steardown</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_append'>append</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>super</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be appended.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 186</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete-instance_method">
+  
+    #<strong>delete</strong>(*selectors, **options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>delete</code> dsl, it creates a DeleteAction to delete child nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># FactoryBot.create(...)
+</span><span class='comment'># =&gt;
+</span><span class='comment'># create(...)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FactoryBot</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>create</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_delete'>delete</span> <span class='symbol'>:receiver</span><span class='comma'>,</span> <span class='symbol'>:dot</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>selectors</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>selector names of child node.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>and_comma</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+306
+307
+308</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 306</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_node-instance_method">
+  
+    #<strong>find_node</strong>(nql, options = {}) { ... } &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>find_node</code> dsl, it creates <span class='object_link'><a href="QueryScope.html" title="Synvert::Core::Rewriter::QueryScope (class)">QueryScope</a></span> to recursively find matching ast nodes, then continue operating on each matching ast node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># matches FactoryBot.create(:user)
+</span><span class='id identifier rubyid_find_node'>find_node</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.send[receiver=FactoryBot][message=create][arguments.size=1]</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>nql</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>node query language to find matching ast nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>run on the matching nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Synvert::Core::NodeQuery::Compiler::ParseError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if query string is invalid.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_node'>find_node</span><span class='lparen'>(</span><span class='id identifier rubyid_nql'>nql</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="QueryScope.html" title="Synvert::Core::Rewriter::QueryScope (class)">QueryScope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="QueryScope.html#initialize-instance_method" title="Synvert::Core::Rewriter::QueryScope#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_nql'>nql</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="QueryScope.html#process-instance_method" title="Synvert::Core::Rewriter::QueryScope#process (method)">process</a></span></span>
+<span class='kw'>rescue</span> <span class='const'>NodeQueryLexer</span><span class='op'>::</span><span class='const'>ScanError</span><span class='comma'>,</span> <span class='const'>Racc</span><span class='op'>::</span><span class='const'>ParseError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NodeQuery</span><span class='op'>::</span><span class='const'>Compiler</span><span class='op'>::</span><span class='const'>ParseError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid query string: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_nql'>nql</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="goto_node-instance_method">
+  
+    #<strong>goto_node</strong>(child_node_name, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>goto_node</code> dsl, it creates a <span class='object_link'><a href="GotoScope.html" title="Synvert::Core::Rewriter::GotoScope (class)">GotoScope</a></span> to go to a child node, then continue operating on the child node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># head status: 406
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>head</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>size:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>first:</span> <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_goto_node'>goto_node</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>arguments.first</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>child_node_name</span>
+      
+      
+        <span class='type'>(<tt>Symbol|String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the child nodes.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>block code to continue operating on the matching nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 124</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_goto_node'>goto_node</span><span class='lparen'>(</span><span class='id identifier rubyid_child_node_name'>child_node_name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GotoScope.html" title="Synvert::Core::Rewriter::GotoScope (class)">GotoScope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="GotoScope.html#initialize-instance_method" title="Synvert::Core::Rewriter::GotoScope#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_child_node_name'>child_node_name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="GotoScope.html#process-instance_method" title="Synvert::Core::Rewriter::GotoScope#process (method)">process</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="if_exist_node-instance_method">
+  
+    #<strong>if_exist_node</strong>(rules, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>if_exist_node</code> dsl, it creates a <span class='object_link'><a href="IfExistCondition.html" title="Synvert::Core::Rewriter::IfExistCondition (class)">Synvert::Core::Rewriter::IfExistCondition</a></span> to check if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># Klass.any_instance.stub(:message)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>stub</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>first:</span> <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='lbrace'>{</span> <span class='label'>not:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_if_exist_node'>if_exist_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>any_instance</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rules</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>rules to check mathing ast nodes.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>block code to continue operating on the matching nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_if_exist_node'>if_exist_node</span><span class='lparen'>(</span><span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="IfExistCondition.html" title="Synvert::Core::Rewriter::IfExistCondition (class)">IfExistCondition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Condition.html#initialize-instance_method" title="Synvert::Core::Rewriter::Condition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="Condition.html#process-instance_method" title="Synvert::Core::Rewriter::Condition#process (method)">process</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="if_only_exist_node-instance_method">
+  
+    #<strong>if_only_exist_node</strong>(rules, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>if_only_exist_node</code> dsl, it creates a <span class='object_link'><a href="IfOnlyExistCondition.html" title="Synvert::Core::Rewriter::IfOnlyExistCondition (class)">Synvert::Core::Rewriter::IfOnlyExistCondition</a></span> to check if current node has only one child node and the child node matches rules, if so, then continue operating on each matching ast node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># it { should matcher }
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>block</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>caller:</span> <span class='lbrace'>{</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>it</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_if_only_exist_node'>if_only_exist_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>should</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rules</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>rules to check mathing ast nodes.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>block code to continue operating on the matching nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 167</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_if_only_exist_node'>if_only_exist_node</span><span class='lparen'>(</span><span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="IfOnlyExistCondition.html" title="Synvert::Core::Rewriter::IfOnlyExistCondition (class)">IfOnlyExistCondition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Condition.html#initialize-instance_method" title="Synvert::Core::Rewriter::Condition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="Condition.html#process-instance_method" title="Synvert::Core::Rewriter::Condition#process (method)">process</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="insert-instance_method">
+  
+    #<strong>insert</strong>(code, at: &#39;end&#39;, to: nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>insert</code> dsl, it creates a Synvert::Core::Rewriter::InsertAction to insert code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># open(&#39;http://test.com&#39;)
+</span><span class='comment'># =&gt;
+</span><span class='comment'># URI.open(&#39;http://test.com&#39;)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>open</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_insert'>insert</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>URI.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>beginning</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be inserted.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>at</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;end&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>insert position, beginning or end</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>to</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>where to insert, if it is nil, will insert to current node.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+220
+221
+222</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 220</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="insert_after-instance_method">
+  
+    #<strong>insert_after</strong>(code)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>insert_after</code> dsl, it creates a Synvert::Core::Rewriter::InsertAfterAction to insert the code next to the current node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># Synvert::Application.config.secret_token = &quot;0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e&quot;
+</span><span class='comment'># =&gt;
+</span><span class='comment'># Synvert::Application.config.secret_token = &quot;0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e&quot;
+</span><span class='comment'># Synvert::Application.config.secret_key_base = &quot;bf4f3f46924ecd9adcb6515681c78144545bba454420973a274d7021ff946b8ef043a95ca1a15a9d1b75f9fbdf85d1a3afaf22f4e3c2f3f78e24a0a188b581df&quot;
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>secret_token=</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_insert_after'>insert_after</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>{{receiver}}.secret_key_base = \&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>64</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be inserted.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+235
+236
+237</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 235</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_insert_after'>insert_after</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert_after'>insert_after</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="node-instance_method">
+  
+    #<strong>node</strong>  &#x21d2; <tt><span class='object_link'><a href="../../../Parser/AST/Node.html" title="Parser::AST::Node (class)">Parser::AST::Node</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets current node, it allows to get current node in block code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Parser/AST/Node.html" title="Parser::AST::Node (class)">Parser::AST::Node</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_node'>node</span>
+  <span class='ivar'>@current_node</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="noop-instance_method">
+  
+    #<strong>noop</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse +noop dsl.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+329
+330
+331</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 329</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_noop'>noop</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_noop'>noop</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="prepend-instance_method">
+  
+    #<strong>prepend</strong>(code)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>prepend</code> dsl, it creates a PrependAction to prepend the code to the top of current node body.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># def setup
+</span><span class='comment'>#   do_something
+</span><span class='comment'># end
+</span><span class='comment'># =&gt;
+</span><span class='comment'># def setup
+</span><span class='comment'>#   super
+</span><span class='comment'>#   do_something
+</span><span class='comment'># end
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>def</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>setup</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_prepend'>prepend</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>super</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be prepended.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+205
+206
+207</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 205</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="process-instance_method">
+  
+    #<strong>process</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Process the instance. It finds specified files, for each file, it executes the block code, rewrites the original code, then writes the code back to the original file.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span>
+  <span class='id identifier rubyid_get_file_paths'>get_file_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file_path'>file_path</span><span class='op'>|</span>
+    <span class='id identifier rubyid_process_file'>process_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="process_with_node-instance_method">
+  
+    #<strong>process_with_node</strong>(node) { ... } &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set current_node to node and process.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>node</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Parser/AST/Node.html" title="Parser::AST::Node (class)">Parser::AST::Node</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>node set to current_node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>process</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process_with_node'>process_with_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_node'>current_node</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span>
+  <span class='kw'>yield</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_node'>current_node</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="process_with_other_node-instance_method">
+  
+    #<strong>process_with_other_node</strong>(node) { ... } &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set current_node properly, process and set current_node back to original current_node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>node</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Parser/AST/Node.html" title="Parser::AST::Node (class)">Parser::AST::Node</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>node set to other_node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>process</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+70
+71
+72
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 70</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process_with_other_node'>process_with_other_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_original_node'>original_node</span> <span class='op'>=</span> <span class='id identifier rubyid_current_node'>current_node</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_node'>current_node</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span>
+  <span class='kw'>yield</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_node'>current_node</span> <span class='op'>=</span> <span class='id identifier rubyid_original_node'>original_node</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove-instance_method">
+  
+    #<strong>remove</strong>(**options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>remove</code> dsl, it creates a RemoveAction to remove current node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='lbrace'>{</span> <span class='label'>in:</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>puts</span><span class='words_sep'> </span><span class='tstring_content'>p</span><span class='tstring_end'>]</span></span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_remove'>remove</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>options.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>and_comma</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+291
+292
+293</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 291</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="replace-instance_method">
+  
+    #<strong>replace</strong>(*selectors, with:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>replace</code> dsl, it creates a ReplaceAction to replace the code of specified child nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># assert(object.empty?)
+</span><span class='comment'># =&gt;
+</span><span class='comment'># assert_empty(object)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>assert</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>size:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>first:</span> <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty?</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>size:</span> <span class='int'>0</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_replace'>replace</span> <span class='symbol'>:message</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>assert_empty</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_replace'>replace</span> <span class='symbol'>:arguments</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{{arguments.first.receiver}}</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>selectors</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>selector names of child node.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>with</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be replaced with.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+280
+281
+282</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 280</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='label'>with:</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='id identifier rubyid_with'>with</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="replace_erb_stmt_with_expr-instance_method">
+  
+    #<strong>replace_erb_stmt_with_expr</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>replace_erb_stmt_with_expr</code> dsl, it creates a <span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span> to replace erb stmt code to expr code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># &lt;% form_for post do |f| %&gt;
+</span><span class='comment'># &lt;% end %&gt;
+</span><span class='comment'># =&gt;
+</span><span class='comment'># &lt;%= form_for post do |f| %&gt;
+</span><span class='comment'># &lt;% end %&gt;
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>block</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>caller:</span> <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>form_for</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_replace_erb_stmt_with_expr'>replace_erb_stmt_with_expr</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+250
+251
+252</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 250</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_replace_erb_stmt_with_expr'>replace_erb_stmt_with_expr</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_actions'>actions</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ReplaceErbStmtWithExprAction.html#initialize-instance_method" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="../Rewriter.html#process-instance_method" title="Synvert::Core::Rewriter#process (method)">process</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="replace_with-instance_method">
+  
+    #<strong>replace_with</strong>(code)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>replace_with</code> dsl, it creates a ReplaceWithAction to replace the whole code of current node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># obj.stub(:foo =&gt; 1, :bar =&gt; 2)
+</span><span class='comment'># =&gt;
+</span><span class='comment'># allow(obj).to receive_messages(:foo =&gt; 1, :bar =&gt; 2)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>stub</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>first:</span> <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_replace_with'>replace_with</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>allow({{receiver}}).to receive_messages({{arguments}})</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be replaced with.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+264
+265
+266</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 264</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_replace_with'>replace_with</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_replace_with'>replace_with</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test-instance_method">
+  
+    #<strong>test</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test the instance. It finds specified files, for each file, it executes the block code, tests the original code, then returns the actions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span>
+  <span class='id identifier rubyid_get_file_paths'>get_file_paths</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file_path'>file_path</span><span class='op'>|</span>
+    <span class='id identifier rubyid_test_file'>test_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unless_exist_node-instance_method">
+  
+    #<strong>unless_exist_node</strong>(rules, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>unless_exist_node</code> dsl, it creates a <span class='object_link'><a href="UnlessExistCondition.html" title="Synvert::Core::Rewriter::UnlessExistCondition (class)">UnlessExistCondition</a></span> to check if matching nodes doesn’t exist in the child nodes, if so, then continue operating on each matching ast node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># obj.stub(:message)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>stub</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>first:</span> <span class='lbrace'>{</span> <span class='label'>type:</span> <span class='lbrace'>{</span> <span class='label'>not:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hash</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_unless_exist_node'>unless_exist_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>any_instance</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rules</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>rules to check mathing ast nodes.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Block</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>block code to continue operating on the matching nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 152</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_unless_exist_node'>unless_exist_node</span><span class='lparen'>(</span><span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="UnlessExistCondition.html" title="Synvert::Core::Rewriter::UnlessExistCondition (class)">UnlessExistCondition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Condition.html#initialize-instance_method" title="Synvert::Core::Rewriter::Condition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="Condition.html#process-instance_method" title="Synvert::Core::Rewriter::Condition#process (method)">process</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="warn-instance_method">
+  
+    #<strong>warn</strong>(message)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>warn</code> dsl, it creates a <span class='object_link'><a href="Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span> to save warning message.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_within_files'>within_files</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/plugins</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rails::Plugin is deprecated and will be removed in Rails 4.0. Instead of adding plugins to vendor/plugins use gems or bundler with path or git dependencies.</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>warning message.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+339
+340
+341</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 339</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
+  <span class='ivar'>@rewriter</span><span class='period'>.</span><span class='id identifier rubyid_add_warning'>add_warning</span> <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Warning.html#initialize-instance_method" title="Synvert::Core::Rewriter::Warning#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="within_node-instance_method">
+  
+    #<strong>within_node</strong>(rules, options = {}) { ... } &#x21d2; <tt>Object</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='with_node-instance_method'>with_node</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>within_node</code> dsl, it creates a <span class='object_link'><a href="WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span> to recursively find matching ast nodes, then continue operating on each matching ast node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># matches User.find_by_login(&#39;test&#39;)
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^find_by_</span><span class='regexp_end'>/</span></span> <span class='kw'>do</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rules</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>rules to find mathing ast nodes.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>optional</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>including_self</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>stop_at_first_match</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>recursive</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>run on the matching nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+108
+109
+110</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 108</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_within_node'>within_node</span><span class='lparen'>(</span><span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="WithinScope.html#initialize-instance_method" title="Synvert::Core::Rewriter::WithinScope#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="WithinScope.html#process-instance_method" title="Synvert::Core::Rewriter::WithinScope#process (method)">process</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="wrap-instance_method">
+  
+    #<strong>wrap</strong>(with:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Parse <code>wrap</code> dsl, it creates a WrapAction to wrap current node with code.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># class Foobar
+</span><span class='comment'># end
+</span><span class='comment'># =&gt;
+</span><span class='comment'># module Synvert
+</span><span class='comment'>#   class Foobar
+</span><span class='comment'>#   end
+</span><span class='comment'># end
+</span><span class='id identifier rubyid_within_node'>within_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>class</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_wrap'>wrap</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>module Synvert</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>with</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>code need to be wrapped with.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+324
+325
+326</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 324</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='label'>with:</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='id identifier rubyid_with'>with</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Sep 30 23:50:48 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.2).
+</div>
+
+    </div>
+  </body>
+</html>

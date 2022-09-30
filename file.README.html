@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.28
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-synvert-core-ruby">synvert-core-ruby</h1>
+
+<p>&lt;img src=“<img src="https://synvert.net/img/logo_96.png" />” alt=“logo” width=“32” height=“32” /&gt;</p>
+
+<p><a href="https://awesomecode.io/repos/xinminlabs/synvert-core-ruby"><img src="https://awesomecode.io/projects/033f7f02-7b22-41c3-a902-fca37f1ec72a/status"></a> <img src="https://github.com/xinminlabs/synvert-core-ruby/actions/workflows/main.yml/badge.svg"></p>
+
+<p>Synvert core provides a set of DSLs to rewrite ruby code. e.g.</p>
+
+<pre class="code ruby"><code class="ruby">Synvert::Rewriter.new &#39;factory_bot&#39;, &#39;convert_factory_girl_to_factory_bot&#39; do
+  description &lt;&lt;~EOS
+    It converts FactoryGirl to FactoryBot
+</code></pre>
+
+<p>ruby  require ‘factory_girl’  require ‘factory_girl_rails’  “‘</p>
+
+<pre class="code ruby"><code class="ruby">=&gt;
+
+```ruby
+require &#39;factory_bot&#39;
+require &#39;factory_bot_rails&#39;
+```
+
+```ruby
+FactoryGirl.create(:user)
+FactoryGirl.build(:user)
+```
+
+=&gt;
+
+```ruby
+FactoryBot.create(:user)
+FactoryBot.build(:user)
+```
+</code></pre>
+
+<p>EOS</p>
+
+<p>within_files Synvert::RAILS_TEST_FILES do  find_node ‘.<a href="name=FactoryGirl">const</a>’ do  replace_with ‘FactoryBot’  end</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_find_node'>find_node</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.send[receiver=nil][message=require][arguments.size=1][arguments.first=&#39;factory_girl&#39;]</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_replace'>replace</span> <span class='symbol'>:arguments</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;factory_bot&#39;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>require</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>size:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>first:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;factory_girl_rails&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_replace'>replace</span> <span class='symbol'>:arguments</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;factory_bot_rails&#39;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p> end end</p>
+
+<p>“‘</p>
+
+<p>Want to see more examples, check out <a href="https://github.com/xinminlabs/synvert-snippets-ruby">synvert-snippets-ruby</a>.</p>
+
+<p>Want to use the CLI, check out <a href="https://github.com/xinminlabs/synvert-ruby">synvert-ruby</a>.</p>
+
+<p>DSLs are as follows</p>
+<ul><li>
+<p><a href="./Synvert/Core/Rewriter.html#description-instance_method">description</a> - set description of the rewriter</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#if_ruby-instance_method">if_ruby</a> - check if ruby version is greater than or equal to the specified ruby version</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#if_gem-instance_method">if_gem</a> - compare version of specified gem</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#within_files-instance_method">within_files</a> - find specified files</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#within_file-instance_method">within_file</a> - alias to within_files</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#add_file-instance_method">add_file</a> - add a new file</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#remove_file-instance_method">remove_file</a> - remove a file</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#helper_method-instance_method">helper_method</a> - define a helper method</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#add_snippet-instance_method">add_snippet</a> - call another rewriter</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#todo-instance_method">todo</a> - set todo</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter.html#redo_until_no_change-instance_method">redo_until_no_change</a> - run the snippet until no change</p>
+</li></ul>
+
+<p>Scopes:</p>
+<ul><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#find_node-instance_method">find_node</a> - recursively find matching ast nodes by node query language</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#within_node-instance_method">within_node</a> - recursively find matching ast nodes</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#with_node-instance_method">with_node</a> - alias to within_node</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#goto_node-instance_method">goto_node</a> - go to a child node</p>
+</li></ul>
+
+<p>Conditions:</p>
+<ul><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#if_exist_node-instance_method">if_exist_node</a> - check if matching node exist in the child nodes</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#unless_exist_node-instance_method">unless_exist_node</a> - check if matching node doesn’t exist in the child nodes</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#if_only_exist_node-instance_method">if_only_exist_node</a> - check if current node has only one child node and the child node matches rules</p>
+</li></ul>
+
+<p>Actions:</p>
+<ul><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#append-instance_method">append</a> - append the code to the bottom of current node body</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#prepend-instance_method">prepend</a> - prepend the code to the bottom of current node body</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#insert-instance_method">insert</a> - insert code</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#insert_after-instance_method">insert_after</a> - insert the code next to the current node</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#replace-instance_method">replace</a> - replace the code of specified child nodes</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#delete-instance_method">delete</a> - delete the code specified child nodes</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#wrap-instance_method">wrap</a> - wrap the current node with code</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#replace_with-instance_method">replace_with</a> - replace the whole code of current node</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#warn-instance_method">warn</a> - warn message</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method">replace_erb_stmt_with_expr</a> - replace erb stmt code to expr code</p>
+</li><li>
+<p><a href="./Synvert/Core/Rewriter/Instance.html#noop-instance_method">noop</a> - no operation</p>
+</li></ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Fri Sep 30 23:50:48 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.2).
+</div>
+
+    </div>
+  </body>
+</html>
