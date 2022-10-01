@@ -101,37 +101,35 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Extend Parser::AST::Node. <a href="https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb" target="_parent" title="https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb">https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb</a></p>
+    <p>Extend Parser::AST::Node.
+<a href="https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb" target="_parent" title="https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb">https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb</a></p>
 
 <p>Rules</p>
 
-<p>Synvert compares ast nodes with key / value pairs, each ast node has multiple attributes, e.g. <code>receiver</code>, <code>message</code> and <code>arguments</code>, it matches only when all of key / value pairs match.</p>
+<p>Synvert compares ast nodes with key / value pairs, each ast node has
+multiple attributes, e.g. +receiver+, +message+ and +arguments+, it
+matches only when all of key / value pairs match.</p>
 
-<p><tt>type: ‘send’, message: :include, arguments: [‘FactoryGirl::Syntax::Methods’]</tt></p>
+<p>+type: &#39;send&#39;, message: :include, arguments: [&#39;FactoryGirl::Syntax::Methods&#39;]+</p>
 
 <p>Synvert does comparison based on the value type</p>
-<ol><li>
-<p>if value is a symbol, then compares ast node value as symbol, e.g. <tt>message: :include</tt></p>
-</li><li>
-<p>if value is a string, then compares ast node original source code, e.g. <tt>name: ‘Synvert::Application’</tt></p>
-</li><li>
-<p>if value is a regexp, then compares ast node original source code, e.g. <tt>message: /find_all_by_/</tt></p>
-</li><li>
-<p>if value is an array, then compares each ast node, e.g. <tt>arguments: [‘FactoryGirl::Syntax::Methods’]</tt></p>
-</li><li>
-<p>if value is nil, then check if ast node is nil, e.g. <tt>arguments: [nil]</tt></p>
-</li><li>
-<p>if value is true or false, then check if ast node is :true or :false, e.g. <tt>arguments: [false]</tt></p>
-</li><li>
-<p>if value is ast, then compare ast node directly, e.g. <tt>to_ast: Parser::CurrentRuby.parse(“self.class.serialized_attributes”)</tt></p>
-</li></ol>
+
+<ol>
+<li>if value is a symbol, then compares ast node value as symbol, e.g. +message: :include+</li>
+<li>if value is a string, then compares ast node original source code, e.g. +name: &#39;Synvert::Application&#39;+</li>
+<li>if value is a regexp, then compares ast node original source code, e.g. +message: /find_all_by_/+</li>
+<li>if value is an array, then compares each ast node, e.g. +arguments: [&#39;FactoryGirl::Syntax::Methods&#39;]+</li>
+<li>if value is nil, then check if ast node is nil, e.g. +arguments: [nil]+</li>
+<li>if value is true or false, then check if ast node is :true or :false, e.g. +arguments: [false]+</li>
+<li>if value is ast, then compare ast node directly, e.g. +to_ast: Parser::CurrentRuby.parse(&quot;self.class.serialized_attributes&quot;)+</li>
+</ol>
 
 <p>It can also compare nested key / value pairs, like</p>
 
-<p><tt>type: ‘send’, receiver: { type: ‘send’, receiver: { type: ‘send’, message: ‘config’ }, message: ‘active_record’ }, message: ‘identity_map=’</tt></p>
+<p>+type: &#39;send&#39;, receiver: { type: &#39;send&#39;, receiver: { type: &#39;send&#39;, message: &#39;config&#39; }, message: &#39;active_record&#39; }, message: &#39;identity_map=&#39;+</p>
 
-<p>Source Code to Ast Node <a href="https://synvert-playground.xinminlabs.com/ruby" target="_parent" title="https://synvert-playground.xinminlabs.com/ruby">https://synvert-playground.xinminlabs.com/ruby</a></p>
+<p>Source Code to Ast Node
+<a href="https://synvert-playground.xinminlabs.com/ruby" target="_parent" title="https://synvert-playground.xinminlabs.com/ruby">https://synvert-playground.xinminlabs.com/ruby</a></p>
 
 
   </div>
@@ -171,8 +169,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get the column of node.</p>
+    <span class="summary_desc"><div class='inline'><p>Get the column of node.</p>
 </div></span>
   
 </li>
@@ -195,8 +192,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get the file name of node.</p>
+    <span class="summary_desc"><div class='inline'><p>Get the file name of node.</p>
 </div></span>
   
 </li>
@@ -219,8 +215,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get the line of node.</p>
+    <span class="summary_desc"><div class='inline'><p>Get the line of node.</p>
 </div></span>
   
 </li>
@@ -243,8 +238,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Strip curly braces for hash.</p>
+    <span class="summary_desc"><div class='inline'><p>Strip curly braces for hash.</p>
 </div></span>
   
 </li>
@@ -267,8 +261,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Convert lambda {} to -&gt; {}.</p>
+    <span class="summary_desc"><div class='inline'><p>Convert lambda {} to -&gt; {}.</p>
 </div></span>
   
 </li>
@@ -291,8 +284,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get single quote string.</p>
+    <span class="summary_desc"><div class='inline'><p>Get single quote string.</p>
 </div></span>
   
 </li>
@@ -315,8 +307,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Convert symbol to string.</p>
+    <span class="summary_desc"><div class='inline'><p>Convert symbol to string.</p>
 </div></span>
   
 </li>
@@ -339,8 +330,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Convert string to symbol.</p>
+    <span class="summary_desc"><div class='inline'><p>Convert string to symbol.</p>
 </div></span>
   
 </li>
@@ -363,8 +353,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Wrap curly braces for hash.</p>
+    <span class="summary_desc"><div class='inline'><p>Wrap curly braces for hash.</p>
 </div></span>
   
 </li>
@@ -390,8 +379,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get the column of node.</p>
+    <p>Get the column of node.</p>
 
 
   </div>
@@ -409,8 +397,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>column.</p>
+        <div class='inline'><p>column.</p>
 </div>
       
     </li>
@@ -449,8 +436,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get the file name of node.</p>
+    <p>Get the file name of node.</p>
 
 
   </div>
@@ -468,8 +454,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>file name.</p>
+        <div class='inline'><p>file name.</p>
 </div>
       
     </li>
@@ -508,8 +493,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get the line of node.</p>
+    <p>Get the line of node.</p>
 
 
   </div>
@@ -527,8 +511,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>line.</p>
+        <div class='inline'><p>line.</p>
 </div>
       
     </li>
@@ -567,8 +550,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Strip curly braces for hash.</p>
+    <p>Strip curly braces for hash.</p>
 
 
   </div>
@@ -634,8 +616,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Convert lambda {} to -&gt; {}</p>
+    <p>Convert lambda {} to -&gt; {}</p>
 
 
   </div>
@@ -719,8 +700,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get single quote string.</p>
+    <p>Get single quote string.</p>
 
 
   </div>
@@ -786,8 +766,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Convert symbol to string.</p>
+    <p>Convert symbol to string.</p>
 
 
   </div>
@@ -853,8 +832,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Convert string to symbol.</p>
+    <p>Convert string to symbol.</p>
 
 
   </div>
@@ -920,8 +898,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Wrap curly braces for hash.</p>
+    <p>Wrap curly braces for hash.</p>
 
 
   </div>
@@ -981,7 +958,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 30 23:50:48 2022 by
+  Generated on Sat Oct  1 00:51:08 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
