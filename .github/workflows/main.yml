@@ -33,7 +33,7 @@ jobs:
         with:
           ruby-version: '3.1'
       - name: Install required gem dependencies
-        run: gem install yard --no-document
+        run: gem install yard redcarpet github-markup --no-document
       - name: Build YARD Ruby Documentation
         run: yardoc --output-dir docs
       - name: Deploy
