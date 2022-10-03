@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.9.2 (2022-10-03)
+
+* Fix `test` in sub_snippets
+
 ## 1.9.1 (2022-09-23)
 
 * Read / write absolute path
