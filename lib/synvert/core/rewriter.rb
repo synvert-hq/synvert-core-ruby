@@ -74,11 +74,14 @@ module Synvert::Core
       # @param name [String] the rewriter name.
       # @param options [Hash]
       # @option options [Boolean] :run_instance (true) process the instance.
+      # @option options [String] :execute_command ('process') process or test the rewriter
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(group, name, options = { run_instance: true })
+      def call(group, name, options = { run_instance: true, execute_command: 'process' })
         rewriter = fetch(group, name)
-        if options[:run_instance]
+        if options[:execute_command] == 'test'
+          rewriter.test
+        elsif options[:run_instance]
           rewriter.process
         else
           rewriter.process_with_sandbox
@@ -121,7 +124,9 @@ module Synvert::Core
     #   @return [Rewriter::RubyVersion] the ruby version
     # @!attribute [r] gem_spec
     #   @return [Rewriter::GemSpec] the gem spec
-    attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files, :ruby_version, :gem_spec
+    # @!attribute [r] test_results
+    #   @return [Object] the test results
+    attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files, :ruby_version, :gem_spec, :test_results
 
     # Initialize a Rewriter.
     # When a rewriter is initialized, it is already registered.
@@ -138,7 +143,7 @@ module Synvert::Core
       @warnings = []
       @affected_files = Set.new
       @redo_until_no_change = false
-      @options = { run_instance: true, write_to_file: true }
+      @options = { run_instance: true, execute_command: 'process', write_to_file: true }
       @test_results = []
       self.class.register(@group, @name, self)
     end
@@ -165,6 +170,7 @@ module Synvert::Core
 
     def test
       @options[:write_to_file] = false
+      @options[:execute_command] = 'test'
       begin
         @affected_files = Set.new
         instance_eval(&@block)
@@ -174,6 +180,7 @@ module Synvert::Core
         end
       ensure
         @options[:write_to_file] = true
+        @options[:execute_command] = 'process'
       end
       @test_results
     end
