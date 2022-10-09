@@ -238,15 +238,6 @@ module Synvert::Core
         rewriter.process
         expect(Rewriter.fetch('group', 'sub_rewriter')).not_to be_nil
       end
-
-      it 'raises RewriterNotFound' do
-        rewriter =
-          Rewriter.new 'group', 'name' do
-            add_snippet :group, :not_exist
-          end
-        expect { rewriter.process }
-          .to raise_error(RewriterNotFound)
-      end
     end
 
     it 'parses helper_method' do

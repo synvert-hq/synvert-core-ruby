@@ -51,14 +51,10 @@ module Synvert::Core
       # @param group [String] rewrtier group.
       # @param name [String] rewrtier name.
       # @return [Synvert::Core::Rewriter] the matching rewriter.
-      # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
       def fetch(group, name)
         group = group.to_s
         name = name.to_s
-        rewriter = rewriters.dig(group, name)
-        raise RewriterNotFound, "Rewriter #{group} #{name} not found" unless rewriter
-
-        rewriter
+        rewriters.dig(group, name)
       end
 
       # Get all available rewriters
