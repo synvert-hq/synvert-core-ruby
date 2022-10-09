@@ -270,16 +270,25 @@ module Synvert::Core
         expect(Rewriter.fetch('group', 'rewriter')).to eq rewriter
       end
 
-      it 'registers and calls rewriter' do
-        rewriter = Rewriter.new 'group', 'rewriter'
+      it 'calls rewriter and process' do
+        rewriter = Rewriter.new 'group', 'rewriter' do
+        end
         expect(rewriter).to receive(:process)
         Rewriter.call 'group', 'rewriter'
       end
 
-      it 'registers and calls rewriter in sandbox mode' do
-        rewriter = Rewriter.new 'group', 'rewriter'
+      it 'calls rewriter and test' do
+        rewriter = Rewriter.new 'group', 'rewriter' do
+        end
+        expect(rewriter).to receive(:test)
+        Rewriter.call 'group', 'rewriter', { write_to_file: false }
+      end
+
+      it 'calls rewriter and process in sandbox mode' do
+        rewriter = Rewriter.new 'group', 'rewriter' do
+        end
         expect(rewriter).to receive(:process_with_sandbox)
-        Rewriter.call 'group', 'rewriter', run_instance: false
+        Rewriter.call 'group', 'rewriter', write_to_file: true, run_instance: false
       end
 
       it 'raises RewriterNotFound if rewriter not found' do

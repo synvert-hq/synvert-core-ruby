@@ -8,6 +8,8 @@ module Synvert::Core
   # One Rewriter checks if the depndency version matches, and it can contain one or many {Synvert::Core::Rewriter::Instance},
   # which define the behavior what files and what codes to detect and rewrite to what code.
   class Rewriter
+    DEFAULT_OPTIONS = { run_instance: true, write_to_file: true }.freeze
+
     autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
 
     autoload :Warning, 'synvert/core/rewriter/warning'
@@ -65,12 +67,12 @@ module Synvert::Core
       # @param name [String] the rewriter name.
       # @param options [Hash]
       # @option options [Boolean] :run_instance (true) process the instance.
-      # @option options [String] :execute_command ('process') process or test the rewriter
       # @return [Synvert::Core::Rewriter] the registered rewriter.
       # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(group, name, options = { run_instance: true, execute_command: 'process' })
+      def call(group, name, options = {})
+        options = DEFAULT_OPTIONS.merge(options)
         rewriter = fetch(group, name)
-        if options[:execute_command] == 'test'
+        if !options[:write_to_file]
           rewriter.test
         elsif options[:run_instance]
           rewriter.process
@@ -134,7 +136,7 @@ module Synvert::Core
       @warnings = []
       @affected_files = Set.new
       @redo_until_no_change = false
-      @options = { run_instance: true, execute_command: 'process', write_to_file: true }
+      @options = DEFAULT_OPTIONS.dup
       @test_results = []
       self.class.register(@group, @name, self)
     end
@@ -161,7 +163,6 @@ module Synvert::Core
 
     def test
       @options[:write_to_file] = false
-      @options[:execute_command] = 'test'
       begin
         @affected_files = Set.new
         instance_eval(&@block)
@@ -171,7 +172,6 @@ module Synvert::Core
         end
       ensure
         @options[:write_to_file] = true
-        @options[:execute_command] = 'process'
       end
       @test_results
     end
