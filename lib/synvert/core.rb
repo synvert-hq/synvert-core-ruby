@@ -19,6 +19,7 @@ module Synvert
     autoload :Engine, 'synvert/core/engine'
     autoload :RewriterNotFound, 'synvert/core/exceptions'
     autoload :MethodNotSupported, 'synvert/core/exceptions'
+    autoload :Utils, 'synvert/core/utils'
   end
 end
 

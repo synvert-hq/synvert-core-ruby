@@ -97,8 +97,11 @@ module Synvert::Core
     # @!attribute [r] gem_spec
     #   @return [Rewriter::GemSpec] the gem spec
     # @!attribute [r] test_results
-    #   @return [Object] the test results
+    #   @return [Array<Object>] the test results
+    # @!attribute [rw] options
+    #   @return [Hash] the rewriter options
     attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files, :ruby_version, :gem_spec, :test_results
+    attr_accessor :options
 
     # Initialize a Rewriter.
     # When a rewriter is initialized, it is already registered.
@@ -230,7 +233,7 @@ module Synvert::Core
         instance.process
       else
         results = instance.test
-        @test_results += results.select { |result| result.affected? }
+        merge_test_results(results)
       end
     end
 
@@ -279,22 +282,34 @@ module Synvert::Core
     #   Synvert::Rewriter.new 'minitest', 'better_syntax' do
     #     add_snippet 'minitest', 'assert_empty'
     #     add_snippet 'minitest', 'assert_equal_arguments_order'
-    #     add_snippet 'minitest', 'assert_includes'
-    #     add_snippet 'minitest', 'assert_instance_of'
-    #     add_snippet 'minitest', 'assert_kind_of'
-    #     add_snippet 'minitest', 'assert_match'
-    #     add_snippet 'minitest', 'assert_nil'
-    #     add_snippet 'minitest', 'assert_operator'
-    #     add_snippet 'minitest', 'assert_path_exists'
-    #     add_snippet 'minitest', 'assert_predicate'
-    #     add_snippet 'minitest', 'assert_respond_to'
-    #     add_snippet 'minitest', 'assert_silent'
-    #     add_snippet 'minitest', 'assert_truthy'
+    #     add_snippet 'minitest/assert_instance_of'
+    #     add_snippet 'minitest/assert_kind_of'
+    #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/minitest/assert_match.rb'
+    #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/minitest/assert_nil.rb'
+    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/minitest/assert_silent.rb'
+    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/minitest/assert_truthy.rb'
     #   end
-    # @param group [String] group of another rewriter.
+    # @param group [String] group of another rewriter, if there's no name parameter, the group can be http url, file path or snippet name.
     # @param name [String] name of another rewriter.
-    def add_snippet(group, name)
-      @sub_snippets << self.class.call(group.to_s, name.to_s, @options)
+    def add_snippet(group, name = nil)
+      rewriter =
+        if name
+          Rewriter.fetch(group, name) || Utils.eval_snippet([group, name].join('/'))
+        else
+          Utils.eval_snippet(group)
+        end
+      return unless rewriter && rewriter.is_a?(Rewriter)
+
+      rewriter.options = @options
+      if !rewriter.options[:write_to_file]
+        results = rewriter.test
+        merge_test_results(results)
+      elsif rewriter.options[:run_instance]
+        rewriter.process
+      else
+        rewriter.process_with_sandbox
+      end
+      @sub_snippets << rewriter
     end
 
     # Parse +helper_method+ dsl, it defines helper method for {Synvert::Core::Rewriter::Instance}.
@@ -343,6 +358,12 @@ module Synvert::Core
     #   end
     def redo_until_no_change
       @redo_until_no_change = true
+    end
+
+    private
+
+    def merge_test_results(results)
+      @test_results += results.select { |result| result.affected? }
     end
   end
 end

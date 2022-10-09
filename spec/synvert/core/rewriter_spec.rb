@@ -220,6 +220,25 @@ module Synvert::Core
         expect(rewriter2.sub_snippets).to eq [rewriter1]
       end
 
+      it 'adds snippet by http url' do
+        expect_any_instance_of(URI).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'sub_rewriter' do\nend"))
+        rewriter = Rewriter.new 'group', 'rewriter' do
+          add_snippet 'http://synvert.net/foo/bar.rb'
+        end
+        rewriter.process
+        expect(Rewriter.fetch('group', 'sub_rewriter')).not_to be_nil
+      end
+
+      it 'adds snippet by file path' do
+        expect(File).to receive(:exist?).and_return(true)
+        expect(File).to receive(:read).and_return("Rewriter.new 'group', 'sub_rewriter' do\nend")
+        rewriter = Rewriter.new 'group', 'rewriter' do
+          add_snippet '/home/richard/foo/bar.rb'
+        end
+        rewriter.process
+        expect(Rewriter.fetch('group', 'sub_rewriter')).not_to be_nil
+      end
+
       it 'raises RewriterNotFound' do
         rewriter =
           Rewriter.new 'group', 'name' do
