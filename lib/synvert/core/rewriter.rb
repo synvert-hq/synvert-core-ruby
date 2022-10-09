@@ -32,15 +32,6 @@ module Synvert::Core
     autoload :AnyValue, 'synvert/core/rewriter/any_value'
 
     class << self
-      # Execute the temporary rewriter without group and name.
-      #
-      # @yield defines the behaviors of the rewriter.
-      def execute(&block)
-        rewriter = Rewriter.new('', '', &block)
-        rewriter.process
-        rewriter
-      end
-
       # Register a rewriter with its group and name.
       #
       # @param group [String] the rewriter group.

@@ -4,12 +4,6 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter do
-    it '.execute' do
-      run = false
-      Rewriter.execute { run = true }
-      expect(run).to be_truthy
-    end
-
     it 'parses description' do
       rewriter =
         Rewriter.new 'group', 'name' do
