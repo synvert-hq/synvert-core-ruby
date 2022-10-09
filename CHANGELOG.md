@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.10.1 (2022-10-09)
+
+* Do not reset `@options`
+* `Rewriter.fetch` does not raise error if rewriter not found
+
 ## 1.10.0 (2022-10-09)
 
 * Eval snippet by http url, file path or snippet name
