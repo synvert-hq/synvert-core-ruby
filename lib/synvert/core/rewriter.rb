@@ -132,24 +132,16 @@ module Synvert::Core
     # It will call the block but doesn't change any file.
     def process_with_sandbox
       @options[:run_instance] = false
-      begin
-        process
-      ensure
-        @options[:run_instance] = true
-      end
+      process
     end
 
     def test
       @options[:write_to_file] = false
-      begin
-        @affected_files = Set.new
-        instance_eval(&@block)
+      @affected_files = Set.new
+      instance_eval(&@block)
 
-        if !@affected_files.empty? && @redo_until_no_change # redo
-          test
-        end
-      ensure
-        @options[:write_to_file] = true
+      if !@affected_files.empty? && @redo_until_no_change # redo
+        test
       end
       @test_results
     end
