@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.10.0 (2022-10-09)
+
+* Eval snippet by http url, file path or snippet name
+* Remove `execute_command` option
+* Remove `Rewriter.call`
+* Remove `Rewriter.execute`
+
 ## 1.9.2 (2022-10-03)
 
 * Fix `test` in sub_snippets
