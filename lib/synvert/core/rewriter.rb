@@ -61,27 +61,6 @@ module Synvert::Core
         rewriter
       end
 
-      # Get a registered rewriter by group and name, then process that rewriter.
-      #
-      # @param group [String] the rewriter group.
-      # @param name [String] the rewriter name.
-      # @param options [Hash]
-      # @option options [Boolean] :run_instance (true) process the instance.
-      # @return [Synvert::Core::Rewriter] the registered rewriter.
-      # @raise [Synvert::Core::RewriterNotFound] if the registered rewriter is not found.
-      def call(group, name, options = {})
-        options = DEFAULT_OPTIONS.merge(options)
-        rewriter = fetch(group, name)
-        if !options[:write_to_file]
-          rewriter.test
-        elsif options[:run_instance]
-          rewriter.process
-        else
-          rewriter.process_with_sandbox
-        end
-        rewriter
-      end
-
       # Get all available rewriters
       #
       # @return [Hash<String, Hash<String, Rewriter>>]

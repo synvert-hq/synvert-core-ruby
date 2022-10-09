@@ -203,7 +203,7 @@ module Synvert::Core
         rewriter1 = Rewriter.new 'group', 'rewriter1'
         rewriter2 =
           Rewriter.new 'group', 'rewriter2' do
-            add_snippet :group, :rewriter1
+            add_snippet 'group', 'rewriter1'
           end
         expect(rewriter1).to receive(:process)
         rewriter2.process
@@ -213,7 +213,7 @@ module Synvert::Core
         rewriter1 = Rewriter.new 'group', 'rewriter1'
         rewriter2 =
           Rewriter.new 'group', 'rewriter2' do
-            add_snippet :group, :rewriter1
+            add_snippet 'group', 'rewriter1'
           end
         expect(rewriter1).to receive(:process)
         rewriter2.process
@@ -268,32 +268,6 @@ module Synvert::Core
       it 'registers and fetches' do
         rewriter = Rewriter.new 'group', 'rewriter'
         expect(Rewriter.fetch('group', 'rewriter')).to eq rewriter
-      end
-
-      it 'calls rewriter and process' do
-        rewriter = Rewriter.new 'group', 'rewriter' do
-        end
-        expect(rewriter).to receive(:process)
-        Rewriter.call 'group', 'rewriter'
-      end
-
-      it 'calls rewriter and test' do
-        rewriter = Rewriter.new 'group', 'rewriter' do
-        end
-        expect(rewriter).to receive(:test)
-        Rewriter.call 'group', 'rewriter', { write_to_file: false }
-      end
-
-      it 'calls rewriter and process in sandbox mode' do
-        rewriter = Rewriter.new 'group', 'rewriter' do
-        end
-        expect(rewriter).to receive(:process_with_sandbox)
-        Rewriter.call 'group', 'rewriter', write_to_file: true, run_instance: false
-      end
-
-      it 'raises RewriterNotFound if rewriter not found' do
-        expect { Rewriter.call 'group', 'rewriter' }
-          .to raise_error(RewriterNotFound)
       end
 
       context 'available' do
