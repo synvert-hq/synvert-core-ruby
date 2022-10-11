@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'parallel'
 
 module Synvert::Core
   # Instance is an execution unit, it finds specified ast nodes,
@@ -41,8 +42,14 @@ module Synvert::Core
     # It finds specified files, for each file, it executes the block code, tests the original code,
     # then returns the actions.
     def test
-      get_file_paths.map do |file_path|
-        test_file(file_path)
+      if Configuration.number_of_workers > 1
+        Parallel.map(get_file_paths, in_processes: Configuration.number_of_workers) do |file_path|
+          test_file(file_path)
+        end
+      else
+        get_file_paths.map do |file_path|
+          test_file(file_path)
+        end
       end
     end
 
