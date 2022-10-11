@@ -8,7 +8,8 @@ module Synvert::Core
       # @!attribute [w] skip_paths
       # @!attribute [w] only_paths
       # @!attribute [w] show_run_process
-      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process
+      # @!attribute [w] number_of_workers
+      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process, :number_of_workers
 
       # Get the path.
       #
@@ -36,6 +37,13 @@ module Synvert::Core
       # @return [Boolean] default is false
       def show_run_process
         @show_run_process || false
+      end
+
+      # Number of workers
+      #
+      # @return [Integer] default is 1
+      def number_of_workers
+        @number_of_workers || 1
       end
     end
   end
