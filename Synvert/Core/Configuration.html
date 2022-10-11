@@ -119,6 +119,32 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#number_of_workers-class_method" title="number_of_workers (class method)">.<strong>number_of_workers</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Number of workers.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#only_paths-class_method" title="only_paths (class method)">.<strong>only_paths</strong>  &#x21d2; Array&lt;String&gt; </a>
     
 
@@ -230,9 +256,68 @@
     <h2>Class Attribute Details</h2>
     
       
-      <span id="only_paths=-class_method"></span>
+      <span id="number_of_workers=-class_method"></span>
       <div class="method_details first">
-  <h3 class="signature first" id="only_paths-class_method">
+  <h3 class="signature first" id="number_of_workers-class_method">
+  
+    .<strong>number_of_workers</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Number of workers</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>default is 1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_number_of_workers'>number_of_workers</span>
+  <span class='ivar'>@number_of_workers</span> <span class='op'>||</span> <span class='int'>1</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="only_paths=-class_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="only_paths-class_method">
   
     .<strong>only_paths</strong>  &#x21d2; <tt>Array&lt;String&gt;</tt> 
   
@@ -273,12 +358,12 @@
       <pre class="lines">
 
 
-30
 31
-32</pre>
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_only_paths'>only_paths</span>
   <span class='ivar'>@only_paths</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -332,12 +417,12 @@
       <pre class="lines">
 
 
-16
 17
-18</pre>
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root_path'>root_path</span>
   <span class='ivar'>@root_path</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.</span><span class='tstring_end'>&#39;</span></span>
@@ -391,12 +476,12 @@
       <pre class="lines">
 
 
-37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_run_process'>show_run_process</span>
   <span class='ivar'>@show_run_process</span> <span class='op'>||</span> <span class='kw'>false</span>
@@ -450,12 +535,12 @@
       <pre class="lines">
 
 
-23
 24
-25</pre>
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_paths'>skip_paths</span>
   <span class='ivar'>@skip_paths</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -471,7 +556,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Oct  9 11:37:53 2022 by
+  Generated on Tue Oct 11 00:37:03 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
