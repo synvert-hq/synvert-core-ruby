@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.11.0 (2022-10-11)
+
+* Add `Configuration.number_of_workers`
+* Test rewriter in parallel
+
 ## 1.10.1 (2022-10-09)
 
 * Do not reset `@options`
