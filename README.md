@@ -82,7 +82,7 @@ Conditions:
 
 * [if_exist_node](./Synvert/Core/Rewriter/Instance.html#if_exist_node-instance_method) - check if matching node exist in the child nodes
 * [unless_exist_node](./Synvert/Core/Rewriter/Instance.html#unless_exist_node-instance_method) - check if matching node doesn't exist in the child nodes
-* [if_only_exist_node](./Synvert/Core/Rewriter/Instance.html#if_only_exist_node-instance_method) - check if current node has only one child node and the child node matches rules
+* [if_only_exist_node](./Synvert/Core/Rewriter/Instance.html#if_only_exist_node-instance_method) - check if current node has only one child node and the child node matches
 
 Actions:
 

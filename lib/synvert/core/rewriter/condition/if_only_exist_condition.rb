@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # IfOnlyExistCondition checks if node has only one child node and the child node matches rules.
+  # IfOnlyExistCondition checks if node has only one child node and the child node matches.
   class Rewriter::IfOnlyExistCondition < Rewriter::Condition
     private
 
-    # check if only have one child node and the child node matches rules.
+    # check if only have one child node and the child node matches.
     #
     # @return [Boolean]
     def match?

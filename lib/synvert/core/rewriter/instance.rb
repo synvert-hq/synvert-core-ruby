@@ -94,7 +94,7 @@ module Synvert::Core
     #   # matches FactoryBot.create(:user)
     #   with_node '.send[receiver=FactoryBot][message=create][arguments.size=1]' do
     #   end
-    # @param nql_or_rules [Hash] nql or rules to find mathing ast nodes.
+    # @param nql_or_rules [String|Hash] nql or rules to find mathing ast nodes.
     # @param options [Hash] optional
     # @option including_self [Boolean] set if query the current node, default is true
     # @option stop_at_first_match [Boolean] set if stop at first match, default is false
@@ -131,10 +131,10 @@ module Synvert::Core
     #     if_exist_node type: 'send', message: 'any_instance' do
     #     end
     #   end
-    # @param rules [Hash] rules to check mathing ast nodes.
+    # @param nql_or_rules [String|Hash] nql or rules to check mathing ast nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
-    def if_exist_node(rules, &block)
-      Rewriter::IfExistCondition.new(self, rules, &block).process
+    def if_exist_node(nql_or_rules, &block)
+      Rewriter::IfExistCondition.new(self, nql_or_rules, &block).process
     end
 
     # Parse +unless_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::UnlessExistCondition} to check
@@ -145,14 +145,14 @@ module Synvert::Core
     #     unless_exist_node type: 'send', message: 'any_instance' do
     #     end
     #   end
-    # @param rules [Hash] rules to check mathing ast nodes.
+    # @param nql_or_rules [String|Hash] nql or rules to check mathing ast nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
-    def unless_exist_node(rules, &block)
-      Rewriter::UnlessExistCondition.new(self, rules, &block).process
+    def unless_exist_node(nql_or_rules, &block)
+      Rewriter::UnlessExistCondition.new(self, nql_or_rules, &block).process
     end
 
     # Parse +if_only_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
-    # if current node has only one child node and the child node matches rules,
+    # if current node has only one child node and the child node matches,
     # if so, then continue operating on each matching ast node.
     # @example
     #   # it { should matcher }
@@ -160,10 +160,10 @@ module Synvert::Core
     #     if_only_exist_node type: 'send', receiver: nil, message: 'should' do
     #     end
     #   end
-    # @param rules [Hash] rules to check mathing ast nodes.
+    # @param nql_or_rules [String|Hash] nql or rules to check mathing ast nodes.
     # @param block [Block] block code to continue operating on the matching nodes.
-    def if_only_exist_node(rules, &block)
-      Rewriter::IfOnlyExistCondition.new(self, rules, &block).process
+    def if_only_exist_node(nql_or_rules, &block)
+      Rewriter::IfOnlyExistCondition.new(self, nql_or_rules, &block).process
     end
 
     # Parse +append+ dsl, it creates a {Synvert::Core::Rewriter::AppendAction} to

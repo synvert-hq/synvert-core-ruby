@@ -5,7 +5,7 @@ module Synvert::Core
   class Rewriter::UnlessExistCondition < Rewriter::Condition
     private
 
-    # check if none of child node matches the rules.
+    # check if none of child node matches.
     #
     # return [Boolean]
     def match?

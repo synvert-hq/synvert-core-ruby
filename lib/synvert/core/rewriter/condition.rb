@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # Condition checks if rules matches.
+  # Condition checks if nql or rules matches.
   class Rewriter::Condition
     # Initialize a Condition.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param rules [Hash]
+    # @param nql_or_rules [String|Hash]
     # @yield run when condition matches
-    def initialize(instance, rules, &block)
+    def initialize(instance, nql_or_rules, &block)
       @instance = instance
-      @node_query = NodeQuery.new(rules)
+      @node_query = NodeQuery.new(nql_or_rules)
       @block = block
     end
 
