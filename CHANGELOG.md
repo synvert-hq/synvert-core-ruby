@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.12.0 (2022-10-14)
+
+* Condition accepts both nql and rules
+* Make `find_node` as an alias to `within_node`
+* Remove skip files only once
+
 ## 1.11.0 (2022-10-11)
 
 * Add `Configuration.number_of_workers`
