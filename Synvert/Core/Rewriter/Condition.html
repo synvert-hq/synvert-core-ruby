@@ -101,7 +101,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Condition checks if rules matches.</p>
+    <p>Condition checks if nql or rules matches.</p>
 
 
   </div>
@@ -131,7 +131,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(instance, rules) { ... } &#x21d2; Condition </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(instance, nql_or_rules) { ... } &#x21d2; Condition </a>
     
 
     
@@ -185,7 +185,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(instance, rules) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="Synvert::Core::Rewriter::Condition (class)">Condition</a></span></tt> 
+    #<strong>initialize</strong>(instance, nql_or_rules) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="Synvert::Core::Rewriter::Condition (class)">Condition</a></span></tt> 
   
 
   
@@ -215,10 +215,10 @@
   
     <li>
       
-        <span class='name'>rules</span>
+        <span class='name'>nql_or_rules</span>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>String|Hash</tt>)</span>
       
       
       
@@ -259,9 +259,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/condition.rb', line 11</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_instance'>instance</span><span class='comma'>,</span> <span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_instance'>instance</span><span class='comma'>,</span> <span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@instance</span> <span class='op'>=</span> <span class='id identifier rubyid_instance'>instance</span>
-  <span class='ivar'>@node_query</span> <span class='op'>=</span> <span class='const'>NodeQuery</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_rules'>rules</span><span class='rparen'>)</span>
+  <span class='ivar'>@node_query</span> <span class='op'>=</span> <span class='const'>NodeQuery</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='rparen'>)</span>
   <span class='ivar'>@block</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -321,7 +321,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct 12 14:42:52 2022 by
+  Generated on Fri Oct 14 03:49:45 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
