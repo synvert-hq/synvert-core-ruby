@@ -17,7 +17,6 @@ module Synvert::Core
     autoload :Instance, 'synvert/core/rewriter/instance'
 
     autoload :Scope, 'synvert/core/rewriter/scope'
-    autoload :QueryScope, 'synvert/core/rewriter/scope/query_scope'
     autoload :WithinScope, 'synvert/core/rewriter/scope/within_scope'
     autoload :GotoScope, 'synvert/core/rewriter/scope/goto_scope'
 

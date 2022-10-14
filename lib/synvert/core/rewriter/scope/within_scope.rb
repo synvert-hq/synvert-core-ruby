@@ -1,22 +1,24 @@
 # frozen_string_literal: true
 
 module Synvert::Core
-  # WithinScope finds out nodes which match rules, then changes its scope to matching node.
+  # WithinScope finds out nodes which match nql or rules, then changes its scope to matching node.
   class Rewriter::WithinScope < Rewriter::Scope
     # Initialize a WithinScope.
     #
     # @param instance [Synvert::Core::Rewriter::Instance]
-    # @param rules [Hash]
+    # @param nql_or_rules [String|Hash]
     # @param options [Hash]
     # @yield run on all matching nodes
-    def initialize(instance, rules, options = {}, &block)
+    # @raise [Synvert::Core::NodeQuery::Compiler::ParseError] if the query string is invalid.
+    def initialize(instance, nql_or_rules, options = {}, &block)
       super(instance, &block)
 
       @options = { including_self: true, stop_at_first_match: false, recursive: true }.merge(options)
-      @node_query = NodeQuery.new(rules)
+      @node_query = NodeQuery.new(nql_or_rules)
     end
 
     # Find out the matching nodes.
+    #
     # It checks the current node and iterates all child nodes,
     # then run the block code on each matching node.
     def process

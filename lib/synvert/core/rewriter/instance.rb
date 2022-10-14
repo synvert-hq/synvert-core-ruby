@@ -85,38 +85,29 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse +find_node+ dsl, it creates {Synvert::Core::Rewriter::QueryScope} to recursively find matching ast nodes,
-    # then continue operating on each matching ast node.
-    # @example
-    #   # matches FactoryBot.create(:user)
-    #   find_node '.send[receiver=FactoryBot][message=create][arguments.size=1]' do
-    #   end
-    # @param nql [String] node query language to find matching ast nodes.
-    # @yield run on the matching nodes.
-    # @raise [Synvert::Core::NodeQuery::Compiler::ParseError] if query string is invalid.
-    def find_node(nql, options = {}, &block)
-      Rewriter::QueryScope.new(self, nql, options, &block).process
-    rescue NodeQueryLexer::ScanError, Racc::ParseError => e
-      raise NodeQuery::Compiler::ParseError, "Invalid query string: #{nql}"
-    end
-
     # Parse +within_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
     # then continue operating on each matching ast node.
     # @example
     #   # matches User.find_by_login('test')
     #   with_node type: 'send', message: /^find_by_/ do
     #   end
-    # @param rules [Hash] rules to find mathing ast nodes.
+    #   # matches FactoryBot.create(:user)
+    #   with_node '.send[receiver=FactoryBot][message=create][arguments.size=1]' do
+    #   end
+    # @param nql_or_rules [Hash] nql or rules to find mathing ast nodes.
     # @param options [Hash] optional
     # @option including_self [Boolean] set if query the current node, default is true
     # @option stop_at_first_match [Boolean] set if stop at first match, default is false
     # @option recursive [Boolean] set if recursively query child nodes, default is true
     # @yield run on the matching nodes.
-    def within_node(rules, options = {}, &block)
-      Rewriter::WithinScope.new(self, rules, options, &block).process
+    def within_node(nql_or_rules, options = {}, &block)
+      Rewriter::WithinScope.new(self, nql_or_rules, options, &block).process
+    rescue NodeQueryLexer::ScanError, Racc::ParseError => e
+      raise NodeQuery::Compiler::ParseError, "Invalid query string: #{nql_or_rules}"
     end
 
     alias with_node within_node
+    alias find_node within_node
 
     # Parse +goto_node+ dsl, it creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
     # then continue operating on the child node.

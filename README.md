@@ -73,9 +73,9 @@ DSLs are as follows
 
 Scopes:
 
-* [find_node](./Synvert/Core/Rewriter/Instance.html#find_node-instance_method) - recursively find matching ast nodes by node query language
 * [within_node](./Synvert/Core/Rewriter/Instance.html#within_node-instance_method) - recursively find matching ast nodes
 * [with_node](./Synvert/Core/Rewriter/Instance.html#with_node-instance_method) - alias to within_node
+* [find_node](./Synvert/Core/Rewriter/Instance.html#find_node-instance_method) - alias to within_node
 * [goto_node](./Synvert/Core/Rewriter/Instance.html#goto_node-instance_method) - go to a child node
 
 Conditions:
