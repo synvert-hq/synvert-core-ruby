@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.13.1 (2022-10-17)
+
+* Do not send hash to keyword arguments
+
 ## 1.13.0 (2022-10-17)
 
 * Add `insert_before` dsl
