@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.13.0 (2022-10-17)
+
+* Add `insert_before` dsl
+* Update `insert_after` to reuse `NodeMutation#insert`
+
 ## 1.12.0 (2022-10-14)
 
 * Condition accepts both nql and rules
