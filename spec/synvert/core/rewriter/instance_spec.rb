@@ -127,7 +127,8 @@ module Synvert::Core
     it 'parses insert_after' do
       instance.current_mutation = double
       instance.current_node = double
-      expect(instance.current_mutation).to receive(:insert_after).with(instance.current_node, 'Foobar')
+      expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
+      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "\n  Foobar", at: 'end')
       instance.insert_after 'Foobar'
     end
 

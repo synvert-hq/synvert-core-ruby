@@ -231,7 +231,8 @@ module Synvert::Core
     #   end
     # @param code [String] code need to be inserted.
     def insert_after(code)
-      @current_mutation.insert_after(@current_node, code)
+      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
+      @current_mutation.insert(@current_node, "\n#{column}#{code}", { at: 'end' })
     end
 
     # Parse +replace_erb_stmt_with_expr+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
