@@ -255,7 +255,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +append+ dsl, it creates a AppendAction to append the code to the bottom of current node body.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +append+ dsl, it appends the code to the bottom of current node body.</p>
 </div></span>
   
 </li>
@@ -278,7 +278,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +delete+ dsl, it creates a DeleteAction to delete child nodes.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +delete+ dsl, it deletes child nodes.</p>
 </div></span>
   
 </li>
@@ -395,7 +395,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +insert+ dsl, it creates a InsertAction to insert code.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +insert+ dsl, it inserts code.</p>
 </div></span>
   
 </li>
@@ -418,7 +418,30 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +insert_after+ dsl, it creates a InsertAfterAction to insert the code next to the current node.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +insert_after+ dsl, it inserts the code next to the current node.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#insert_before-instance_method" title="#insert_before (instance method)">#<strong>insert_before</strong>(code)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Parse +insert_before+ dsl, it inserts the code previous to the current node.</p>
 </div></span>
   
 </li>
@@ -487,7 +510,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +prepend+ dsl, it creates a PrependAction to prepend the code to the top of current node body.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +prepend+ dsl, it prepends the code to the top of current node body.</p>
 </div></span>
   
 </li>
@@ -579,7 +602,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +remove+ dsl, it creates a RemoveAction to remove current node.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +remove+ dsl, it removes current node.</p>
 </div></span>
   
 </li>
@@ -602,7 +625,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +replace+ dsl, it creates a ReplaceAction to replace the code of specified child nodes.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +replace+ dsl, it replaces the code of specified child nodes.</p>
 </div></span>
   
 </li>
@@ -625,7 +648,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +replace_erb_stmt_with_expr+ dsl, it creates a <span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span> to replace erb stmt code to expr code.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +replace_erb_stmt_with_expr+ dsl, it replaces erb stmt code to expr code.</p>
 </div></span>
   
 </li>
@@ -648,7 +671,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +replace_with+ dsl, it creates a ReplaceWithAction to replace the whole code of current node.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +replace_with+ dsl, it replaces the whole code of current node.</p>
 </div></span>
   
 </li>
@@ -765,7 +788,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +wrap+ dsl, it creates a WrapAction to wrap current node with code.</p>
+    <span class="summary_desc"><div class='inline'><p>Parse +wrap+ dsl, it wraps current node with code.</p>
 </div></span>
   
 </li>
@@ -1110,12 +1133,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-345
-346
-347</pre>
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_any_value'>any_value</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="AnyValue.html" title="Synvert::Core::Rewriter::AnyValue (class)">AnyValue</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Rewriter.html#initialize-instance_method" title="Synvert::Core::Rewriter#initialize (method)">new</a></span></span>
@@ -1136,8 +1159,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +append+ dsl, it creates a AppendAction to
-append the code to the bottom of current node body.</p>
+    <p>Parse +append+ dsl, it appends the code to the bottom of current node body.</p>
 
 
   </div>
@@ -1188,12 +1210,12 @@ append the code to the bottom of current node body.</p>
       <pre class="lines">
 
 
+183
 184
-185
-186</pre>
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
@@ -1214,7 +1236,7 @@ append the code to the bottom of current node body.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +delete+ dsl, it creates a DeleteAction to delete child nodes.</p>
+    <p>Parse +delete+ dsl, it deletes child nodes.</p>
 
 
   </div>
@@ -1292,12 +1314,12 @@ append the code to the bottom of current node body.</p>
       <pre class="lines">
 
 
-304
-305
-306</pre>
+314
+315
+316</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 314</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1580,7 +1602,7 @@ if so, then continue operating on each matching ast node.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +insert+ dsl, it creates a Synvert::Core::Rewriter::InsertAction to insert code.</p>
+    <p>Parse +insert+ dsl, it inserts code.</p>
 
 
   </div>
@@ -1660,12 +1682,12 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-218
-219
-220</pre>
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
@@ -1686,8 +1708,7 @@ if so, then continue operating on each matching ast node.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +insert_after+ dsl, it creates a Synvert::Core::Rewriter::InsertAfterAction to
-insert the code next to the current node.</p>
+    <p>Parse +insert_after+ dsl, it inserts the code next to the current node.</p>
 
 
   </div>
@@ -1734,15 +1755,92 @@ insert the code next to the current node.</p>
       <pre class="lines">
 
 
-233
-234
-235</pre>
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_after'>insert_after</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
-  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert_after'>insert_after</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_column'>column</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span> <span class='op'>*</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span><span class='period'>.</span><span class='id identifier rubyid_get_start_loc'>get_start_loc</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_column'>column</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_column'>column</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_code'>code</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="insert_before-instance_method">
+  
+    #<strong>insert_before</strong>(code)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Parse +insert_before+ dsl, it inserts the code previous to the current node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># Synvert::Application.config.secret_token = &quot;0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e&quot;
+</span><span class='comment'># =&gt;
+</span><span class='comment'># Synvert::Application.config.secret_key_base = &quot;bf4f3f46924ecd9adcb6515681c78144545bba454420973a274d7021ff946b8ef043a95ca1a15a9d1b75f9fbdf85d1a3afaf22f4e3c2f3f78e24a0a188b581df&quot;
+</span><span class='comment'># Synvert::Application.config.secret_token = &quot;0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e&quot;
+</span><span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>secret_token=</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_insert_before'>insert_before</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>{{receiver}}.secret_key_base = \&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>64</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>code need to be inserted.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+245
+246
+247
+248</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 245</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_insert_before'>insert_before</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_column'>column</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span> <span class='op'>*</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span><span class='period'>.</span><span class='id identifier rubyid_get_start_loc'>get_start_loc</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_column'>column</span>
+  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_code'>code</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_column'>column</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>beginning</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1827,12 +1925,12 @@ insert the code next to the current node.</p>
       <pre class="lines">
 
 
-327
-328
-329</pre>
+336
+337
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 327</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noop'>noop</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_noop'>noop</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span>
@@ -1853,8 +1951,7 @@ insert the code next to the current node.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +prepend+ dsl, it creates a PrependAction to
-prepend the code to the top of current node body.</p>
+    <p>Parse +prepend+ dsl, it prepends the code to the top of current node body.</p>
 
 
   </div>
@@ -1905,12 +2002,12 @@ prepend the code to the top of current node body.</p>
       <pre class="lines">
 
 
-203
-204
-205</pre>
+201
+202
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
@@ -2139,7 +2236,7 @@ then writes the code back to the original file.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +remove+ dsl, it creates a RemoveAction to remove current node.</p>
+    <p>Parse +remove+ dsl, it removes current node.</p>
 
 
   </div>
@@ -2201,12 +2298,12 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-289
-290
-291</pre>
+299
+300
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 299</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2227,8 +2324,7 @@ then writes the code back to the original file.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +replace+ dsl, it creates a ReplaceAction to
-replace the code of specified child nodes.</p>
+    <p>Parse +replace+ dsl, it replaces the code of specified child nodes.</p>
 
 
   </div>
@@ -2290,12 +2386,12 @@ replace the code of specified child nodes.</p>
       <pre class="lines">
 
 
-278
-279
-280</pre>
+288
+289
+290</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 288</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='label'>with:</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='id identifier rubyid_with'>with</span><span class='rparen'>)</span>
@@ -2316,8 +2412,7 @@ replace the code of specified child nodes.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +replace_erb_stmt_with_expr+ dsl, it creates a <span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span> to
-replace erb stmt code to expr code.</p>
+    <p>Parse +replace_erb_stmt_with_expr+ dsl, it replaces erb stmt code to expr code.</p>
 
 
   </div>
@@ -2346,12 +2441,12 @@ replace erb stmt code to expr code.</p>
       <pre class="lines">
 
 
-248
-249
-250</pre>
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_erb_stmt_with_expr'>replace_erb_stmt_with_expr</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_actions'>actions</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ReplaceErbStmtWithExprAction.html#initialize-instance_method" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="../Rewriter.html#process-instance_method" title="Synvert::Core::Rewriter#process (method)">process</a></span></span>
@@ -2372,8 +2467,7 @@ replace erb stmt code to expr code.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +replace_with+ dsl, it creates a ReplaceWithAction to
-replace the whole code of current node.</p>
+    <p>Parse +replace_with+ dsl, it replaces the whole code of current node.</p>
 
 
   </div>
@@ -2419,12 +2513,12 @@ replace the whole code of current node.</p>
       <pre class="lines">
 
 
-262
-263
-264</pre>
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_with'>replace_with</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_replace_with'>replace_with</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
@@ -2633,12 +2727,12 @@ if matching nodes doesn&#39;t exist in the child nodes, if so, then continue ope
       <pre class="lines">
 
 
-337
-338
-339</pre>
+346
+347
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 337</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 346</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='ivar'>@rewriter</span><span class='period'>.</span><span class='id identifier rubyid_add_warning'>add_warning</span> <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Warning.html#initialize-instance_method" title="Synvert::Core::Rewriter::Warning#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
@@ -2825,8 +2919,7 @@ then continue operating on each matching ast node.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +wrap+ dsl, it creates a WrapAction to
-wrap current node with code.</p>
+    <p>Parse +wrap+ dsl, it wraps current node with code.</p>
 
 
   </div>
@@ -2876,12 +2969,12 @@ wrap current node with code.</p>
       <pre class="lines">
 
 
-322
-323
-324</pre>
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='label'>with:</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='id identifier rubyid_with'>with</span><span class='rparen'>)</span>
@@ -2896,7 +2989,7 @@ wrap current node with code.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Oct 14 03:56:31 2022 by
+  Generated on Mon Oct 17 05:00:26 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
