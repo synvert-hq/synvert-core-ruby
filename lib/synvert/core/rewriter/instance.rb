@@ -229,7 +229,7 @@ module Synvert::Core
     # @param code [String] code need to be inserted.
     def insert_after(code)
       column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
-      @current_mutation.insert(@current_node, "\n#{column}#{code}", { at: 'end' })
+      @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end')
     end
 
     # Parse +insert_before+ dsl, it inserts the code previous to the current node.
@@ -244,7 +244,7 @@ module Synvert::Core
     # @param code [String] code need to be inserted.
     def insert_before(code)
       column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
-      @current_mutation.insert(@current_node, "#{code}\n#{column}", { at: 'beginning' })
+      @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning')
     end
 
     # Parse +replace_erb_stmt_with_expr+ dsl, it replaces erb stmt code to expr code.
