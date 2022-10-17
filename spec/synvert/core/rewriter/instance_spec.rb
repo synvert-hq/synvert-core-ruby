@@ -132,6 +132,14 @@ module Synvert::Core
       instance.insert_after 'Foobar'
     end
 
+    it 'parses insert_before' do
+      instance.current_mutation = double
+      instance.current_node = double
+      expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
+      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "Foobar\n  ", at: 'beginning')
+      instance.insert_before 'Foobar'
+    end
+
     it 'parses replace_erb_stmt_with_expr' do
       instance.current_mutation = double
       instance.current_node = double

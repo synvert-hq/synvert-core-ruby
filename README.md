@@ -90,6 +90,7 @@ Actions:
 * [prepend](./Synvert/Core/Rewriter/Instance.html#prepend-instance_method) - prepend the code to the bottom of current node body
 * [insert](./Synvert/Core/Rewriter/Instance.html#insert-instance_method) - insert code
 * [insert_after](./Synvert/Core/Rewriter/Instance.html#insert_after-instance_method) - insert the code next to the current node
+* [insert_before](./Synvert/Core/Rewriter/Instance.html#insert_before-instance_method) - insert the code previous to the current node
 * [replace](./Synvert/Core/Rewriter/Instance.html#replace-instance_method) - replace the code of specified child nodes
 * [delete](./Synvert/Core/Rewriter/Instance.html#delete-instance_method) - delete the code specified child nodes
 * [wrap](./Synvert/Core/Rewriter/Instance.html#wrap-instance_method) - wrap the current node with code

@@ -166,8 +166,7 @@ module Synvert::Core
       Rewriter::IfOnlyExistCondition.new(self, nql_or_rules, &block).process
     end
 
-    # Parse +append+ dsl, it creates a {Synvert::Core::Rewriter::AppendAction} to
-    # append the code to the bottom of current node body.
+    # Parse +append+ dsl, it appends the code to the bottom of current node body.
     # @example
     #   # def teardown
     #   #   clean_something
@@ -185,8 +184,7 @@ module Synvert::Core
       @current_mutation.append(@current_node, code)
     end
 
-    # Parse +prepend+ dsl, it creates a {Synvert::Core::Rewriter::PrependAction} to
-    # prepend the code to the top of current node body.
+    # Parse +prepend+ dsl, it prepends the code to the top of current node body.
     # @example
     #   # def setup
     #   #   do_something
@@ -204,7 +202,7 @@ module Synvert::Core
       @current_mutation.prepend(@current_node, code)
     end
 
-    # Parse +insert+ dsl, it creates a {Synvert::Core::Rewriter::InsertAction} to insert code.
+    # Parse +insert+ dsl, it inserts code.
     # @example
     #   # open('http://test.com')
     #   # =>
@@ -219,8 +217,7 @@ module Synvert::Core
       @current_mutation.insert(@current_node, code, at: at, to: to)
     end
 
-    # Parse +insert_after+ dsl, it creates a {Synvert::Core::Rewriter::InsertAfterAction} to
-    # insert the code next to the current node.
+    # Parse +insert_after+ dsl, it inserts the code next to the current node.
     # @example
     #   # Synvert::Application.config.secret_token = "0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e"
     #   # =>
@@ -235,8 +232,22 @@ module Synvert::Core
       @current_mutation.insert(@current_node, "\n#{column}#{code}", { at: 'end' })
     end
 
-    # Parse +replace_erb_stmt_with_expr+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction} to
-    # replace erb stmt code to expr code.
+    # Parse +insert_before+ dsl, it inserts the code previous to the current node.
+    # @example
+    #   # Synvert::Application.config.secret_token = "0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e"
+    #   # =>
+    #   # Synvert::Application.config.secret_key_base = "bf4f3f46924ecd9adcb6515681c78144545bba454420973a274d7021ff946b8ef043a95ca1a15a9d1b75f9fbdf85d1a3afaf22f4e3c2f3f78e24a0a188b581df"
+    #   # Synvert::Application.config.secret_token = "0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e"
+    #   with_node type: 'send', message: 'secret_token=' do
+    #     insert_before "{{receiver}}.secret_key_base = \"#{SecureRandom.hex(64)}\""
+    #   end
+    # @param code [String] code need to be inserted.
+    def insert_before(code)
+      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
+      @current_mutation.insert(@current_node, "#{code}\n#{column}", { at: 'beginning' })
+    end
+
+    # Parse +replace_erb_stmt_with_expr+ dsl, it replaces erb stmt code to expr code.
     # @example
     #   # <% form_for post do |f| %>
     #   # <% end %>
@@ -250,8 +261,7 @@ module Synvert::Core
       @current_mutation.actions << Rewriter::ReplaceErbStmtWithExprAction.new(@current_node).process
     end
 
-    # Parse +replace_with+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceWithAction} to
-    # replace the whole code of current node.
+    # Parse +replace_with+ dsl, it replaces the whole code of current node.
     # @example
     #   # obj.stub(:foo => 1, :bar => 2)
     #   # =>
@@ -264,8 +274,7 @@ module Synvert::Core
       @current_mutation.replace_with(@current_node, code)
     end
 
-    # Parse +replace+ dsl, it creates a {Synvert::Core::Rewriter::ReplaceAction} to
-    # replace the code of specified child nodes.
+    # Parse +replace+ dsl, it replaces the code of specified child nodes.
     # @example
     #   # assert(object.empty?)
     #   # =>
@@ -280,7 +289,7 @@ module Synvert::Core
       @current_mutation.replace(@current_node, *selectors, with: with)
     end
 
-    # Parse +remove+ dsl, it creates a {Synvert::Core::Rewriter::RemoveAction} to remove current node.
+    # Parse +remove+ dsl, it removes current node.
     # @example
     #   with_node type: 'send', message: { in: %w[puts p] } do
     #     remove
@@ -291,7 +300,7 @@ module Synvert::Core
       @current_mutation.remove(@current_node, **options)
     end
 
-    # Parse +delete+ dsl, it creates a {Synvert::Core::Rewriter::DeleteAction} to delete child nodes.
+    # Parse +delete+ dsl, it deletes child nodes.
     # @example
     #   # FactoryBot.create(...)
     #   # =>
@@ -306,8 +315,7 @@ module Synvert::Core
       @current_mutation.delete(@current_node, *selectors, **options)
     end
 
-    # Parse +wrap+ dsl, it creates a {Synvert::Core::Rewriter::WrapAction} to
-    # wrap current node with code.
+    # Parse +wrap+ dsl, it wraps current node with code.
     # @example
     #   # class Foobar
     #   # end
