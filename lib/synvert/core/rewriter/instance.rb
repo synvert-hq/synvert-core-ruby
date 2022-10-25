@@ -227,9 +227,9 @@ module Synvert::Core
     #     insert_after "{{receiver}}.secret_key_base = \"#{SecureRandom.hex(64)}\""
     #   end
     # @param code [String] code need to be inserted.
-    def insert_after(code)
+    def insert_after(code, to: nil)
       column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
-      @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end')
+      @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end', to: to)
     end
 
     # Parse +insert_before+ dsl, it inserts the code previous to the current node.
@@ -242,9 +242,9 @@ module Synvert::Core
     #     insert_before "{{receiver}}.secret_key_base = \"#{SecureRandom.hex(64)}\""
     #   end
     # @param code [String] code need to be inserted.
-    def insert_before(code)
+    def insert_before(code, to: nil)
       column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
-      @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning')
+      @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning', to: to)
     end
 
     # Parse +replace_erb_stmt_with_expr+ dsl, it replaces erb stmt code to expr code.

@@ -128,7 +128,7 @@ module Synvert::Core
       instance.current_mutation = double
       instance.current_node = double
       expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
-      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "\n  Foobar", at: 'end')
+      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "\n  Foobar", at: 'end', to: nil)
       instance.insert_after 'Foobar'
     end
 
@@ -136,7 +136,7 @@ module Synvert::Core
       instance.current_mutation = double
       instance.current_node = double
       expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
-      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "Foobar\n  ", at: 'beginning')
+      expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "Foobar\n  ", at: 'beginning', to: nil)
       instance.insert_before 'Foobar'
     end
 
