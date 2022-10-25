@@ -8,6 +8,7 @@ module Synvert::Core
   # One instance can contain one or many {Synvert::Core::Rewriter::Scope} and {Synvert::Rewriter::Condition}.
   class Rewriter::Instance
     include Rewriter::Helper
+
     # Initialize an Instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
@@ -19,9 +20,9 @@ module Synvert::Core
       @file_patterns = file_patterns
       @block = block
       strategy = NodeMutation::Strategy::KEEP_RUNNING
-      if (rewriter.options[:strategy] == Strategy::ALLOW_INSERT_AT_SAME_POSITION) {
+      if rewriter.options[:strategy] == Strategy::ALLOW_INSERT_AT_SAME_POSITION
         strategy |=  NodeMutation::Strategy::ALLOW_INSERT_AT_SAME_POSITION
-      }
+      end
       NodeMutation.configure({ strategy: strategy })
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
@@ -90,7 +91,7 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse +within_node+ dsl, it creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
+    # It creates a {Synvert::Core::Rewriter::WithinScope} to recursively find matching ast nodes,
     # then continue operating on each matching ast node.
     # @example
     #   # matches User.find_by_login('test')
@@ -114,7 +115,7 @@ module Synvert::Core
     alias with_node within_node
     alias find_node within_node
 
-    # Parse +goto_node+ dsl, it creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
+    # It creates a {Synvert::Core::Rewriter::GotoScope} to go to a child node,
     # then continue operating on the child node.
     # @example
     #   # head status: 406
@@ -128,7 +129,7 @@ module Synvert::Core
       Rewriter::GotoScope.new(self, child_node_name, &block).process
     end
 
-    # Parse +if_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::IfExistCondition} to check
+    # It creates a {Synvert::Core::Rewriter::IfExistCondition} to check
     # if matching nodes exist in the child nodes, if so, then continue operating on each matching ast node.
     # @example
     #   # Klass.any_instance.stub(:message)
@@ -142,7 +143,7 @@ module Synvert::Core
       Rewriter::IfExistCondition.new(self, nql_or_rules, &block).process
     end
 
-    # Parse +unless_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::UnlessExistCondition} to check
+    # It creates a {Synvert::Core::Rewriter::UnlessExistCondition} to check
     # if matching nodes doesn't exist in the child nodes, if so, then continue operating on each matching ast node.
     # @example
     #   # obj.stub(:message)
@@ -156,7 +157,7 @@ module Synvert::Core
       Rewriter::UnlessExistCondition.new(self, nql_or_rules, &block).process
     end
 
-    # Parse +if_only_exist_node+ dsl, it creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
+    # It creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
     # if current node has only one child node and the child node matches,
     # if so, then continue operating on each matching ast node.
     # @example
@@ -171,7 +172,7 @@ module Synvert::Core
       Rewriter::IfOnlyExistCondition.new(self, nql_or_rules, &block).process
     end
 
-    # Parse +append+ dsl, it appends the code to the bottom of current node body.
+    # It appends the code to the bottom of current node body.
     # @example
     #   # def teardown
     #   #   clean_something
@@ -189,7 +190,7 @@ module Synvert::Core
       @current_mutation.append(@current_node, code)
     end
 
-    # Parse +prepend+ dsl, it prepends the code to the top of current node body.
+    # It prepends the code to the top of current node body.
     # @example
     #   # def setup
     #   #   do_something
@@ -207,7 +208,7 @@ module Synvert::Core
       @current_mutation.prepend(@current_node, code)
     end
 
-    # Parse +insert+ dsl, it inserts code.
+    # It inserts code.
     # @example
     #   # open('http://test.com')
     #   # =>
@@ -222,7 +223,7 @@ module Synvert::Core
       @current_mutation.insert(@current_node, code, at: at, to: to)
     end
 
-    # Parse +insert_after+ dsl, it inserts the code next to the current node.
+    # It inserts the code next to the current node.
     # @example
     #   # Synvert::Application.config.secret_token = "0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e"
     #   # =>
@@ -237,7 +238,7 @@ module Synvert::Core
       @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end', to: to)
     end
 
-    # Parse +insert_before+ dsl, it inserts the code previous to the current node.
+    # It inserts the code previous to the current node.
     # @example
     #   # Synvert::Application.config.secret_token = "0447aa931d42918bfb934750bb78257088fb671186b5d1b6f9fddf126fc8a14d34f1d045cefab3900751c3da121a8dd929aec9bafe975f1cabb48232b4002e4e"
     #   # =>
@@ -252,7 +253,7 @@ module Synvert::Core
       @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning', to: to)
     end
 
-    # Parse +replace_erb_stmt_with_expr+ dsl, it replaces erb stmt code to expr code.
+    # It replaces erb stmt code to expr code.
     # @example
     #   # <% form_for post do |f| %>
     #   # <% end %>
@@ -266,7 +267,7 @@ module Synvert::Core
       @current_mutation.actions << Rewriter::ReplaceErbStmtWithExprAction.new(@current_node).process
     end
 
-    # Parse +replace_with+ dsl, it replaces the whole code of current node.
+    # It replaces the whole code of current node.
     # @example
     #   # obj.stub(:foo => 1, :bar => 2)
     #   # =>
@@ -279,7 +280,7 @@ module Synvert::Core
       @current_mutation.replace_with(@current_node, code)
     end
 
-    # Parse +replace+ dsl, it replaces the code of specified child nodes.
+    # It replaces the code of specified child nodes.
     # @example
     #   # assert(object.empty?)
     #   # =>
@@ -294,7 +295,7 @@ module Synvert::Core
       @current_mutation.replace(@current_node, *selectors, with: with)
     end
 
-    # Parse +remove+ dsl, it removes current node.
+    # It removes current node.
     # @example
     #   with_node type: 'send', message: { in: %w[puts p] } do
     #     remove
@@ -305,7 +306,7 @@ module Synvert::Core
       @current_mutation.remove(@current_node, **options)
     end
 
-    # Parse +delete+ dsl, it deletes child nodes.
+    # It deletes child nodes.
     # @example
     #   # FactoryBot.create(...)
     #   # =>
@@ -320,7 +321,7 @@ module Synvert::Core
       @current_mutation.delete(@current_node, *selectors, **options)
     end
 
-    # Parse +wrap+ dsl, it wraps current node with code.
+    # It wraps current node with code.
     # @example
     #   # class Foobar
     #   # end
@@ -337,12 +338,12 @@ module Synvert::Core
       @current_mutation.wrap(@current_node, with: with)
     end
 
-    # Parse +noop dsl.
+    # No operation.
     def noop
       @current_mutation.noop(@current_node)
     end
 
-    # Parse +warn+ dsl, it creates a {Synvert::Core::Rewriter::Warning} to save warning message.
+    # It creates a {Synvert::Core::Rewriter::Warning} to save warning message.
     # @example
     #   within_files 'vendor/plugins' do
     #     warn 'Rails::Plugin is deprecated and will be removed in Rails 4.0. Instead of adding plugins to vendor/plugins use gems or bundler with path or git dependencies.'
