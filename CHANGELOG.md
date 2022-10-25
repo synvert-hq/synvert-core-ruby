@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.14.0 (2022-10-25)
+
+* `insert_after` and `insert_before` accepts `to` option
+* Add `configure` dsl to configure the strategy
+
 ## 1.13.1 (2022-10-17)
 
 * Do not send hash to keyword arguments
