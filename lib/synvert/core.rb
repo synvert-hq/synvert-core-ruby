@@ -18,11 +18,13 @@ module Synvert
     autoload :Rewriter, 'synvert/core/rewriter'
     autoload :Engine, 'synvert/core/engine'
     autoload :Utils, 'synvert/core/utils'
+    autoload :Strategy, 'synvert/core/strategy'
   end
 end
 
 module Synvert
   Rewriter = Core::Rewriter
+  Strategy = Core::Strategy
 
   ALL_RUBY_FILES = %w[**/*.rb]
   ALL_RAKE_FILES = %w[**/*.rake]

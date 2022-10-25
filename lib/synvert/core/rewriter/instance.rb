@@ -18,6 +18,11 @@ module Synvert::Core
       @actions = []
       @file_patterns = file_patterns
       @block = block
+      strategy = NodeMutation::Strategy::KEEP_RUNNING
+      if (rewriter.options[:strategy] == Strategy::ALLOW_INSERT_AT_SAME_POSITION) {
+        strategy |=  NodeMutation::Strategy::ALLOW_INSERT_AT_SAME_POSITION
+      }
+      NodeMutation.configure({ strategy: strategy })
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 

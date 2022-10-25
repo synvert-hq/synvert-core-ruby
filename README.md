@@ -59,6 +59,7 @@ Want to use the CLI, check out [synvert-ruby](https://github.com/xinminlabs/synv
 
 DSLs are as follows
 
+* [configure](./Synvert/Core/Rewriter.html#configure-instance_method) - configure the rewriter
 * [description](./Synvert/Core/Rewriter.html#description-instance_method) - set description of the rewriter
 * [if_ruby](./Synvert/Core/Rewriter.html#if_ruby-instance_method) - check if ruby version is greater than or equal to the specified ruby version
 * [if_gem](./Synvert/Core/Rewriter.html#if_gem-instance_method) - compare version of specified gem

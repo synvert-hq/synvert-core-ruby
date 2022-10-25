@@ -163,8 +163,18 @@ module Synvert::Core
     # DSL #
     #######
 
-    # Parse +description+ dsl, it sets description of the rewrite.
-    # Or get description.
+    # Configure the rewriter
+    # @example
+    #   configure({ strategy: 'allow_insert_at_same_position' })
+    # @param options [Hash]
+    # @option strategy [String] allow_insert_at_same_position
+    def configure(options)
+      if options[:strategy]
+        @options[:strategy] = options[:strategy]
+      end
+    end
+
+    # It sets description of the rewrite or get description.
     # @example
     #   Synvert::Rewriter.new 'rspec', 'use_new_syntax' do
     #     description 'It converts rspec code to new syntax, it calls all rspec sub snippets.'
