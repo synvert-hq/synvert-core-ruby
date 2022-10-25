@@ -607,7 +607,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parses +add_file+ dsl, it adds a new file.</p>
+    <span class="summary_desc"><div class='inline'><p>It adds a new file.</p>
 </div></span>
   
 </li>
@@ -630,7 +630,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +add_snippet+ dsl, it calls anther rewriter.</p>
+    <span class="summary_desc"><div class='inline'><p>It calls anther rewriter.</p>
 </div></span>
   
 </li>
@@ -662,6 +662,29 @@ which define the behavior what files and what codes to detect and rewrite to wha
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#configure-instance_method" title="#configure (instance method)">#<strong>configure</strong>(options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Configure the rewriter.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#description-instance_method" title="#description (instance method)">#<strong>description</strong>(description = nil)  &#x21d2; Object </a>
     
 
@@ -676,7 +699,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +description+ dsl, it sets description of the rewrite.</p>
+    <span class="summary_desc"><div class='inline'><p>It sets description of the rewrite or get description.</p>
 </div></span>
   
 </li>
@@ -699,7 +722,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +helper_method+ dsl, it defines helper method for <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>It defines helper method for <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span>.</p>
 </div></span>
   
 </li>
@@ -722,7 +745,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +if_gem+ dsl, it compares version of the specified gem.</p>
+    <span class="summary_desc"><div class='inline'><p>It compares version of the specified gem.</p>
 </div></span>
   
 </li>
@@ -745,7 +768,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +if_ruby+ dsl, it checks if ruby version is greater than or equal to the specified ruby version.</p>
+    <span class="summary_desc"><div class='inline'><p>It checks if ruby version is greater than or equal to the specified ruby version.</p>
 </div></span>
   
 </li>
@@ -862,7 +885,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parses +remove_file+ dsl, it removes a file.</p>
+    <span class="summary_desc"><div class='inline'><p>It removes a file.</p>
 </div></span>
   
 </li>
@@ -907,7 +930,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +todo+ dsl, it sets todo of the rewriter.</p>
+    <span class="summary_desc"><div class='inline'><p>It sets todo of the rewriter.</p>
 </div></span>
   
 </li>
@@ -932,7 +955,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Parse +within_files+ dsl, it finds specified files.</p>
+    <span class="summary_desc"><div class='inline'><p>It finds specified files.</p>
 </div></span>
   
 </li>
@@ -2002,7 +2025,7 @@ When a rewriter is initialized, it is already registered.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parses +add_file+ dsl, it adds a new file.</p>
+    <p>It adds a new file.</p>
 
 
   </div>
@@ -2064,21 +2087,21 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
 251
-252</pre>
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 241</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_file'>add_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span>
@@ -2108,7 +2131,7 @@ When a rewriter is initialized, it is already registered.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +add_snippet+ dsl, it calls anther rewriter.</p>
+    <p>It calls anther rewriter.</p>
 
 
   </div>
@@ -2175,16 +2198,6 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
 291
 292
 293
@@ -2194,10 +2207,20 @@ When a rewriter is initialized, it is already registered.</p>
 297
 298
 299
-300</pre>
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 291</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_snippet'>add_snippet</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rewriter'>rewriter</span> <span class='op'>=</span>
@@ -2280,6 +2303,92 @@ When a rewriter is initialized, it is already registered.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="configure-instance_method">
+  
+    #<strong>configure</strong>(options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Configure the rewriter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>strategy:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>allow_insert_at_same_position</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>strategy</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:strategy</span><span class='rbracket'>]</span>
+    <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:strategy</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:strategy</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="description-instance_method">
   
     #<strong>description</strong>(description = nil)  &#x21d2; <tt>Object</tt> 
@@ -2290,8 +2399,7 @@ When a rewriter is initialized, it is already registered.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +description+ dsl, it sets description of the rewrite.
-Or get description.</p>
+    <p>It sets description of the rewrite or get description.</p>
 
 
   </div>
@@ -2353,16 +2461,16 @@ Or get description.</p>
       <pre class="lines">
 
 
-174
-175
-176
-177
-178
-179
-180</pre>
+184
+185
+186
+187
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span><span class='lparen'>(</span><span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_description'>description</span>
@@ -2387,7 +2495,7 @@ Or get description.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +helper_method+ dsl, it defines helper method for <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span>.</p>
+    <p>It defines helper method for <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span>.</p>
 
 
   </div>
@@ -2453,12 +2561,12 @@ Or get description.</p>
       <pre class="lines">
 
 
-315
-316
-317</pre>
+325
+326
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 315</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 325</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_helper_method'>helper_method</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@helpers</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>block:</span> <span class='id identifier rubyid_block'>block</span> <span class='rbrace'>}</span>
@@ -2479,7 +2587,7 @@ Or get description.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +if_gem+ dsl, it compares version of the specified gem.</p>
+    <p>It compares version of the specified gem.</p>
 
 
   </div>
@@ -2537,12 +2645,12 @@ Or get description.</p>
       <pre class="lines">
 
 
-199
-200
-201</pre>
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_if_gem'>if_gem</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='ivar'>@gem_spec</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rewriter/GemSpec.html" title="Synvert::Core::Rewriter::GemSpec (class)">GemSpec</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rewriter/GemSpec.html#initialize-instance_method" title="Synvert::Core::Rewriter::GemSpec#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
@@ -2563,7 +2671,7 @@ Or get description.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +if_ruby+ dsl, it checks if ruby version is greater than or equal to the specified ruby version.</p>
+    <p>It checks if ruby version is greater than or equal to the specified ruby version.</p>
 
 
   </div>
@@ -2606,12 +2714,12 @@ Or get description.</p>
       <pre class="lines">
 
 
-188
-189
-190</pre>
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_if_ruby'>if_ruby</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='ivar'>@ruby_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rewriter/RubyVersion.html" title="Synvert::Core::Rewriter::RubyVersion (class)">RubyVersion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rewriter/RubyVersion.html#initialize-instance_method" title="Synvert::Core::Rewriter::RubyVersion#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
@@ -2746,12 +2854,12 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
-346
-347
-348</pre>
+356
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 346</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 356</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_redo_until_no_change'>redo_until_no_change</span>
   <span class='ivar'>@redo_until_no_change</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -2772,7 +2880,7 @@ It will call the block but doesn&#39;t change any file.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parses +remove_file+ dsl, it removes a file.</p>
+    <p>It removes a file.</p>
 
 
   </div>
@@ -2815,15 +2923,15 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
-260
-261
-262
-263
-264
-265</pre>
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_file'>remove_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span>
@@ -2891,7 +2999,7 @@ It will call the block but doesn&#39;t change any file.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +todo+ dsl, it sets todo of the rewriter.
+    <p>It sets todo of the rewriter.
 Or get todo.</p>
 
 
@@ -2960,16 +3068,16 @@ Or get todo.</p>
       <pre class="lines">
 
 
-333
-334
-335
-336
-337
-338
-339</pre>
+343
+344
+345
+346
+347
+348
+349</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 333</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 343</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_todo'>todo</span><span class='lparen'>(</span><span class='id identifier rubyid_todo'>todo</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_todo'>todo</span>
@@ -2998,7 +3106,7 @@ Or get todo.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Parse +within_files+ dsl, it finds specified files.
+    <p>It finds specified files.
 It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span> to rewrite code.</p>
 
 
@@ -3058,23 +3166,23 @@ It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="S
       <pre class="lines">
 
 
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
 222
 223
 224
-225</pre>
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_within_files'>within_files</span><span class='lparen'>(</span><span class='id identifier rubyid_file_patterns'>file_patterns</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span>
@@ -3100,7 +3208,7 @@ It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="S
 </div>
 
       <div id="footer">
-  Generated on Mon Oct 17 05:15:19 2022 by
+  Generated on Tue Oct 25 14:22:51 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>

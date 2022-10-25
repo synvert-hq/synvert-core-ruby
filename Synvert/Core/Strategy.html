@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: Synvert::Core::Engine
+  Class: Synvert::Core::Strategy
   
     &mdash; Documentation by YARD 0.9.28
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "Synvert::Core::Engine";
+  pathId = "Synvert::Core::Strategy";
   relpath = '../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../_index.html">Index (E)</a> &raquo;
+    <a href="../../_index.html">Index (S)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Core.html" title="Synvert::Core (module)">Core</a></span></span>
      &raquo; 
-    <span class="title">Engine</span>
+    <span class="title">Strategy</span>
   
 </div>
 
@@ -59,12 +59,28 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Module: Synvert::Core::Engine
+      <div id="content"><h1>Class: Synvert::Core::Strategy
   
   
   
 </h1>
 <div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Synvert::Core::Strategy</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
   
 
   
@@ -78,33 +94,11 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/synvert/core/engine.rb<span class="defines">,<br />
-  lib/synvert/core/engine/erb.rb</span>
-</dd>
+    <dd>lib/synvert/core/strategy.rb</dd>
   </dl>
   
 </div>
 
-<h2>Overview</h2><div class="docstring">
-  <div class="discussion">
-    <p>Engine defines how to encode / decode other files (like erb).</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
-  
-    
-  
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Engine/Erb.html" title="Synvert::Core::Engine::Erb (class)">Erb</a></span>, <span class='object_link'><a href="Engine/Erubis.html" title="Synvert::Core::Engine::Erubis (class)">Erubis</a></span>
-    
-  
-</p>
 
   
     <h2>
@@ -114,15 +108,10 @@
 
     <dl class="constants">
       
-        <dt id="ERUBY_EXPR_SPLITTER-constant" class="">ERUBY_EXPR_SPLITTER =
+        <dt id="ALLOW_INSERT_AT_SAME_POSITION-constant" class="">ALLOW_INSERT_AT_SAME_POSITION =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;  ;</span><span class='tstring_end'>&#39;</span></span></pre></dd>
-      
-        <dt id="ERUBY_STMT_SPLITTER-constant" class="">ERUBY_STMT_SPLITTER =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;   ;</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>allow_insert_at_same_position</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
     </dl>
   
