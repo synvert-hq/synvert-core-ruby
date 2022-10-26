@@ -197,6 +197,10 @@ module Synvert::Core
       instance.warn 'foobar'
     end
 
+    it 'parses any_value' do
+      expect(instance.any_value).to be_instance_of NodeQuery::AnyValue
+    end
+
     describe '#process' do
       let(:rewriter) { Rewriter.new('foo', 'bar') }
 

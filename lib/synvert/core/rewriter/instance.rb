@@ -356,9 +356,9 @@ module Synvert::Core
     # Match any value but nil.
     # @example
     #   type: 'hash', nothing_value: 'true', status_value: any_value
-    # @return [Synvert::Core::Rewriter::AnyValue]
+    # @return [NodeQuery::AnyValue]
     def any_value
-      Rewriter::AnyValue.new
+      NodeQuery::AnyValue.new
     end
 
     private
