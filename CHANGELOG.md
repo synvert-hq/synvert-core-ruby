@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.14.1 (2022-10-26)
+
+* Abstract AnyValue to NodeQuery
+
 ## 1.14.0 (2022-10-25)
 
 * `insert_after` and `insert_before` accepts `to` option
