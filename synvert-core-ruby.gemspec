@@ -21,9 +21,9 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "activesupport", "< 7.0.0"
   spec.add_runtime_dependency "erubis"
-  spec.add_runtime_dependency "node_query"
-  spec.add_runtime_dependency "node_mutation"
+  spec.add_runtime_dependency "node_query", ">= 1.10.0"
+  spec.add_runtime_dependency "node_mutation", ">= 1.7.1"
   spec.add_runtime_dependency "parser"
-  spec.add_runtime_dependency "parser_node_ext"
+  spec.add_runtime_dependency "parser_node_ext", ">= 0.4.1"
   spec.add_runtime_dependency "parallel"
 end

@@ -4,11 +4,11 @@ PATH
     synvert-core (1.14.1)
       activesupport (< 7.0.0)
       erubis
-      node_mutation
-      node_query
+      node_mutation (>= 1.7.1)
+      node_query (>= 1.10.0)
       parallel
       parser
-      parser_node_ext
+      parser_node_ext (>= 0.4.1)
 
 GEM
   remote: https://rubygems.org/
