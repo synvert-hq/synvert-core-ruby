@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 1.14.2 (2022-11-19)
+
+* Specify `node_query`, `node_mutation` and `parser_node_ext` versions
+
 ## 1.14.1 (2022-10-26)
 
-* Abstract AnyValue to NodeQuery
+* Abstract `AnyValue` to NodeQuery
 
 ## 1.14.0 (2022-10-25)
 
