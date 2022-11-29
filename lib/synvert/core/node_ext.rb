@@ -27,7 +27,7 @@ module Parser::AST
   # +type: 'send', receiver: { type: 'send', receiver: { type: 'send', message: 'config' }, message: 'active_record' }, message: 'identity_map='+
   #
   # Source Code to Ast Node
-  # {https://synvert-playground.xinminlabs.com/ruby}
+  # {https://playground.synvert.net/ruby}
   class Node
     # Get the file name of node.
     #
