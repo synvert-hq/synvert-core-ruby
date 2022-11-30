@@ -221,7 +221,8 @@ module Synvert::Core
       end
 
       it 'adds snippet by http url' do
-        expect_any_instance_of(URI).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'sub_rewriter' do\nend"))
+        expect(Utils).to receive(:remote_snippet_exists?).with(URI.parse('http://synvert.net/foo/bar.rb')).and_return(true)
+        expect_any_instance_of(URI::HTTP).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'sub_rewriter' do\nend"))
         rewriter = Rewriter.new 'group', 'rewriter' do
           add_snippet 'http://synvert.net/foo/bar.rb'
         end
