@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.15.0 (2022-11-30)
+
+* Load snippet from github
+
 ## 1.14.2 (2022-11-19)
 
 * Specify `node_query`, `node_mutation` and `parser_node_ext` versions
