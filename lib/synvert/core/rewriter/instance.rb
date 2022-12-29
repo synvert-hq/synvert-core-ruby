@@ -32,7 +32,11 @@ module Synvert::Core
     #   @return current ast node
     # @!attribute [r] current_mutation
     #   @return current mutation
-    attr_reader :file_path, :current_node, :current_mutation
+    # @!attribute [r] query_adapter
+    #   @return NodeQuery Adapter
+    # @!attribute [r] mutation_adapter
+    #   @return NodeMutation Adapter
+    attr_reader :file_path, :current_node, :current_mutation, :query_adapter, :mutation_adapter
     attr_accessor :current_node
 
     # Process the instance.
@@ -45,6 +49,8 @@ module Synvert::Core
       while true
         source = read_source(absolute_file_path)
         @current_mutation = NodeMutation.new(source)
+        @mutation_adapter = NodeMutation.adapter
+        @query_adapter = NodeQuery.adapter
         begin
           node = parse_code(@file_path, source)
 
@@ -80,6 +86,8 @@ module Synvert::Core
       absolute_file_path = File.join(Configuration.root_path, file_path)
       source = read_source(absolute_file_path)
       @current_mutation = NodeMutation.new(source)
+      @mutation_adapter = NodeMutation.adapter
+      @query_adapter = NodeQuery.adapter
       begin
         node = parse_code(file_path, source)
 
