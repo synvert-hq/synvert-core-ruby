@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'parallel'
 require 'fileutils'
 
 module Synvert::Core
@@ -223,11 +224,16 @@ module Synvert::Core
       return if @ruby_version && !@ruby_version.match?
       return if @gem_spec && !@gem_spec.match?
 
-      instance = Rewriter::Instance.new(self, Array(file_patterns), &block)
       if @options[:write_to_file]
-        instance.process
+        handle_one_file(Array(file_patterns)) do |file_path|
+          instance = Rewriter::Instance.new(self, file_path, &block)
+          instance.process
+        end
       else
-        results = instance.test
+        results = handle_one_file(Array(file_patterns)) do |file_path|
+          instance = Rewriter::Instance.new(self, file_path, &block)
+          instance.test
+        end
         merge_test_results(results)
       end
     end
@@ -356,6 +362,52 @@ module Synvert::Core
     end
 
     private
+
+    # Handle one file.
+    # @param file_patterns [String] file patterns to find files.
+    # @yield [file_path] block to handle file.
+    # @yieldparam file_path [String] file path.
+    def handle_one_file(file_patterns)
+      if Configuration.number_of_workers > 1
+        Parallel.map(get_file_paths(file_patterns), in_processes: Configuration.number_of_workers) do |file_path|
+          yield(file_path)
+        end
+      else
+        get_file_paths(file_patterns).map do |file_path|
+          yield(file_path)
+        end
+      end
+    end
+
+    # Get file paths.
+    # @return [Array<String>] file paths
+    def get_file_paths(file_patterns)
+      Dir.chdir(Configuration.root_path) do
+        only_paths = Configuration.only_paths.size > 0 ? Configuration.only_paths : ["."]
+        only_paths.flat_map do |only_path|
+          file_patterns.flat_map do |file_pattern|
+            pattern = only_path == "." ? file_pattern : File.join(only_path, file_pattern)
+            Dir.glob(pattern)
+          end
+        end - get_skip_files
+      end
+    end
+
+    # Get skip files.
+    # @return [Array<String>] skip files
+    def get_skip_files
+      Configuration.skip_paths.flat_map do |skip_path|
+        if File.directory?(skip_path)
+          Dir.glob(File.join(skip_path, "**/*"))
+        elsif File.file?(skip_path)
+          [skip_path]
+        elsif skip_path.end_with?("**") || skip_path.end_with?("**/")
+          Dir.glob(File.join(skip_path, "*"))
+        else
+          Dir.glob(skip_path)
+        end
+      end
+    end
 
     def merge_test_results(results)
       @test_results += results.select { |result| result.affected? }

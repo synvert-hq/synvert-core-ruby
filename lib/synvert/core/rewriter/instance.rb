@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'parallel'
 
 module Synvert::Core
   # Instance is an execution unit, it finds specified ast nodes,
@@ -12,12 +11,12 @@ module Synvert::Core
     # Initialize an Instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
-    # @param file_patterns [Array<String>] pattern list to find files, e.g. ['spec/**/*_spec.rb']
+    # @param file_path [Array<String>]
     # @yield block code to find nodes, match conditions and rewrite code.
-    def initialize(rewriter, file_patterns, &block)
+    def initialize(rewriter, file_path, &block)
       @rewriter = rewriter
       @actions = []
-      @file_patterns = file_patterns
+      @file_path = file_path
       @block = block
       strategy = NodeMutation::Strategy::KEEP_RUNNING
       if rewriter.options[:strategy] == Strategy::ALLOW_INSERT_AT_SAME_POSITION
@@ -27,20 +26,50 @@ module Synvert::Core
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 
+    # @!attribute [r] file_path
+    #   @return file path
     # @!attribute [rw] current_node
-    #   @return current parsing node
-    # @!attribute [rw] current_file
-    #   @return current filename
-    # @!attribute [rw] current_mutation
+    #   @return current ast node
+    # @!attribute [r] current_mutation
     #   @return current mutation
-    attr_accessor :current_node, :current_file, :current_mutation
+    attr_reader :file_path, :current_node, :current_mutation
+    attr_accessor :current_node
 
     # Process the instance.
     # It finds specified files, for each file, it executes the block code, rewrites the original code,
     # then writes the code back to the original file.
     def process
-      get_file_paths.each do |file_path|
-        process_file(file_path)
+      puts @file_path if Configuration.show_run_process
+
+      absolute_file_path = File.join(Configuration.root_path, @file_path)
+      while true
+        source = read_source(absolute_file_path)
+        @current_mutation = NodeMutation.new(source)
+        begin
+          node = parse_code(@file_path, source)
+
+          process_with_node(node) do
+            instance_eval(&@block)
+          rescue NoMethodError => e
+            puts [
+              "error: #{e.message}",
+              "file: #{file_path}",
+              "source: #{source}",
+              "line: #{current_node.line}"
+            ].join("\n")
+            raise
+          end
+
+          result = @current_mutation.process
+          if result.affected?
+            @rewriter.add_affected_file(file_path)
+            write_source(absolute_file_path, result.new_source)
+          end
+          break unless result.conflicted?
+        rescue Parser::SyntaxError
+          puts "[Warn] file #{file_path} was not parsed correctly."
+          # do nothing, iterate next file
+        end
       end
     end
 
@@ -48,16 +77,33 @@ module Synvert::Core
     # It finds specified files, for each file, it executes the block code, tests the original code,
     # then returns the actions.
     def test
-      if Configuration.number_of_workers > 1
-        Parallel.map(get_file_paths, in_processes: Configuration.number_of_workers) do |file_path|
-          test_file(file_path)
+      absolute_file_path = File.join(Configuration.root_path, file_path)
+      source = read_source(absolute_file_path)
+      @current_mutation = NodeMutation.new(source)
+      begin
+        node = parse_code(file_path, source)
+
+        process_with_node(node) do
+          instance_eval(&@block)
+        rescue NoMethodError => e
+          puts [
+            "error: #{e.message}",
+            "file: #{file_path}",
+            "source: #{source}",
+            "line: #{current_node.line}"
+          ].join("\n")
+          raise
         end
-      else
-        get_file_paths.map do |file_path|
-          test_file(file_path)
-        end
+
+        result = @current_mutation.test
+        result.file_path = file_path
+        result
+      rescue Parser::SyntaxError
+        puts "[Warn] file #{file_path} was not parsed correctly."
+        # do nothing, iterate next file
       end
     end
+
 
     # Gets current node, it allows to get current node in block code.
     #
@@ -362,105 +408,6 @@ module Synvert::Core
     end
 
     private
-
-    # Process one file.
-    #
-    # @param file_path [String]
-    def process_file(file_path)
-      puts file_path if Configuration.show_run_process
-
-      @current_file = File.join(Configuration.root_path, file_path)
-      while true
-        source = read_source(@current_file)
-        @current_mutation = NodeMutation.new(source)
-        begin
-          node = parse_code(file_path, source)
-
-          process_with_node(node) do
-            instance_eval(&@block)
-          rescue NoMethodError => e
-            puts [
-              "error: #{e.message}",
-              "file: #{file_path}",
-              "source: #{source}",
-              "line: #{current_node.line}"
-            ].join("\n")
-            raise
-          end
-
-          result = @current_mutation.process
-          if result.affected?
-            @rewriter.add_affected_file(file_path)
-            write_source(@current_file, result.new_source)
-          end
-          break unless result.conflicted?
-        rescue Parser::SyntaxError
-          puts "[Warn] file #{file_path} was not parsed correctly."
-          # do nothing, iterate next file
-        end
-      end
-    end
-
-    # Test one file.
-    #
-    # @param file_path [String]
-    def test_file(file_path)
-      @current_file = File.join(Configuration.root_path, file_path)
-      source = read_source(@current_file)
-      @current_mutation = NodeMutation.new(source)
-      begin
-        node = parse_code(@current_file, source)
-
-        process_with_node(node) do
-          instance_eval(&@block)
-        rescue NoMethodError => e
-          puts [
-            "error: #{e.message}",
-            "file: #{file_path}",
-            "source: #{source}",
-            "line: #{current_node.line}"
-          ].join("\n")
-          raise
-        end
-
-        result = @current_mutation.test
-        result.file_path = file_path
-        result
-      rescue Parser::SyntaxError
-        puts "[Warn] file #{file_path} was not parsed correctly."
-        # do nothing, iterate next file
-      end
-    end
-
-    # Get file paths.
-    # @return [Array<String>] file paths
-    def get_file_paths
-      Dir.chdir(Configuration.root_path) do
-        only_paths = Configuration.only_paths.size > 0 ? Configuration.only_paths : ["."]
-        only_paths.flat_map do |only_path|
-          @file_patterns.flat_map do |file_pattern|
-            pattern = only_path == "." ? file_pattern : File.join(only_path, file_pattern)
-            Dir.glob(pattern)
-          end
-        end - get_skip_files
-      end
-    end
-
-    # Get skip files.
-    # @return [Array<String>] skip files
-    def get_skip_files
-      Configuration.skip_paths.flat_map do |skip_path|
-        if File.directory?(skip_path)
-          Dir.glob(File.join(skip_path, "**/*"))
-        elsif File.file?(skip_path)
-          [skip_path]
-        elsif skip_path.end_with?("**") || skip_path.end_with?("**/")
-          Dir.glob(File.join(skip_path, "*"))
-        else
-          Dir.glob(skip_path)
-        end
-      end
-    end
 
     # Read file source.
     # @param file_path [String] file path

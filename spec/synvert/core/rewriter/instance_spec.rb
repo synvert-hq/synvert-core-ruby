@@ -6,7 +6,7 @@ module Synvert::Core
   describe Rewriter::Instance do
     let(:instance) {
       rewriter = Rewriter.new('foo', 'bar')
-      Rewriter::Instance.new(rewriter, ['file pattern'])
+      Rewriter::Instance.new(rewriter, 'code.rb')
     }
 
     it 'parses find_node' do
@@ -97,35 +97,35 @@ module Synvert::Core
     end
 
     it 'parses append' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:append).with(instance.current_node, 'Foobar')
       instance.append 'Foobar'
     end
 
     it 'parses prepend' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:prepend).with(instance.current_node, 'Foobar')
       instance.prepend 'Foobar'
     end
 
     it 'parses insert at end' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:insert).with(instance.current_node, 'Foobar', at: 'end', to: 'receiver')
       instance.insert 'Foobar', to: 'receiver'
     end
 
     it 'parses insert at beginning' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:insert).with(instance.current_node, 'Foobar', at: 'beginning', to: nil)
       instance.insert 'Foobar', at: 'beginning'
     end
 
     it 'parses insert_after' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
       expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "\n  Foobar", at: 'end', to: nil)
@@ -133,7 +133,7 @@ module Synvert::Core
     end
 
     it 'parses insert_before' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
       expect(instance.current_mutation).to receive(:insert).with(instance.current_node, "Foobar\n  ", at: 'beginning', to: nil)
@@ -141,7 +141,7 @@ module Synvert::Core
     end
 
     it 'parses replace_erb_stmt_with_expr' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       action = double
       expect(instance.current_mutation).to receive(:actions).and_return([])
@@ -151,42 +151,42 @@ module Synvert::Core
     end
 
     it 'parses replace_with' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:replace_with).with(instance.current_node, 'Foobar')
       instance.replace_with 'Foobar'
     end
 
     it 'parses replace with' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:replace).with(instance.current_node, :message, with: 'Foobar')
       instance.replace :message, with: 'Foobar'
     end
 
     it 'parses remove' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:remove).with(instance.current_node, and_comma: true)
       instance.remove and_comma: true
     end
 
     it 'parses delete' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:delete).with(instance.current_node, :dot, :message, and_comma: true)
       instance.delete :dot, :message, and_comma: true
     end
 
     it 'parses wrap with' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:wrap).with(instance.current_node, with: 'module Foobar')
       instance.wrap with: 'module Foobar'
     end
 
     it 'parses noop' do
-      instance.current_mutation = double
+      instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.current_mutation).to receive(:noop).with(instance.current_node)
       instance.noop
@@ -206,7 +206,7 @@ module Synvert::Core
 
       it 'writes new code to file' do
         instance =
-          Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
+          Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
               replace_with 'create {{arguments}}'
             end
@@ -225,7 +225,6 @@ module Synvert::Core
             assert post.valid?
           end
         EOS
-        expect(Dir).to receive(:glob).with('spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
         expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
         expect(File).to receive(:write).with('./spec/models/post_spec.rb', output)
         instance.process
@@ -233,7 +232,7 @@ module Synvert::Core
 
       it 'does not write if file content is not changed' do
         instance =
-          Rewriter::Instance.new rewriter, ['spec/spec_helper.rb'] do
+          Rewriter::Instance.new rewriter, 'spec/spec_helper.rb' do
             with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
               unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
                 insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
@@ -250,7 +249,6 @@ module Synvert::Core
             config.include FactoryGirl::Syntax::Methods
           end
         EOS
-        expect(Dir).to receive(:glob).with('spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
         expect(File).to receive(:read).with('./spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
         expect(File).not_to receive(:write).with('./spec/spec_helper.rb', output)
         instance.process
@@ -258,7 +256,7 @@ module Synvert::Core
 
       it 'updates file_source and file_ast when writing a file' do
         instance =
-          Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
+          Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
               replace_with 'create {{arguments}}'
             end
@@ -277,7 +275,6 @@ module Synvert::Core
             assert post.valid?
           end
         EOS
-        expect(Dir).to receive(:glob).with('spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb']).twice
         expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
         expect(File).to receive(:write).with('./spec/models/post_spec.rb', output)
         expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(output)
@@ -292,7 +289,7 @@ module Synvert::Core
 
       it 'writes new code to file' do
         instance =
-          Rewriter::Instance.new rewriter, ['spec/**/*_spec.rb'] do
+          Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
               replace_with 'create {{arguments}}'
             end
@@ -304,11 +301,10 @@ module Synvert::Core
             assert post.valid?
           end
         EOS
-        expect(Dir).to receive(:glob).with('spec/**/*_spec.rb').and_return(['spec/models/post_spec.rb'])
         expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
         results = instance.test
-        expect(results[0].file_path).to eq 'spec/models/post_spec.rb'
-        expect(results[0].actions).to eq [
+        expect(results.file_path).to eq 'spec/models/post_spec.rb'
+        expect(results.actions).to eq [
           OpenStruct.new(start: 35, end: 59, new_code: 'create :user'),
           OpenStruct.new(start: 69, end: 105, new_code: 'create :post, user: user')
         ]
@@ -316,7 +312,7 @@ module Synvert::Core
 
       it 'does not write if file content is not changed' do
         instance =
-          Rewriter::Instance.new rewriter, ['spec/spec_helper.rb'] do
+          Rewriter::Instance.new rewriter, 'spec/spec_helper.rb' do
             with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
               unless_exist_node type: 'send', message: 'include', arguments: ['FactoryGirl::Syntax::Methods'] do
                 insert '{{arguments.first}}.include FactoryGirl::Syntax::Methods'
@@ -328,11 +324,10 @@ module Synvert::Core
             config.include FactoryGirl::Syntax::Methods
           end
         EOS
-        expect(Dir).to receive(:glob).with('spec/spec_helper.rb').and_return(['spec/spec_helper.rb'])
         expect(File).to receive(:read).with('./spec/spec_helper.rb', encoding: 'UTF-8').and_return(input)
         result = instance.test
-        expect(result[0].file_path).to eq 'spec/spec_helper.rb'
-        expect(result[0].actions).to eq []
+        expect(result.file_path).to eq 'spec/spec_helper.rb'
+        expect(result.actions).to eq []
       end
     end
 
