@@ -127,32 +127,6 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#current_file-instance_method" title="#current_file (instance method)">#<strong>current_file</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Current filename.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#current_mutation-instance_method" title="#current_mutation (instance method)">#<strong>current_mutation</strong>  &#x21d2; Object </a>
     
 
@@ -161,6 +135,8 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
   
   
+    
+      <span class="note title readonly">readonly</span>
     
     
   
@@ -196,7 +172,91 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Current parsing node.</p>
+    <span class="summary_desc"><div class='inline'><p>Current ast node.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file_path-instance_method" title="#file_path (instance method)">#<strong>file_path</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>File path.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mutation_adapter-instance_method" title="#mutation_adapter (instance method)">#<strong>mutation_adapter</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute mutation_adapter.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#query_adapter-instance_method" title="#query_adapter (instance method)">#<strong>query_adapter</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>NodeQuery Adapter.</p>
 </div></span>
   
 </li>
@@ -356,7 +416,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(rewriter, file_patterns) { ... } &#x21d2; Instance </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(rewriter, file_path) { ... } &#x21d2; Instance </a>
     
 
     
@@ -814,7 +874,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(rewriter, file_patterns) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span></tt> 
+    #<strong>initialize</strong>(rewriter, file_path) { ... } &#x21d2; <tt><span class='object_link'><a href="" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span></tt> 
   
 
   
@@ -844,16 +904,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
     <li>
       
-        <span class='name'>file_patterns</span>
+        <span class='name'>file_path</span>
       
       
         <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
       
       
-      
-        &mdash;
-        <div class='inline'><p>pattern list to find files, e.g. [&#39;spec/*<em>/</em>_spec.rb&#39;]</p>
-</div>
       
     </li>
   
@@ -883,6 +939,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
+16
 17
 18
 19
@@ -893,16 +950,15 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
 24
 25
 26
-27
-28</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 16</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_rewriter'>rewriter</span><span class='comma'>,</span> <span class='id identifier rubyid_file_patterns'>file_patterns</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_rewriter'>rewriter</span><span class='comma'>,</span> <span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@rewriter</span> <span class='op'>=</span> <span class='id identifier rubyid_rewriter'>rewriter</span>
   <span class='ivar'>@actions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='ivar'>@file_patterns</span> <span class='op'>=</span> <span class='id identifier rubyid_file_patterns'>file_patterns</span>
+  <span class='ivar'>@file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_file_path'>file_path</span>
   <span class='ivar'>@block</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span>
   <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>=</span> <span class='const'>NodeMutation</span><span class='op'>::</span><span class='const'>Strategy</span><span class='op'>::</span><span class='const'>KEEP_RUNNING</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_rewriter'>rewriter</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:strategy</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Strategy.html" title="Synvert::Core::Strategy (class)">Strategy</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Strategy.html#ALLOW_INSERT_AT_SAME_POSITION-constant" title="Synvert::Core::Strategy::ALLOW_INSERT_AT_SAME_POSITION (constant)">ALLOW_INSERT_AT_SAME_POSITION</a></span></span>
@@ -922,66 +978,11 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="current_file=-instance_method"></span>
+      <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="current_file-instance_method">
+  <h3 class="signature first" id="current_mutation-instance_method">
   
-    #<strong>current_file</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns current filename.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'></span>
-      
-      
-      
-        
-        <div class='inline'><p>current filename</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-36</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 36</span>
-
-<span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_file</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id="current_mutation=-instance_method"></span>
-      <div class="method_details ">
-  <h3 class="signature " id="current_mutation-instance_method">
-  
-    #<strong>current_mutation</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>current_mutation</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -1020,12 +1021,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-36</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 39</span>
 
-<span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_file</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span></pre>
+<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:file_path</span><span class='comma'>,</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span><span class='comma'>,</span> <span class='symbol'>:query_adapter</span><span class='comma'>,</span> <span class='symbol'>:mutation_adapter</span></pre>
     </td>
   </tr>
 </table>
@@ -1044,7 +1045,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns current parsing node.</p>
+    <p>Returns current ast node.</p>
 
 
   </div>
@@ -1062,7 +1063,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       
       
         
-        <div class='inline'><p>current parsing node</p>
+        <div class='inline'><p>current ast node</p>
 </div>
       
     </li>
@@ -1075,16 +1076,164 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-36
-37
-38</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 39</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_current_node'>current_node</span>
-  <span class='ivar'>@current_node</span>
+<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:file_path</span><span class='comma'>,</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span><span class='comma'>,</span> <span class='symbol'>:query_adapter</span><span class='comma'>,</span> <span class='symbol'>:mutation_adapter</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="file_path-instance_method">
+  
+    #<strong>file_path</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns file path.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>file path</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_file_path'>file_path</span>
+  <span class='ivar'>@file_path</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="mutation_adapter-instance_method">
+  
+    #<strong>mutation_adapter</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute mutation_adapter.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 39</span>
+
+<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:file_path</span><span class='comma'>,</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span><span class='comma'>,</span> <span class='symbol'>:query_adapter</span><span class='comma'>,</span> <span class='symbol'>:mutation_adapter</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="query_adapter-instance_method">
+  
+    #<strong>query_adapter</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns NodeQuery Adapter.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>NodeQuery Adapter</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 39</span>
+
+<span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:file_path</span><span class='comma'>,</span> <span class='symbol'>:current_node</span><span class='comma'>,</span> <span class='symbol'>:current_mutation</span><span class='comma'>,</span> <span class='symbol'>:query_adapter</span><span class='comma'>,</span> <span class='symbol'>:mutation_adapter</span></pre>
     </td>
   </tr>
 </table>
@@ -1143,12 +1292,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-360
-361
-362</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_any_value'>any_value</span>
   <span class='const'>NodeQuery</span><span class='op'>::</span><span class='const'>AnyValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1220,12 +1369,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-189
-190
-191</pre>
+243
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 243</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
@@ -1324,12 +1473,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-320
-321
-322</pre>
+374
+375
+376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 374</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1411,12 +1560,12 @@ then continue operating on the child node.</p>
       <pre class="lines">
 
 
-128
-129
-130</pre>
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_goto_node'>goto_node</span><span class='lparen'>(</span><span class='id identifier rubyid_child_node_name'>child_node_name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GotoScope.html" title="Synvert::Core::Rewriter::GotoScope (class)">GotoScope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="GotoScope.html#initialize-instance_method" title="Synvert::Core::Rewriter::GotoScope#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_child_node_name'>child_node_name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="GotoScope.html#process-instance_method" title="Synvert::Core::Rewriter::GotoScope#process (method)">process</a></span></span>
@@ -1498,12 +1647,12 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
       <pre class="lines">
 
 
-142
-143
-144</pre>
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_if_exist_node'>if_exist_node</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="IfExistCondition.html" title="Synvert::Core::Rewriter::IfExistCondition (class)">IfExistCondition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Condition.html#initialize-instance_method" title="Synvert::Core::Rewriter::Condition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="Condition.html#process-instance_method" title="Synvert::Core::Rewriter::Condition#process (method)">process</a></span></span>
@@ -1586,12 +1735,12 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-171
-172
-173</pre>
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_if_only_exist_node'>if_only_exist_node</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="IfOnlyExistCondition.html" title="Synvert::Core::Rewriter::IfOnlyExistCondition (class)">IfOnlyExistCondition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Condition.html#initialize-instance_method" title="Synvert::Core::Rewriter::Condition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="Condition.html#process-instance_method" title="Synvert::Core::Rewriter::Condition#process (method)">process</a></span></span>
@@ -1692,12 +1841,12 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-222
-223
-224</pre>
+276
+277
+278</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 276</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
@@ -1765,13 +1914,13 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-236
-237
-238
-239</pre>
+290
+291
+292
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 290</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_after'>insert_after</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_column'>column</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span> <span class='op'>*</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span><span class='period'>.</span><span class='id identifier rubyid_get_start_loc'>get_start_loc</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_column'>column</span>
@@ -1840,13 +1989,13 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-251
-252
-253
-254</pre>
+305
+306
+307
+308</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_before'>insert_before</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_column'>column</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span> <span class='op'>*</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span><span class='period'>.</span><span class='id identifier rubyid_get_start_loc'>get_start_loc</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_column'>column</span>
@@ -1895,12 +2044,12 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-65
-66
-67</pre>
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_node'>node</span>
   <span class='ivar'>@current_node</span>
@@ -1935,12 +2084,12 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-342
-343
-344</pre>
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noop'>noop</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_noop'>noop</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span>
@@ -2012,12 +2161,12 @@ if so, then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-207
-208
-209</pre>
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
@@ -2054,18 +2203,80 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-41
-42
-43
-44
-45</pre>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span>
-  <span class='id identifier rubyid_get_file_paths'>get_file_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file_path'>file_path</span><span class='op'>|</span>
-    <span class='id identifier rubyid_process_file'>process_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='ivar'>@file_path</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_show_run_process'><span class='object_link'><a href="../Configuration.html#show_run_process-class_method" title="Synvert::Core::Configuration.show_run_process (method)">show_run_process</a></span></span>
+
+  <span class='id identifier rubyid_absolute_file_path'>absolute_file_path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_root_path'><span class='object_link'><a href="../Configuration.html#root_path-class_method" title="Synvert::Core::Configuration.root_path (method)">root_path</a></span></span><span class='comma'>,</span> <span class='ivar'>@file_path</span><span class='rparen'>)</span>
+  <span class='kw'>while</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='id identifier rubyid_read_source'>read_source</span><span class='lparen'>(</span><span class='id identifier rubyid_absolute_file_path'>absolute_file_path</span><span class='rparen'>)</span>
+    <span class='ivar'>@current_mutation</span> <span class='op'>=</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+    <span class='ivar'>@mutation_adapter</span> <span class='op'>=</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span>
+    <span class='ivar'>@query_adapter</span> <span class='op'>=</span> <span class='const'>NodeQuery</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_code'>parse_code</span><span class='lparen'>(</span><span class='ivar'>@file_path</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+
+      <span class='id identifier rubyid_process_with_node'>process_with_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='ivar'>@block</span><span class='rparen'>)</span>
+      <span class='kw'>rescue</span> <span class='const'>NoMethodError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+        <span class='id identifier rubyid_puts'>puts</span> <span class='lbracket'>[</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>error: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>line: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_node'>current_node</span><span class='period'>.</span><span class='id identifier rubyid_line'>line</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_raise'>raise</span>
+      <span class='kw'>end</span>
+
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_affected?'>affected?</span>
+        <span class='ivar'>@rewriter</span><span class='period'>.</span><span class='id identifier rubyid_add_affected_file'>add_affected_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_write_source'>write_source</span><span class='lparen'>(</span><span class='id identifier rubyid_absolute_file_path'>absolute_file_path</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_new_source'>new_source</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='kw'>break</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_conflicted?'>conflicted?</span>
+    <span class='kw'>rescue</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>SyntaxError</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[Warn] file </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> was not parsed correctly.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='comment'># do nothing, iterate next file
+</span>    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2134,14 +2345,14 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-73
-74
-75
-76
-77</pre>
+127
+128
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process_with_node'>process_with_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_node'>current_node</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span>
@@ -2214,15 +2425,15 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-83
-84
-85
-86
-87
-88</pre>
+137
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process_with_other_node'>process_with_other_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_original_node'>original_node</span> <span class='op'>=</span> <span class='id identifier rubyid_current_node'>current_node</span>
@@ -2308,12 +2519,12 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-305
-306
-307</pre>
+359
+360
+361</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 305</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 359</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2396,12 +2607,12 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-294
-295
-296</pre>
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 348</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='label'>with:</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_selectors'>selectors</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='id identifier rubyid_with'>with</span><span class='rparen'>)</span>
@@ -2451,12 +2662,12 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-266
-267
-268</pre>
+320
+321
+322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 320</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_erb_stmt_with_expr'>replace_erb_stmt_with_expr</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_actions'>actions</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ReplaceErbStmtWithExprAction.html#initialize-instance_method" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="../Rewriter.html#process-instance_method" title="Synvert::Core::Rewriter#process (method)">process</a></span></span>
@@ -2523,12 +2734,12 @@ then writes the code back to the original file.</p>
       <pre class="lines">
 
 
-279
-280
-281</pre>
+333
+334
+335</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 333</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_with'>replace_with</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_replace_with'>replace_with</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
@@ -2565,31 +2776,67 @@ then returns the actions.</p>
       <pre class="lines">
 
 
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60</pre>
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span>
-  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_number_of_workers'><span class='object_link'><a href="../Configuration.html#number_of_workers-class_method" title="Synvert::Core::Configuration.number_of_workers (method)">number_of_workers</a></span></span> <span class='op'>&gt;</span> <span class='int'>1</span>
-    <span class='const'>Parallel</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='id identifier rubyid_get_file_paths'>get_file_paths</span><span class='comma'>,</span> <span class='label'>in_processes:</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_number_of_workers'><span class='object_link'><a href="../Configuration.html#number_of_workers-class_method" title="Synvert::Core::Configuration.number_of_workers (method)">number_of_workers</a></span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file_path'>file_path</span><span class='op'>|</span>
-      <span class='id identifier rubyid_test_file'>test_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_absolute_file_path'>absolute_file_path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_root_path'><span class='object_link'><a href="../Configuration.html#root_path-class_method" title="Synvert::Core::Configuration.root_path (method)">root_path</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='id identifier rubyid_read_source'>read_source</span><span class='lparen'>(</span><span class='id identifier rubyid_absolute_file_path'>absolute_file_path</span><span class='rparen'>)</span>
+  <span class='ivar'>@current_mutation</span> <span class='op'>=</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='ivar'>@mutation_adapter</span> <span class='op'>=</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span>
+  <span class='ivar'>@query_adapter</span> <span class='op'>=</span> <span class='const'>NodeQuery</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_code'>parse_code</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_process_with_node'>process_with_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='ivar'>@block</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>NoMethodError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='lbracket'>[</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>error: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>line: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_node'>current_node</span><span class='period'>.</span><span class='id identifier rubyid_line'>line</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span>
     <span class='kw'>end</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_get_file_paths'>get_file_paths</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file_path'>file_path</span><span class='op'>|</span>
-      <span class='id identifier rubyid_test_file'>test_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span>
+    <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_file_path'>file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_file_path'>file_path</span>
+    <span class='id identifier rubyid_result'>result</span>
+  <span class='kw'>rescue</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>SyntaxError</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[Warn] file </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> was not parsed correctly.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='comment'># do nothing, iterate next file
+</span>  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2668,12 +2915,12 @@ if matching nodes doesn&#39;t exist in the child nodes, if so, then continue ope
       <pre class="lines">
 
 
-156
-157
-158</pre>
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unless_exist_node'>unless_exist_node</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="UnlessExistCondition.html" title="Synvert::Core::Rewriter::UnlessExistCondition (class)">UnlessExistCondition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Condition.html#initialize-instance_method" title="Synvert::Core::Rewriter::Condition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="Condition.html#process-instance_method" title="Synvert::Core::Rewriter::Condition#process (method)">process</a></span></span>
@@ -2737,12 +2984,12 @@ if matching nodes doesn&#39;t exist in the child nodes, if so, then continue ope
       <pre class="lines">
 
 
-352
-353
-354</pre>
+406
+407
+408</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='ivar'>@rewriter</span><span class='period'>.</span><span class='id identifier rubyid_add_warning'>add_warning</span> <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Warning.html#initialize-instance_method" title="Synvert::Core::Rewriter::Warning#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
@@ -2899,14 +3146,14 @@ then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-109
-110
-111
-112
-113</pre>
+163
+164
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_within_node'>within_node</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="WithinScope.html#initialize-instance_method" title="Synvert::Core::Rewriter::WithinScope#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="WithinScope.html#process-instance_method" title="Synvert::Core::Rewriter::WithinScope#process (method)">process</a></span></span>
@@ -2979,12 +3226,12 @@ then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-337
-338
-339</pre>
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 337</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='label'>with:</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_wrap'>wrap</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='id identifier rubyid_with'>with</span><span class='rparen'>)</span>
@@ -2999,9 +3246,9 @@ then continue operating on each matching ast node.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Nov 30 15:11:29 2022 by
+  Generated on Thu Dec 29 13:07:04 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.2).
+  0.9.28 (ruby-3.1.3).
 </div>
 
     </div>
