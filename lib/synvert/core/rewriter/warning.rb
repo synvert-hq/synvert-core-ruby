@@ -8,7 +8,7 @@ module Synvert::Core
     # @param instance [Synvert::Core::Rewriter::Instance]
     # @param message [String] warning message.
     def initialize(instance, message)
-      @file_path = instance.current_file
+      @file_path = instance.file_path
       @line = instance.current_node.loc.expression.line
       @message = message
     end

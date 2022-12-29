@@ -7,7 +7,7 @@ module Synvert::Core
     subject {
       source = "def test\n  debugger\nend"
       send_node = Parser::CurrentRuby.parse(source).body.first
-      instance = double(current_node: send_node, current_file: 'app/test.rb')
+      instance = double(current_node: send_node, file_path: 'app/test.rb')
       Rewriter::Warning.new(instance, 'remove debugger')
     }
 
