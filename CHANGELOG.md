@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.16.0 (2022-12-29)
+
+* Add `Instance#query_adapter` and `Instance#mutation_adapter`
+* One instance handle only one file
+* Use `instance.file_path` instead of `instance.current_file`
+
 ## 1.15.0 (2022-11-30)
 
 * Load snippet from github
