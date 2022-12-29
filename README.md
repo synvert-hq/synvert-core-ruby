@@ -99,3 +99,10 @@ Actions:
 * [warn](./Synvert/Core/Rewriter/Instance.html#warn-instance_method) - warn message
 * [replace_erb_stmt_with_expr](./Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method) - replace erb stmt code to expr code
 * [noop](./Synvert/Core/Rewriter/Instance.html#noop-instance_method) - no operation
+
+Attributes:
+
+* [file_path](./Synvert/Core/Rewriter/Instance.html#file_path-instance_method) - current file path
+* [node](./Synvert/Core/Rewriter/Instance.html#node-instance_method) - current ast node
+* [query_adapter](./Synvert/Core/Rewriter/Instance.html#query_adapter-instance_method) - [query adapter](https://github.com/xinminlabs/node-query-ruby/blob/main/lib/node_query/adapter.rb) to get some helper methods
+* [mutation_adapter](./Synvert/Core/Rewriter/Instance.html#mutation_adapter-instance_method) - [mutation adapter](https://github.com/xinminlabs/node-mutation-ruby/blob/main/lib/node_mutation/adapter.rb) to get some helper methods
