@@ -30,13 +30,11 @@ module Synvert::Core
     #   @return file path
     # @!attribute [rw] current_node
     #   @return current ast node
-    # @!attribute [r] current_mutation
-    #   @return current mutation
     # @!attribute [r] query_adapter
     #   @return NodeQuery Adapter
     # @!attribute [r] mutation_adapter
     #   @return NodeMutation Adapter
-    attr_reader :file_path, :current_node, :current_mutation, :query_adapter, :mutation_adapter
+    attr_reader :file_path, :current_node, :query_adapter, :mutation_adapter
     attr_accessor :current_node
 
     # Process the instance.
