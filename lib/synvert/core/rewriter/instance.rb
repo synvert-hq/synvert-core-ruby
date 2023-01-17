@@ -405,14 +405,6 @@ module Synvert::Core
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
-    # Match any value but nil.
-    # @example
-    #   type: 'hash', nothing_value: 'true', status_value: any_value
-    # @return [NodeQuery::AnyValue]
-    def any_value
-      NodeQuery::AnyValue.new
-    end
-
     private
 
     # Read file source.
