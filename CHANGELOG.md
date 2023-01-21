@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.17.0 (2023-01-21)
+
+* Add `add_action` dsl
+* Remove `any_value`
+* No access to `Instance#current_mutation`
+
 ## 1.16.0 (2022-12-29)
 
 * Add `Instance#query_adapter` and `Instance#mutation_adapter`
