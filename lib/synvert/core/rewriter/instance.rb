@@ -396,6 +396,9 @@ module Synvert::Core
     end
 
     # Add a custom action.
+    # @example
+    #   remover_action = NodeMutation::RemoveAction.new(node)
+    #   add_action(remover_action)
     # @param action [Synvert::Core::Rewriter::Action] action
     def add_action(action)
       @current_mutation.actions << action.process

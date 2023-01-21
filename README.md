@@ -60,7 +60,7 @@ Want to use the CLI, check out [synvert-ruby](https://github.com/xinminlabs/synv
 DSLs are as follows
 
 * [configure](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#configure-instance_method) - configure the rewriter
-* [description](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#description-instance_method) - set description of the rewriter
+* [description](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#description-instance_method) - describe what the rewriter does
 * [if_ruby](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#if_ruby-instance_method) - check if ruby version is greater than or equal to the specified ruby version
 * [if_gem](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#if_gem-instance_method) - compare version of specified gem
 * [within_files](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#within_files-instance_method) - find specified files
@@ -99,6 +99,7 @@ Actions:
 * [warn](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#warn-instance_method) - warn message
 * [replace_erb_stmt_with_expr](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method) - replace erb stmt code to expr code
 * [noop](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#noop-instance_method) - no operation
+* [add_action](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method) - add custom action
 
 Attributes:
 
