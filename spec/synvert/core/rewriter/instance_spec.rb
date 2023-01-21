@@ -197,6 +197,15 @@ module Synvert::Core
       instance.warn 'foobar'
     end
 
+    it 'adds action' do
+      mutation = NodeMutation.new("")
+      instance.instance_variable_set(:@current_mutation, mutation)
+      action = double
+      expect(action).to receive(:process).and_return(action)
+      instance.add_action(action)
+      expect(mutation.actions).to eq [action]
+    end
+
     describe '#process' do
       let(:rewriter) { Rewriter.new('foo', 'bar') }
 

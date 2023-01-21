@@ -395,6 +395,12 @@ module Synvert::Core
       @current_mutation.noop(@current_node)
     end
 
+    # Add a custom action.
+    # @param action [Synvert::Core::Rewriter::Action] action
+    def add_action(action)
+      @current_mutation.actions << action.process
+    end
+
     # It creates a {Synvert::Core::Rewriter::Warning} to save warning message.
     # @example
     #   within_files 'vendor/plugins' do
