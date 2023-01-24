@@ -330,28 +330,6 @@ module Synvert::Core
       @helpers << { name: name, block: block }
     end
 
-    # It sets todo of the rewriter.
-    # Or get todo.
-    # @example
-    #   Synvert::Rewriter.new 'rails', 'upgrade_3_2_to_4_0' do
-    #     todo <<~EOS
-    #       1. Rails 4.0 no longer supports loading plugins from vendor/plugins. You must replace any plugins by extracting them to gems and adding them to your Gemfile. If you choose not to make them gems, you can move them into, say, lib/my_plugin/* and add an appropriate initializer in config/initializers/my_plugin.rb.
-    #       2.  Make the following changes to your Gemfile.
-    #           gem 'sass-rails', '~> 4.0.0'
-    #           gem 'coffee-rails', '~> 4.0.0'
-    #           gem 'uglifier', '>= 1.3.0'
-    #     EOS
-    #   end
-    # @param todo [String] rewriter todo.
-    # @return [String] rewriter todo.
-    def todo(todo = nil)
-      if todo
-        @todo = todo
-      else
-        @todo
-      end
-    end
-
     # Rerun the snippet until no change.
     # @example
     #   Synvert::Rewriter.new 'ruby', 'nested_class_definition' do

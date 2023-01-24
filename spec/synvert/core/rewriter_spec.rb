@@ -256,15 +256,6 @@ module Synvert::Core
       expect(instance.dynamic_helper('arg1', 'arg2')).to eq 'dynamic result'
     end
 
-    it 'parses todo' do
-      rewriter =
-        Rewriter.new 'group', 'name' do
-          todo "this rewriter doesn't do blah blah blah"
-        end
-      rewriter.process
-      expect(rewriter.todo).to eq "this rewriter doesn't do blah blah blah"
-    end
-
     it 'parses redo_until_no_change' do
       rewriter =
         Rewriter.new 'group', 'name' do

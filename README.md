@@ -69,7 +69,6 @@ DSLs are as follows
 * [remove_file](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#remove_file-instance_method) - remove a file
 * [helper_method](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#helper_method-instance_method) - define a helper method
 * [add_snippet](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_snippet-instance_method) - call another rewriter
-* [todo](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#todo-instance_method) - set todo
 * [redo_until_no_change](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#redo_until_no_change-instance_method) - run the snippet until no change
 
 Scopes:
