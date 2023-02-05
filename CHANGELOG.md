@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.18.1 (2023-02-05)
+
+* Fix glob with only paths
+
 ## 1.18.0 (2023-02-01)
 
 * Remove `todo` dsl
