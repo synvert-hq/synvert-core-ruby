@@ -347,42 +347,12 @@ module Synvert::Core
     # @yieldparam file_path [String] file path.
     def handle_one_file(file_patterns)
       if Configuration.number_of_workers > 1
-        Parallel.map(get_file_paths(file_patterns), in_processes: Configuration.number_of_workers) do |file_path|
+        Parallel.map(Utils.glob(file_patterns), in_processes: Configuration.number_of_workers) do |file_path|
           yield(file_path)
         end
       else
-        get_file_paths(file_patterns).map do |file_path|
+        Utils.glob(file_patterns).map do |file_path|
           yield(file_path)
-        end
-      end
-    end
-
-    # Get file paths.
-    # @return [Array<String>] file paths
-    def get_file_paths(file_patterns)
-      Dir.chdir(Configuration.root_path) do
-        only_paths = Configuration.only_paths.size > 0 ? Configuration.only_paths : ["."]
-        only_paths.flat_map do |only_path|
-          file_patterns.flat_map do |file_pattern|
-            pattern = only_path == "." ? file_pattern : File.join(only_path, file_pattern)
-            Dir.glob(pattern)
-          end
-        end - get_skip_files
-      end
-    end
-
-    # Get skip files.
-    # @return [Array<String>] skip files
-    def get_skip_files
-      Configuration.skip_paths.flat_map do |skip_path|
-        if File.directory?(skip_path)
-          Dir.glob(File.join(skip_path, "**/*"))
-        elsif File.file?(skip_path)
-          [skip_path]
-        elsif skip_path.end_with?("**") || skip_path.end_with?("**/")
-          Dir.glob(File.join(skip_path, "*"))
-        else
-          Dir.glob(skip_path)
         end
       end
     end

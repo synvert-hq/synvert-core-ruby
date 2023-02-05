@@ -53,5 +53,30 @@ module Synvert::Core
         end
       end
     end
+
+    describe '.glob' do
+      before do
+        Configuration.only_paths = []
+        Configuration.skip_paths = []
+      end
+
+      it 'gets all files' do
+        expect(Dir).to receive(:glob).with('**/*.rb').and_return(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+        expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+      end
+
+      it 'filters only paths' do
+        Configuration.only_paths = ['app/models']
+        expect(Dir).to receive(:glob).with('**/*.rb').and_return(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+        expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb'])
+      end
+
+      it 'skip files' do
+        Configuration.skip_paths = ['app/controllers/**/*']
+        expect(Dir).to receive(:glob).with('**/*.rb').and_return(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+        expect(Dir).to receive(:glob).with('app/controllers/**/*').and_return(['app/controllers/posts_controller.rb'])
+        expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb'])
+      end
+    end
   end
 end

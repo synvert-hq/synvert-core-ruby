@@ -86,7 +86,7 @@ module Synvert::Core
       end
 
       it 'delegates process to instances if if_ruby matches' do
-        expect(Dir).to receive(:glob).with('config/routes.rb').and_return(['config/routes.rb'])
+        expect(Utils).to receive(:glob).with(['config/routes.rb']).and_return(['config/routes.rb'])
         expect(File).to receive(:exist?).with('./.ruby-version').and_return(true)
         expect(File).to receive(:read).with('./.ruby-version').and_return('2.0.0')
         expect_any_instance_of(Rewriter::Instance).to receive(:process)
@@ -112,7 +112,7 @@ module Synvert::Core
       end
 
       it 'delegates process to instances if if_gem matches' do
-        expect(Dir).to receive(:glob).with('config/routes.rb').and_return(['config/routes.rb'])
+        expect(Utils).to receive(:glob).with(['config/routes.rb']).and_return(['config/routes.rb'])
         expect_any_instance_of(Rewriter::GemSpec).to receive(:match?).and_return(true)
         expect_any_instance_of(Rewriter::Instance).to receive(:process)
         rewriter =
@@ -125,7 +125,7 @@ module Synvert::Core
       end
 
       it 'delegates process to instances if if_ruby and if_gem do not exist' do
-        expect(Dir).to receive(:glob).with('config/routes.rb').and_return(['config/routes.rb'])
+        expect(Utils).to receive(:glob).with(['config/routes.rb']).and_return(['config/routes.rb'])
         expect_any_instance_of(Rewriter::Instance).to receive(:process)
         rewriter =
           Rewriter.new 'group', 'name' do

@@ -27,6 +27,18 @@ module Synvert::Core
         end
       end
 
+      # Glob file paths.
+      # @param file_patterns [Array<String>] file patterns
+      # @return [Array<String>] file paths
+      def glob(file_patterns)
+        Dir.chdir(Configuration.root_path) do
+          all_files = file_patterns.flat_map do |file_pattern|
+            Dir.glob(file_pattern)
+          end
+          filter_only_paths(all_files) - get_skip_files
+        end
+      end
+
       private
 
       def is_valid_url?(url)
@@ -64,6 +76,32 @@ module Synvert::Core
         return url unless url.include?('//github.com/')
 
         url.sub('//github.com/', '//raw.githubusercontent.com/').sub('/blob/', '/')
+      end
+
+      # Filter only paths with `Configuration.only_paths`.
+      # @return [Array<String>] filtered file paths
+      def filter_only_paths(all_files)
+        return all_files if Configuration.only_paths.size == 0
+
+        Configuration.only_paths.flat_map do |only_path|
+          all_files.filter { |file_path| file_path.starts_with?(only_path) }
+        end
+      end
+
+      # Get skip files.
+      # @return [Array<String>] skip files
+      def get_skip_files
+        Configuration.skip_paths.flat_map do |skip_path|
+          if File.directory?(skip_path)
+            Dir.glob(File.join(skip_path, "**/*"))
+          elsif File.file?(skip_path)
+            [skip_path]
+          elsif skip_path.end_with?("**") || skip_path.end_with?("**/")
+            Dir.glob(File.join(skip_path, "*"))
+          else
+            Dir.glob(skip_path)
+          end
+        end
       end
     end
   end
