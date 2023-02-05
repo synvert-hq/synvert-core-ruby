@@ -139,6 +139,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#glob-class_method" title="glob (class method)">.<strong>glob</strong>(file_patterns)  &#x21d2; Array&lt;String&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Glob file paths.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#load_snippet-class_method" title="load_snippet (class method)">.<strong>load_snippet</strong>(snippet_name)  &#x21d2; Object </a>
     
 
@@ -191,6 +214,92 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eval_snippet'>eval_snippet</span><span class='lparen'>(</span><span class='id identifier rubyid_snippet_name'>snippet_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='id identifier rubyid_load_snippet'>load_snippet</span><span class='lparen'>(</span><span class='id identifier rubyid_snippet_name'>snippet_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="glob-class_method">
+  
+    .<strong>glob</strong>(file_patterns)  &#x21d2; <tt>Array&lt;String&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Glob file paths.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file_patterns</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>file patterns</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>file paths</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/utils.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_file_patterns'>file_patterns</span><span class='rparen'>)</span>
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_root_path'><span class='object_link'><a href="Configuration.html#root_path-class_method" title="Synvert::Core::Configuration.root_path (method)">root_path</a></span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_all_files'>all_files</span> <span class='op'>=</span> <span class='id identifier rubyid_file_patterns'>file_patterns</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file_pattern'>file_pattern</span><span class='op'>|</span>
+      <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_file_pattern'>file_pattern</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_filter_only_paths'>filter_only_paths</span><span class='lparen'>(</span><span class='id identifier rubyid_all_files'>all_files</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_get_skip_files'>get_skip_files</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -256,7 +365,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Feb  1 12:14:30 2023 by
+  Generated on Sun Feb  5 06:37:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </div>
