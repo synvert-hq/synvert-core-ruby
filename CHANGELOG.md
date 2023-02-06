@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.19.0 (2023-02-06)
+
+* Remove `Instance#query_adapter`
+
 ## 1.18.1 (2023-02-05)
 
 * Fix glob with only paths
