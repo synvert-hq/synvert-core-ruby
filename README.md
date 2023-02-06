@@ -105,5 +105,4 @@ Attributes:
 
 * [file_path](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#file_path-instance_method) - current file path
 * [node](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#node-instance_method) - current ast node
-* [query_adapter](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#query_adapter-instance_method) - [query adapter](https://xinminlabs.github.io/node-query-ruby/NodeQuery/Adapter.html) to get some helper methods
 * [mutation_adapter](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#mutation_adapter-instance_method) - [mutation adapter](https://xinminlabs.github.io/node-mutation-ruby/NodeMutation/Adapter.html) to get some helper methods
