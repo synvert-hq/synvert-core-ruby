@@ -272,6 +272,31 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tab_width-class_method" title="tab_width (class method)">.<strong>tab_width</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -325,12 +350,12 @@
       <pre class="lines">
 
 
-46
 47
-48</pre>
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_number_of_workers'>number_of_workers</span>
   <span class='ivar'>@number_of_workers</span> <span class='op'>||</span> <span class='int'>1</span>
@@ -384,12 +409,12 @@
       <pre class="lines">
 
 
-32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_only_paths'>only_paths</span>
   <span class='ivar'>@only_paths</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -443,12 +468,12 @@
       <pre class="lines">
 
 
-18
 19
-20</pre>
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root_path'>root_path</span>
   <span class='ivar'>@root_path</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.</span><span class='tstring_end'>&#39;</span></span>
@@ -502,12 +527,12 @@
       <pre class="lines">
 
 
-39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_run_process'>show_run_process</span>
   <span class='ivar'>@show_run_process</span> <span class='op'>||</span> <span class='kw'>false</span>
@@ -561,12 +586,12 @@
       <pre class="lines">
 
 
-53
 54
-55</pre>
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_quote'>single_quote</span>
   <span class='ivar'>@single_quote</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='ivar'>@single_quote</span>
@@ -620,15 +645,47 @@
       <pre class="lines">
 
 
-25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_paths'>skip_paths</span>
   <span class='ivar'>@skip_paths</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="tab_width=-class_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="tab_width-class_method">
+  
+    .<strong>tab_width</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tab_width'>tab_width</span>
+  <span class='ivar'>@tab_width</span> <span class='op'>||</span> <span class='int'>2</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -641,7 +698,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Feb  8 04:32:09 2023 by
+  Generated on Wed Feb  8 13:21:23 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.3).
 </div>
