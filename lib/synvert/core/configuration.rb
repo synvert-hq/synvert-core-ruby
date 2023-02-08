@@ -9,7 +9,8 @@ module Synvert::Core
       # @!attribute [w] only_paths
       # @!attribute [w] show_run_process
       # @!attribute [w] number_of_workers
-      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process, :number_of_workers
+      # @!attribute [w] single_quote
+      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process, :number_of_workers, :single_quote
 
       # Get the path.
       #
@@ -44,6 +45,13 @@ module Synvert::Core
       # @return [Integer] default is 1
       def number_of_workers
         @number_of_workers || 1
+      end
+
+      # Use single quote or double quote.
+      #
+      # @return [Boolean] true if use single quote, default is true
+      def single_quote
+        @single_quote || true
       end
     end
   end
