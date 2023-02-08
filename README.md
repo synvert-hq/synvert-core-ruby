@@ -101,6 +101,11 @@ Actions:
 * [noop](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#noop-instance_method) - no operation
 * [add_action](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method) - add custom action
 
+Others:
+
+* [wrap_with_quotes](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method) - wrap string code with single or doulbe quotes
+
+
 Attributes:
 
 * [file_path](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#file_path-instance_method) - current file path
