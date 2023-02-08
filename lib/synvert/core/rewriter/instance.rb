@@ -22,7 +22,7 @@ module Synvert::Core
       if rewriter.options[:strategy] == Strategy::ALLOW_INSERT_AT_SAME_POSITION
         strategy |=  NodeMutation::Strategy::ALLOW_INSERT_AT_SAME_POSITION
       end
-      NodeMutation.configure({ strategy: strategy })
+      NodeMutation.configure({ strategy: strategy, tab_width: Configuration.tab_width })
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
     end
 
