@@ -10,7 +10,8 @@ module Synvert::Core
       # @!attribute [w] show_run_process
       # @!attribute [w] number_of_workers
       # @!attribute [w] single_quote
-      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process, :number_of_workers, :single_quote
+      # @!attribute [w] tab_width
+      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process, :number_of_workers, :single_quote, :tab_width
 
       # Get the path.
       #
@@ -52,6 +53,10 @@ module Synvert::Core
       # @return [Boolean] true if use single quote, default is true
       def single_quote
         @single_quote.nil? ? true : @single_quote
+      end
+
+      def tab_width
+        @tab_width || 2
       end
     end
   end
