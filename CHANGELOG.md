@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.21.0 (2023-02-08)
+
+* Add `Configuration#tab_width`
+* Add `Instance#add_leading_spaces`
+
 ## 1.20.0 (2023-02-08)
 
 * Add `Configuration#single_quote`
