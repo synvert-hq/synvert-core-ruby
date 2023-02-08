@@ -104,6 +104,7 @@ Actions:
 Others:
 
 * [wrap_with_quotes](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method) - wrap string code with single or doulbe quotes
+* [add_leading_spaces](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_leading_spaces-instance_method) - add leading spaces before the string code
 
 
 Attributes:
