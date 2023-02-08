@@ -423,6 +423,13 @@ module Synvert::Core
       quote + escaped_str + quote
     end
 
+    # Add leading spaces before the str according to Configuration.tab_width.
+    # @param str [String]
+    # @return [String]
+    def add_leading_spaces(str)
+      " " * Configuration.tab_width + str;
+    end
+
     private
 
     # Read file source.

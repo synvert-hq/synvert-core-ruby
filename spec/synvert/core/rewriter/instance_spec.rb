@@ -394,5 +394,11 @@ module Synvert::Core
         end
       end
     end
+
+    describe '#add_leading_spaces' do
+      it 'adds leading spaces' do
+        expect(instance.add_leading_spaces('foo')).to eq '  foo';
+      end
+    end
   end
 end
