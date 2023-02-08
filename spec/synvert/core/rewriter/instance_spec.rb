@@ -361,5 +361,38 @@ module Synvert::Core
         expect(instance.current_node).to eq node1
       end
     end
+
+    describe '#wrap_with_quotes' do
+      context 'Configuration.single_quote = true' do
+        it 'wraps with single quotes' do
+          expect(instance.wrap_with_quotes('foobar')).to eq "'foobar'"
+        end
+
+        it 'wraps with double quotes if it contains single quote' do
+          expect(instance.wrap_with_quotes("foo'bar")).to eq '"foo\'bar"'
+        end
+
+        it 'wraps with signle quotes and escapes single quote' do
+          expect(instance.wrap_with_quotes("foo'\"bar")).to eq "'foo\\'\"bar'"
+        end
+      end
+
+      context 'Configuration.single_quote = false' do
+        before { Configuration.single_quote = false }
+        after { Configuration.single_quote = true }
+
+        it 'wraps with double quotes' do
+          expect(instance.wrap_with_quotes('foobar')).to eq '"foobar"'
+        end
+
+        it 'wraps with single quotes if it contains double quote' do
+          expect(instance.wrap_with_quotes('foo"bar')).to eq "'foo\"bar'"
+        end
+
+        it 'wraps with double quotes and escapes double quote' do
+          expect(instance.wrap_with_quotes("foo'\"bar")).to eq '"foo\'\\"bar"'
+        end
+      end
+    end
   end
 end

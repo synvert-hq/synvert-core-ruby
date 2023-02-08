@@ -410,6 +410,19 @@ module Synvert::Core
       @rewriter.add_warning Rewriter::Warning.new(self, message)
     end
 
+    # Wrap str string with single or doulbe quotes based on Configuration.single_quote.
+    # @param str [String]
+    # @return [String] quoted string
+    def wrap_with_quotes(str)
+      quote = Configuration.single_quote ? "'" : '"';
+      another_quote = Configuration.single_quote ? '"' : "'";
+      if str.include?(quote) && !str.include?(another_quote)
+        return "#{another_quote}#{str}#{another_quote}"
+      end
+      escaped_str = str.gsub(quote) { |char| '\\' + quote }
+      quote + escaped_str + quote
+    end
+
     private
 
     # Read file source.

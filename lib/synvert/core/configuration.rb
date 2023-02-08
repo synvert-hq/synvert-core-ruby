@@ -51,7 +51,7 @@ module Synvert::Core
       #
       # @return [Boolean] true if use single quote, default is true
       def single_quote
-        @single_quote || true
+        @single_quote.nil? ? true : @single_quote
       end
     end
   end
