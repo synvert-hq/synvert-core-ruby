@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.20.0 (2023-02-08)
+
+* Add `Configuration#single_quote`
+* Add `Instance#wrap_with_quotes`
+
 ## 1.19.0 (2023-02-06)
 
 * Remove `Instance#query_adapter`

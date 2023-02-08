@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.19.0)
+    synvert-core (1.20.0)
       activesupport (< 7.0.0)
       erubis
       node_mutation (>= 1.8.2)
