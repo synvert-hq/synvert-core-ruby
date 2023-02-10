@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.21.1 (2023-02-10)
+
+* Add `tab_size` option to `add_leading_spaces`
+
 ## 1.21.0 (2023-02-08)
 
 * Add `Configuration#tab_width`

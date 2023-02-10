@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.21.0)
+    synvert-core (1.21.1)
       activesupport (< 7.0.0)
       erubis
       node_mutation (>= 1.9.0)
@@ -57,7 +57,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     parallel (1.22.1)
-    parser (3.2.0.0)
+    parser (3.2.1.0)
       ast (~> 2.4.1)
     parser_node_ext (0.10.0)
       parser
