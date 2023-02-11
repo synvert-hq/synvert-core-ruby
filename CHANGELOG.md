@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.21.2 (2023-02-11)
+
+* Call block multiple times when goto node array
+* Update `node_mutation` to 1.9.2
+
 ## 1.21.1 (2023-02-10)
 
 * Add `tab_size` option to `add_leading_spaces`
