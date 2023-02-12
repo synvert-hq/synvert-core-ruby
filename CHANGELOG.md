@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.21.3 (2023-02-12)
+
+* Update `parser_node_ext` to 1.0.0
+
 ## 1.21.2 (2023-02-11)
 
 * Call block multiple times when goto node array
