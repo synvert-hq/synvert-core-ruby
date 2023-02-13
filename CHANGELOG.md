@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.21.4 (2023-02-13)
+
+* Do not rescue `NoMethodError` and output debug info
+
 ## 1.21.3 (2023-02-12)
 
 * Update `parser_node_ext` to 1.0.0
