@@ -51,14 +51,6 @@ module Synvert::Core
 
           process_with_node(node) do
             instance_eval(&@block)
-          rescue NoMethodError => e
-            puts [
-              "error: #{e.message}",
-              "file: #{file_path}",
-              "source: #{source}",
-              "line: #{current_node.line}"
-            ].join("\n")
-            raise
           end
 
           result = @current_mutation.process
@@ -87,14 +79,6 @@ module Synvert::Core
 
         process_with_node(node) do
           instance_eval(&@block)
-        rescue NoMethodError => e
-          puts [
-            "error: #{e.message}",
-            "file: #{file_path}",
-            "source: #{source}",
-            "line: #{current_node.line}"
-          ].join("\n")
-          raise
         end
 
         result = @current_mutation.test
