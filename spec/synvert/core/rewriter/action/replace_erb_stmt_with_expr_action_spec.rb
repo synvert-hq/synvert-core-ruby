@@ -8,20 +8,20 @@ module Synvert::Core
       subject {
         source = "<% form_for post do |f| %>\n<% end %>"
         source = Engine::Erb.encode(source)
-        node = Parser::CurrentRuby.parse(source).children[1]
+        node = Parser::CurrentRuby.parse(source).children.first
         described_class.new(node).process
       }
 
       it 'gets start' do
-        expect(subject.start).to eq '@output_buffer = output_buffer || ActionView::OutputBuffer.new;'.length
+        expect(subject.start).to eq '<%'.length
       end
 
       it 'gets end' do
-        expect(subject.end).to eq '@output_buffer = output_buffer || ActionView::OutputBuffer.new;;   ; form_for post do |f| ;   ;'.length
+        expect(subject.end).to eq '<%'.length
       end
 
       it 'gets new_code' do
-        expect(subject.new_code).to eq '@output_buffer.append=  form_for post do |f| ;  ;'
+        expect(subject.new_code).to eq '='
       end
     end
   end

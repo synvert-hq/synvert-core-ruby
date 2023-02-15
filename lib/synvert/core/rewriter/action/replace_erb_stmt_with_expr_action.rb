@@ -16,28 +16,15 @@ module Synvert::Core
     #
     # @return [String] new code.
     def new_code
-      NodeMutation.adapter.file_content(@node)[@start...@end]
-        .sub(Engine::ERUBY_STMT_SPLITTER, '@output_buffer.append= ')
-        .sub(Engine::ERUBY_STMT_SPLITTER, Engine::ERUBY_EXPR_SPLITTER)
+      '='
     end
 
     private
 
     # Calculate the begin the end positions.
     def calculate_position
-      node_start = NodeMutation.adapter.get_start(@node)
-      node_source = NodeMutation.adapter.get_source(@node)
-      file_content = NodeMutation.adapter.file_content(@node)
-
-      whitespace_index = node_start
-      while file_content[whitespace_index -= 1] == ' '
-      end
-      @start = whitespace_index - Engine::ERUBY_STMT_SPLITTER.length + 1
-
-      at_index = node_start + node_source.index('do')
-      while file_content[at_index += 1] != '@'
-      end
-      @end = at_index
+      @start = NodeMutation.adapter.get_start(@node) - 1
+      @end = @start
     end
   end
 end
