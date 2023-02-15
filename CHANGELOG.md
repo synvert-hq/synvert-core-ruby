@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.21.5 (2023-02-15)
+
+* Rewrite erb engine, no need to decode
+* Rewrite `ReplaceErbStmtWithExprAction` to insert "=" instead
+* Erb encoded source passed to `node_query`, but not `node_mutation`
+
 ## 1.21.4 (2023-02-13)
 
 * Do not rescue `NoMethodError` and output debug info
