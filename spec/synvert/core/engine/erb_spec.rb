@@ -6,13 +6,13 @@ module Synvert::Core
   describe Engine::Erb do
     it 'encodes / decodes' do
       source = <<~EOF
-        <%content_for :head do%>
+        <% content_for :head do %>
           <style>
             body {
               background-image: url(<%= asset_path('bg.png') %>);
             }
           </style>
-        <%end%>
+        <% end %>
 
         <%
           foo = 'bar'
@@ -34,14 +34,11 @@ module Synvert::Core
           <% end %>
         <% end %>
       EOF
-      encoded_source = Engine::Erb.encode(source)
-      buffer = Parser::Source::Buffer.new '(test)'
-      buffer.source = encoded_source
-      parser = Parser::CurrentRuby.new
-      parser.reset
-      parser.parse buffer
-
-      expect(Engine::Erb.decode(encoded_source)).to eq source
+      encoded_lines = Engine::Erb.encode(source).split("\n")
+      expect(encoded_lines[0]).to eq '   content_for :head do   '
+      expect(encoded_lines[1]).to eq "                                                     asset_path('bg.png')     "
+      expect(encoded_lines[-2]).to eq '     end   '
+      expect(encoded_lines[-1]).to eq '   end   '
     end
   end
 end
