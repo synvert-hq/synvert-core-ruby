@@ -287,12 +287,32 @@ module Synvert::Core
         instance.process
         expect(rewriter.affected_files).to be_include('spec/models/post_spec.rb')
       end
+
+      it 'updates erb file' do
+        instance =
+          Rewriter::Instance.new rewriter, 'app/views/posts/_form.html.erb' do
+            with_node type: 'send', receiver: nil, message: 'form_for' do
+              replace_erb_stmt_with_expr
+            end
+          end
+        input = <<~EOS
+          <% form_for @post do |f| %>
+          <% end %>
+        EOS
+        output = <<~EOS
+          <%= form_for @post do |f| %>
+          <% end %>
+        EOS
+        expect(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:write).with('./app/views/posts/_form.html.erb', output)
+        instance.process
+      end
     end
 
     describe '#test' do
       let(:rewriter) { Rewriter.new('foo', 'bar') }
 
-      it 'writes new code to file' do
+      it 'gets actions if afected' do
         instance =
           Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
@@ -315,7 +335,7 @@ module Synvert::Core
         ]
       end
 
-      it 'does not write if file content is not changed' do
+      it 'gets nothing if not affected' do
         instance =
           Rewriter::Instance.new rewriter, 'spec/spec_helper.rb' do
             with_node type: 'block', caller: { receiver: 'RSpec', message: 'configure' } do
@@ -333,6 +353,23 @@ module Synvert::Core
         result = instance.test
         expect(result.file_path).to eq 'spec/spec_helper.rb'
         expect(result.actions).to eq []
+      end
+
+      it 'updates erb file' do
+        instance =
+          Rewriter::Instance.new rewriter, 'app/views/posts/_form.html.erb' do
+            with_node type: 'send', receiver: nil, message: 'form_for' do
+              replace_erb_stmt_with_expr
+            end
+          end
+        input = <<~EOS
+          <% form_for @post do |f| %>
+          <% end %>
+        EOS
+        expect(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
+        result = instance.test
+        expect(result.file_path).to eq 'app/views/posts/_form.html.erb'
+        expect(result.actions).to eq [OpenStruct.new(start: 2, end: 2, new_code: '=')]
       end
     end
 

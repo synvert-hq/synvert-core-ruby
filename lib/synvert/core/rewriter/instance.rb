@@ -421,16 +421,13 @@ module Synvert::Core
     # @param file_path [String] file path
     # @return [String] file source
     def read_source(file_path)
-      source = File.read(file_path, encoding: 'UTF-8')
-      source = Engine::Erb.encode(source) if /\.erb$/.match?(file_path)
-      source
+      File.read(file_path, encoding: 'UTF-8')
     end
 
     # Write file source to file.
     # @param file_path [String] file path
     # @param source [String] file source
     def write_source(file_path, source)
-      source = Engine::Erb.decode(source) if /\.erb/.match?(file_path)
       File.write(file_path, source.gsub(/ +\n/, "\n"))
     end
 
@@ -441,7 +438,7 @@ module Synvert::Core
     # @return [Node] ast node for file
     def parse_code(file_path, source)
       buffer = Parser::Source::Buffer.new file_path
-      buffer.source = source
+      buffer.source = /\.erb/.match?(file_path) ? Engine::Erb.encode(source) : source
 
       parser = Parser::CurrentRuby.new
       parser.reset
