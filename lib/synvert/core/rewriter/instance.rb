@@ -296,7 +296,8 @@ module Synvert::Core
     #     replace_erb_stmt_with_expr
     #   end
     def replace_erb_stmt_with_expr
-      @current_mutation.actions << Rewriter::ReplaceErbStmtWithExprAction.new(@current_node).process
+      action = Rewriter::ReplaceErbStmtWithExprAction.new(@current_node)
+      add_action(action)
     end
 
     # It replaces the whole code of current node.
