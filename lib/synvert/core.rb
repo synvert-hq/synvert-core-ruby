@@ -46,7 +46,7 @@ module Synvert
     engines/*/config/routes.rb
     engines/*/config/routes/**/*.rb
   ]
-  RAILS_VIEW_FILES = %w[app/views/**/*.html.{erb,haml,slim}]
+  RAILS_VIEW_FILES = %w[app/views/**/*.html.{erb}]
 
   RAILS_CONTROLLER_TEST_FILES = %w[
     test/functional/**/*.rb
