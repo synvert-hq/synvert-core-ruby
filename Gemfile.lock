@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.21.5)
+    synvert-core (1.21.6)
       activesupport (< 7.0.0)
       erubis
       node_mutation (>= 1.9.2)
@@ -50,7 +50,7 @@ GEM
     method_source (1.0.0)
     minitest (5.17.0)
     nenv (0.3.0)
-    node_mutation (1.9.2)
+    node_mutation (1.9.3)
       erubis
     node_query (1.12.0)
     notiffany (0.1.3)

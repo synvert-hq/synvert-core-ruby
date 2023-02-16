@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.21.6 (2023-02-16)
+
+* `RAILS_VIEW_FILES` do not check `haml` and `slim` files until we support them
+* Add constants `ALL_FILES` and `ALL_ERB_FILES`
+
 ## 1.21.5 (2023-02-15)
 
 * Rewrite erb engine, no need to decode
