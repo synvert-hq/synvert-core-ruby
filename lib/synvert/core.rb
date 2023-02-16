@@ -29,7 +29,9 @@ module Synvert
   Strategy = Core::Strategy
 
   ALL_RUBY_FILES = %w[**/*.rb]
+  ALL_ERB_FILES = %w[**/*.erb]
   ALL_RAKE_FILES = %w[**/*.rake]
+  ALL_FILES = ALL_RUBY_FILES + ALL_ERB_FILES + ALL_RAKE_FILES
 
   RAILS_APP_FILES = %w[app/**/*.rb engines/*/app/**/*.rb]
   RAILS_CONTROLLER_FILES = %w[app/controllers/**/*.rb engines/*/app/controllers/**/*.rb]
