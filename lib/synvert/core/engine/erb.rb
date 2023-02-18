@@ -1,19 +1,17 @@
 # frozen_string_literal: true
 
-require 'erubis'
-
 module Synvert::Core
   module Engine
     class Erb
       class << self
-        # convert erb to ruby code.
+        # Encode erb string, leave only ruby code, replace other erb code with whitespace.
         #
-        # @param source [String] erb source code.
-        # @return [String] ruby source code.
+        # @param source [String] erb code.
+        # @return [String] encoded ruby code.
         def encode(source)
-          source.gsub(/^.*?<%=?/m) { |str| ' ' * str.size }
-                .gsub(/%>.*?$/m) { |str| ' ' * str.size }
-                .gsub(/%>.*?<%=?/m) { |str| ' ' * str.size }
+          source.gsub(/%>.*?<%=?/m) { |str| ' ' * str.size }
+                .sub(/^.*?<%=?/m) { |str| ' ' * str.size }
+                .sub(/%>.*?$/m) { |str| ' ' * str.size }
         end
       end
     end

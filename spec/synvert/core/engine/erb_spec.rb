@@ -34,11 +34,14 @@ module Synvert::Core
           <% end %>
         <% end %>
       EOF
-      encoded_lines = Engine::Erb.encode(source).split("\n")
-      expect(encoded_lines[0]).to eq '   content_for :head do   '
-      expect(encoded_lines[1]).to eq "                                                     asset_path('bg.png')     "
-      expect(encoded_lines[-2]).to eq '     end   '
-      expect(encoded_lines[-1]).to eq '   end   '
+      encoded_source = Engine::Erb.encode(source)
+      expect(encoded_source).to be_include 'content_for :head do'
+      expect(encoded_source).to be_include " asset_path('bg.png')"
+      expect(encoded_source).to be_include 'post = Post.find(:first)'
+      expect(encoded_source).to be_include "link_to_function 'test', \"confirm('test');\""
+      expect(encoded_source).to be_include 'end'
+      expect(encoded_source).not_to be_include 'style'
+      expect(encoded_source).not_to be_include 'div'
     end
   end
 end
