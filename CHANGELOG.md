@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.21.7 (2023-03-23)
+
+* Polish `erb` engine
+* Update `node_mutation` to 1.12.1
+
 ## 1.21.6 (2023-02-16)
 
 * `RAILS_VIEW_FILES` do not check `haml` and `slim` files until we support them
