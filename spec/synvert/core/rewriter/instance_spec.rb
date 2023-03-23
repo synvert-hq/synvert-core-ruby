@@ -330,8 +330,8 @@ module Synvert::Core
         results = instance.test
         expect(results.file_path).to eq 'spec/models/post_spec.rb'
         expect(results.actions).to eq [
-          OpenStruct.new(start: 35, end: 59, new_code: 'create :user'),
-          OpenStruct.new(start: 69, end: 105, new_code: 'create :post, user: user')
+          NodeMutation::Struct::Action.new(35, 59, 'create :user'),
+          NodeMutation::Struct::Action.new(69, 105, 'create :post, user: user')
         ]
       end
 
@@ -369,7 +369,7 @@ module Synvert::Core
         expect(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.erb'
-        expect(result.actions).to eq [OpenStruct.new(start: 2, end: 2, new_code: '=')]
+        expect(result.actions).to eq [NodeMutation::Struct::Action.new(2, 2, '=')]
       end
     end
 
