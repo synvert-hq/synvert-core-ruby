@@ -33,13 +33,14 @@ module Synvert::Core
 
     describe '#process' do
       it 'rewrites the file' do
-        rewriter = Rewriter.new('group', 'name') do
-          within_files '**/*.rb' do
-            with_node node_type: 'class', name: 'Foobar' do
-              replace :name, with: 'Synvert'
+        rewriter =
+          Rewriter.new('group', 'name') do
+            within_files '**/*.rb' do
+              with_node node_type: 'class', name: 'Foobar' do
+                replace :name, with: 'Synvert'
+              end
             end
           end
-        end
         input = "class Foobar\nend"
         output = "class Synvert\nend"
         FakeFS do
@@ -52,13 +53,14 @@ module Synvert::Core
 
     describe '#test' do
       it 'gets test results' do
-        rewriter = Rewriter.new('group', 'name') do
-          within_files '**/*.rb' do
-            with_node node_type: 'class', name: 'Foobar' do
-              replace :name, with: 'Synvert'
+        rewriter =
+          Rewriter.new('group', 'name') do
+            within_files '**/*.rb' do
+              with_node node_type: 'class', name: 'Foobar' do
+                replace :name, with: 'Synvert'
+              end
             end
           end
-        end
         input = "class Foobar\nend"
         FakeFS do
           File.write("code.rb", input)
@@ -226,9 +228,10 @@ module Synvert::Core
       it 'adds snippet by http url' do
         expect(Utils).to receive(:remote_snippet_exists?).with(URI.parse('http://synvert.net/foo/bar.rb')).and_return(true)
         expect_any_instance_of(URI::HTTP).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'sub_rewriter' do\nend"))
-        rewriter = Rewriter.new 'group', 'rewriter' do
-          add_snippet 'http://synvert.net/foo/bar.rb'
-        end
+        rewriter =
+          Rewriter.new 'group', 'rewriter' do
+            add_snippet 'http://synvert.net/foo/bar.rb'
+          end
         rewriter.process
         expect(Rewriter.fetch('group', 'sub_rewriter')).not_to be_nil
       end
@@ -236,9 +239,10 @@ module Synvert::Core
       it 'adds snippet by file path' do
         expect(File).to receive(:exist?).and_return(true)
         expect(File).to receive(:read).and_return("Rewriter.new 'group', 'sub_rewriter' do\nend")
-        rewriter = Rewriter.new 'group', 'rewriter' do
-          add_snippet '/home/richard/foo/bar.rb'
-        end
+        rewriter =
+          Rewriter.new 'group', 'rewriter' do
+            add_snippet '/home/richard/foo/bar.rb'
+          end
         rewriter.process
         expect(Rewriter.fetch('group', 'sub_rewriter')).not_to be_nil
       end
