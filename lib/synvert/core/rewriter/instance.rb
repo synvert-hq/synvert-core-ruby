@@ -404,7 +404,7 @@ module Synvert::Core
         return "#{another_quote}#{str}#{another_quote}"
       end
 
-      escaped_str = str.gsub(quote) { |char| '\\' + quote }
+      escaped_str = str.gsub(quote) { |_char| '\\' + quote }
       quote + escaped_str + quote
     end
 
