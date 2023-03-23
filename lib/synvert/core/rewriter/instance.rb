@@ -20,7 +20,7 @@ module Synvert::Core
       @block = block
       strategy = NodeMutation::Strategy::KEEP_RUNNING
       if rewriter.options[:strategy] == Strategy::ALLOW_INSERT_AT_SAME_POSITION
-        strategy |=  NodeMutation::Strategy::ALLOW_INSERT_AT_SAME_POSITION
+        strategy |= NodeMutation::Strategy::ALLOW_INSERT_AT_SAME_POSITION
       end
       NodeMutation.configure({ strategy: strategy, tab_width: Configuration.tab_width })
       rewriter.helpers.each { |helper| singleton_class.send(:define_method, helper[:name], &helper[:block]) }
@@ -89,7 +89,6 @@ module Synvert::Core
         # do nothing, iterate next file
       end
     end
-
 
     # Gets current node, it allows to get current node in block code.
     #
@@ -404,6 +403,7 @@ module Synvert::Core
       if str.include?(quote) && !str.include?(another_quote)
         return "#{another_quote}#{str}#{another_quote}"
       end
+
       escaped_str = str.gsub(quote) { |char| '\\' + quote }
       quote + escaped_str + quote
     end

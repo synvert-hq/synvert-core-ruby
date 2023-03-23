@@ -94,7 +94,15 @@ module Synvert::Core
     #   @return [Array<Object>] the test results
     # @!attribute [rw] options
     #   @return [Hash] the rewriter options
-    attr_reader :group, :name, :sub_snippets, :helpers, :warnings, :affected_files, :ruby_version, :gem_spec, :test_results
+    attr_reader :group,
+                :name,
+                :sub_snippets,
+                :helpers,
+                :warnings,
+                :affected_files,
+                :ruby_version,
+                :gem_spec,
+                :test_results
     attr_accessor :options
 
     # Initialize a Rewriter.
@@ -230,10 +238,11 @@ module Synvert::Core
           instance.process
         end
       else
-        results = handle_one_file(Array(file_patterns)) do |file_path|
-          instance = Rewriter::Instance.new(self, file_path, &block)
-          instance.test
-        end
+        results =
+          handle_one_file(Array(file_patterns)) do |file_path|
+            instance = Rewriter::Instance.new(self, file_path, &block)
+            instance.test
+          end
         merge_test_results(results)
       end
     end
