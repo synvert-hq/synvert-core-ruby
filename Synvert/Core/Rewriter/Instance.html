@@ -1272,7 +1272,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 415</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_leading_spaces'>add_leading_spaces</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='label'>tab_size:</span> <span class='int'>1</span><span class='rparen'>)</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tab_width'><span class='object_link'><a href="../Configuration.html#tab_width-class_method" title="Synvert::Core::Configuration.tab_width (method)">tab_width</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_tab_size'>tab_size</span> <span class='op'>+</span> <span class='id identifier rubyid_str'>str</span><span class='semicolon'>;</span>
+  <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tab_width'><span class='object_link'><a href="../Configuration.html#tab_width-class_method" title="Synvert::Core::Configuration.tab_width (method)">tab_width</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_tab_size'>tab_size</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_str'>str</span><span class='semicolon'>;</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3270,7 +3270,7 @@ then continue operating on each matching ast node.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Mar 23 12:04:44 2023 by
+  Generated on Thu Mar 23 12:06:21 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.2.1).
 </div>
