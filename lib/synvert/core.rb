@@ -9,7 +9,6 @@ require_relative './core/node_ext'
 require 'active_support'
 require 'active_support/core_ext'
 require 'erubis'
-require 'set'
 require 'node_query'
 require 'node_mutation'
 
