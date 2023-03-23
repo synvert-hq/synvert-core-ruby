@@ -12,7 +12,12 @@ module Synvert::Core
     it 'parses find_node' do
       scope = double
       block = proc {}
-      expect(Rewriter::WithinScope).to receive(:new).with(instance, '.send[message=create]', {}, &block).and_return(scope)
+      expect(Rewriter::WithinScope).to receive(:new).with(
+        instance,
+        '.send[message=create]',
+        {},
+        &block
+      ).and_return(scope)
       expect(scope).to receive(:process)
       instance.find_node('.send[message=create]', &block)
     end
@@ -99,28 +104,44 @@ module Synvert::Core
     it 'parses append' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:append).with(instance.current_node, 'Foobar')
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:append).with(
+        instance.current_node,
+        'Foobar'
+      )
       instance.append 'Foobar'
     end
 
     it 'parses prepend' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:prepend).with(instance.current_node, 'Foobar')
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:prepend).with(
+        instance.current_node,
+        'Foobar'
+      )
       instance.prepend 'Foobar'
     end
 
     it 'parses insert at end' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(instance.current_node, 'Foobar', at: 'end', to: 'receiver')
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(
+        instance.current_node,
+        'Foobar',
+        at: 'end',
+        to: 'receiver'
+      )
       instance.insert 'Foobar', to: 'receiver'
     end
 
     it 'parses insert at beginning' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(instance.current_node, 'Foobar', at: 'beginning', to: nil)
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(
+        instance.current_node,
+        'Foobar',
+        at: 'beginning',
+        to: nil
+      )
       instance.insert 'Foobar', at: 'beginning'
     end
 
@@ -128,7 +149,12 @@ module Synvert::Core
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(instance.current_node, "\n  Foobar", at: 'end', to: nil)
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(
+        instance.current_node,
+        "\n  Foobar",
+        at: 'end',
+        to: nil
+      )
       instance.insert_after 'Foobar'
     end
 
@@ -136,7 +162,12 @@ module Synvert::Core
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(instance.current_node, "Foobar\n  ", at: 'beginning', to: nil)
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(
+        instance.current_node,
+        "Foobar\n  ",
+        at: 'beginning',
+        to: nil
+      )
       instance.insert_before 'Foobar'
     end
 
@@ -153,35 +184,53 @@ module Synvert::Core
     it 'parses replace_with' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:replace_with).with(instance.current_node, 'Foobar')
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:replace_with).with(
+        instance.current_node,
+        'Foobar'
+      )
       instance.replace_with 'Foobar'
     end
 
     it 'parses replace with' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:replace).with(instance.current_node, :message, with: 'Foobar')
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:replace).with(
+        instance.current_node,
+        :message,
+        with: 'Foobar'
+      )
       instance.replace :message, with: 'Foobar'
     end
 
     it 'parses remove' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:remove).with(instance.current_node, and_comma: true)
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:remove).with(
+        instance.current_node,
+        and_comma: true
+      )
       instance.remove and_comma: true
     end
 
     it 'parses delete' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:delete).with(instance.current_node, :dot, :message, and_comma: true)
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:delete).with(
+        instance.current_node,
+        :dot,
+        :message,
+        and_comma: true
+      )
       instance.delete :dot, :message, and_comma: true
     end
 
     it 'parses wrap with' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:wrap).with(instance.current_node, with: 'module Foobar')
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:wrap).with(
+        instance.current_node,
+        with: 'module Foobar'
+      )
       instance.wrap with: 'module Foobar'
     end
 

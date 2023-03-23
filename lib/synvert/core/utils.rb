@@ -15,14 +15,17 @@ module Synvert::Core
         if is_valid_url?(snippet_name)
           uri = URI.parse(format_url(snippet_name))
           return uri.open.read if remote_snippet_exists?(uri)
+
           raise SnippetNotFoundError.new("#{snippet_name} nout found")
         elsif is_valid_file?(snippet_name)
           return File.read(snippet_name)
         else
           snippet_path = snippet_expand_path(snippet_name)
           return File.read(snippet_path) if File.exist?(snippet_path)
+
           snippet_uri = URI.parse(format_url(remote_snippet_url(snippet_name)))
           return snippet_uri.open.read if remote_snippet_exists?(snippet_uri)
+
           raise SnippetNotFoundError.new("#{snippet_name} nout found")
         end
       end
@@ -32,9 +35,10 @@ module Synvert::Core
       # @return [Array<String>] file paths
       def glob(file_patterns)
         Dir.chdir(Configuration.root_path) do
-          all_files = file_patterns.flat_map do |file_pattern|
-            Dir.glob(file_pattern)
-          end
+          all_files =
+            file_patterns.flat_map do |file_pattern|
+              Dir.glob(file_pattern)
+            end
           filter_only_paths(all_files) - get_skip_files
         end
       end
