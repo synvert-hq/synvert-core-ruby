@@ -128,7 +128,8 @@ module Synvert::Core
         instance.current_node,
         'Foobar',
         at: 'end',
-        to: 'receiver'
+        to: 'receiver',
+        and_comma: false
       )
       instance.insert 'Foobar', to: 'receiver'
     end
@@ -140,7 +141,8 @@ module Synvert::Core
         instance.current_node,
         'Foobar',
         at: 'beginning',
-        to: nil
+        to: nil,
+        and_comma: false
       )
       instance.insert 'Foobar', at: 'beginning'
     end
@@ -153,7 +155,8 @@ module Synvert::Core
         instance.current_node,
         "\n  Foobar",
         at: 'end',
-        to: nil
+        to: nil,
+        and_comma: false
       )
       instance.insert_after 'Foobar'
     end
@@ -166,7 +169,8 @@ module Synvert::Core
         instance.current_node,
         "Foobar\n  ",
         at: 'beginning',
-        to: nil
+        to: nil,
+        and_comma: false
       )
       instance.insert_before 'Foobar'
     end

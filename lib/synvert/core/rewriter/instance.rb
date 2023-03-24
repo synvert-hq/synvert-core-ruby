@@ -250,8 +250,9 @@ module Synvert::Core
     # @param code [String] code need to be inserted.
     # @param at [String] insert position, beginning or end
     # @param to [String] where to insert, if it is nil, will insert to current node.
-    def insert(code, at: 'end', to: nil)
-      @current_mutation.insert(@current_node, code, at: at, to: to)
+    # @param and_comma [Boolean] insert extra comma.
+    def insert(code, at: 'end', to: nil, and_comma: false)
+      @current_mutation.insert(@current_node, code, at: at, to: to, and_comma: and_comma)
     end
 
     # It inserts the code next to the current node.
@@ -264,9 +265,11 @@ module Synvert::Core
     #     insert_after "{{receiver}}.secret_key_base = \"#{SecureRandom.hex(64)}\""
     #   end
     # @param code [String] code need to be inserted.
-    def insert_after(code, to: nil)
+    # @param to [String] where to insert, if it is nil, will insert to current node.
+    # @param and_comma [Boolean] insert extra comma.
+    def insert_after(code, to: nil, and_comma: false)
       column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
-      @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end', to: to)
+      @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end', to: to, and_comma: and_comma)
     end
 
     # It inserts the code previous to the current node.
@@ -279,9 +282,11 @@ module Synvert::Core
     #     insert_before "{{receiver}}.secret_key_base = \"#{SecureRandom.hex(64)}\""
     #   end
     # @param code [String] code need to be inserted.
-    def insert_before(code, to: nil)
+    # @param to [String] where to insert, if it is nil, will insert to current node.
+    # @param and_comma [Boolean] insert extra comma.
+    def insert_before(code, to: nil, and_comma: false)
       column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
-      @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning', to: to)
+      @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning', to: to, and_comma: and_comma)
     end
 
     # It replaces erb stmt code to expr code.
@@ -332,10 +337,9 @@ module Synvert::Core
     #   with_node type: 'send', message: { in: %w[puts p] } do
     #     remove
     #   end
-    # @param options [Hash] options.
     # @option and_comma [Boolean] delete extra comma.
-    def remove(**options)
-      @current_mutation.remove(@current_node, **options)
+    def remove(and_comma: false)
+      @current_mutation.remove(@current_node, and_comma: and_comma)
     end
 
     # It deletes child nodes.
@@ -347,10 +351,9 @@ module Synvert::Core
     #     delete :receiver, :dot
     #   end
     # @param selectors [Array<Symbol>] selector names of child node.
-    # @param options [Hash]
     # @option and_comma [Boolean] delete extra comma.
-    def delete(*selectors, **options)
-      @current_mutation.delete(@current_node, *selectors, **options)
+    def delete(*selectors, and_comma: false)
+      @current_mutation.delete(@current_node, *selectors, and_comma: and_comma)
     end
 
     # It wraps current node with code.
