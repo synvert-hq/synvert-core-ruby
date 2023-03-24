@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.22.0 (2023-03-24)
+
+* Add `and_comma` option to `insert`, `insert_before`, `insert_after` api
+
 ## 1.21.7 (2023-03-23)
 
 * Polish `erb` engine
