@@ -3,7 +3,7 @@ PATH
   specs:
     synvert-core (1.22.0)
       activesupport (< 7.0.0)
-      node_mutation (>= 1.12.1)
+      node_mutation (>= 1.13.0)
       node_query (>= 1.12.0)
       parallel
       parser
@@ -49,7 +49,7 @@ GEM
     method_source (1.0.0)
     minitest (5.18.0)
     nenv (0.3.0)
-    node_mutation (1.12.1)
+    node_mutation (1.13.0)
       erubis
     node_query (1.12.0)
     notiffany (0.1.3)
