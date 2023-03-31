@@ -182,7 +182,10 @@ module Synvert::Core
       erb_source = '<% form_for @post do |f| %><% end %>'
       allow(File).to receive(:read).and_return(erb_source)
       expect(instance.instance_variable_get(:@current_mutation)).to receive(:actions).and_return([])
-      expect(Rewriter::ReplaceErbStmtWithExprAction).to receive(:new).with(instance.current_node, erb_source).and_return(action)
+      expect(Rewriter::ReplaceErbStmtWithExprAction).to receive(:new).with(
+        instance.current_node,
+        erb_source
+      ).and_return(action)
       expect(action).to receive(:process)
       instance.replace_erb_stmt_with_expr
     end
