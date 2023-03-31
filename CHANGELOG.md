@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.22.1 (2023-03-31)
+
+* Fix indent when `insert_after` or `insert_before` to a child node
+* Update `node_mutation` to 1.13.0
+
 ## 1.22.0 (2023-03-24)
 
 * Add `and_comma` option to `insert`, `insert_before`, `insert_after` api
