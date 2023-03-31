@@ -1,5 +1,11 @@
 # CHANGELOG
 
+##  1.22.2 (2023-03-31)
+
+* Do not replace white space characters in erb engine
+* Check erb source in `ReplaceErbStmtWithExprAction`
+* Update `node_mutation` to 1.13.1
+
 ## 1.22.1 (2023-03-31)
 
 * Fix indent when `insert_after` or `insert_before` to a child node
