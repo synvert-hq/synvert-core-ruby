@@ -9,9 +9,15 @@ module Synvert::Core
         # @param source [String] erb code.
         # @return [String] encoded ruby code.
         def encode(source)
-          source.gsub(/%>.*?<%=?/m) { |str| ' ' * str.size }
-                .sub(/^.*?<%=?/m) { |str| ' ' * str.size }
-                .sub(/%>.*?$/m) { |str| ' ' * str.size }
+          source.gsub(/%>.*?<%=?/m) { |str| replace_all_code_but_white_space_characters(str) }
+                .sub(/^.*?<%=?/m) { |str| replace_all_code_but_white_space_characters(str) }
+                .sub(/%>.*?$/m) { |str| replace_all_code_but_white_space_characters(str) }
+        end
+
+        private
+
+        def replace_all_code_but_white_space_characters(source)
+          source.gsub(/\S/, ' ')
         end
       end
     end
