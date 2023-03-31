@@ -155,10 +155,10 @@ module Synvert::Core
         instance.current_node,
         "\n  Foobar",
         at: 'end',
-        to: nil,
+        to: 'caller',
         and_comma: false
       )
-      instance.insert_after 'Foobar'
+      instance.insert_after 'Foobar', to: 'caller'
     end
 
     it 'parses insert_before' do
@@ -169,10 +169,10 @@ module Synvert::Core
         instance.current_node,
         "Foobar\n  ",
         at: 'beginning',
-        to: nil,
+        to: 'caller',
         and_comma: false
       )
-      instance.insert_before 'Foobar'
+      instance.insert_before 'Foobar', to: 'caller'
     end
 
     it 'parses replace_erb_stmt_with_expr' do

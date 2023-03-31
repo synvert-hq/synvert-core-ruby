@@ -268,7 +268,7 @@ module Synvert::Core
     # @param to [String] where to insert, if it is nil, will insert to current node.
     # @param and_comma [Boolean] insert extra comma.
     def insert_after(code, to: nil, and_comma: false)
-      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
+      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node, to).column
       @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end', to: to, and_comma: and_comma)
     end
 
@@ -285,7 +285,7 @@ module Synvert::Core
     # @param to [String] where to insert, if it is nil, will insert to current node.
     # @param and_comma [Boolean] insert extra comma.
     def insert_before(code, to: nil, and_comma: false)
-      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node).column
+      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node, to).column
       @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning', to: to, and_comma: and_comma)
     end
 
