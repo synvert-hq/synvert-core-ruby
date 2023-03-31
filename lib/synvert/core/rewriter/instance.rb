@@ -300,7 +300,9 @@ module Synvert::Core
     #     replace_erb_stmt_with_expr
     #   end
     def replace_erb_stmt_with_expr
-      action = Rewriter::ReplaceErbStmtWithExprAction.new(@current_node)
+      absolute_file_path = File.join(Configuration.root_path, @file_path)
+      erb_source = read_source(absolute_file_path)
+      action = Rewriter::ReplaceErbStmtWithExprAction.new(@current_node, erb_source)
       add_action(action)
     end
 

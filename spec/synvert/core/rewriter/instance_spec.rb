@@ -179,8 +179,10 @@ module Synvert::Core
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       action = double
+      erb_source = '<% form_for @post do |f| %><% end %>'
+      allow(File).to receive(:read).and_return(erb_source)
       expect(instance.instance_variable_get(:@current_mutation)).to receive(:actions).and_return([])
-      expect(Rewriter::ReplaceErbStmtWithExprAction).to receive(:new).with(instance.current_node).and_return(action)
+      expect(Rewriter::ReplaceErbStmtWithExprAction).to receive(:new).with(instance.current_node, erb_source).and_return(action)
       expect(action).to receive(:process)
       instance.replace_erb_stmt_with_expr
     end
@@ -356,7 +358,7 @@ module Synvert::Core
           <%= form_for @post do |f| %>
           <% end %>
         EOS
-        expect(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
+        allow(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
         expect(File).to receive(:write).with('./app/views/posts/_form.html.erb', output)
         instance.process
       end
@@ -419,7 +421,7 @@ module Synvert::Core
           <% form_for @post do |f| %>
           <% end %>
         EOS
-        expect(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
+        allow(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.erb'
         expect(result.actions).to eq [NodeMutation::Struct::Action.new(2, 2, '=')]
