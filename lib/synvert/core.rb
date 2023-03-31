@@ -8,7 +8,6 @@ require 'parser_node_ext'
 require_relative './core/node_ext'
 require 'active_support'
 require 'active_support/core_ext'
-require 'erubis'
 require 'node_query'
 require 'node_mutation'
 
