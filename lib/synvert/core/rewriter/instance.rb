@@ -444,7 +444,7 @@ module Synvert::Core
     # @return [Node] ast node for file
     def parse_code(file_path, source)
       buffer = Parser::Source::Buffer.new file_path
-      buffer.source = /\.erb/.match?(file_path) ? Engine::Erb.encode(source) : source
+      buffer.source = Engine.encode(File.extname(file_path), source)
 
       parser = Parser::CurrentRuby.new
       parser.reset
