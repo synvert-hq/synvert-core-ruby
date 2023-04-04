@@ -9,14 +9,40 @@ module Synvert::Core
         # @param source [String] haml code.
         # @return [String] encoded ruby code.
         def encode(source)
-          source.lines.map do |line|
-            if line =~ /\A(\s*-)/ || # match "  - if current_user"
-               line =~ /\A(\s*([%#\.].*)?=)/ # match "  %span= current_user.login"
-              ' ' * $1.size + line[$1.size..]
+          tab_sizes = []
+          lines = source.lines.map do |line|
+            if line =~ /\A(\s*)(- ?)(.*)/
+              if $3.start_with?('if', 'unless', 'begin', 'case') || $3.include?(' do ')
+                tab_sizes.push($1.size)
+              end
+              ' ' * ($1.size + $2.size) + $3
             else
-              ' ' * line.size
+              if line =~ /\A(\s*)([%#\.].*)?=(.*)/ # match "  %span= current_user.login"
+                new_line =
+                  if !tab_sizes.empty? && tab_sizes[-1] >= $1.size
+                    tab_sizes.pop
+                    "end\n" + ' ' * ($1.size + ($2 || '').size + 1) + $3
+                  else
+                    ' ' * ($1.size + ($2 || '').size + 1) + $3
+                  end
+                if line.include?(' do ')
+                  tab_sizes.push($1.size)
+                end
+                new_line
+              elsif line =~ /\A(\s*)(.*)/ # match any other line
+                if !tab_sizes.empty? && tab_sizes[-1] >= $1.size
+                  tab_sizes.pop
+                  "end\n" + ' ' * line.size
+                else
+                  ' ' * line.size
+                end
+              end
             end
-          end.join("\n")
+          end
+          unless tab_sizes.empty?
+            lines.push("end\n")
+          end
+          lines.join("\n")
         end
       end
     end
