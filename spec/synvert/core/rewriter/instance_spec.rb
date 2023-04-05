@@ -365,6 +365,26 @@ module Synvert::Core
         expect(File).to receive(:write).with('./app/views/posts/_form.html.erb', output)
         instance.process
       end
+
+      it 'updates haml file' do
+        instance =
+          Rewriter::Instance.new rewriter, 'app/views/posts/_form.html.haml' do
+            with_node node_type: 'ivar' do
+              replace_with 'post'
+            end
+          end
+        input = <<~EOS
+          = form_for @post do |f|
+          = form_for @post do |f|
+        EOS
+        output = <<~EOS
+          = form_for post do |f|
+          = form_for post do |f|
+        EOS
+        allow(File).to receive(:read).with('./app/views/posts/_form.html.haml', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:write).with('./app/views/posts/_form.html.haml', output)
+        instance.process
+      end
     end
 
     describe '#test' do
@@ -428,6 +448,30 @@ module Synvert::Core
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.erb'
         expect(result.actions).to eq [NodeMutation::Struct::Action.new(2, 2, '=')]
+      end
+
+      it 'updates haml file' do
+        instance =
+          Rewriter::Instance.new rewriter, 'app/views/posts/_form.html.haml' do
+            with_node node_type: 'ivar' do
+              replace_with 'post'
+            end
+          end
+        input = <<~EOS
+          = form_for @post do |f|
+          = form_for @post do |f|
+        EOS
+        output = <<~EOS
+          = form_for post do |f|
+          = form_for post do |f|
+        EOS
+        allow(File).to receive(:read).with('./app/views/posts/_form.html.haml', encoding: 'UTF-8').and_return(input)
+        result = instance.test
+        expect(result.file_path).to eq 'app/views/posts/_form.html.haml'
+        expect(result.actions).to eq [
+          NodeMutation::Struct::Action.new("= form_for ".length, "= form_for @post".length, 'post'),
+          NodeMutation::Struct::Action.new("= form_for @post do |f|\n= form_for ".length, "= form_for @post do |f|\n= form_for @post".length, 'post'),
+        ]
       end
     end
 

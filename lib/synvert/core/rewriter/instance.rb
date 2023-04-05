@@ -44,10 +44,12 @@ module Synvert::Core
       absolute_file_path = File.join(Configuration.root_path, @file_path)
       while true
         source = read_source(absolute_file_path)
+        encoded_source = Engine.encode(File.extname(file_path), source)
         @current_mutation = NodeMutation.new(source)
+        @current_mutation.transform_proc = Engine.generate_transform_proc(File.extname(file_path), encoded_source)
         @mutation_adapter = NodeMutation.adapter
         begin
-          node = parse_code(@file_path, source)
+          node = parse_code(@file_path, encoded_source)
 
           process_with_node(node) do
             instance_eval(&@block)
@@ -73,9 +75,11 @@ module Synvert::Core
       absolute_file_path = File.join(Configuration.root_path, file_path)
       source = read_source(absolute_file_path)
       @current_mutation = NodeMutation.new(source)
+      encoded_source = Engine.encode(File.extname(file_path), source)
+      @current_mutation.transform_proc = Engine.generate_transform_proc(File.extname(file_path), encoded_source)
       @mutation_adapter = NodeMutation.adapter
       begin
-        node = parse_code(file_path, source)
+        node = parse_code(file_path, encoded_source)
 
         process_with_node(node) do
           instance_eval(&@block)
@@ -440,11 +444,11 @@ module Synvert::Core
     # Parse code ast node.
     #
     # @param file_path [String] file path
-    # @param file_path [String] file path
+    # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
-    def parse_code(file_path, source)
+    def parse_code(file_path, encoded_source)
       buffer = Parser::Source::Buffer.new file_path
-      buffer.source = Engine.encode(File.extname(file_path), source)
+      buffer.source = encoded_source
 
       parser = Parser::CurrentRuby.new
       parser.reset
