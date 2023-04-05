@@ -15,13 +15,13 @@ module Synvert::Core
           tab_sizes = []
           lines = source.lines.map do |line|
             if line =~ /\A(\s*)(- ?)(.*)/ # match "  - if currenet_user"
-              code = ' ' * ($1.size + $2.size) + $3
+              code = (' ' * ($1.size + $2.size)) + $3
               new_line = $3.start_with?('else', 'elsif', 'when') ? code : check_and_insert_end(code, tab_sizes, $1.size)
               tab_sizes.push($1.size) if $3.start_with?('if', 'unless', 'begin', 'case') || $3.include?(' do ')
               new_line
             else
               if line =~ /\A(\s*)([%#\.].*)?=(.*)/ # match "  %span= current_user.login"
-                code = ' ' * ($1.size + ($2 || '').size + 1) + $3
+                code = (' ' * ($1.size + ($2 || '').size + 1)) + $3
                 new_line = check_and_insert_end(code, tab_sizes, $1.size)
                 tab_sizes.push($1.size) if line.include?(' do ')
                 new_line
@@ -50,7 +50,7 @@ module Synvert::Core
               index = encoded_source[start..-1].index(END_LINE)
               break unless index
 
-              indices << start + index
+              indices << (start + index)
               start += index + END_LINE.length
             end
             indices.each do |index|
