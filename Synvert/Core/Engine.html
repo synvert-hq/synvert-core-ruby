@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/synvert/core/engine.rb<span class="defines">,<br />
-  lib/synvert/core/engine/erb.rb</span>
+  lib/synvert/core/engine/erb.rb,<br /> lib/synvert/core/engine/haml.rb</span>
 </dd>
   </dl>
   
@@ -101,7 +101,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Engine/Erb.html" title="Synvert::Core::Engine::Erb (class)">Erb</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Engine/Erb.html" title="Synvert::Core::Engine::Erb (class)">Erb</a></span>, <span class='object_link'><a href="Engine/Haml.html" title="Synvert::Core::Engine::Haml (class)">Haml</a></span>
     
   
 </p>
@@ -112,14 +112,339 @@
 
 
 
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
 
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#encode-class_method" title="encode (class method)">.<strong>encode</strong>(extension, source)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Encode source code by registered engine.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate_transform_proc-class_method" title="generate_transform_proc (class method)">.<strong>generate_transform_proc</strong>(extension, encoded_source)  &#x21d2; Proc </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Generate a transform_proc by registered engine, which is used to adjust start and end position of actions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#register-class_method" title="register (class method)">.<strong>register</strong>(extension, engine)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Register an engine.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="encode-class_method">
+  
+    .<strong>encode</strong>(extension, source)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Encode source code by registered engine.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>extension</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>encoded source</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_encode'>encode</span><span class='lparen'>(</span><span class='id identifier rubyid_extension'>extension</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_engine'>engine</span> <span class='op'>=</span> <span class='ivar'>@engines</span><span class='lbracket'>[</span><span class='id identifier rubyid_extension'>extension</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_engine'>engine</span> <span class='op'>?</span> <span class='id identifier rubyid_engine'>engine</span><span class='period'>.</span><span class='id identifier rubyid_encode'>encode</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_source'>source</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_transform_proc-class_method">
+  
+    .<strong>generate_transform_proc</strong>(extension, encoded_source)  &#x21d2; <tt>Proc</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Generate a transform_proc by registered engine,
+which is used to adjust start and end position of actions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>extension</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>encoded_source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>transform_proc</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_generate_transform_proc'>generate_transform_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_extension'>extension</span><span class='comma'>,</span> <span class='id identifier rubyid_encoded_source'>encoded_source</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_engine'>engine</span> <span class='op'>=</span> <span class='ivar'>@engines</span><span class='lbracket'>[</span><span class='id identifier rubyid_extension'>extension</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_engine'>engine</span> <span class='op'>?</span> <span class='id identifier rubyid_engine'>engine</span><span class='period'>.</span><span class='id identifier rubyid_generate_transform_proc'>generate_transform_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_encoded_source'>encoded_source</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="register-class_method">
+  
+    .<strong>register</strong>(extension, engine)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Register an engine</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>extension</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>engine</span>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='id identifier rubyid_extension'>extension</span><span class='comma'>,</span> <span class='id identifier rubyid_engine'>engine</span><span class='rparen'>)</span>
+  <span class='ivar'>@engines</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@engines</span><span class='lbracket'>[</span><span class='id identifier rubyid_extension'>extension</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_engine'>engine</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Fri Mar 31 10:54:26 2023 by
+  Generated on Wed Apr  5 05:18:13 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.2.1).
+  0.9.28 (ruby-3.2.2).
 </div>
 
     </div>
