@@ -470,7 +470,11 @@ module Synvert::Core
         expect(result.file_path).to eq 'app/views/posts/_form.html.haml'
         expect(result.actions).to eq [
           NodeMutation::Struct::Action.new("= form_for ".length, "= form_for @post".length, 'post'),
-          NodeMutation::Struct::Action.new("= form_for @post do |f|\n= form_for ".length, "= form_for @post do |f|\n= form_for @post".length, 'post'),
+          NodeMutation::Struct::Action.new(
+            "= form_for @post do |f|\n= form_for ".length,
+            "= form_for @post do |f|\n= form_for @post".length,
+            'post'
+          ),
         ]
       end
     end
