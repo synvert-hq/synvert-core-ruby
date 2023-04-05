@@ -14,6 +14,11 @@ module Synvert::Core
                 .sub(/%>.*?$/m) { |str| replace_all_code_but_white_space_characters(str) }
         end
 
+        # Generate an empty proc.
+        def generate_transform_proc(_encoded_source)
+          proc {}
+        end
+
         private
 
         def replace_all_code_but_white_space_characters(source)
