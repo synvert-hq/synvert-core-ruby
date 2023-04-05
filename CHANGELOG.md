@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.23.0 (2023-04-05)
+
+* Add haml engine
+* Add `Engine.register` and `Engine.encode` and `Engine.generate_transform_proc`
+* Set NodeMutation `transform_proc`
+* Update `node_mutation` to 1.14.0
+
 ##  1.22.2 (2023-03-31)
 
 * Do not replace white space characters in erb engine
