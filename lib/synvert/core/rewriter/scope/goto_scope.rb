@@ -20,7 +20,7 @@ module Synvert::Core
 
       child_node = current_node
       @child_node_name.to_s.split('.').each do |child_node_name|
-        child_node = child_node_name.is_a?(Parser::AST::Node) ? child_node_name : child_node.send(child_node_name)
+        child_node = child_node.is_a?(Array) && child_node_name =~ /-?\d+/ ? child_node[child_node_name.to_i] : child_node.send(child_node_name)
       end
       if child_node.is_a?(Array)
         child_node.each do |child_child_node|

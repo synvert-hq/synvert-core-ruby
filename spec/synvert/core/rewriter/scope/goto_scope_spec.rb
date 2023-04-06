@@ -33,7 +33,20 @@ module Synvert::Core
         expect(instance.current_node.type).to eq :block
       end
 
-      it 'calls block multiple times with blok body' do
+      it 'call block with child node in array' do
+        run = false
+        type_in_scope = nil
+        scope = Rewriter::GotoScope.new instance, 'body.1' do
+          run = true
+          type_in_scope = node.type
+        end
+        scope.process
+        expect(run).to be_truthy
+        expect(type_in_scope).to eq :send
+        expect(instance.current_node.type).to eq :block
+      end
+
+      it 'calls block multiple times with block body' do
         count = 0
         scope =
           Rewriter::GotoScope.new instance, 'body' do
