@@ -36,10 +36,11 @@ module Synvert::Core
       it 'call block with child node in array' do
         run = false
         type_in_scope = nil
-        scope = Rewriter::GotoScope.new instance, 'body.1' do
-          run = true
-          type_in_scope = node.type
-        end
+        scope =
+          Rewriter::GotoScope.new instance, 'body.1' do
+            run = true
+            type_in_scope = node.type
+          end
         scope.process
         expect(run).to be_truthy
         expect(type_in_scope).to eq :send
