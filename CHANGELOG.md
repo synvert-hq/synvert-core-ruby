@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.23.1 (2023-04-06)
+
+* Fix array index name in `GotoScope`
+* Update `node_query` to 1.12.1
+
 ## 1.23.0 (2023-04-05)
 
 * Add haml engine
