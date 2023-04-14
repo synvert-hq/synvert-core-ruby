@@ -5,6 +5,7 @@ module Synvert::Core
   module Engine
     autoload :Erb, 'synvert/core/engine/erb'
     autoload :Haml, 'synvert/core/engine/haml'
+    autoload :Slim, 'synvert/core/engine/slim'
 
     # Register an engine
     # @param [String] extension
@@ -36,4 +37,5 @@ module Synvert::Core
 
   Engine.register('.erb', Engine::Erb)
   Engine.register('.haml', Engine::Haml)
+  Engine.register('.slim', Engine::Slim)
 end
