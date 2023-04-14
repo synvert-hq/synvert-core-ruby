@@ -3,6 +3,7 @@
 module Synvert::Core
   # Engine defines how to encode / decode other files (like erb).
   module Engine
+    autoload :Elegant, 'synvert/core/engine/elegant'
     autoload :Erb, 'synvert/core/engine/erb'
     autoload :Haml, 'synvert/core/engine/haml'
     autoload :Slim, 'synvert/core/engine/slim'
