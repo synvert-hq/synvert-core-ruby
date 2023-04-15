@@ -8,6 +8,8 @@ module Synvert::Core
     # while delete `end\n` when generate_transform_proc.
     module Elegant
       END_LINE = "end\n"
+      WHITESPACE = ' '
+      SPACE_DO_SPACE = ' do '
 
       # Generate transform proc, it's used to adjust start and end position of actions.
       # Due to the fact that we insert `end\n` when encode the source code, we need to adjust
@@ -37,15 +39,15 @@ module Synvert::Core
         end
       end
 
-      # Check if the current tab_size is less than or equal to the last tab_size in tab_sizes.
-      # If so, pop the last tab_size and insert "end\n" before code.
-      # otherwise, return code.
-      def check_and_insert_end(code, tab_sizes, current_tab_size)
-        if !tab_sizes.empty? && current_tab_size <= tab_sizes[-1]
-          tab_sizes.pop
-          END_LINE + code
+      # Check if the current leading_spaces_count is less than or equal to the last leading_spaces_count in leading_spaces_counts.
+      # If so, pop the last leading_spaces_count and return true.
+      def insert_end?(leading_spaces_counts, current_leading_spaces_count, equal = true)
+        operation = equal ? :<= : :<
+        if !leading_spaces_counts.empty? && current_leading_spaces_count.send(operation, leading_spaces_counts.last)
+          leading_spaces_counts.pop
+          true
         else
-          code
+          false
         end
       end
     end

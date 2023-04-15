@@ -12,29 +12,110 @@ module Synvert::Core
         # @param source [String] haml code.
         # @return [String] encoded ruby code.
         def encode(source)
-          tab_sizes = []
-          lines =
-            source.lines.map do |line|
-              if line =~ /\A(\s*)(- ?)(.*)/ # match "  - if currenet_user"
-                code = (' ' * ($1.size + $2.size)) + $3
-                new_line =
-                  $3.start_with?('else', 'elsif', 'when') ? code : check_and_insert_end(code, tab_sizes, $1.size)
-                tab_sizes.push($1.size) if $3.start_with?('if', 'unless', 'begin', 'case') || $3.include?(' do ')
-
-                new_line
-              else
-                if line =~ /\A(\s*)([%#\.].*)?=(.*)/ # match "  %span= current_user.login"
-                  code = (' ' * ($1.size + ($2 || '').size + 1)) + $3
-                  new_line = check_and_insert_end(code, tab_sizes, $1.size)
-                  tab_sizes.push($1.size) if line.include?(' do ')
-                  new_line
-                elsif line =~ /\A(\s*)(.*)/ # match any other line
-                  check_and_insert_end(' ' * line.size, tab_sizes, $1.size)
+          leading_spaces_counts = []
+          new_code = []
+          scanner = StringScanner.new(source)
+          loop do
+            new_code << scanner.scan(/\s*/)
+            leading_spaces_count = scanner.matched.size
+            if scanner.scan('-') # it matches ruby statement "  - current_user"
+              scan_ruby_statement(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+            elsif scanner.scan('=') # it matches ruby expression "  = current_user.login"
+              scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+            elsif scanner.scan(/[%#\.][a-zA-Z0-9\-_%#\.]+/) # it matches element, id and class "  %span.user"
+              new_code << WHITESPACE * scanner.matched.size
+              if scanner.scan('{') # it matches attributes "  %span{:class => 'user'}"
+                new_code << '{'
+                count = 1
+                while scanner.scan(/.*?[\{\}]/m)
+                  if scanner.matched[-1] == '}'
+                    count -= 1
+                    new_code << scanner.matched
+                    break if count == 0
+                  else
+                    count += 1
+                    new_code << scanner.matched
+                  end
                 end
               end
+              if scanner.scan('=')
+                scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+              end
+            else
+              while scanner.scan(/(.*?)(\\*)#\{/)
+                if scanner.matched[-3] == '\\'
+                  new_code << WHITESPACE * scanner.matched.size
+                else
+                  count = 1
+                  while scanner.scan(/.*?([\{\}])/)
+                    if scanner.matched[-1] == '}'
+                      count -= 1
+                      if count == 0
+                        new_code << scanner.matched[0..-2] + ';'
+                        break
+                      else
+                        new_code << scanner.matched
+                      end
+                    else
+                      count += 1
+                      new_code << scanner.matched
+                    end
+                  end
+                end
+              end
+
+              if insert_end?(leading_spaces_counts, leading_spaces_count)
+                new_code << END_LINE
+              end
+              if scanner.scan(/.*?(\z|\n)/)
+                new_code << WHITESPACE * scanner.matched.size
+              end
             end
-          lines.push(END_LINE) unless tab_sizes.empty?
-          lines.join("\n")
+
+            break if scanner.eos?
+          end
+
+          new_code << END_LINE unless leading_spaces_counts.empty?
+          new_code.join
+        end
+
+        private
+
+        def scan_ruby_statement(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+          new_code << WHITESPACE
+          new_code << scanner.scan(/\s*/)
+          keyword = scanner.scan(/\w+/)
+          rest = scanner.scan(/.*?(\z|\n)/)
+          if insert_end?(leading_spaces_counts, leading_spaces_count, !%w[else elsif when].include?(keyword))
+            new_code << END_LINE
+          end
+          if %w[if unless begin case].include?(keyword) || rest.include?(SPACE_DO_SPACE)
+            leading_spaces_counts << leading_spaces_count
+          end
+          new_code << keyword
+          new_code << rest
+
+          while rest.rstrip.end_with?(',')
+            rest = scanner.scan(/.*?(\z|\n)/)
+            new_code << rest
+          end
+        end
+
+        def scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+          new_code << WHITESPACE
+          rest = scanner.scan(/.*?(\z|\n)/)
+          if insert_end?(leading_spaces_counts, leading_spaces_count)
+            new_code << END_LINE
+          end
+          if rest.include?(SPACE_DO_SPACE)
+            leading_spaces_counts << leading_spaces_count
+          end
+          new_code << rest
+
+          while rest.rstrip.end_with?(',')
+            rest = scanner.scan(/.*?(\z|\n)/)
+            new_code << rest
+          end
         end
       end
     end

@@ -2,6 +2,7 @@
 
 require 'synvert/core/version'
 require 'bundler'
+require 'strscan'
 require 'parser'
 require 'parser/current'
 require 'parser_node_ext'
