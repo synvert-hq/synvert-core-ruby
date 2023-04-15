@@ -9,7 +9,10 @@ module Synvert::Core
     module Elegant
       END_LINE = "end\n"
       WHITESPACE = ' '
-      SPACE_DO_SPACE = ' do '
+      DO_BLOCK_REGEX = / do(\s|\z|\n)/
+
+      IF_KEYWORDS = %w[if unless begin case]
+      ELSE_KEYWORDS = %w[else elsif when in rescue ensure]
 
       # Generate transform proc, it's used to adjust start and end position of actions.
       # Due to the fact that we insert `end\n` when encode the source code, we need to adjust
