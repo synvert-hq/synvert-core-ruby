@@ -385,6 +385,26 @@ module Synvert::Core
         expect(File).to receive(:write).with('./app/views/posts/_form.html.haml', output)
         instance.process
       end
+
+      it 'updates slim file' do
+        instance =
+          Rewriter::Instance.new rewriter, 'app/views/posts/_form.html.slim' do
+            with_node node_type: 'ivar' do
+              replace_with 'post'
+            end
+          end
+        input = <<~EOS
+          = form_for @post do |f|
+          = form_for @post do |f|
+        EOS
+        output = <<~EOS
+          = form_for post do |f|
+          = form_for post do |f|
+        EOS
+        allow(File).to receive(:read).with('./app/views/posts/_form.html.slim', encoding: 'UTF-8').and_return(input)
+        expect(File).to receive(:write).with('./app/views/posts/_form.html.slim', output)
+        instance.process
+      end
     end
 
     describe '#test' do
@@ -468,6 +488,34 @@ module Synvert::Core
         allow(File).to receive(:read).with('./app/views/posts/_form.html.haml', encoding: 'UTF-8').and_return(input)
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.haml'
+        expect(result.actions).to eq [
+          NodeMutation::Struct::Action.new("= form_for ".length, "= form_for @post".length, 'post'),
+          NodeMutation::Struct::Action.new(
+            "= form_for @post do |f|\n= form_for ".length,
+            "= form_for @post do |f|\n= form_for @post".length,
+            'post'
+          ),
+        ]
+      end
+
+      it 'updates slim file' do
+        instance =
+          Rewriter::Instance.new rewriter, 'app/views/posts/_form.html.slim' do
+            with_node node_type: 'ivar' do
+              replace_with 'post'
+            end
+          end
+        input = <<~EOS
+          = form_for @post do |f|
+          = form_for @post do |f|
+        EOS
+        output = <<~EOS
+          = form_for post do |f|
+          = form_for post do |f|
+        EOS
+        allow(File).to receive(:read).with('./app/views/posts/_form.html.slim', encoding: 'UTF-8').and_return(input)
+        result = instance.test
+        expect(result.file_path).to eq 'app/views/posts/_form.html.slim'
         expect(result.actions).to eq [
           NodeMutation::Struct::Action.new("= form_for ".length, "= form_for @post".length, 'post'),
           NodeMutation::Struct::Action.new(

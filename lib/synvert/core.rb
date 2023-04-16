@@ -30,8 +30,9 @@ module Synvert
   ALL_RUBY_FILES = %w[**/*.rb]
   ALL_ERB_FILES = %w[**/*.erb]
   ALL_HAML_FILES = %w[**/*.haml]
+  ALL_SLIM_FILES = %w[**/*.slim]
   ALL_RAKE_FILES = %w[**/*.rake]
-  ALL_FILES = ALL_RUBY_FILES + ALL_ERB_FILES + ALL_HAML_FILES + ALL_RAKE_FILES
+  ALL_FILES = ALL_RUBY_FILES + ALL_ERB_FILES + ALL_HAML_FILES + ALL_SLIM_FILES + ALL_RAKE_FILES
 
   RAILS_APP_FILES = %w[app/**/*.rb engines/*/app/**/*.rb]
   RAILS_CONTROLLER_FILES = %w[app/controllers/**/*.rb engines/*/app/controllers/**/*.rb]
@@ -48,7 +49,7 @@ module Synvert
     engines/*/config/routes.rb
     engines/*/config/routes/**/*.rb
   ]
-  RAILS_VIEW_FILES = ALL_ERB_FILES + ALL_HAML_FILES
+  RAILS_VIEW_FILES = ALL_ERB_FILES + ALL_HAML_FILES + ALL_SLIM_FILES
 
   RAILS_CONTROLLER_TEST_FILES = %w[
     test/functional/**/*.rb
