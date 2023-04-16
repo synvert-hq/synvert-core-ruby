@@ -28,16 +28,16 @@ module Synvert::Core
               new_code << WHITESPACE
               scan_ruby_statement(scanner, new_code, leading_spaces_counts, leading_spaces_count)
             elsif scanner.scan(/==?/) # it matches ruby expression "  = current_user.login"
-              new_code << WHITESPACE * scanner.matched.size
+              new_code << (WHITESPACE * scanner.matched.size)
               scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
             elsif scanner.scan(/[a-z#\.][a-zA-Z0-9\-_%#\.]*/) # it matches element, id and class "  span.user"
-              new_code << WHITESPACE * scanner.matched.size
+              new_code << (WHITESPACE * scanner.matched.size)
               ATTRIBUTES_PAIR.each do |start, ending| # it matches attributes in brackets "  span[ class='user' ]"
                 scan_matching_wrapper(scanner, new_code, start, ending)
               end
               scan_attributes_between_whitespace(scanner, new_code)
               if scanner.scan(/ ?==?/) # it matches ruby expression "  span= current_user.login"
-                new_code << WHITESPACE * scanner.matched.size
+                new_code << (WHITESPACE * scanner.matched.size)
                 scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
               else
                 scan_ruby_interpolation_and_plain_text(scanner, new_code, leading_spaces_counts, leading_spaces_count)
@@ -64,7 +64,7 @@ module Synvert::Core
             while scanner.scan(/.*?[#{Regexp.quote(start)}#{Regexp.quote(ending)}]/m)
               matched = scanner.matched.gsub(/(\A| ).*?=/) { |key| WHITESPACE * key.size }
               if scanner.matched[-1] == ending
-                new_code << matched[0..-2] + ';'
+                new_code << (matched[0..-2] + ';')
                 count -= 1
                 break if count == 0
               else
@@ -77,7 +77,7 @@ module Synvert::Core
 
         def scan_attributes_between_whitespace(scanner, new_code)
           while scanner.scan(/ ?[\w\-_]+==?/) # it matches attributes split by space "  span class='user'"
-            new_code << WHITESPACE * scanner.matched.size
+            new_code << (WHITESPACE * scanner.matched.size)
             stack = []
             while scanner.scan(/(.*?['"\(\)\[\]\{\}]|.+?\b)/)
               matched = scanner.matched
