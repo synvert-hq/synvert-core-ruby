@@ -6,11 +6,7 @@ module Synvert::Core
       class << self
         include Elegant
 
-        ATTRIBUTES_PAIR = {
-          '{' => '}',
-          '[' => ']',
-          '(' => ')'
-        }
+        ATTRIBUTES_PAIR = { '{' => '}', '[' => ']', '(' => ')' }
 
         # Encode haml string, leave only ruby code, replace other haml code with whitespace.
         # And insert `end\n` for each if, unless, begin, case to make it a valid ruby code.
@@ -86,7 +82,7 @@ module Synvert::Core
                 stack << matched[-1]
               elsif [')', ']', '}'].include?(matched[-1])
                 stack.pop
-              elsif %w['  "].include?(matched[-1])
+              elsif %w[' "].include?(matched[-1])
                 stack.last == matched[-1] ? stack.pop : stack << matched[-1]
               end
               break if stack.empty?
