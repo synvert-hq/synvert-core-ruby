@@ -116,11 +116,7 @@
         <dt id="ATTRIBUTES_PAIR-constant" class="">ATTRIBUTES_PAIR =
           
         </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>}</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>(</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>)</span><span class='tstring_end'>&#39;</span></span>
-<span class='rbrace'>}</span></pre></dd>
+        <dd><pre class="code"><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>}</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>(</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>)</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span></pre></dd>
       
     </dl>
   
@@ -250,6 +246,10 @@ And insert <code>end\n</code> for each if, unless, begin, case to make it a vali
       <pre class="lines">
 
 
+16
+17
+18
+19
 20
 21
 22
@@ -282,14 +282,10 @@ And insert <code>end\n</code> for each if, unless, begin, case to make it a vali
 49
 50
 51
-52
-53
-54
-55
-56</pre>
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/slim.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/slim.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_encode'>encode</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -302,16 +298,16 @@ And insert <code>end\n</code> for each if, unless, begin, case to make it a vali
 </span>      <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span>
       <span class='id identifier rubyid_scan_ruby_statement'>scan_ruby_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>==?</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='comment'># it matches ruby expression &quot;  = current_user.login&quot;
-</span>      <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_matched'>matched</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+</span>      <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_matched'>matched</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_scan_ruby_expression'>scan_ruby_expression</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[a-z#\.][a-zA-Z0-9\-_%#\.]*</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='comment'># it matches element, id and class &quot;  span.user&quot;
-</span>      <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_matched'>matched</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+</span>      <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_matched'>matched</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
       <span class='const'><span class='object_link'><a href="#ATTRIBUTES_PAIR-constant" title="Synvert::Core::Engine::Slim::ATTRIBUTES_PAIR (constant)">ATTRIBUTES_PAIR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_start'>start</span><span class='comma'>,</span> <span class='id identifier rubyid_ending'>ending</span><span class='op'>|</span> <span class='comment'># it matches attributes in brackets &quot;  span[ class=&#39;user&#39; ]&quot;
 </span>        <span class='id identifier rubyid_scan_matching_wrapper'>scan_matching_wrapper</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_start'>start</span><span class='comma'>,</span> <span class='id identifier rubyid_ending'>ending</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
       <span class='id identifier rubyid_scan_attributes_between_whitespace'>scan_attributes_between_whitespace</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='rparen'>)</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> ?==?</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='comment'># it matches ruby expression &quot;  span= current_user.login&quot;
-</span>        <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_matched'>matched</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+</span>        <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Elegant.html#WHITESPACE-constant" title="Synvert::Core::Engine::Elegant::WHITESPACE (constant)">WHITESPACE</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_matched'>matched</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_scan_ruby_expression'>scan_ruby_expression</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_scan_ruby_interpolation_and_plain_text'>scan_ruby_interpolation_and_plain_text</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
@@ -338,7 +334,7 @@ And insert <code>end\n</code> for each if, unless, begin, case to make it a vali
 </div>
 
       <div id="footer">
-  Generated on Sun Apr 16 14:18:09 2023 by
+  Generated on Sun Apr 16 14:55:12 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
