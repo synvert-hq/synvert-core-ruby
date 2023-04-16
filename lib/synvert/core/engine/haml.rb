@@ -25,7 +25,7 @@ module Synvert::Core
               new_code << WHITESPACE
               scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
             elsif scanner.scan(/[%#\.][a-zA-Z0-9\-_%#\.]+/) # it matches element, id and class "  %span.user"
-              new_code << WHITESPACE * scanner.matched.size
+              new_code << (WHITESPACE * scanner.matched.size)
               scan_matching_wrapper(scanner, new_code, '{', '}')
               if scanner.scan('=')
                 new_code << WHITESPACE

@@ -94,14 +94,14 @@ module Synvert::Core
           new_code << END_LINE
         end
         while scanner.scan(/(.*?)(\\*)#\{/) # it matches interpolation "  #{current_user.login}"
-          new_code << WHITESPACE * scanner.matched.size
+          new_code << (WHITESPACE * scanner.matched.size)
           unless scanner.matched[-3] == '\\'
             count = 1
             while scanner.scan(/.*?([\{\}])/)
               if scanner.matched[-1] == '}'
                 count -= 1
                 if count == 0
-                  new_code << scanner.matched[0..-2] + ';'
+                  new_code << (scanner.matched[0..-2] + ';')
                   break
                 else
                   new_code << scanner.matched
@@ -114,10 +114,10 @@ module Synvert::Core
           end
         end
         if scanner.scan(/.*?\z/)
-          new_code << WHITESPACE * scanner.matched.size
+          new_code << (WHITESPACE * scanner.matched.size)
         end
         if scanner.scan(/.*?\n/)
-          new_code << WHITESPACE * (scanner.matched.size - 1) + "\n"
+          new_code << ((WHITESPACE * (scanner.matched.size - 1)) + "\n")
         end
       end
     end
