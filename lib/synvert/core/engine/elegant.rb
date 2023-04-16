@@ -74,10 +74,10 @@ module Synvert::Core
       end
 
       def scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
-        rest = scanner.scan(/.*?(\z|\n)/)
         if insert_end?(leading_spaces_counts, leading_spaces_count)
           new_code << END_LINE
         end
+        rest = scanner.scan(/.*?(\z|\n)/)
         if rest =~ DO_BLOCK_REGEX
           leading_spaces_counts << leading_spaces_count
         end

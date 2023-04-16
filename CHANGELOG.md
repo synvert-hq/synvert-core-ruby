@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.24.0 (2023-04-16)
+
+* Add `Slim` engine
+* Abstract `Engine/Elegant` module
+* Rewrite `Haml` and `Slim` engine by StringScanner
+
 ## 1.23.1 (2023-04-06)
 
 * Fix array index name in `GotoScope`
@@ -7,7 +13,7 @@
 
 ## 1.23.0 (2023-04-05)
 
-* Add haml engine
+* Add `Haml` engine
 * Add `Engine.register` and `Engine.encode` and `Engine.generate_transform_proc`
 * Set NodeMutation `transform_proc`
 * Update `node_mutation` to 1.14.0
