@@ -6,7 +6,7 @@
 <title>
   Module: Synvert::Core::Engine
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.34
   
 </title>
 
@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/synvert/core/engine.rb<span class="defines">,<br />
-  lib/synvert/core/engine/erb.rb,<br /> lib/synvert/core/engine/haml.rb</span>
+  lib/synvert/core/engine/erb.rb,<br /> lib/synvert/core/engine/haml.rb,<br /> lib/synvert/core/engine/slim.rb,<br /> lib/synvert/core/engine/elegant.rb</span>
 </dd>
   </dl>
   
@@ -99,9 +99,11 @@
 <p class="children">
   
     
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Engine/Elegant.html" title="Synvert::Core::Engine::Elegant (module)">Elegant</a></span>
+    
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Engine/Erb.html" title="Synvert::Core::Engine::Erb (class)">Erb</a></span>, <span class='object_link'><a href="Engine/Haml.html" title="Synvert::Core::Engine::Haml (class)">Haml</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Engine/Erb.html" title="Synvert::Core::Engine::Erb (class)">Erb</a></span>, <span class='object_link'><a href="Engine/Haml.html" title="Synvert::Core::Engine::Haml (class)">Haml</a></span>, <span class='object_link'><a href="Engine/Slim.html" title="Synvert::Core::Engine::Slim (class)">Slim</a></span>
     
   
 </p>
@@ -266,13 +268,13 @@
       <pre class="lines">
 
 
-21
-22
 23
-24</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_encode'>encode</span><span class='lparen'>(</span><span class='id identifier rubyid_extension'>extension</span><span class='comma'>,</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_engine'>engine</span> <span class='op'>=</span> <span class='ivar'>@engines</span><span class='lbracket'>[</span><span class='id identifier rubyid_extension'>extension</span><span class='rbracket'>]</span>
@@ -352,13 +354,13 @@ which is used to adjust start and end position of actions.</p>
       <pre class="lines">
 
 
-31
-32
 33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_generate_transform_proc'>generate_transform_proc</span><span class='lparen'>(</span><span class='id identifier rubyid_extension'>extension</span><span class='comma'>,</span> <span class='id identifier rubyid_encoded_source'>encoded_source</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_engine'>engine</span> <span class='op'>=</span> <span class='ivar'>@engines</span><span class='lbracket'>[</span><span class='id identifier rubyid_extension'>extension</span><span class='rbracket'>]</span>
@@ -420,13 +422,13 @@ which is used to adjust start and end position of actions.</p>
       <pre class="lines">
 
 
-12
-13
 14
-15</pre>
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='id identifier rubyid_extension'>extension</span><span class='comma'>,</span> <span class='id identifier rubyid_engine'>engine</span><span class='rparen'>)</span>
   <span class='ivar'>@engines</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -442,9 +444,9 @@ which is used to adjust start and end position of actions.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Apr  6 01:01:07 2023 by
+  Generated on Sun Apr 16 14:18:05 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.2.2).
+  0.9.34 (ruby-3.2.2).
 </div>
 
     </div>
