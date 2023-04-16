@@ -19,23 +19,22 @@ module Synvert::Core
             new_code << scanner.scan(/\s*/)
             leading_spaces_count = scanner.matched.size
             if scanner.scan('-') # it matches ruby statement "  - current_user"
+              new_code << WHITESPACE
               scan_ruby_statement(scanner, new_code, leading_spaces_counts, leading_spaces_count)
             elsif scanner.scan('=') # it matches ruby expression "  = current_user.login"
+              new_code << WHITESPACE
               scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
             elsif scanner.scan(/[%#\.][a-zA-Z0-9\-_%#\.]+/) # it matches element, id and class "  %span.user"
               new_code << WHITESPACE * scanner.matched.size
               scan_matching_wrapper(scanner, new_code, '{', '}')
               if scanner.scan('=')
+                new_code << WHITESPACE
                 scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+              else
+                scan_ruby_interpolation_and_plain_text(scanner, new_code, leading_spaces_counts, leading_spaces_count)
               end
             else
-              scan_ruby_interpolation(scanner, new_code)
-              if insert_end?(leading_spaces_counts, leading_spaces_count)
-                new_code << END_LINE
-              end
-              if scanner.scan(/.*?(\z|\n)/)
-                new_code << WHITESPACE * scanner.matched.size
-              end
+              scan_ruby_interpolation_and_plain_text(scanner, new_code, leading_spaces_counts, leading_spaces_count)
             end
 
             break if scanner.eos?
@@ -53,38 +52,13 @@ module Synvert::Core
           if scanner.scan(start) # it matches attributes "  %span{:class => 'user'}"
             new_code << start
             count = 1
-            while scanner.scan(/.*?[\\#{start}\\#{ending}]/m)
+            while scanner.scan(/.*?[#{Regexp.quote(start)}#{Regexp.quote(ending)}]/m)
+              new_code << scanner.matched
               if scanner.matched[-1] == ending
                 count -= 1
-                new_code << scanner.matched
                 break if count == 0
               else
                 count += 1
-                new_code << scanner.matched
-              end
-            end
-          end
-        end
-
-        def scan_ruby_interpolation(scanner, new_code)
-          while scanner.scan(/(.*?)(\\*)#\{/) # it matches interpolation "  #{current_user.login}"
-            if scanner.matched[-3] == '\\'
-              new_code << WHITESPACE * scanner.matched.size
-            else
-              count = 1
-              while scanner.scan(/.*?([\{\}])/)
-                if scanner.matched[-1] == '}'
-                  count -= 1
-                  if count == 0
-                    new_code << scanner.matched[0..-2] + ';'
-                    break
-                  else
-                    new_code << scanner.matched
-                  end
-                else
-                  count += 1
-                  new_code << scanner.matched
-                end
               end
             end
           end

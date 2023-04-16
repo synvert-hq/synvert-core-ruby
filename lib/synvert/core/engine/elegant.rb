@@ -11,7 +11,7 @@ module Synvert::Core
       WHITESPACE = ' '
       DO_BLOCK_REGEX = / do(\s|\z|\n)/
 
-      IF_KEYWORDS = %w[if unless begin case]
+      IF_KEYWORDS = %w[if unless begin case for while until]
       ELSE_KEYWORDS = %w[else elsif when in rescue ensure]
 
       # Generate transform proc, it's used to adjust start and end position of actions.
@@ -51,6 +51,73 @@ module Synvert::Core
           true
         else
           false
+        end
+      end
+
+      def scan_ruby_statement(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+        new_code << scanner.scan(/\s*/)
+        keyword = scanner.scan(/\w+/)
+        rest = scanner.scan(/.*?(\z|\n)/)
+        if insert_end?(leading_spaces_counts, leading_spaces_count, !ELSE_KEYWORDS.include?(keyword))
+          new_code << END_LINE
+        end
+        if IF_KEYWORDS.include?(keyword) || rest =~ DO_BLOCK_REGEX
+          leading_spaces_counts << leading_spaces_count
+        end
+        new_code << keyword
+        new_code << rest
+
+        while rest.rstrip.end_with?(',')
+          rest = scanner.scan(/.*?(\z|\n)/)
+          new_code << rest
+        end
+      end
+
+      def scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+        rest = scanner.scan(/.*?(\z|\n)/)
+        if insert_end?(leading_spaces_counts, leading_spaces_count)
+          new_code << END_LINE
+        end
+        if rest =~ DO_BLOCK_REGEX
+          leading_spaces_counts << leading_spaces_count
+        end
+        new_code << rest
+
+        while rest.rstrip.end_with?(',')
+          rest = scanner.scan(/.*?(\z|\n)/)
+          new_code << rest
+        end
+      end
+
+      def scan_ruby_interpolation_and_plain_text(scanner, new_code, leading_spaces_counts, leading_spaces_count)
+        if insert_end?(leading_spaces_counts, leading_spaces_count)
+          new_code << END_LINE
+        end
+        while scanner.scan(/(.*?)(\\*)#\{/) # it matches interpolation "  #{current_user.login}"
+          new_code << WHITESPACE * scanner.matched.size
+          unless scanner.matched[-3] == '\\'
+            count = 1
+            while scanner.scan(/.*?([\{\}])/)
+              if scanner.matched[-1] == '}'
+                count -= 1
+                if count == 0
+                  new_code << scanner.matched[0..-2] + ';'
+                  break
+                else
+                  new_code << scanner.matched
+                end
+              else
+                count += 1
+                new_code << scanner.matched
+              end
+            end
+          end
+        end
+        if scanner.scan(/.*?\z/)
+          new_code << WHITESPACE * scanner.matched.size
+        end
+        if scanner.scan(/.*?\n/)
+          new_code << WHITESPACE * (scanner.matched.size - 1) + "\n"
         end
       end
     end
