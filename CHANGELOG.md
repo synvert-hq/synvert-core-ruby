@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.25.0 (2023-04-17)
+
+* Update `wrap` dsl
+* Update `node_mutation` to 1.15.1
+* Fix `erb` encoded source
+
 ## 1.24.0 (2023-04-16)
 
 * Add `Slim` engine
