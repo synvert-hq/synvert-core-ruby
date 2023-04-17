@@ -362,7 +362,7 @@ module Synvert::Core
       @current_mutation.delete(@current_node, *selectors, and_comma: and_comma)
     end
 
-    # It wraps current node with code.
+    # It wraps current node with prefix and suffix code.
     # @example
     #   # class Foobar
     #   # end
@@ -372,11 +372,13 @@ module Synvert::Core
     #   #   end
     #   # end
     #   within_node type: 'class' do
-    #     wrap with: 'module Synvert'
+    #     wrap with: 'module Synvert', and: 'end', newline: true
     #   end
-    # @param with [String] code need to be wrapped with.
-    def wrap(with:)
-      @current_mutation.wrap(@current_node, with: with)
+    # @param prefix [String] prefix code need to be wrapped with.
+    # @param suffix [String] suffix code need to be wrapped with.
+    # @param newline [Boolean] if wrap code in newline, default is false
+    def wrap(prefix:, suffix:, newline: false)
+      @current_mutation.wrap(@current_node, prefix: prefix, suffix: suffix, newline: newline)
     end
 
     # No operation.

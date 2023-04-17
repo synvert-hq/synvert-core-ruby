@@ -233,14 +233,16 @@ module Synvert::Core
       instance.delete :dot, :message, and_comma: true
     end
 
-    it 'parses wrap with' do
+    it 'parses wrap' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
       expect(instance.instance_variable_get(:@current_mutation)).to receive(:wrap).with(
         instance.current_node,
-        with: 'module Foobar'
+        prefix: 'module Foobar',
+        suffix: 'end',
+        newline: true
       )
-      instance.wrap with: 'module Foobar'
+      instance.wrap prefix: 'module Foobar', suffix: 'end', newline: true
     end
 
     it 'parses noop' do
