@@ -245,6 +245,13 @@ module Synvert::Core
       instance.wrap prefix: 'module Foobar', suffix: 'end', newline: true
     end
 
+    it 'parses indent' do
+      instance.instance_variable_set(:@current_mutation, double)
+      instance.current_node = double
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:indent).with(instance.current_node, tab_size: 1)
+      instance.indent
+    end
+
     it 'parses noop' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double

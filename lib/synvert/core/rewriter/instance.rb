@@ -381,6 +381,20 @@ module Synvert::Core
       @current_mutation.wrap(@current_node, prefix: prefix, suffix: suffix, newline: newline)
     end
 
+    # It indent the code of current node.
+    # @example
+    #     # class Foobar
+    #     # end
+    #     # =>
+    #     #   class Foobar
+    #     #   end
+    #     within_node type: 'class' do
+    #       indent
+    #     end
+    def indent(tab_size: 1)
+      @current_mutation.indent(@current_node, tab_size: tab_size)
+    end
+
     # No operation.
     def noop
       @current_mutation.noop(@current_node)
