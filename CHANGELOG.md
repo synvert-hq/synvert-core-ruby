@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.26.0 (2023-04-18)
+
+* `add_file` and `remove_file` work for test
+* Add `indent` dsl
+* Add `type` to Action
+* Update `node_mutation` to 1.15.3
+
 ## 1.25.0 (2023-04-17)
 
 * Update `wrap` dsl
