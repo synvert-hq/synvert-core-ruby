@@ -11,6 +11,7 @@ module Synvert::Core
     def initialize(node, erb_source)
       super(node, nil)
       @erb_source = erb_source
+      @type = :insert
     end
 
     # The new erb expr code.

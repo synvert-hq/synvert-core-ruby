@@ -204,11 +204,11 @@ module Synvert::Core
         EOS
         proc = Engine::Slim.generate_transform_proc(encoded_source)
         actions = [
-          NodeMutation::Struct::Action.new(50, 55, ''),
+          NodeMutation::Struct::Action.new(:delete, 50, 55, ''),
           # first end position is 69
-          NodeMutation::Struct::Action.new(100, 105, ''),
+          NodeMutation::Struct::Action.new(:delete, 100, 105, ''),
           # second end position is 111
-          NodeMutation::Struct::Action.new(120, 125, '')
+          NodeMutation::Struct::Action.new(:delete, 120, 125, '')
         ]
         proc.call(actions)
         expect(actions.first.start).to eq 50

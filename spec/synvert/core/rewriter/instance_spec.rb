@@ -437,8 +437,8 @@ module Synvert::Core
         results = instance.test
         expect(results.file_path).to eq 'spec/models/post_spec.rb'
         expect(results.actions).to eq [
-          NodeMutation::Struct::Action.new(35, 59, 'create :user'),
-          NodeMutation::Struct::Action.new(69, 105, 'create :post, user: user')
+          NodeMutation::Struct::Action.new(:replace, 35, 59, 'create :user'),
+          NodeMutation::Struct::Action.new(:replace, 69, 105, 'create :post, user: user')
         ]
       end
 
@@ -476,7 +476,7 @@ module Synvert::Core
         allow(File).to receive(:read).with('./app/views/posts/_form.html.erb', encoding: 'UTF-8').and_return(input)
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.erb'
-        expect(result.actions).to eq [NodeMutation::Struct::Action.new(2, 2, '=')]
+        expect(result.actions).to eq [NodeMutation::Struct::Action.new(:insert, 2, 2, '=')]
       end
 
       it 'updates haml file' do
@@ -498,8 +498,9 @@ module Synvert::Core
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.haml'
         expect(result.actions).to eq [
-          NodeMutation::Struct::Action.new("= form_for ".length, "= form_for @post".length, 'post'),
+          NodeMutation::Struct::Action.new(:replace, "= form_for ".length, "= form_for @post".length, 'post'),
           NodeMutation::Struct::Action.new(
+            :replace,
             "= form_for @post do |f|\n= form_for ".length,
             "= form_for @post do |f|\n= form_for @post".length,
             'post'
@@ -526,8 +527,9 @@ module Synvert::Core
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.slim'
         expect(result.actions).to eq [
-          NodeMutation::Struct::Action.new("= form_for ".length, "= form_for @post".length, 'post'),
+          NodeMutation::Struct::Action.new(:replace, "= form_for ".length, "= form_for @post".length, 'post'),
           NodeMutation::Struct::Action.new(
+            :replace,
             "= form_for @post do |f|\n= form_for ".length,
             "= form_for @post do |f|\n= form_for @post".length,
             'post'

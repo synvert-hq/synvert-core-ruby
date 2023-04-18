@@ -68,7 +68,7 @@ module Synvert::Core
           expect(results[0].file_path).to eq '/code.rb'
           expect(results[0].affected?).to be_truthy
           expect(results[0].conflicted?).to be_falsey
-          expect(results[0].actions).to eq [NodeMutation::Struct::Action.new(6, 12, 'Synvert')]
+          expect(results[0].actions).to eq [NodeMutation::Struct::Action.new(:replace, 6, 12, 'Synvert')]
         end
       end
     end
