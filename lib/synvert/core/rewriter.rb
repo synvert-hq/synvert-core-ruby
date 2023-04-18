@@ -264,6 +264,14 @@ module Synvert::Core
     def add_file(filename, content)
       return unless @options[:run_instance]
 
+      unless @options[:write_to_file]
+        result = NodeMutation::Result.new(affected: true, conflicted: false)
+        result.actions = [NodeMutation::Struct::Action.new(:add_file, 0, 0, content)]
+        result.file_path = filename
+        @test_results << result
+        return
+      end
+
       filepath = File.join(Configuration.root_path, filename)
       if File.exist?(filepath)
         puts "File #{filepath} already exists."
@@ -282,6 +290,14 @@ module Synvert::Core
     # @param filename [String] file name.
     def remove_file(filename)
       return unless @options[:run_instance]
+
+      unless @options[:write_to_file]
+        result = NodeMutation::Result.new(affected: true, conflicted: false)
+        result.actions = [NodeMutation::Struct::Action.new(:remove_file, 0, -1)]
+        result.file_path = filename
+        @test_results << result
+        return
+      end
 
       file_path = File.join(Configuration.root_path, filename)
       File.delete(file_path) if File.exist?(file_path)

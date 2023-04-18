@@ -169,6 +169,18 @@ module Synvert::Core
         rewriter.process_with_sandbox
         expect(File.exist?('./foo.bar')).to be_falsey
       end
+
+      it 'returns test result' do
+        rewriter =
+          Rewriter.new 'group', 'rewriter2' do
+            add_file 'foo.bar', 'FooBar'
+          end
+        result = rewriter.test
+        expect(result[0].file_path).to eq 'foo.bar'
+        expect(result[0].affected?).to be_truthy
+        expect(result[0].conflicted?).to be_falsey
+        expect(result[0].actions).to eq [NodeMutation::Struct::Action.new(:add_file, 0, 0, 'FooBar')]
+      end
     end
 
     describe 'parses remove_file' do
@@ -198,6 +210,21 @@ module Synvert::Core
             add_file 'foo.bar', 'FooBar'
           end
         rewriter.process_with_sandbox
+        expect(File.exist?('./foo.bar')).to be_truthy
+        FileUtils.rm './foo.bar'
+      end
+
+      it 'returns test result' do
+        File.write './foo.bar', 'FooBar'
+        rewriter =
+          Rewriter.new 'group', 'rewriter2' do
+            remove_file 'foo.bar'
+          end
+        result = rewriter.test
+        expect(result[0].file_path).to eq 'foo.bar'
+        expect(result[0].affected?).to be_truthy
+        expect(result[0].conflicted?).to be_falsey
+        expect(result[0].actions).to eq [NodeMutation::Struct::Action.new(:remove_file, 0, -1, nil)]
         expect(File.exist?('./foo.bar')).to be_truthy
         FileUtils.rm './foo.bar'
       end
