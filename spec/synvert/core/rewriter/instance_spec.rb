@@ -248,7 +248,10 @@ module Synvert::Core
     it 'parses indent' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:indent).with(instance.current_node, tab_size: 1)
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:indent).with(
+        instance.current_node,
+        tab_size: 1
+      )
       instance.indent
     end
 
