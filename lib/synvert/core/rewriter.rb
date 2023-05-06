@@ -383,7 +383,7 @@ module Synvert::Core
     end
 
     def merge_test_results(results)
-      @test_results += results.select { |result| result.affected? }
+      @test_results += results.compact.select { |result| result.affected? }
     end
   end
 end
