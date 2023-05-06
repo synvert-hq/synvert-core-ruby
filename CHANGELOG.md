@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.26.1 (2023-05-06)
+
+* Compact test results
+* Fix erb regex
+
 ## 1.26.0 (2023-04-18)
 
 * `add_file` and `remove_file` work for test
