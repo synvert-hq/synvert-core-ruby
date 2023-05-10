@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.26.2 (2023-05-10)
+
+* Update `node_mutation` to 1.16.0
+
 ## 1.26.1 (2023-05-06)
 
 * Compact test results
