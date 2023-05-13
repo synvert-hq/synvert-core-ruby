@@ -202,6 +202,17 @@ module Synvert::Core
         expect(encoded_source).not_to be_include 'See, I can count!'
       end
 
+      it 'encodes ruby block in multi lines' do
+        source = <<~EOS
+          = form_for(:document, builder: BootstrapForm,
+            html: {id: 'new_document_form', class: 'form-vertical'}) do |f|
+        EOS
+        encoded_source = Engine::Haml.encode(source)
+        expect(encoded_source).to be_include 'form_for'
+        expect(encoded_source).to be_include 'do |f|'
+        expect(encoded_source).to be_include 'end'
+      end
+
       it 'encodes ruby interpolation' do
         source = 'Look at #{h word} lack of backslash: \#{foo}'
         encoded_source = Engine::Haml.encode(source)

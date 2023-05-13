@@ -69,6 +69,9 @@ module Synvert::Core
 
         while rest.rstrip.end_with?(',')
           rest = scanner.scan(/.*?(\z|\n)/)
+          if IF_KEYWORDS.include?(keyword) || rest =~ DO_BLOCK_REGEX
+            leading_spaces_counts << leading_spaces_count
+          end
           new_code << rest
         end
       end
@@ -85,6 +88,9 @@ module Synvert::Core
 
         while rest.rstrip.end_with?(',')
           rest = scanner.scan(/.*?(\z|\n)/)
+          if rest =~ DO_BLOCK_REGEX
+            leading_spaces_counts << leading_spaces_count
+          end
           new_code << rest
         end
       end
