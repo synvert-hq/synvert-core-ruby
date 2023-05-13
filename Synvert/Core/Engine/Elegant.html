@@ -466,9 +466,6 @@ If so, pop the last leading_spaces_count and return true.</p>
       <pre class="lines">
 
 
-76
-77
-78
 79
 80
 81
@@ -480,10 +477,16 @@ If so, pop the last leading_spaces_count and return true.</p>
 87
 88
 89
-90</pre>
+90
+91
+92
+93
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/elegant.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/elegant.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scan_ruby_expression'>scan_ruby_expression</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_insert_end?'>insert_end?</span><span class='lparen'>(</span><span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
@@ -497,6 +500,9 @@ If so, pop the last leading_spaces_count and return true.</p>
 
   <span class='kw'>while</span> <span class='id identifier rubyid_rest'>rest</span><span class='period'>.</span><span class='id identifier rubyid_rstrip'>rstrip</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_rest'>rest</span> <span class='op'>=</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>.*?(\z|\n)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_rest'>rest</span> <span class='op'>=~</span> <span class='const'><span class='object_link'><a href="#DO_BLOCK_REGEX-constant" title="Synvert::Core::Engine::Elegant::DO_BLOCK_REGEX (constant)">DO_BLOCK_REGEX</a></span></span>
+      <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span>
+    <span class='kw'>end</span>
     <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rest'>rest</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -520,12 +526,6 @@ If so, pop the last leading_spaces_count and return true.</p>
       <pre class="lines">
 
 
-92
-93
-94
-95
-96
-97
 98
 99
 100
@@ -550,10 +550,16 @@ If so, pop the last leading_spaces_count and return true.</p>
 119
 120
 121
-122</pre>
+122
+123
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/elegant.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/elegant.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scan_ruby_interpolation_and_plain_text'>scan_ruby_interpolation_and_plain_text</span><span class='lparen'>(</span><span class='id identifier rubyid_scanner'>scanner</span><span class='comma'>,</span> <span class='id identifier rubyid_new_code'>new_code</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_insert_end?'>insert_end?</span><span class='lparen'>(</span><span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span><span class='comma'>,</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span><span class='rparen'>)</span>
@@ -623,7 +629,10 @@ If so, pop the last leading_spaces_count and return true.</p>
 71
 72
 73
-74</pre>
+74
+75
+76
+77</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/synvert/core/engine/elegant.rb', line 57</span>
@@ -643,6 +652,9 @@ If so, pop the last leading_spaces_count and return true.</p>
 
   <span class='kw'>while</span> <span class='id identifier rubyid_rest'>rest</span><span class='period'>.</span><span class='id identifier rubyid_rstrip'>rstrip</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_rest'>rest</span> <span class='op'>=</span> <span class='id identifier rubyid_scanner'>scanner</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>.*?(\z|\n)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#IF_KEYWORDS-constant" title="Synvert::Core::Engine::Elegant::IF_KEYWORDS (constant)">IF_KEYWORDS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_keyword'>keyword</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_rest'>rest</span> <span class='op'>=~</span> <span class='const'><span class='object_link'><a href="#DO_BLOCK_REGEX-constant" title="Synvert::Core::Engine::Elegant::DO_BLOCK_REGEX (constant)">DO_BLOCK_REGEX</a></span></span>
+      <span class='id identifier rubyid_leading_spaces_counts'>leading_spaces_counts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_leading_spaces_count'>leading_spaces_count</span>
+    <span class='kw'>end</span>
     <span class='id identifier rubyid_new_code'>new_code</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rest'>rest</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -656,7 +668,7 @@ If so, pop the last leading_spaces_count and return true.</p>
 </div>
 
       <div id="footer">
-  Generated on Sat May 13 06:36:10 2023 by
+  Generated on Sat May 13 08:00:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
