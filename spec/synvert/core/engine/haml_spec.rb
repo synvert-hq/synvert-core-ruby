@@ -98,6 +98,14 @@ module Synvert::Core
         expect(encoded_source).to be_include '{:href=>"/posts", :data => {:author_id => 123, :category => 7}}'
       end
 
+      it 'encodes attributes with ruby evaluation' do
+        source = <<~EOS
+          %a{:href=>"/posts", :data => {:author_id => 123, :category => 7}}= current_user.name
+        EOS
+        encoded_source = Engine::Haml.encode(source)
+        expect(encoded_source).to be_include '{:href=>"/posts", :data => {:author_id => 123, :category => 7}}; current_user.name'
+      end
+
       it 'encodes class and ID' do
         source = <<~EOS
           %div#things

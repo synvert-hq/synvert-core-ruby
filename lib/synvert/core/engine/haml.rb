@@ -28,7 +28,7 @@ module Synvert::Core
               new_code << (WHITESPACE * scanner.matched.size)
               scan_matching_wrapper(scanner, new_code, '{', '}')
               if scanner.scan('=')
-                new_code << WHITESPACE
+                new_code << ';'
                 scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
               else
                 scan_ruby_interpolation_and_plain_text(scanner, new_code, leading_spaces_counts, leading_spaces_count)

@@ -131,8 +131,8 @@ module Synvert::Core
             h2[id="tagline" class="small tagline"] = page_tagline
         EOS
         encoded_source = Engine::Slim.encode(source)
-        expect(encoded_source).to be_include 'page_logo'
-        expect(encoded_source).to be_include 'page_tagline'
+        expect(encoded_source).to be_include '; page_logo'
+        expect(encoded_source).to be_include '; page_tagline'
         expect(encoded_source).not_to be_include 'h1'
         expect(encoded_source).not_to be_include 'h2'
         expect(encoded_source).not_to be_include 'id'
