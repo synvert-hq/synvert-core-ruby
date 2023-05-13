@@ -33,7 +33,7 @@ module Synvert::Core
               end
               scan_attributes_between_whitespace(scanner, new_code)
               if scanner.scan(/ ?==?/) # it matches ruby expression "  span= current_user.login"
-                new_code << (WHITESPACE * (scanner.matched.size - 1)) + ';'
+                new_code << ((WHITESPACE * (scanner.matched.size - 1)) + ';')
                 scan_ruby_expression(scanner, new_code, leading_spaces_counts, leading_spaces_count)
               else
                 scan_ruby_interpolation_and_plain_text(scanner, new_code, leading_spaces_counts, leading_spaces_count)
