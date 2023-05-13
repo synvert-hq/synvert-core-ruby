@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.28.3 (2023-05-13)
+
+* Fix haml and slim engine to support attribute and ruby evalidation in the same line
+* Fix ruby block in multi lins in haml and slim
+
 ## 1.26.2 (2023-05-10)
 
 * Update `node_mutation` to 1.16.0
