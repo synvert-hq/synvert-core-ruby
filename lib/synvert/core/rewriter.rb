@@ -9,7 +9,7 @@ module Synvert::Core
   # One Rewriter checks if the depndency version matches, and it can contain one or many {Synvert::Core::Rewriter::Instance},
   # which define the behavior what files and what codes to detect and rewrite to what code.
   class Rewriter
-    DEFAULT_OPTIONS = { run_instance: true, write_to_file: true }.freeze
+    DEFAULT_OPTIONS = { run_instance: true, write_to_file: true, adapter: 'parser' }.freeze
 
     autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
 
@@ -129,7 +129,9 @@ module Synvert::Core
     # It will call the block.
     def process
       @affected_files = Set.new
-      instance_eval(&@block)
+      ensure_current_adapter do
+        instance_eval(&@block)
+      end
 
       process if !@affected_files.empty? && @redo_until_no_change # redo
     end
@@ -144,7 +146,9 @@ module Synvert::Core
     def test
       @options[:write_to_file] = false
       @affected_files = Set.new
-      instance_eval(&@block)
+      ensure_current_adapter do
+        instance_eval(&@block)
+      end
 
       if !@affected_files.empty? && @redo_until_no_change # redo
         test
@@ -172,12 +176,19 @@ module Synvert::Core
 
     # Configure the rewriter
     # @example
+    #   configure({ adapter: 'syntax_tree' })
     #   configure({ strategy: 'allow_insert_at_same_position' })
     # @param options [Hash]
-    # @option strategy [String] allow_insert_at_same_position
+    # @option adapter [String] 'parser' or 'syntax_tree'
+    # @option strategy [String] 'allow_insert_at_same_position'
     def configure(options)
-      if options[:strategy]
-        @options[:strategy] = options[:strategy]
+      @options = @options.merge(options)
+      if @options[:adapter] == 'syntax_tree'
+        NodeQuery.configure(adapter: NodeQuery::SyntaxTreeAdapter.new)
+        NodeMutation.configure(adapter: NodeMutation::SyntaxTreeAdapter.new)
+      else
+        NodeQuery.configure(adapter: NodeQuery::ParserAdapter.new)
+        NodeMutation.configure(adapter: NodeMutation::ParserAdapter.new)
       end
     end
 
@@ -365,6 +376,18 @@ module Synvert::Core
     end
 
     private
+
+    # Ensure back to current adapter after running a rewriter.
+    def ensure_current_adapter
+      current_query_adapter = NodeQuery.adapter
+      current_mutation_adapter = NodeMutation.adapter
+      begin
+        yield
+      ensure
+        NodeQuery.configure(adapter: current_query_adapter)
+        NodeMutation.configure(adapter: current_mutation_adapter)
+      end
+    end
 
     # Handle one file.
     # @param file_patterns [String] file patterns to find files.

@@ -4,6 +4,29 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter do
+    it 'parses configure' do
+      running_query_adapter = nil
+      running_mutation_adapter = nil
+      rewriter =
+        Rewriter.new 'group', 'name' do
+          configure adapter: 'syntax_tree'
+
+          within_files '**/*.rb' do
+            running_query_adapter = NodeQuery.adapter
+            running_mutation_adapter = NodeMutation.adapter
+          end
+        end
+      input = "class Foobar\nend"
+      FakeFS do
+        File.write("code.rb", input)
+        rewriter.process
+        expect(running_query_adapter).to be_instance_of(NodeQuery::SyntaxTreeAdapter)
+        expect(running_mutation_adapter).to be_instance_of(NodeMutation::SyntaxTreeAdapter)
+        expect(NodeQuery.adapter).to be_instance_of(NodeQuery::ParserAdapter)
+        expect(NodeMutation.adapter).to be_instance_of(NodeMutation::ParserAdapter)
+      end
+    end
+
     it 'parses description' do
       rewriter =
         Rewriter.new 'group', 'name' do
