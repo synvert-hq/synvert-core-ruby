@@ -466,12 +466,34 @@ module Synvert::Core
     # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
     def parse_code(file_path, encoded_source)
+      if @rewriter.syntax_tree_parser?
+        parse_code_by_syntax_tree(file_path, encoded_source)
+      else
+        parse_code_by_parser(file_path, encoded_source)
+      end
+    end
+
+    # Parse code ast node by parser.
+    #
+    # @param file_path [String] file path
+    # @param encoded_source [String] encoded source code
+    # @return [Node] ast node for file
+    def parse_code_by_parser(file_path, encoded_source)
       buffer = Parser::Source::Buffer.new file_path
       buffer.source = encoded_source
 
       parser = Parser::CurrentRuby.new
       parser.reset
       parser.parse buffer
+    end
+
+    # Parse code ast node by syntax_tree.
+    #
+    # @param file_path [String] file path
+    # @param encoded_source [String] encoded source code
+    # @return [Node] ast node for file
+    def parse_code_by_syntax_tree(file_path, encoded_source)
+      SyntaxTree::Parser.new(encoded_source).parse.statements
     end
   end
 end

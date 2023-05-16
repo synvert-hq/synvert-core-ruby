@@ -9,7 +9,9 @@ module Synvert::Core
   # One Rewriter checks if the depndency version matches, and it can contain one or many {Synvert::Core::Rewriter::Instance},
   # which define the behavior what files and what codes to detect and rewrite to what code.
   class Rewriter
-    DEFAULT_OPTIONS = { run_instance: true, write_to_file: true, adapter: 'parser' }.freeze
+    DEFAULT_OPTIONS = { run_instance: true, write_to_file: true, parser: 'parser' }.freeze
+    PARSER_PARSER = 'parser'
+    SYNTAX_TREE_PARSER = 'syntax_tree'
 
     autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
 
@@ -170,20 +172,27 @@ module Synvert::Core
       @affected_files.add(file_path)
     end
 
+    def syntax_tree_parser?
+      @options[:parser] == SYNTAX_TREE_PARSER
+    end
+
     #######
     # DSL #
     #######
 
     # Configure the rewriter
     # @example
-    #   configure({ adapter: 'syntax_tree' })
+    #   configure({ parser: 'syntax_tree' })
     #   configure({ strategy: 'allow_insert_at_same_position' })
     # @param options [Hash]
     # @option adapter [String] 'parser' or 'syntax_tree'
     # @option strategy [String] 'allow_insert_at_same_position'
     def configure(options)
       @options = @options.merge(options)
-      if @options[:adapter] == 'syntax_tree'
+      if options[:parser] && ![PARSER_PARSER, SYNTAX_TREE_PARSER].include?(options[:parser])
+        raise Errors::ParserNotSupported.new("Parser #{options[:adapter]} not supported")
+      end
+      if syntax_tree_parser?
         NodeQuery.configure(adapter: NodeQuery::SyntaxTreeAdapter.new)
         NodeMutation.configure(adapter: NodeMutation::SyntaxTreeAdapter.new)
       else
