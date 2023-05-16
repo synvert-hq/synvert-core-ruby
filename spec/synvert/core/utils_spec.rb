@@ -16,7 +16,7 @@ module Synvert::Core
           expect(described_class).to receive(:remote_snippet_exists?).and_return(false)
           expect do
             described_class.eval_snippet('http://example.com/rewriter.rb')
-          end.to raise_error(SnippetNotFoundError)
+          end.to raise_error(Errors::SnippetNotFound)
         end
       end
 

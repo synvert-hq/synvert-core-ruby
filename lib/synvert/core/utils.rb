@@ -16,7 +16,7 @@ module Synvert::Core
           uri = URI.parse(format_url(snippet_name))
           return uri.open.read if remote_snippet_exists?(uri)
 
-          raise SnippetNotFoundError.new("#{snippet_name} nout found")
+          raise Errors::SnippetNotFound.new("#{snippet_name} nout found")
         elsif is_valid_file?(snippet_name)
           return File.read(snippet_name)
         else
@@ -26,7 +26,7 @@ module Synvert::Core
           snippet_uri = URI.parse(format_url(remote_snippet_url(snippet_name)))
           return snippet_uri.open.read if remote_snippet_exists?(snippet_uri)
 
-          raise SnippetNotFoundError.new("#{snippet_name} nout found")
+          raise Errors::SnippetNotFound.new("#{snippet_name} nout found")
         end
       end
 

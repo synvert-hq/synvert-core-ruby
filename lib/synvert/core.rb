@@ -14,7 +14,7 @@ module Synvert
     autoload :Engine, 'synvert/core/engine'
     autoload :Utils, 'synvert/core/utils'
     autoload :Strategy, 'synvert/core/strategy'
-    autoload :SnippetNotFoundError, 'synvert/core/snippet_not_found_error'
+    autoload :Errors, 'synvert/core/errors'
   end
 end
 
