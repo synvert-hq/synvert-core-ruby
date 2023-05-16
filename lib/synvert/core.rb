@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 require 'synvert/core/version'
-require 'bundler'
-require 'strscan'
-require 'parser'
-require 'parser/current'
-require 'parser_node_ext'
 require_relative './core/node_ext'
 require 'active_support'
 require 'active_support/core_ext'

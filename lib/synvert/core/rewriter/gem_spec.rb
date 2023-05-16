@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bundler'
+
 module Synvert::Core
   # GemSpec checks and compares gem version.
   class Rewriter::GemSpec

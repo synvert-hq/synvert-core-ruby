@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'parser/current'
+require 'syntax_tree'
+
 module Synvert::Core
   # Instance is an execution unit, it finds specified ast nodes,
   # checks if the nodes match some conditions, then add, replace or remove code.

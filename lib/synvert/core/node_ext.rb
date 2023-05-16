@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'parser'
+
 module Parser::AST
   # Extend Parser::AST::Node.
   # {https://github.com/whitequark/parser/blob/master/lib/parser/ast/node.rb}
