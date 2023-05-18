@@ -190,6 +190,7 @@ module Synvert::Core
       if options[:parser] && ![Synvert::PARSER_PARSER, Synvert::SYNTAX_TREE_PARSER].include?(options[:parser])
         raise Errors::ParserNotSupported.new("Parser #{options[:adapter]} not supported")
       end
+
       if syntax_tree_parser?
         NodeQuery.configure(adapter: NodeQuery::SyntaxTreeAdapter.new)
         NodeMutation.configure(adapter: NodeMutation::SyntaxTreeAdapter.new)

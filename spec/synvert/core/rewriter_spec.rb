@@ -33,7 +33,8 @@ module Synvert::Core
           Rewriter.new 'group', 'name' do
             configure parser: 'unknown'
           end
-        expect { rewriter.process }.to raise_error(Errors::ParserNotSupported)
+        expect { rewriter.process }
+          .to raise_error(Errors::ParserNotSupported)
       end
     end
 
