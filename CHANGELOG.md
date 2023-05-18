@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.29.0 (2023-05-16)
+
+* Configure `parser`, can be `parser` or `syntax_tree`
+* Add `Errors` module
+
 ## 1.28.3 (2023-05-13)
 
 * Fix haml and slim engine to support attribute and ruby evalidation in the same line
