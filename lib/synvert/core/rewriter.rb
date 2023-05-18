@@ -10,8 +10,6 @@ module Synvert::Core
   # which define the behavior what files and what codes to detect and rewrite to what code.
   class Rewriter
     DEFAULT_OPTIONS = { run_instance: true, write_to_file: true, parser: 'parser' }.freeze
-    PARSER_PARSER = 'parser'
-    SYNTAX_TREE_PARSER = 'syntax_tree'
 
     autoload :ReplaceErbStmtWithExprAction, 'synvert/core/rewriter/action/replace_erb_stmt_with_expr_action'
 
@@ -173,7 +171,7 @@ module Synvert::Core
     end
 
     def syntax_tree_parser?
-      @options[:parser] == SYNTAX_TREE_PARSER
+      @options[:parser] == Synvert::SYNTAX_TREE_PARSER
     end
 
     #######
@@ -182,14 +180,14 @@ module Synvert::Core
 
     # Configure the rewriter
     # @example
-    #   configure({ parser: 'syntax_tree' })
+    #   configure({ parser: Synvert::PARSER_PARSER })
     #   configure({ strategy: 'allow_insert_at_same_position' })
     # @param options [Hash]
-    # @option adapter [String] 'parser' or 'syntax_tree'
+    # @option adapter [String] Synvert::PARSER_PARSER or Synvert::SYNTAX_TREE_PARSER
     # @option strategy [String] 'allow_insert_at_same_position'
     def configure(options)
       @options = @options.merge(options)
-      if options[:parser] && ![PARSER_PARSER, SYNTAX_TREE_PARSER].include?(options[:parser])
+      if options[:parser] && ![Synvert::PARSER_PARSER, Synvert::SYNTAX_TREE_PARSER].include?(options[:parser])
         raise Errors::ParserNotSupported.new("Parser #{options[:adapter]} not supported")
       end
       if syntax_tree_parser?

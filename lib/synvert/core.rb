@@ -71,4 +71,7 @@ module Synvert
   RAILS_MINITEST_FILES = %w[test/**/*.rb engines/*/test/**/*.rb]
   RAILS_CUCUMBER_FILES = %w[features/**/*.rb]
   RAILS_TEST_FILES = RAILS_MINITEST_FILES + RAILS_RSPEC_FILES + RAILS_CUCUMBER_FILES
+
+  PARSER_PARSER = 'parser'
+  SYNTAX_TREE_PARSER = 'syntax_tree'
 end
