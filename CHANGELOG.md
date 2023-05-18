@@ -1,11 +1,12 @@
 # CHANGELOG
 
-## 1.29.0 (2023-05-16)
+## 1.27.0 (2023-05-16)
 
 * Configure `parser`, can be `parser` or `syntax_tree`
 * Add `Errors` module
+* Require `parser_node_ext` and `synvert_tree_ext` properly
 
-## 1.28.3 (2023-05-13)
+## 1.26.3 (2023-05-13)
 
 * Fix haml and slim engine to support attribute and ruby evalidation in the same line
 * Fix ruby block in multi lins in haml and slim
