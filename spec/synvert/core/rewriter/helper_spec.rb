@@ -16,7 +16,7 @@ module Synvert::Core
 
     describe 'add_receiver_if_necessary' do
       context 'with receiver' do
-        let(:node) { parse('User.save(false)') }
+        let(:node) { parser_parse('User.save(false)') }
 
         it 'adds reciever' do
           allow(dummy_instance).to receive(:node).and_return(node)
@@ -27,7 +27,7 @@ module Synvert::Core
       end
 
       context 'without receiver' do
-        let(:node) { parse('save(false)') }
+        let(:node) { parser_parse('save(false)') }
 
         it "doesn't add reciever" do
           allow(dummy_instance).to receive(:node).and_return(node)
@@ -38,7 +38,7 @@ module Synvert::Core
 
     describe 'add_arguments_with_parenthesis_if_necessary' do
       context 'with arguments' do
-        let(:node) { parse('user.save(false)') }
+        let(:node) { parser_parse('user.save(false)') }
 
         it 'gets arguments with parenthesis' do
           allow(dummy_instance).to receive(:node).and_return(node)
@@ -47,7 +47,7 @@ module Synvert::Core
       end
 
       context 'without argument' do
-        let(:node) { parse('user.save') }
+        let(:node) { parser_parse('user.save') }
 
         it 'gets nothing' do
           allow(dummy_instance).to receive(:node).and_return(node)
