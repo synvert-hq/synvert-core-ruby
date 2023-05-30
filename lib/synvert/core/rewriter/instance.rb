@@ -66,9 +66,9 @@ module Synvert::Core
             write_source(absolute_file_path, result.new_source)
           end
           break unless result.conflicted?
-        rescue Parser::SyntaxError
+        rescue Parser::SyntaxError => e
           puts "[Warn] file #{file_path} was not parsed correctly."
-          # do nothing, iterate next file
+          puts e.message
           break
         end
       end
@@ -94,9 +94,9 @@ module Synvert::Core
         result = @current_mutation.test
         result.file_path = file_path
         result
-      rescue Parser::SyntaxError
+      rescue Parser::SyntaxError => e
         puts "[Warn] file #{file_path} was not parsed correctly."
-        # do nothing, iterate next file
+        puts e.message
       end
     end
 
