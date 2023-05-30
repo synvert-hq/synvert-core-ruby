@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.27.1 (2023-05-30)
+
+* Puts error message when rescue `Parser::SyntaxError`
+* Update `node_mutation` to 1.18.2
+
 ## 1.27.0 (2023-05-16)
 
 * Configure `parser`, can be `parser` or `syntax_tree`
