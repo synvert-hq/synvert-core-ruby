@@ -47,7 +47,7 @@ module Synvert::Core
       puts @file_path if Configuration.show_run_process
 
       absolute_file_path = File.join(Configuration.root_path, @file_path)
-      while true
+      loop do
         source = read_source(absolute_file_path)
         encoded_source = Engine.encode(File.extname(file_path), source)
         @current_mutation = NodeMutation.new(source)
@@ -69,6 +69,7 @@ module Synvert::Core
         rescue Parser::SyntaxError
           puts "[Warn] file #{file_path} was not parsed correctly."
           # do nothing, iterate next file
+          break
         end
       end
     end
