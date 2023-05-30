@@ -253,13 +253,13 @@ module Synvert::Core
 
       if @options[:write_to_file]
         handle_one_file(Array(file_patterns)) do |file_path|
-          instance = Rewriter::Instance.new(self, file_path, &block)
+          instance = Instance.new(self, file_path, &block)
           instance.process
         end
       else
         results =
           handle_one_file(Array(file_patterns)) do |file_path|
-            instance = Rewriter::Instance.new(self, file_path, &block)
+            instance = Instance.new(self, file_path, &block)
             instance.test
           end
         merge_test_results(results)
