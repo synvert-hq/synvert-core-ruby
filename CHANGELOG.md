@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.28.0 (2023-06-01)
+
+* Add `Synvert::Core::Helper`
+* Add `call_helper` dsl in rewriter
+
 ## 1.27.1 (2023-05-30)
 
 * Puts error message when rescue `Parser::SyntaxError`
