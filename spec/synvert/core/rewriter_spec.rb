@@ -309,6 +309,46 @@ module Synvert::Core
       end
     end
 
+    describe 'parses call_helper' do
+      it 'eval helper by name' do
+        block_receiver = nil
+        block_options = {}
+        helper = Synvert::Helper.new 'helper' do |options|
+          block_receiver = self.class.name
+          block_options = options
+        end
+        rewriter =
+          Rewriter.new 'group', 'rewriter' do
+            call_helper('helper', options: { foo: 'bar' })
+          end
+        rewriter.process
+        expect(block_receiver).to eq 'Synvert::Core::Rewriter'
+        expect(block_options).to eq(foo: 'bar')
+      end
+
+      it 'adds snippet by http url' do
+        expect(Utils).to receive(:remote_snippet_exists?).with(URI.parse('http://synvert.net/foo/bar.rb')).and_return(true)
+        expect_any_instance_of(URI::HTTP).to receive(:open).and_return(StringIO.new("Synvert::Helper.new 'helper' do\nend"))
+        rewriter =
+          Rewriter.new 'group', 'rewriter' do
+            call_helper 'http://synvert.net/foo/bar.rb'
+          end
+        rewriter.process
+        expect(Synvert::Helper.fetch('helper')).not_to be_nil
+      end
+
+      it 'adds snippet by file path' do
+        expect(File).to receive(:exist?).and_return(true)
+        expect(File).to receive(:read).and_return("Synvert::Helper.new 'helper' do\nend")
+        rewriter =
+          Rewriter.new 'group', 'rewriter' do
+            call_helper '/home/richard/foo/bar.rb'
+          end
+        rewriter.process
+        expect(Synvert::Helper.fetch('helper')).not_to be_nil
+      end
+    end
+
     it 'parses helper_method' do
       rewriter =
         Rewriter.new 'group', 'name' do

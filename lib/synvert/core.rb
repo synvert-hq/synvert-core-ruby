@@ -21,6 +21,7 @@ end
 
 module Synvert
   Rewriter = Core::Rewriter
+  Helper = Core::Helper
   Strategy = Core::Strategy
 
   ALL_RUBY_FILES = %w[**/*.rb]

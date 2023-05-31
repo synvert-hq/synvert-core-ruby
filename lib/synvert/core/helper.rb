@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Synvert::Core
+  # Helper is used to define shared snippet.
   class Helper
     attr_reader :name, :block
 
@@ -42,6 +43,11 @@ module Synvert::Core
       end
     end
 
+    # Initialize a Helper.
+    # When a helper is initialized, it is already registered.
+    #
+    # @param name [String] name of the helper.
+    # @yield defines the behaviors of the helper, block code won't be called when initialization.
     def initialize(name, &block)
       @name = name
       @block = block

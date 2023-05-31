@@ -57,7 +57,7 @@ module Synvert::Core
 
       # Get all available rewriters
       #
-      # @return [Hash<String, Hash<String, Rewriter>>]
+      # @return [Hash<String, Hash<String, Synvert::Core::Rewriter>>]
       def availables
         rewriters
       end
@@ -355,6 +355,22 @@ module Synvert::Core
         rewriter.process_with_sandbox
       end
       @sub_snippets << rewriter
+    end
+
+    # It calls a shared rewriter.
+    # @example
+    #   Synvert::Rewriter.new 'rails', 'upgrade_6_0_to_6_1' do
+    #     call_helper 'rails/set_load_defaults', options: { rails_version: '6.1' }
+    #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/rails/set_load_defaults.rb', options: { rails_version: '6.1' }
+    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb', options: { rails_version: '6.1' }
+    #   end
+    # @param name [String] name of helper.
+    # @param options [Hash] options to pass to helper.
+    def call_helper(name, options: {})
+      helper = Synvert::Core::Helper.fetch(name) || Utils.eval_snippet(name)
+      return unless helper && helper.is_a?(Synvert::Core::Helper)
+
+      instance_exec(options, &helper.block)
     end
 
     # It defines helper method for {Synvert::Core::Rewriter::Instance}.
