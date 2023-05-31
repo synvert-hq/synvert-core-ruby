@@ -11,6 +11,7 @@ module Synvert
   module Core
     autoload :Configuration, 'synvert/core/configuration'
     autoload :Rewriter, 'synvert/core/rewriter'
+    autoload :Helper, 'synvert/core/helper'
     autoload :Engine, 'synvert/core/engine'
     autoload :Utils, 'synvert/core/utils'
     autoload :Strategy, 'synvert/core/strategy'
