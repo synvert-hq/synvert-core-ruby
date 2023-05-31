@@ -469,7 +469,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#availables-class_method" title="availables (class method)">.<strong>availables</strong>  &#x21d2; Hash&lt;String, Hash&lt;String, Rewriter&gt;&gt; </a>
+      <a href="#availables-class_method" title="availables (class method)">.<strong>availables</strong>  &#x21d2; Hash&lt;String, Hash&lt;String, Synvert::Core::Rewriter&gt;&gt; </a>
     
 
     
@@ -654,6 +654,29 @@ which define the behavior what files and what codes to detect and rewrite to wha
 
   
     <span class="summary_desc"><div class='inline'><p>Add a warning.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call_helper-instance_method" title="#call_helper (instance method)">#<strong>call_helper</strong>(name, options: {})  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>It calls a shared rewriter.</p>
 </div></span>
   
 </li>
@@ -1816,7 +1839,7 @@ When a rewriter is initialized, it is already registered.</p>
       <div class="method_details first">
   <h3 class="signature first" id="availables-class_method">
   
-    .<strong>availables</strong>  &#x21d2; <tt>Hash&lt;String, Hash&lt;String, <span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Rewriter</a></span>&gt;&gt;</tt> 
+    .<strong>availables</strong>  &#x21d2; <tt>Hash&lt;String, Hash&lt;String, <span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Synvert::Core::Rewriter</a></span>&gt;&gt;</tt> 
   
 
   
@@ -1837,7 +1860,7 @@ When a rewriter is initialized, it is already registered.</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash&lt;String, Hash&lt;String, <span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Rewriter</a></span>&gt;&gt;</tt>)</span>
+        <span class='type'>(<tt>Hash&lt;String, Hash&lt;String, <span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Synvert::Core::Rewriter</a></span>&gt;&gt;</tt>)</span>
       
       
       
@@ -2462,6 +2485,100 @@ When a rewriter is initialized, it is already registered.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="call_helper-instance_method">
+  
+    #<strong>call_helper</strong>(name, options: {})  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>It calls a shared rewriter.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Synvert.html#Rewriter-constant" title="Synvert::Rewriter (constant)">Rewriter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rails</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>upgrade_6_0_to_6_1</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_call_helper'>call_helper</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rails/set_load_defaults</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>options:</span> <span class='lbrace'>{</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/Users/flyerhzm/.synvert-ruby/lib/rails/set_load_defaults.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>options:</span> <span class='lbrace'>{</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>options:</span> <span class='lbrace'>{</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>name of helper.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>options to pass to helper.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+369
+370
+371
+372
+373
+374</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 369</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call_helper'>call_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_helper'>helper</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core.html" title="Synvert::Core (module)">Core</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Helper.html" title="Synvert::Core::Helper (class)">Helper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Helper.html#fetch-class_method" title="Synvert::Core::Helper.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Synvert::Core::Utils (class)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_eval_snippet'><span class='object_link'><a href="Utils.html#eval_snippet-class_method" title="Synvert::Core::Utils.eval_snippet (method)">eval_snippet</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_helper'>helper</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_helper'>helper</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core.html" title="Synvert::Core (module)">Core</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Helper.html" title="Synvert::Core::Helper (class)">Helper</a></span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_instance_exec'>instance_exec</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_helper'>helper</span><span class='period'>.</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="configure-instance_method">
   
     #<strong>configure</strong>(options)  &#x21d2; <tt>Object</tt> 
@@ -2754,12 +2871,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
-373
-374
-375</pre>
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 373</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_helper_method'>helper_method</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@helpers</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>block:</span> <span class='id identifier rubyid_block'>block</span> <span class='rbrace'>}</span>
@@ -3051,12 +3168,12 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
-382
-383
-384</pre>
+398
+399
+400</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 382</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_redo_until_no_change'>redo_until_no_change</span>
   <span class='ivar'>@redo_until_no_change</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -3386,7 +3503,7 @@ It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="S
 </div>
 
       <div id="footer">
-  Generated on Tue May 30 03:40:18 2023 by
+  Generated on Wed May 31 22:41:46 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
