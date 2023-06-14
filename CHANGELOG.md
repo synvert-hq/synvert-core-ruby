@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.28.1 (2023-06-14)
+
+* Do not use keyword options in `call_helper`
+* Update `node_query` to 1.13.3 and `node_mutation` to 1.18.3
+* Update `parser_node_ext` to 1.2.0 and `syntax_tree_ext` to 0.6.0
+
 ## 1.28.0 (2023-06-01)
 
 * Add `Synvert::Core::Helper`

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.28.0)
+    synvert-core (1.28.1)
       activesupport (< 7.0.0)
       node_mutation (>= 1.18.3)
       node_query (>= 1.13.3)
