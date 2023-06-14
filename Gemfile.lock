@@ -7,9 +7,9 @@ PATH
       node_query (>= 1.13.3)
       parallel
       parser
-      parser_node_ext (>= 1.1.1)
+      parser_node_ext (>= 1.2.0)
       syntax_tree
-      syntax_tree_ext (>= 0.3.1)
+      syntax_tree_ext (>= 0.6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -41,7 +41,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    i18n (1.13.0)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -56,14 +56,16 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     parallel (1.23.0)
-    parser (3.2.2.1)
+    parser (3.2.2.3)
       ast (~> 2.4.1)
-    parser_node_ext (1.1.1)
+      racc
+    parser_node_ext (1.2.0)
       parser
     prettier_print (1.2.1)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    racc (1.7.1)
     rake (13.0.6)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
@@ -84,7 +86,7 @@ GEM
     shellany (0.0.1)
     syntax_tree (6.1.1)
       prettier_print (>= 1.2.0)
-    syntax_tree_ext (0.3.1)
+    syntax_tree_ext (0.6.0)
       syntax_tree
     thor (1.2.1)
     tzinfo (2.0.6)
