@@ -360,13 +360,13 @@ module Synvert::Core
     # It calls a shared rewriter.
     # @example
     #   Synvert::Rewriter.new 'rails', 'upgrade_6_0_to_6_1' do
-    #     call_helper 'rails/set_load_defaults', options: { rails_version: '6.1' }
-    #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/rails/set_load_defaults.rb', options: { rails_version: '6.1' }
-    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb', options: { rails_version: '6.1' }
+    #     call_helper 'rails/set_load_defaults', rails_version: '6.1'
+    #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/rails/set_load_defaults.rb', rails_version: '6.1'
+    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb', rails_version: '6.1'
     #   end
     # @param name [String] name of helper.
     # @param options [Hash] options to pass to helper.
-    def call_helper(name, options: {})
+    def call_helper(name, options = {})
       helper = Synvert::Core::Helper.fetch(name) || Utils.eval_snippet(name)
       return unless helper && helper.is_a?(Synvert::Core::Helper)
 

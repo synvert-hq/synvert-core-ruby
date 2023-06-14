@@ -320,7 +320,7 @@ module Synvert::Core
           end
         rewriter =
           Rewriter.new 'group', 'rewriter' do
-            call_helper('helper', options: { foo: 'bar' })
+            call_helper('helper', foo: 'bar')
           end
         rewriter.process
         expect(block_receiver).to eq 'Synvert::Core::Rewriter'
