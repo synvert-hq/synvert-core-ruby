@@ -236,7 +236,7 @@ module Synvert::Core
       @gem_spec = Rewriter::GemSpec.new(name, version)
     end
 
-    # It finds specified files.
+    # It finds specified files, and for each file, it will delegate to {Synvert::Core::Rewriter::Instance} to rewrite code.
     # It creates a {Synvert::Core::Rewriter::Instance} to rewrite code.
     # @example
     #   Synvert::Rewriter.new 'rspec', 'be_close_to_be_within' do

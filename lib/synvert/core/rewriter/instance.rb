@@ -41,12 +41,13 @@ module Synvert::Core
     attr_accessor :current_node
 
     # Process the instance.
-    # It finds specified files, for each file, it executes the block code, rewrites the original code,
+    # It executes the block code, rewrites the original code,
     # then writes the code back to the original file.
     def process
       puts @file_path if Configuration.show_run_process
 
       absolute_file_path = File.join(Configuration.root_path, @file_path)
+      # It keeps running until no conflict.
       loop do
         source = read_source(absolute_file_path)
         encoded_source = Engine.encode(File.extname(file_path), source)
@@ -75,7 +76,7 @@ module Synvert::Core
     end
 
     # Test the instance.
-    # It finds specified files, for each file, it executes the block code, tests the original code,
+    # It executes the block code, tests the original code,
     # then returns the actions.
     def test
       absolute_file_path = File.join(Configuration.root_path, file_path)
