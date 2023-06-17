@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.28.2 (2023-06-17)
+
+* Update `node_query` to 1.13.5
+
 ## 1.28.1 (2023-06-14)
 
 * Do not use keyword options in `call_helper`
