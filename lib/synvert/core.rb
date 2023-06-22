@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'synvert/core/version'
-require_relative './core/node_ext'
 require 'active_support'
 require 'active_support/core_ext'
 require 'node_query'
