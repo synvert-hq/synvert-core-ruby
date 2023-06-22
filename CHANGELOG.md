@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.28.3 (2023-06-22)
+
+* Update `node_mutation` to 1.19.1
+* Remove `node_ext`
+
 ## 1.28.2 (2023-06-17)
 
 * Update `node_query` to 1.13.5
