@@ -91,7 +91,7 @@ module Synvert::Core
     # @!attribute [r] gem_spec
     #   @return [Rewriter::GemSpec] the gem spec
     # @!attribute [r] test_results
-    #   @return [Array<Object>] the test results
+    #   @return [Hash<String, Object>] the test results
     # @!attribute [rw] options
     #   @return [Hash] the rewriter options
     attr_reader :group,
@@ -121,7 +121,7 @@ module Synvert::Core
       @affected_files = Set.new
       @redo_until_no_change = false
       @options = DEFAULT_OPTIONS.dup
-      @test_results = []
+      @test_results = Hash.new { |h, k| h[k] = [] }
       self.class.register(@group, @name, self)
     end
 
@@ -153,7 +153,22 @@ module Synvert::Core
       if !@affected_files.empty? && @redo_until_no_change # redo
         test
       end
-      @test_results
+      @test_results.map do |filename, test_results|
+        new_actions = test_results.map(&:actions).flatten.sort_by(&:end)
+        last_start = -1
+        conflicted = new_actions.any? do |action|
+          if last_start > action.end
+            true
+          else
+            last_start = action.start
+            false
+          end
+        end
+        result = NodeMutation::Result.new(affected: true, conflicted: conflicted)
+        result.actions = new_actions
+        result.file_path = filename
+        result
+      end
     end
 
     # Add a warning.
@@ -287,7 +302,7 @@ module Synvert::Core
         result = NodeMutation::Result.new(affected: true, conflicted: false)
         result.actions = [NodeMutation::Struct::Action.new(:add_file, 0, 0, content)]
         result.file_path = filename
-        @test_results << result
+        merge_test_result(result)
         return
       end
 
@@ -314,7 +329,7 @@ module Synvert::Core
         result = NodeMutation::Result.new(affected: true, conflicted: false)
         result.actions = [NodeMutation::Struct::Action.new(:remove_file, 0, -1)]
         result.file_path = filename
-        @test_results << result
+        merge_test_result(result)
         return
       end
 
@@ -430,7 +445,13 @@ module Synvert::Core
     end
 
     def merge_test_results(results)
-      @test_results += results.compact.select { |result| result.affected? }
+      results.compact.select(&:affected?).each do |result|
+        merge_test_result(result)
+      end
+    end
+
+    def merge_test_result(result)
+      @test_results[result.file_path] << result
     end
   end
 end
