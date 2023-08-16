@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.28.4 (2023-08-16)
+
+* Merge `test_results` based on file_path
+* Update `node-query` to 1.13.9
+* Update `node_mutation` to 1.19.3
+
 ## 1.28.3 (2023-06-22)
 
 * Update `node_mutation` to 1.19.1
