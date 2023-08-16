@@ -156,14 +156,15 @@ module Synvert::Core
       @test_results.map do |filename, test_results|
         new_actions = test_results.map(&:actions).flatten.sort_by(&:end)
         last_start = 0
-        conflicted = new_actions.any? do |action|
-          if last_start > action.end
-            true
-          else
-            last_start = action.start
-            false
+        conflicted =
+          new_actions.any? do |action|
+            if last_start > action.end
+              true
+            else
+              last_start = action.start
+              false
+            end
           end
-        end
         result = NodeMutation::Result.new(affected: true, conflicted: conflicted)
         result.actions = new_actions
         result.file_path = filename
