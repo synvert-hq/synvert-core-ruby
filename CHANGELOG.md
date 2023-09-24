@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.28.5 (2023-09-25)
+
+* Update `node-query` to 1.13.11
+* Update `node_mutation` to 1.20.0
+* Combine actions within scope
+* Iterate actions in engine
+
 ## 1.28.4 (2023-08-16)
 
 * Merge `test_results` based on file_path
