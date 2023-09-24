@@ -34,7 +34,7 @@ module Synvert::Core
             start += index + END_LINE.length
           end
           indices.each do |index|
-            actions.each do |action|
+            NodeMutation::Helper.iterate_actions(actions) do |action|
               action.start -= END_LINE.length if action.start > index
               action.end -= END_LINE.length if action.end > index
             end
