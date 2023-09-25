@@ -373,7 +373,7 @@ then action start position should be 16 and end position should be 26.</p>
       <span class='id identifier rubyid_start'>start</span> <span class='op'>+=</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="#END_LINE-constant" title="Synvert::Core::Engine::Elegant::END_LINE (constant)">END_LINE</a></span></span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_indices'>indices</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
-      <span class='id identifier rubyid_actions'>actions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_action'>action</span><span class='op'>|</span>
+      <span class='const'>NodeMutation</span><span class='op'>::</span><span class='const'>Helper</span><span class='period'>.</span><span class='id identifier rubyid_iterate_actions'>iterate_actions</span><span class='lparen'>(</span><span class='id identifier rubyid_actions'>actions</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_action'>action</span><span class='op'>|</span>
         <span class='id identifier rubyid_action'>action</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span> <span class='op'>-=</span> <span class='const'><span class='object_link'><a href="#END_LINE-constant" title="Synvert::Core::Engine::Elegant::END_LINE (constant)">END_LINE</a></span></span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='kw'>if</span> <span class='id identifier rubyid_action'>action</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_index'>index</span>
         <span class='id identifier rubyid_action'>action</span><span class='period'>.</span><span class='id identifier rubyid_end'>end</span> <span class='op'>-=</span> <span class='const'><span class='object_link'><a href="#END_LINE-constant" title="Synvert::Core::Engine::Elegant::END_LINE (constant)">END_LINE</a></span></span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='kw'>if</span> <span class='id identifier rubyid_action'>action</span><span class='period'>.</span><span class='id identifier rubyid_end'>end</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_index'>index</span>
       <span class='kw'>end</span>
@@ -668,7 +668,7 @@ If so, pop the last leading_spaces_count and return true.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 17 05:23:28 2023 by
+  Generated on Mon Sep 25 02:23:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
