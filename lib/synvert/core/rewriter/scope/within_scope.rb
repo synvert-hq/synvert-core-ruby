@@ -29,9 +29,7 @@ module Synvert::Core
       @instance.process_with_node current_node do
         matching_nodes.each do |matching_node|
           @instance.process_with_node matching_node do
-            @instance.current_mutation.combine do
-              @instance.instance_eval(&@block)
-            end
+            @instance.instance_eval(&@block)
           end
         end
       end

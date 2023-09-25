@@ -37,9 +37,7 @@ module Synvert::Core
     #   @return current ast node
     # @!attribute [r] mutation_adapter
     #   @return NodeMutation Adapter
-    # @!attribute [r] current_mutation
-    #   @return current node mutation
-    attr_reader :file_path, :mutation_adapter, :current_mutation
+    attr_reader :file_path, :current_node, :mutation_adapter
     attr_accessor :current_node
 
     # Process the instance.
