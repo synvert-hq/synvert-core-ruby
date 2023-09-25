@@ -6,9 +6,7 @@ module Synvert::Core
   describe Rewriter::WithinScope do
     let(:instance) {
       rewriter = Rewriter.new('foo', 'bar')
-      Rewriter::Instance.new(rewriter, 'file pattern').tap do |instance|
-        instance.instance_variable_set(:@current_mutation, NodeMutation.new('source'))
-      end
+      Rewriter::Instance.new(rewriter, 'file pattern')
     }
     let(:source) { <<~EOS }
       describe User do
