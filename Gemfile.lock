@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.28.5)
+    synvert-core (1.29.0)
       activesupport (< 7.0.0)
       node_mutation (>= 1.21.0)
       node_query (>= 1.13.11)
@@ -91,7 +91,7 @@ GEM
     thor (1.2.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    zeitwerk (2.6.11)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   ruby

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.29.0 (2023-09-26)
+
+* Update `node_mutation` to 1.21.0
+* Revert "Combine actions within scope"
+* Add `group` dsl
+
 ## 1.28.5 (2023-09-25)
 
 * Update `node-query` to 1.13.11
