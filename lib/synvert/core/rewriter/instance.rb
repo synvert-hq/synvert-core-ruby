@@ -407,6 +407,16 @@ module Synvert::Core
       @current_mutation.noop(@current_node)
     end
 
+    # Group actions.
+    # @example
+    #     group do
+    #       delete :message, :dot
+    #       replace 'receiver.caller.message', with: 'flat_map'
+    #     end
+    def group(&block)
+      @current_mutation.group(&block)
+    end
+
     # Add a custom action.
     # @example
     #   remover_action = NodeMutation::RemoveAction.new(node)

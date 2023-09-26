@@ -262,6 +262,13 @@ module Synvert::Core
       instance.noop
     end
 
+    it 'parses group' do
+      instance.instance_variable_set(:@current_mutation, double)
+      instance.current_node = double
+      expect(instance.instance_variable_get(:@current_mutation)).to receive(:group)
+      instance.group {}
+    end
+
     it 'parses warn' do
       expect(Rewriter::Warning).to receive(:new).with(instance, 'foobar')
       instance.warn 'foobar'
