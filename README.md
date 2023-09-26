@@ -101,6 +101,7 @@ Actions:
 * [warn](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#warn-instance_method) - warn message
 * [replace_erb_stmt_with_expr](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method) - replace erb stmt code to expr code
 * [noop](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#noop-instance_method) - no operation
+* [group](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#group-instance_method) - group actions
 * [add_action](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method) - add custom action
 
 Others:
