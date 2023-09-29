@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.29.1 (2023-09-29)
+
+* Update `node-query` to 1.13.12
+
 ## 1.29.0 (2023-09-26)
 
 * Update `node_mutation` to 1.21.0
