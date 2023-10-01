@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "node_query", ">= 1.13.12"
   spec.add_runtime_dependency "node_mutation", ">= 1.21.0"
   spec.add_runtime_dependency "parser"
-  spec.add_runtime_dependency "parser_node_ext", ">= 1.2.0"
+  spec.add_runtime_dependency "parser_node_ext", ">= 1.2.1"
   spec.add_runtime_dependency "syntax_tree"
   spec.add_runtime_dependency "syntax_tree_ext", ">= 0.6.4"
   spec.add_runtime_dependency "parallel"

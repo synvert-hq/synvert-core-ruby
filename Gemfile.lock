@@ -7,7 +7,7 @@ PATH
       node_query (>= 1.13.12)
       parallel
       parser
-      parser_node_ext (>= 1.2.0)
+      parser_node_ext (>= 1.2.1)
       syntax_tree
       syntax_tree_ext (>= 0.6.4)
 
@@ -59,7 +59,7 @@ GEM
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
-    parser_node_ext (1.2.0)
+    parser_node_ext (1.2.1)
       parser
     prettier_print (1.2.1)
     pry (0.14.1)
