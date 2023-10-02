@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.29.2 (2023-10-03)
+
+* Update `parser_node_ext` to 1.2.1
+* Update `node_mutation` to 1.21.3
+
 ## 1.29.1 (2023-09-29)
 
 * Update `node-query` to 1.13.12
