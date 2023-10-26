@@ -8,7 +8,7 @@ module Synvert::Core
   class Utils
     class << self
       def eval_snippet(snippet_name)
-        eval(load_snippet(snippet_name))
+        eval(load_snippet(snippet_name), binding, __FILE__, __LINE__ + 1)
       end
 
       def load_snippet(snippet_name)
