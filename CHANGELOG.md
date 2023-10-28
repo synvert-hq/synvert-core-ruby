@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.29.3 (2023-10-28)
+
+* Update `node_mutation` to 1.21.3
+* Add `__FILE__` and `__LINE__` to eval
+
 ## 1.29.2 (2023-10-03)
 
 * Update `parser_node_ext` to 1.2.1
