@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.29.4 (2023-11-24)
+
+* Update `node_mutation` to 1.21.4
+
 ## 1.29.3 (2023-10-28)
 
 * Update `node_mutation` to 1.21.3

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.29.3)
+    synvert-core (1.29.4)
       activesupport (< 7.0.0)
       node_mutation (>= 1.21.6)
       node_query (>= 1.13.12)
@@ -65,7 +65,7 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    racc (1.7.1)
+    racc (1.7.3)
     rake (13.0.6)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
