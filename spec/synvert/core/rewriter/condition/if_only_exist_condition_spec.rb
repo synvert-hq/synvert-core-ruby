@@ -4,22 +4,20 @@ require 'spec_helper'
 
 module Synvert::Core
   describe Rewriter::IfOnlyExistCondition do
-    let(:source) {
-      '
+    let(:source) { <<~EOS }
       RSpec.configure do |config|
         config.include EmailSpec::Helpers
         config.include EmailSpec::Methods
       end
-      '
-    }
+    EOS
     let(:node) { Parser::CurrentRuby.parse(source) }
-    let(:instance) { double(current_node: node) }
+    let(:instance) { double(current_node: node, parser: :parser) }
 
     describe '#process' do
       it 'gets matching nodes' do
         source = ' RSpec.configure do |config| config.include EmailSpec::Helpers end '
         node = Parser::CurrentRuby.parse(source)
-        instance = double(current_node: node)
+        instance = double(current_node: node, parser: :parser)
         run = false
         condition =
           Rewriter::IfOnlyExistCondition.new instance,

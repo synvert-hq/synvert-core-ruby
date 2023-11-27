@@ -148,9 +148,8 @@ module Synvert::Core
     end
 
     it 'parses insert_after' do
-      instance.instance_variable_set(:@current_mutation, double)
+      expect(@current_mutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
       instance.current_node = double
-      expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
       expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(
         instance.current_node,
         "\n  Foobar",
@@ -162,9 +161,8 @@ module Synvert::Core
     end
 
     it 'parses insert_before' do
-      instance.instance_variable_set(:@current_mutation, double)
+      expect(@current_mutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
       instance.current_node = double
-      expect(NodeMutation).to receive_message_chain(:adapter, :get_start_loc, :column).and_return(2)
       expect(instance.instance_variable_get(:@current_mutation)).to receive(:insert).with(
         instance.current_node,
         "Foobar\n  ",
@@ -176,7 +174,8 @@ module Synvert::Core
     end
 
     it 'parses replace_erb_stmt_with_expr' do
-      instance.instance_variable_set(:@current_mutation, double)
+      adapter = NodeMutation::ParserAdapter.new
+      instance.instance_variable_set(:@current_mutation, double(adapter: adapter))
       instance.current_node = double
       action = double
       erb_source = '<% form_for @post do |f| %><% end %>'
@@ -184,7 +183,8 @@ module Synvert::Core
       expect(instance.instance_variable_get(:@current_mutation)).to receive(:actions).and_return([])
       expect(Rewriter::ReplaceErbStmtWithExprAction).to receive(:new).with(
         instance.current_node,
-        erb_source
+        erb_source,
+        adapter: adapter
       ).and_return(action)
       expect(action).to receive(:process)
       instance.replace_erb_stmt_with_expr
@@ -275,7 +275,7 @@ module Synvert::Core
     end
 
     it 'adds action' do
-      mutation = NodeMutation.new("")
+      mutation = NodeMutation.new("", adapter: :parser)
       instance.instance_variable_set(:@current_mutation, mutation)
       action = double
       expect(action).to receive(:process).and_return(action)

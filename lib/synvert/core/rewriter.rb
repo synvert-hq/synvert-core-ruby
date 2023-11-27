@@ -190,6 +190,10 @@ module Synvert::Core
       @options[:parser] == Synvert::SYNTAX_TREE_PARSER
     end
 
+    def parser
+      @options[:parser]
+    end
+
     #######
     # DSL #
     #######

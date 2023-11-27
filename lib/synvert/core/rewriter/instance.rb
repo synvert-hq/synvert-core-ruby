@@ -35,9 +35,7 @@ module Synvert::Core
     #   @return file path
     # @!attribute [rw] current_node
     #   @return current ast node
-    # @!attribute [r] mutation_adapter
-    #   @return NodeMutation Adapter
-    attr_reader :file_path, :current_node, :mutation_adapter
+    attr_reader :file_path, :current_node
     attr_accessor :current_node
 
     # Process the instance.
@@ -51,9 +49,8 @@ module Synvert::Core
       loop do
         source = read_source(absolute_file_path)
         encoded_source = Engine.encode(File.extname(file_path), source)
-        @current_mutation = NodeMutation.new(source)
+        @current_mutation = NodeMutation.new(source, adapter: @rewriter.parser)
         @current_mutation.transform_proc = Engine.generate_transform_proc(File.extname(file_path), encoded_source)
-        @mutation_adapter = NodeMutation.adapter
         begin
           node = parse_code(@file_path, encoded_source)
 
@@ -81,10 +78,9 @@ module Synvert::Core
     def test
       absolute_file_path = File.join(Configuration.root_path, file_path)
       source = read_source(absolute_file_path)
-      @current_mutation = NodeMutation.new(source)
+      @current_mutation = NodeMutation.new(source, adapter: @rewriter.parser)
       encoded_source = Engine.encode(File.extname(file_path), source)
       @current_mutation.transform_proc = Engine.generate_transform_proc(File.extname(file_path), encoded_source)
-      @mutation_adapter = NodeMutation.adapter
       begin
         node = parse_code(file_path, encoded_source)
 
@@ -106,6 +102,20 @@ module Synvert::Core
     # @return [Parser::AST::Node]
     def node
       @current_node
+    end
+
+    # Get rewriter's adapter.
+    #
+    # @return [String] adapter
+    def parser
+      @rewriter.parser
+    end
+
+    # Gent current_mutation's adapter.
+    #
+    # @return [NodeMutation::Adapter]
+    def mutation_adapter
+      @current_mutation.adapter
     end
 
     # Set current_node to node and process.
@@ -279,7 +289,7 @@ module Synvert::Core
     # @param to [String] where to insert, if it is nil, will insert to current node.
     # @param and_comma [Boolean] insert extra comma.
     def insert_after(code, to: nil, and_comma: false)
-      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node, to).column
+      column = ' ' * @current_mutation.adapter.get_start_loc(@current_node, to).column
       @current_mutation.insert(@current_node, "\n#{column}#{code}", at: 'end', to: to, and_comma: and_comma)
     end
 
@@ -296,7 +306,7 @@ module Synvert::Core
     # @param to [String] where to insert, if it is nil, will insert to current node.
     # @param and_comma [Boolean] insert extra comma.
     def insert_before(code, to: nil, and_comma: false)
-      column = ' ' * NodeMutation.adapter.get_start_loc(@current_node, to).column
+      column = ' ' * @current_mutation.adapter.get_start_loc(@current_node, to).column
       @current_mutation.insert(@current_node, "#{code}\n#{column}", at: 'beginning', to: to, and_comma: and_comma)
     end
 
@@ -313,7 +323,7 @@ module Synvert::Core
     def replace_erb_stmt_with_expr
       absolute_file_path = File.join(Configuration.root_path, @file_path)
       erb_source = read_source(absolute_file_path)
-      action = Rewriter::ReplaceErbStmtWithExprAction.new(@current_node, erb_source)
+      action = Rewriter::ReplaceErbStmtWithExprAction.new(@current_node, erb_source, adapter: @current_mutation.adapter)
       add_action(action)
     end
 
@@ -480,7 +490,7 @@ module Synvert::Core
     # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
     def parse_code(file_path, encoded_source)
-      if @rewriter.syntax_tree_parser?
+      if @rewriter.parser == Synvert::SYNTAX_TREE_PARSER
         parse_code_by_syntax_tree(file_path, encoded_source)
       else
         parse_code_by_parser(file_path, encoded_source)
