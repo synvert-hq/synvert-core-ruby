@@ -8,8 +8,10 @@ module Synvert::Core
     # Initialize a ReplaceErbStmtWithExprAction.
     #
     # @param node [Synvert::Core::Rewriter::Node]
-    def initialize(node, erb_source)
-      super(node, nil)
+    # @param erb_source [String]
+    # @param adapter [NodeMutation::Adapter]
+    def initialize(node, erb_source, adapter:)
+      super(node, nil, adapter: adapter)
       @erb_source = erb_source
       @type = :insert
     end
@@ -25,7 +27,7 @@ module Synvert::Core
 
     # Calculate the begin the end positions.
     def calculate_position
-      @start = NodeMutation.adapter.get_start(@node)
+      @start = @adapter.get_start(@node)
       loop do
         @start -= 1
         break if @erb_source[@start] == '%'

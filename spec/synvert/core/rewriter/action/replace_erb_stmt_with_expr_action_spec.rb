@@ -8,8 +8,8 @@ module Synvert::Core
       subject {
         erb_source = "<% form_for post do |f| %>\n<% end %>"
         source = Engine::Erb.encode(erb_source)
-        node = Parser::CurrentRuby.parse(source).children.first
-        described_class.new(node, erb_source).process
+        node = parser_parse(source).children.first
+        described_class.new(node, erb_source, adapter: NodeMutation::ParserAdapter.new).process
       }
 
       it 'gets start' do
@@ -29,8 +29,8 @@ module Synvert::Core
       subject {
         erb_source = "<%form_for post do |f|%>\n<%end%>"
         source = Engine::Erb.encode(erb_source)
-        node = Parser::CurrentRuby.parse(source).children.first
-        described_class.new(node, erb_source).process
+        node = parser_parse(source).children.first
+        described_class.new(node, erb_source, adapter: NodeMutation::ParserAdapter.new).process
       }
 
       it 'gets start' do
