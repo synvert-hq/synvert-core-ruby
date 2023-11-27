@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.30.0 (2023-11-27)
+
+* Update `node_mutation` to 1.22.0
+* Update `node_query` to 1.14.1
+* Add `adapter` as `Rewriter::ReplaceErbStmtWithExprAction` parameter
+* Initialize NodeQuery and NodeMutation with adapter
+* Remove `ensure_current_adapter` as adapter is an instance variable of Rewriter
+
 ## 1.29.4 (2023-11-24)
 
 * Update `node_mutation` to 1.21.4
