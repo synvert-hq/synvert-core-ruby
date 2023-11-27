@@ -5,7 +5,7 @@ require 'spec_helper'
 module Synvert::Core
   describe Rewriter::WithinScope do
     let(:instance) {
-      rewriter = Rewriter.new('foo', 'bar')
+      rewriter = Rewriter.new('foo', 'bar') { configure(parser: PARSER_PARSER) }
       Rewriter::Instance.new(rewriter, 'file pattern')
     }
     let(:source) { <<~EOS }

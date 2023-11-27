@@ -129,9 +129,7 @@ module Synvert::Core
     # It will call the block.
     def process
       @affected_files = Set.new
-      ensure_current_adapter do
-        instance_eval(&@block)
-      end
+      instance_eval(&@block)
 
       process if !@affected_files.empty? && @redo_until_no_change # redo
     end
@@ -146,9 +144,7 @@ module Synvert::Core
     def test
       @options[:write_to_file] = false
       @affected_files = Set.new
-      ensure_current_adapter do
-        instance_eval(&@block)
-      end
+      instance_eval(&@block)
 
       if !@affected_files.empty? && @redo_until_no_change # redo
         test
@@ -186,10 +182,6 @@ module Synvert::Core
       @affected_files.add(file_path)
     end
 
-    def syntax_tree_parser?
-      @options[:parser] == Synvert::SYNTAX_TREE_PARSER
-    end
-
     def parser
       @options[:parser]
     end
@@ -209,14 +201,6 @@ module Synvert::Core
       @options = @options.merge(options)
       if options[:parser] && ![Synvert::PARSER_PARSER, Synvert::SYNTAX_TREE_PARSER].include?(options[:parser])
         raise Errors::ParserNotSupported.new("Parser #{options[:adapter]} not supported")
-      end
-
-      if syntax_tree_parser?
-        NodeQuery.configure(adapter: NodeQuery::SyntaxTreeAdapter.new)
-        NodeMutation.configure(adapter: NodeMutation::SyntaxTreeAdapter.new)
-      else
-        NodeQuery.configure(adapter: NodeQuery::ParserAdapter.new)
-        NodeMutation.configure(adapter: NodeMutation::ParserAdapter.new)
       end
     end
 
@@ -420,18 +404,6 @@ module Synvert::Core
     end
 
     private
-
-    # Ensure back to current adapter after running a rewriter.
-    def ensure_current_adapter
-      current_query_adapter = NodeQuery.adapter
-      current_mutation_adapter = NodeMutation.adapter
-      begin
-        yield
-      ensure
-        NodeQuery.configure(adapter: current_query_adapter)
-        NodeMutation.configure(adapter: current_mutation_adapter)
-      end
-    end
 
     # Handle one file.
     # @param file_patterns [String] file patterns to find files.

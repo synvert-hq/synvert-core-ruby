@@ -6,25 +6,20 @@ module Synvert::Core
   RSpec.describe Rewriter do
     describe '#configure' do
       it 'parses parser' do
-        running_query_adapter = nil
         running_mutation_adapter = nil
         rewriter =
           Rewriter.new 'group', 'name' do
             configure parser: 'syntax_tree'
 
             within_files '**/*.rb' do
-              running_query_adapter = NodeQuery.adapter
-              running_mutation_adapter = NodeMutation.adapter
+              running_mutation_adapter = mutation_adapter
             end
           end
         input = "class Foobar\nend"
         FakeFS do
           File.write("code.rb", input)
           rewriter.process
-          expect(running_query_adapter).to be_instance_of(NodeQuery::SyntaxTreeAdapter)
           expect(running_mutation_adapter).to be_instance_of(NodeMutation::SyntaxTreeAdapter)
-          expect(NodeQuery.adapter).to be_instance_of(NodeQuery::ParserAdapter)
-          expect(NodeMutation.adapter).to be_instance_of(NodeMutation::ParserAdapter)
         end
       end
 
