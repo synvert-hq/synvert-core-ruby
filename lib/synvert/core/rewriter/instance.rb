@@ -104,14 +104,14 @@ module Synvert::Core
       @current_node
     end
 
-    # Get rewriter's adapter.
+    # Get rewriter's parser.
     #
-    # @return [String] adapter
+    # @return [String] parser
     def parser
       @rewriter.parser
     end
 
-    # Gent current_mutation's adapter.
+    # Get current_mutation's adapter.
     #
     # @return [NodeMutation::Adapter]
     def mutation_adapter
