@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.30.2 (2024-01-09)
+
+* Add `Configuration.strict` option
+
 ## 1.30.1 (2023-12-01)
 
 * It is `parser` option instead of `adapter`
