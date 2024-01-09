@@ -12,7 +12,14 @@ module Synvert::Core
       # @!attribute [w] single_quote
       # @!attribute [w] tab_width
       # @!attribute [w] strict, if strict is false, it will ignore ruby version and gem version check.
-      attr_writer :root_path, :skip_paths, :only_paths, :show_run_process, :number_of_workers, :single_quote, :tab_width, :strict
+      attr_writer :root_path,
+                  :skip_paths,
+                  :only_paths,
+                  :show_run_process,
+                  :number_of_workers,
+                  :single_quote,
+                  :tab_width,
+                  :strict
 
       # Get the path.
       #
