@@ -24,6 +24,8 @@ module Synvert::Core
     #
     # @return [Boolean] true if matches, otherwise false.
     def match?
+      return true unless Configuration.strict
+
       gemfile_lock_path = File.expand_path(File.join(Configuration.root_path, 'Gemfile.lock'))
 
       # if Gemfile.lock does not exist, just ignore this check

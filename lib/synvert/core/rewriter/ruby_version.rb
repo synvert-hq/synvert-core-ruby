@@ -16,6 +16,8 @@ module Synvert::Core
     #
     # @return [Boolean] true if matches, otherwise false.
     def match?
+      return true unless Configuration.strict
+
       if File.exist?(File.join(Configuration.root_path, '.ruby-version'))
         version_file = '.ruby-version'
       elsif File.exist?(File.join(Configuration.root_path, '.rvmrc'))

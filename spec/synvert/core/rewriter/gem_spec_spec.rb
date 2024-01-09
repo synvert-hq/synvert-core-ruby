@@ -51,5 +51,12 @@ module Synvert::Core
       gem_spec = Rewriter::GemSpec.new('ast', '1.1.0')
       expect(gem_spec).to be_match
     end
+
+    it 'returns true if Configuration.strict is false' do
+      Configuration.strict = false
+      gem_spec = Rewriter::GemSpec.new('synvert', '1.0.0')
+      expect(gem_spec).to be_match
+      Configuration.strict = true
+    end
   end
 end
