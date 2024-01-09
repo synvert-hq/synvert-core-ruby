@@ -35,7 +35,7 @@ module Synvert::Core
     #   @return file path
     # @!attribute [rw] current_node
     #   @return current ast node
-    attr_reader :file_path, :current_node
+    attr_reader :file_path
     attr_accessor :current_node
 
     # Process the instance.
