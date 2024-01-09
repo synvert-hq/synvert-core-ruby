@@ -275,7 +275,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#tab_width-class_method" title="tab_width (class method)">.<strong>tab_width</strong>  &#x21d2; Object </a>
+      <a href="#strict-class_method" title="strict (class method)">.<strong>strict</strong>  &#x21d2; Boolean </a>
     
 
     
@@ -292,7 +292,61 @@
   
 
   
+    <span class="summary_desc"><div class='inline'><p>Returns the value of the strict flag.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#strict,+if+strict+is+false,+it+will+ignore+ruby+version+and+gem+version+check%2E=-class_method" title="strict, if strict is false, it will ignore ruby version and gem version check.= (class method)">.<strong>strict, if strict is false, it will ignore ruby version and gem version check.=</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+      <span class="note title writeonly">writeonly</span>
+    
+  
+  
+  
+  
+  
+
+  
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tab_width-class_method" title="tab_width (class method)">.<strong>tab_width</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the tab width used for indentation.</p>
+</div></span>
   
 </li>
 
@@ -350,12 +404,12 @@
       <pre class="lines">
 
 
-47
 48
-49</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_number_of_workers'>number_of_workers</span>
   <span class='ivar'>@number_of_workers</span> <span class='op'>||</span> <span class='int'>1</span>
@@ -409,12 +463,12 @@
       <pre class="lines">
 
 
-33
 34
-35</pre>
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_only_paths'>only_paths</span>
   <span class='ivar'>@only_paths</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -468,12 +522,12 @@
       <pre class="lines">
 
 
-19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root_path'>root_path</span>
   <span class='ivar'>@root_path</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.</span><span class='tstring_end'>&#39;</span></span>
@@ -527,12 +581,12 @@
       <pre class="lines">
 
 
-40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_run_process'>show_run_process</span>
   <span class='ivar'>@show_run_process</span> <span class='op'>||</span> <span class='kw'>false</span>
@@ -586,12 +640,12 @@
       <pre class="lines">
 
 
-54
 55
-56</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_quote'>single_quote</span>
   <span class='ivar'>@single_quote</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='ivar'>@single_quote</span>
@@ -645,12 +699,12 @@
       <pre class="lines">
 
 
-26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_paths'>skip_paths</span>
   <span class='ivar'>@skip_paths</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -661,11 +715,72 @@
 </div>
     
       
-      <span id="tab_width=-class_method"></span>
+      <span id="strict=-class_method"></span>
       <div class="method_details ">
-  <h3 class="signature " id="tab_width-class_method">
+  <h3 class="signature " id="strict-class_method">
   
-    .<strong>tab_width</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>strict</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of the strict flag.</p>
+
+<p>If the strict flag is not set, it returns true by default.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the value of the strict flag</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 73</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_strict'>strict</span>
+  <span class='ivar'>@strict</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='ivar'>@strict</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="strict, if strict is false, it will ignore ruby version and gem version check.=-class_method">
+  
+    .<strong>strict, if strict is false, it will ignore ruby version and gem version check.=</strong>(value)  &#x21d2; <tt>Object</tt>  <span class="extras">(writeonly)</span>
   
 
   
@@ -677,12 +792,69 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 15</span>
+
+<span class='id identifier rubyid_attr_writer'>attr_writer</span> <span class='symbol'>:root_path</span><span class='comma'>,</span> <span class='symbol'>:skip_paths</span><span class='comma'>,</span> <span class='symbol'>:only_paths</span><span class='comma'>,</span> <span class='symbol'>:show_run_process</span><span class='comma'>,</span> <span class='symbol'>:number_of_workers</span><span class='comma'>,</span> <span class='symbol'>:single_quote</span><span class='comma'>,</span> <span class='symbol'>:tab_width</span><span class='comma'>,</span> <span class='symbol'>:strict</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="tab_width=-class_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="tab_width-class_method">
+  
+    .<strong>tab_width</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the tab width used for indentation.</p>
+
+<p>If the tab width is not explicitly set, it defaults to 2.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The tab width.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/configuration.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tab_width'>tab_width</span>
   <span class='ivar'>@tab_width</span> <span class='op'>||</span> <span class='int'>2</span>
@@ -698,7 +870,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jan  1 23:17:22 2024 by
+  Generated on Tue Jan  9 07:48:06 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
