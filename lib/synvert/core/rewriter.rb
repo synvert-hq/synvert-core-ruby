@@ -289,7 +289,11 @@ module Synvert::Core
 
       unless @options[:write_to_file]
         result = NodeMutation::Result.new(affected: true, conflicted: false)
-        result.actions = [NodeMutation::Struct::Action.new(:add_file, 0, 0, content)]
+        if Configuration.test_result == 'new_source'
+          result.new_source = content
+        else
+          result.actions = [NodeMutation::Struct::Action.new(:add_file, 0, 0, content)]
+        end
         result.file_path = filename
         merge_test_result(result)
         return
@@ -316,7 +320,11 @@ module Synvert::Core
 
       unless @options[:write_to_file]
         result = NodeMutation::Result.new(affected: true, conflicted: false)
-        result.actions = [NodeMutation::Struct::Action.new(:remove_file, 0, -1)]
+        if Configuration.test_result == 'new_source'
+          result.new_source = nil
+        else
+          result.actions = [NodeMutation::Struct::Action.new(:remove_file, 0, -1)]
+        end
         result.file_path = filename
         merge_test_result(result)
         return
