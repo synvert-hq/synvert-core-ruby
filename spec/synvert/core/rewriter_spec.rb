@@ -100,6 +100,31 @@ module Synvert::Core
           expect(results[0].actions).to eq [NodeMutation::Struct::Action.new(:replace, 6, 12, 'Synvert')]
         end
       end
+
+      context 'Configuration.test_result is new_source' do
+        before { Configuration.test_result = 'new_source' }
+        after { Configuration.test_result = nil }
+
+        it 'gets test results with new_source' do
+          rewriter =
+            Rewriter.new('group', 'name') do
+              within_files '**/*.rb' do
+                with_node node_type: 'class', name: 'Foobar' do
+                  replace :name, with: 'Synvert'
+                end
+              end
+            end
+          input = "class Foobar\nend"
+          FakeFS do
+            File.write("code.rb", input)
+            results = rewriter.test
+            expect(results[0].file_path).to eq '/code.rb'
+            expect(results[0].affected?).to be_truthy
+            expect(results[0].conflicted?).to be_falsey
+            expect(results[0].new_source).to eq "class Synvert\nend"
+          end
+        end
+      end
     end
 
     describe 'parses within_file' do

@@ -456,7 +456,7 @@ module Synvert::Core
         before { Configuration.test_result = 'new_source' }
         after { Configuration.test_result = nil }
 
-        it 'gets new_source if Configuration.test_result is new_source' do
+        it 'gets new_source' do
           instance =
             Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
               with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do

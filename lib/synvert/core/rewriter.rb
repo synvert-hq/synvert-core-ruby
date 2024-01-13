@@ -149,22 +149,26 @@ module Synvert::Core
       if !@affected_files.empty? && @redo_until_no_change # redo
         test
       end
-      @test_results.map do |filename, test_results|
-        new_actions = test_results.map(&:actions).flatten.sort_by(&:end)
-        last_start = -1
-        conflicted =
-          new_actions.any? do |action|
-            if last_start > action.end
-              true
-            else
-              last_start = action.start
-              false
+      if Configuration.test_result == 'new_source'
+        @test_results.values.flatten
+      else
+        @test_results.map do |filename, test_results|
+          new_actions = test_results.map(&:actions).flatten.sort_by(&:end)
+          last_start = -1
+          conflicted =
+            new_actions.any? do |action|
+              if last_start > action.end
+                true
+              else
+                last_start = action.start
+                false
+              end
             end
-          end
-        result = NodeMutation::Result.new(affected: true, conflicted: conflicted)
-        result.actions = new_actions
-        result.file_path = filename
-        result
+          result = NodeMutation::Result.new(affected: true, conflicted: conflicted)
+          result.actions = new_actions
+          result.file_path = filename
+          result
+        end
       end
     end
 
