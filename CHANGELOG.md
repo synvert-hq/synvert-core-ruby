@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.30.3 (2024-01-13)
+
+* Add `Configuration.test_result` option
+
 ## 1.30.2 (2024-01-09)
 
 * Add `Configuration.strict` option
