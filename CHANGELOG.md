@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.31.0 (2024-01-14)
+
+* Support `Configuration.test_result` in `add_file` and `remove_file` dsl
+* Get new source in `Rewriter#test`
+
 ## 1.30.3 (2024-01-13)
 
 * Add `Configuration.test_result` option
