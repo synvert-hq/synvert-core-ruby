@@ -12,6 +12,7 @@ module Synvert::Core
       # @!attribute [w] single_quote
       # @!attribute [w] tab_width
       # @!attribute [w] strict, if strict is false, it will ignore ruby version and gem version check.
+      # @!attribute [w] test_result, default is 'actions', it can be 'actions' or 'new_source'.
       attr_writer :root_path,
                   :skip_paths,
                   :only_paths,
@@ -19,7 +20,8 @@ module Synvert::Core
                   :number_of_workers,
                   :single_quote,
                   :tab_width,
-                  :strict
+                  :strict,
+                  :test_result
 
       # Get the path.
       #
@@ -79,6 +81,15 @@ module Synvert::Core
       # @return [Boolean] the value of the strict flag
       def strict
         @strict.nil? ? true : @strict
+      end
+
+      # Returns the value of the test_result flag.
+      #
+      # If the test_result flag is not set, it returns 'actions' by default.
+      #
+      # @return [String] the value of the test_result flag
+      def test_result
+        @test_result || 'actions'
       end
     end
   end
