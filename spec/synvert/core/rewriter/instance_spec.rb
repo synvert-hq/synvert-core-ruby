@@ -429,7 +429,7 @@ module Synvert::Core
     describe '#test' do
       let(:rewriter) { Rewriter.new('foo', 'bar') }
 
-      it 'gets actions if afected' do
+      it 'gets actions if affected' do
         instance =
           Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
             with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
@@ -450,6 +450,37 @@ module Synvert::Core
           NodeMutation::Struct::Action.new(:replace, 35, 59, 'create :user'),
           NodeMutation::Struct::Action.new(:replace, 69, 105, 'create :post, user: user')
         ]
+      end
+
+      context 'Configuration.test_result is new_source' do
+        before { Configuration.test_result = 'new_source' }
+        after { Configuration.test_result = nil }
+
+        it 'gets new_source if Configuration.test_result is new_source' do
+          instance =
+            Rewriter::Instance.new rewriter, 'spec/models/post_spec.rb' do
+              with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
+                replace_with 'create {{arguments}}'
+              end
+            end
+          input = <<~EOS
+            it 'uses factory_girl' do
+              user = FactoryGirl.create :user
+              post = FactoryGirl.create :post, user: user
+              assert post.valid?
+            end
+          EOS
+          expect(File).to receive(:read).with('./spec/models/post_spec.rb', encoding: 'UTF-8').and_return(input)
+          results = instance.test
+          expect(results.file_path).to eq 'spec/models/post_spec.rb'
+          expect(results.new_source).to eq <<~EOS
+            it 'uses factory_girl' do
+              user = create :user
+              post = create :post, user: user
+              assert post.valid?
+            end
+          EOS
+        end
       end
 
       it 'gets nothing if not affected' do
@@ -591,7 +622,7 @@ module Synvert::Core
 
       context 'Configuration.single_quote = false' do
         before { Configuration.single_quote = false }
-        after { Configuration.single_quote = true }
+        after { Configuration.single_quote = nil }
 
         it 'wraps with double quotes' do
           expect(instance.wrap_with_quotes('foobar')).to eq '"foobar"'

@@ -88,7 +88,7 @@ module Synvert::Core
           instance_eval(&@block)
         end
 
-        result = @current_mutation.test
+        result = Configuration.test_result == 'new_source' ? @current_mutation.process : @current_mutation.test
         result.file_path = file_path
         result
       rescue Parser::SyntaxError => e
