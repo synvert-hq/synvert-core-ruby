@@ -119,7 +119,6 @@ module Synvert::Core
       @sub_snippets = []
       @warnings = []
       @affected_files = Set.new
-      @redo_until_no_change = false
       @options = DEFAULT_OPTIONS.dup
       @test_results = Hash.new { |h, k| h[k] = [] }
       self.class.register(@group, @name, self)
@@ -130,8 +129,6 @@ module Synvert::Core
     def process
       @affected_files = Set.new
       instance_eval(&@block)
-
-      process if !@affected_files.empty? && @redo_until_no_change # redo
     end
 
     # Process rewriter with sandbox mode.
@@ -146,9 +143,6 @@ module Synvert::Core
       @affected_files = Set.new
       instance_eval(&@block)
 
-      if !@affected_files.empty? && @redo_until_no_change # redo
-        test
-      end
       if Configuration.test_result == 'new_source'
         @test_results.values.flatten
       else
@@ -404,15 +398,6 @@ module Synvert::Core
     # @yield helper method block.
     def helper_method(name, &block)
       @helpers << { name: name, block: block }
-    end
-
-    # Rerun the snippet until no change.
-    # @example
-    #   Synvert::Rewriter.new 'ruby', 'nested_class_definition' do
-    #     redo_until_no_change
-    #   end
-    def redo_until_no_change
-      @redo_until_no_change = true
     end
 
     private

@@ -70,7 +70,6 @@ DSLs are as follows
 * [helper_method](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#helper_method-instance_method) - define a helper method
 * [add_snippet](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_snippet-instance_method) - call another rewriter
 * [call_helper](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#call_helper-instance_method) - call a shared rewriter
-* [redo_until_no_change](https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#redo_until_no_change-instance_method) - run the snippet until no change
 
 Scopes:
 

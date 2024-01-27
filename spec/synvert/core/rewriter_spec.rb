@@ -382,15 +382,6 @@ module Synvert::Core
       expect(instance.dynamic_helper('arg1', 'arg2')).to eq 'dynamic result'
     end
 
-    it 'parses redo_until_no_change' do
-      rewriter =
-        Rewriter.new 'group', 'name' do
-          redo_until_no_change
-        end
-      rewriter.process
-      expect(rewriter.instance_variable_get('@redo_until_no_change')).to be_truthy
-    end
-
     describe 'class methods' do
       before :each do
         Rewriter.clear
