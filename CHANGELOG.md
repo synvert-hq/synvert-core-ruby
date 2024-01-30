@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.31.1 (2024-01-30)
+
+* Update `node_mutation` to 1.22.4
+* Remove `redo_until_no_change` dsl
+
 ## 1.31.0 (2024-01-14)
 
 * Support `Configuration.test_result` in `add_file` and `remove_file` dsl
