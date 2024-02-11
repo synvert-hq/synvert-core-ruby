@@ -75,4 +75,5 @@ module Synvert
 
   PARSER_PARSER = 'parser'
   SYNTAX_TREE_PARSER = 'syntax_tree'
+  PRISM_PARSER = 'prism'
 end

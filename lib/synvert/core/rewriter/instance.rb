@@ -4,6 +4,8 @@ require 'parser/current'
 require 'parser_node_ext'
 require 'syntax_tree'
 require 'syntax_tree_ext'
+require 'prism'
+require 'prism_ext'
 
 module Synvert::Core
   # Instance is an execution unit, it finds specified ast nodes,
@@ -490,8 +492,11 @@ module Synvert::Core
     # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
     def parse_code(file_path, encoded_source)
-      if @rewriter.parser == Synvert::SYNTAX_TREE_PARSER
+      case @rewriter.parser
+      when Synvert::SYNTAX_TREE_PARSER
         parse_code_by_syntax_tree(file_path, encoded_source)
+      when Synvert::PRISM_PARSER
+        parse_code_by_prism(file_path, encoded_source)
       else
         parse_code_by_parser(file_path, encoded_source)
       end
@@ -518,6 +523,15 @@ module Synvert::Core
     # @return [Node] ast node for file
     def parse_code_by_syntax_tree(_file_path, encoded_source)
       SyntaxTree.parse(encoded_source).statements
+    end
+
+    # Parse code ast node by prism.
+    #
+    # @param file_path [String] file path
+    # @param encoded_source [String] encoded source code
+    # @return [Node] ast node for file
+    def parse_code_by_prism(_file_path, encoded_source)
+      Prism.parse(encoded_source).value.statements
     end
   end
 end
