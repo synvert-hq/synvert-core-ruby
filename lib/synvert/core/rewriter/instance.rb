@@ -517,7 +517,7 @@ module Synvert::Core
     # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
     def parse_code_by_syntax_tree(_file_path, encoded_source)
-      SyntaxTree::Parser.new(encoded_source).parse.statements
+      SyntaxTree.parse(encoded_source).statements
     end
   end
 end
