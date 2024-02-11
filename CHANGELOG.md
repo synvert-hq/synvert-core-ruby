@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.32.0 (2024-02-11)
+
+* Support `prism`
+* Update `node_mutation` to 1.23.0
+* Update `node_query` to 1.15.0
+
 ## 1.31.1 (2024-01-30)
 
 * Update `node_mutation` to 1.22.4
