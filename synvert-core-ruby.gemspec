@@ -20,13 +20,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "activesupport", "< 7.0.0"
-  spec.add_runtime_dependency "node_query", ">= 1.15.0"
-  spec.add_runtime_dependency "node_mutation", ">= 1.23.0"
+  spec.add_runtime_dependency "node_query", ">= 1.15.1"
+  spec.add_runtime_dependency "node_mutation", ">= 1.23.2"
   spec.add_runtime_dependency "parser"
   spec.add_runtime_dependency "parser_node_ext", ">= 1.2.2"
   spec.add_runtime_dependency "syntax_tree"
-  spec.add_runtime_dependency "syntax_tree_ext", ">= 0.7.1"
+  spec.add_runtime_dependency "syntax_tree_ext", ">= 0.7.2"
   spec.add_runtime_dependency "prism"
-  spec.add_runtime_dependency "prism_ext", ">= 0.2.2"
+  spec.add_runtime_dependency "prism_ext", ">= 0.2.3"
   spec.add_runtime_dependency "parallel"
 end
