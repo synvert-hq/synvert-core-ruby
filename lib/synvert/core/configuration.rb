@@ -7,6 +7,7 @@ module Synvert::Core
       # @!attribute [w] root_path
       # @!attribute [w] skip_paths
       # @!attribute [w] only_paths
+      # @!attribute [w] respect_gitignore
       # @!attribute [w] show_run_process
       # @!attribute [w] number_of_workers
       # @!attribute [w] single_quote
@@ -16,6 +17,7 @@ module Synvert::Core
       attr_writer :root_path,
                   :skip_paths,
                   :only_paths,
+                  :respect_gitignore,
                   :show_run_process,
                   :number_of_workers,
                   :single_quote,
@@ -42,6 +44,13 @@ module Synvert::Core
       # @return [Array<String>] default is [].
       def only_paths
         @only_paths || []
+      end
+
+      # Check if respect .gitignore
+      #
+      # @return [Boolean] default is true
+      def respect_gitignore
+        @respect_gitignore.nil? ? true : @respect_gitignore
       end
 
       # Check if show run process.
