@@ -78,14 +78,21 @@ module Synvert::Core
           Configuration.respect_gitignore = true
         end
 
-        it 'gets all files' do
-          expect(Object).to receive(:`).and_return(
-            [
-              'app/models/post.rb',
-              'app/controllers/posts_controller.rb'
-            ].join("\n")
+        it 'correctly filters out ignored files' do
+          file_patterns = ["**/*.rb"]
+          all_files = ["app/models/post.rb", "app/controllers/posts_controller.rb", "app/controllers/temp.tmp"]
+          not_ignored_files = ["app/models/post.rb", "app/controllers/posts_controller.rb"]
+          command_output = "app/controllers/temp.tmp\n"
+
+          allow(Open3).to receive(:popen3).with('git check-ignore --stdin').and_yield(
+            instance_double(IO, puts: nil, close: nil),
+            StringIO.new(command_output),
+            StringIO.new(''),
+            instance_double(Process::Waiter, value: instance_double(Process::Status, success?: true))
           )
-          expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+          allow(Dir).to receive(:glob).and_return(all_files)
+
+          expect(described_class.glob(file_patterns)).to match_array(not_ignored_files)
         end
       end
 

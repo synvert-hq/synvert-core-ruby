@@ -3,6 +3,7 @@
 require 'net/http'
 require 'uri'
 require 'open-uri'
+require 'open3'
 
 module Synvert::Core
   class Utils
@@ -35,13 +36,19 @@ module Synvert::Core
       # @return [Array<String>] file paths
       def glob(file_patterns)
         Dir.chdir(Configuration.root_path) do
-          all_files = if Configuration.respect_gitignore
-            `git ls-files --cached --others --exclude-standard #{file_patterns.join(' ')}`.split("\n")
-          else
-            file_patterns.flat_map { |file_pattern| Dir.glob(file_pattern) }
+          all_files = file_patterns.flat_map { |pattern| Dir.glob(pattern) }
+          ignored_files = []
+
+          if Configuration.respect_gitignore
+            Open3.popen3('git check-ignore --stdin') do |stdin, stdout, stderr, wait_thr|
+              stdin.puts(all_files.join("\n"))
+              stdin.close
+
+              ignored_files = stdout.read.split("\n")
+            end
           end
 
-          filtered_files = filter_only_paths(all_files)
+          filtered_files = filter_only_paths(all_files - ignored_files)
 
           filtered_files -= get_explicitly_skipped_files
         end
