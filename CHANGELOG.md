@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.33.0 (2024-02-18)
+
+* Add `Configuration.respect_gitignore`
+* Glob files with `git check-ignore` if `Configuration.respect_gitignore` is true
+
 ## 1.32.1 (2024-02-17)
 
 * Update `node_mutation` to 1.23.2
