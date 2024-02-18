@@ -35,11 +35,15 @@ module Synvert::Core
       # @return [Array<String>] file paths
       def glob(file_patterns)
         Dir.chdir(Configuration.root_path) do
-          all_files =
-            file_patterns.flat_map do |file_pattern|
-              Dir.glob(file_pattern)
-            end
-          filter_only_paths(all_files) - get_skip_files
+          all_files = if Configuration.respect_gitignore
+            `git ls-files --cached --others --exclude-standard #{file_patterns.join(' ')}`.split("\n")
+          else
+            file_patterns.flat_map { |file_pattern| Dir.glob(file_pattern) }
+          end
+
+          filtered_files = filter_only_paths(all_files)
+
+          filtered_files -= get_explicitly_skipped_files
         end
       end
 
@@ -85,16 +89,16 @@ module Synvert::Core
       # Filter only paths with `Configuration.only_paths`.
       # @return [Array<String>] filtered file paths
       def filter_only_paths(all_files)
-        return all_files if Configuration.only_paths.size == 0
+        return all_files if Configuration.only_paths.empty?
 
         Configuration.only_paths.flat_map do |only_path|
           all_files.filter { |file_path| file_path.starts_with?(only_path) }
         end
       end
 
-      # Get skip files.
-      # @return [Array<String>] skip files
-      def get_skip_files
+      # Get skipped files.
+      # @return [Array<String>] skipped files
+      def get_explicitly_skipped_files
         Configuration.skip_paths.flat_map do |skip_path|
           if File.directory?(skip_path)
             Dir.glob(File.join(skip_path, "**/*"))

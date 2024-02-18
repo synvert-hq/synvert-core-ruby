@@ -58,16 +58,35 @@ module Synvert::Core
       before do
         Configuration.only_paths = []
         Configuration.skip_paths = []
+        Configuration.respect_gitignore = false
       end
 
-      it 'gets all files' do
-        expect(Dir).to receive(:glob).with('**/*.rb').and_return(
-          [
-            'app/models/post.rb',
-            'app/controllers/posts_controller.rb'
-          ]
-        )
-        expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+      context 'Configuration.respect_gitignore is false' do
+        it 'gets all files' do
+          expect(Dir).to receive(:glob).with('**/*.rb').and_return(
+            [
+              'app/models/post.rb',
+              'app/controllers/posts_controller.rb'
+            ]
+          )
+          expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+        end
+      end
+
+      context 'Configuration.respect_gitignore is true' do
+        before do
+          Configuration.respect_gitignore = true
+        end
+
+        it 'gets all files' do
+          expect(Object).to receive(:`).and_return(
+            [
+              'app/models/post.rb',
+              'app/controllers/posts_controller.rb'
+            ].join("\n")
+          )
+          expect(described_class.glob(['**/*.rb'])).to eq(['app/models/post.rb', 'app/controllers/posts_controller.rb'])
+        end
       end
 
       it 'filters only paths' do
