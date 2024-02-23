@@ -47,8 +47,9 @@ module Synvert::Core
       puts @file_path if Configuration.show_run_process
 
       absolute_file_path = File.join(Configuration.root_path, @file_path)
-      # It keeps running until no conflict.
-      loop do
+      # It keeps running until no conflict,
+      # it will try 10 times at maximum.
+      10.times do
         source = read_source(absolute_file_path)
         encoded_source = Engine.encode(File.extname(file_path), source)
         @current_mutation = NodeMutation.new(source, adapter: @rewriter.parser)
