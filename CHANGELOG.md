@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.33.1 (2024-02-23)
+
+* Try 10 times at maximum when process
+
 ## 1.33.0 (2024-02-18)
 
 * Add `Configuration.respect_gitignore`
