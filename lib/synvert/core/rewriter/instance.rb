@@ -502,8 +502,10 @@ module Synvert::Core
         parse_code_by_syntax_tree(file_path, encoded_source)
       when Synvert::PRISM_PARSER
         parse_code_by_prism(file_path, encoded_source)
-      else
+      when Synvert::PARSER_PARSER
         parse_code_by_parser(file_path, encoded_source)
+      else
+        raise Errors::ParserNotSupported.new("Parser #{@rewriter.parser} not supported")
       end
     end
 
