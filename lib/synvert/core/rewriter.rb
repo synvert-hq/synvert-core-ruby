@@ -117,10 +117,8 @@ module Synvert::Core
       @block = block
       @helpers = []
       @sub_snippets = []
-      @warnings = []
-      @affected_files = Set.new
       @options = DEFAULT_OPTIONS.dup
-      @test_results = Hash.new { |h, k| h[k] = [] }
+      reset
       self.class.register(@group, @name, self)
     end
 
@@ -182,6 +180,13 @@ module Synvert::Core
 
     def parser
       @options[:parser]
+    end
+
+    # Reset @warnings, @affected_files, and @test_results.
+    def reset
+      @warnings = []
+      @affected_files = Set.new
+      @test_results = Hash.new { |h, k| h[k] = [] }
     end
 
     #######

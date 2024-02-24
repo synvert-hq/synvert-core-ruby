@@ -4,6 +4,19 @@ require 'spec_helper'
 
 module Synvert::Core
   RSpec.describe Rewriter do
+    describe '#reset' do
+      it 'resets warnings, affected_files, and test_results' do
+        rewriter = Rewriter.new 'group', 'name'
+        rewriter.instance_variable_set(:@warnings, ['warnings'])
+        rewriter.instance_variable_set(:@affected_files, ['files'])
+        rewriter.instance_variable_set(:@test_results, { foo: 'bar' })
+        rewriter.reset
+        expect(rewriter.warnings).to eq []
+        expect(rewriter.affected_files).to eq Set.new
+        expect(rewriter.test_results).to eq Hash.new
+      end
+    end
+
     describe '#configure' do
       it 'parses parser' do
         running_mutation_adapter = nil
