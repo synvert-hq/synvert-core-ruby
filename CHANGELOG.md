@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.33.2 (2024-02-24)
+
+* Reset `@warnings`, `@affected_files`, and `@test_results`
+* Puts `Parser::SyntaxError` message only when `ENV[DEBUG]` is true
+* Raise `ParserNotSupported` if parser is not supported
+
 ## 1.33.1 (2024-02-23)
 
 * Try 10 times at maximum when process
