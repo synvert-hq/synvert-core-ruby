@@ -68,8 +68,10 @@ module Synvert::Core
           end
           break unless result.conflicted?
         rescue Parser::SyntaxError => e
-          puts "[Warn] file #{file_path} was not parsed correctly."
-          puts e.message
+          if ENV['DEBUG'] == 'true'
+            puts "[Warn] file #{file_path} was not parsed correctly."
+            puts e.message
+          end
           break
         end
       end
@@ -95,8 +97,10 @@ module Synvert::Core
         result.file_path = file_path
         result
       rescue Parser::SyntaxError => e
-        puts "[Warn] file #{file_path} was not parsed correctly."
-        puts e.message
+        if ENV['DEBUG'] == 'true'
+          puts "[Warn] file #{file_path} was not parsed correctly."
+          puts e.message
+        end
       end
     end
 
