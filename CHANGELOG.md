@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.33.3 (2024-02-28)
+
+* Preserve current parser
+
 ## 1.33.2 (2024-02-24)
 
 * Reset `@warnings`, `@affected_files`, and `@test_results`
