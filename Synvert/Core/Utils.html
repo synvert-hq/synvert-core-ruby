@@ -310,7 +310,7 @@
     <span class='id identifier rubyid_ignored_files'>ignored_files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
     <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_respect_gitignore'><span class='object_link'><a href="Configuration.html#respect_gitignore-class_method" title="Synvert::Core::Configuration.respect_gitignore (method)">respect_gitignore</a></span></span>
-      <span class='const'>Open3</span><span class='period'>.</span><span class='id identifier rubyid_popen3'>popen3</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>git check-ignore --stdin</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_stdin'>stdin</span><span class='comma'>,</span> <span class='id identifier rubyid_stdout'>stdout</span><span class='comma'>,</span> <span class='id identifier rubyid__stderr'>_stderr</span><span class='comma'>,</span> <span class='id identifier rubyid__wait_thr'>_wait_thr</span><span class='op'>|</span>
+      <span class='const'>Open3</span><span class='period'>.</span><span class='id identifier rubyid_popen3'>popen3</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>git check-ignore --stdin</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_stdin'>stdin</span><span class='comma'>,</span> <span class='id identifier rubyid_stdout'>stdout</span><span class='comma'>,</span> <span class='id identifier rubyid_stderr'>stderr</span><span class='comma'>,</span> <span class='id identifier rubyid_wait_thr'>wait_thr</span><span class='op'>|</span>
         <span class='id identifier rubyid_stdin'>stdin</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_all_files'>all_files</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_stdin'>stdin</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
 
@@ -393,7 +393,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Feb 24 14:03:27 2024 by
+  Generated on Wed Feb 28 04:52:36 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.3).
 </div>
