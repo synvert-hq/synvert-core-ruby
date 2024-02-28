@@ -361,13 +361,15 @@ module Synvert::Core
       return unless rewriter && rewriter.is_a?(Rewriter)
 
       rewriter.options = @options
-      if !rewriter.options[:write_to_file]
-        results = rewriter.test
-        merge_test_results(results)
-      elsif rewriter.options[:run_instance]
-        rewriter.process
-      else
-        rewriter.process_with_sandbox
+      preserve_current_parser do
+        if !rewriter.options[:write_to_file]
+          results = rewriter.test
+          merge_test_results(results)
+        elsif rewriter.options[:run_instance]
+          rewriter.process
+        else
+          rewriter.process_with_sandbox
+        end
       end
       @sub_snippets << rewriter
     end
@@ -385,7 +387,9 @@ module Synvert::Core
       helper = Synvert::Core::Helper.fetch(name) || Utils.eval_snippet(name)
       return unless helper && helper.is_a?(Synvert::Core::Helper)
 
-      instance_exec(options, &helper.block)
+      preserve_current_parser do
+        instance_exec(options, &helper.block)
+      end
     end
 
     # It defines helper method for {Synvert::Core::Rewriter::Instance}.
@@ -431,6 +435,13 @@ module Synvert::Core
 
     def merge_test_result(result)
       @test_results[result.file_path] << result
+    end
+
+    def preserve_current_parser
+      current_parser = @options[:parser]
+      yield
+    ensure
+      @options[:parser] = current_parser
     end
   end
 end
