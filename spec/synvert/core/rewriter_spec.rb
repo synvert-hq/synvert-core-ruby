@@ -395,6 +395,18 @@ module Synvert::Core
       expect(instance.dynamic_helper('arg1', 'arg2')).to eq 'dynamic result'
     end
 
+    it 'parses save_data and load_data' do
+      data = nil
+      rewriter =
+        Rewriter.new 'group', 'name' do
+          hash = { foo: 'bar' }
+          save_data :object, hash
+          data = load_data :object
+        end
+      rewriter.process
+      expect(data).to eq({ foo: 'bar' })
+    end
+
     describe 'class methods' do
       before :each do
         Rewriter.clear
