@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.34.0 (2024-02-29)
+
+* Add `with_configurations` dsl
+* Add `save_data` dsl
+* Add `load_data` dsl
+
 ## 1.33.3 (2024-02-28)
 
 * Preserve current parser
