@@ -409,6 +409,14 @@ module Synvert::Core
       @helpers << { name: name, block: block }
     end
 
+    # Executes a block of code with temporary configurations.
+    #
+    # @param configurations [Hash] The temporary configurations to apply.
+    # @yield The block of code to execute.
+    def with_configurations(configurations, &block)
+      Configuration.with_temporary_configurations(configurations, &block)
+    end
+
     private
 
     # Handle one file.

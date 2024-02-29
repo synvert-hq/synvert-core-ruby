@@ -100,6 +100,32 @@ module Synvert::Core
       def test_result
         @test_result || 'actions'
       end
+
+      # Temporarily sets the specified configurations, executes the given block, and then restores the original configurations.
+      #
+      # @param configurations [Hash] The configurations to be set temporarily.
+      # @yield The block of code to be executed.
+      #
+      # @example
+      #   with_temporary_configurations({ number_of_workers: 1 }) do
+      #     # Code to be executed with temporary configurations
+      #   end
+      def with_temporary_configurations(configurations, &block)
+        old_instance_variables = instance_variables.reduce({}) do |hash, var|
+          hash[var] = instance_variable_get(var)
+          hash
+        end
+
+        configurations.each do |variable, value|
+          instance_variable_set("@#{variable}", value)
+        end
+
+        block.call
+
+        old_instance_variables.each do |var, value|
+          instance_variable_set(var, value)
+        end
+      end
     end
   end
 end
