@@ -24,7 +24,6 @@ module Synvert::Core
     autoload :Condition, 'synvert/core/rewriter/condition'
     autoload :IfExistCondition, 'synvert/core/rewriter/condition/if_exist_condition'
     autoload :UnlessExistCondition, 'synvert/core/rewriter/condition/unless_exist_condition'
-    autoload :IfOnlyExistCondition, 'synvert/core/rewriter/condition/if_only_exist_condition'
 
     autoload :Helper, 'synvert/core/rewriter/helper'
 

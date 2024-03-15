@@ -91,16 +91,6 @@ module Synvert::Core
       instance.unless_exist_node(type: 'send', message: 'create', &block)
     end
 
-    it 'parses if_only_exist_node' do
-      condition = double
-      block = proc {}
-      expect(Rewriter::IfOnlyExistCondition).to receive(:new)
-        .with(instance, { type: 'send', message: 'create' }, &block)
-        .and_return(condition)
-      expect(condition).to receive(:process)
-      instance.if_only_exist_node(type: 'send', message: 'create', &block)
-    end
-
     it 'parses append' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double

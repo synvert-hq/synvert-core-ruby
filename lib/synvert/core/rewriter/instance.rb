@@ -48,8 +48,8 @@ module Synvert::Core
 
       absolute_file_path = File.join(Configuration.root_path, @file_path)
       # It keeps running until no conflict,
-      # it will try 10 times at maximum.
-      10.times do
+      # it will try 5 times at maximum.
+      5.times do
         source = read_source(absolute_file_path)
         encoded_source = Engine.encode(File.extname(file_path), source)
         @current_mutation = NodeMutation.new(source, adapter: @rewriter.parser)
@@ -214,21 +214,6 @@ module Synvert::Core
     # @param block [Block] block code to continue operating on the matching nodes.
     def unless_exist_node(nql_or_rules, &block)
       Rewriter::UnlessExistCondition.new(self, nql_or_rules, &block).process
-    end
-
-    # It creates a {Synvert::Core::Rewriter::IfOnlyExistCondition} to check
-    # if current node has only one child node and the child node matches,
-    # if so, then continue operating on each matching ast node.
-    # @example
-    #   # it { should matcher }
-    #   with_node type: 'block', caller: { message: 'it' } do
-    #     if_only_exist_node type: 'send', receiver: nil, message: 'should' do
-    #     end
-    #   end
-    # @param nql_or_rules [String|Hash] nql or rules to check mathing ast nodes.
-    # @param block [Block] block code to continue operating on the matching nodes.
-    def if_only_exist_node(nql_or_rules, &block)
-      Rewriter::IfOnlyExistCondition.new(self, nql_or_rules, &block).process
     end
 
     # It appends the code to the bottom of current node body.
