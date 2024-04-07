@@ -45,7 +45,7 @@ module Synvert::Core
           expect(File).to receive(:exist?).with("group/name").and_return(false)
           expect(described_class).to receive(:default_snippets_home).and_return('/home/richard/.synvert-ruby')
           expect(File).to receive(:exist?).with("/home/richard/.synvert-ruby/lib/group/name.rb").and_return(false)
-          expect(described_class).to receive(:remote_snippet_exists?).with(URI.parse("https://raw.githubusercontent.com/xinminlabs/synvert-snippets-ruby/main/lib/group/name.rb")).and_return(true)
+          expect(described_class).to receive(:remote_snippet_exists?).with(URI.parse("https://raw.githubusercontent.com/synvert-hq/synvert-snippets-ruby/main/lib/group/name.rb")).and_return(true)
           expect_any_instance_of(URI::HTTP).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'name' do\nend"))
           rewriter = described_class.eval_snippet('group/name')
           expect(rewriter.group).to eq 'group'

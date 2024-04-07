@@ -345,8 +345,8 @@ module Synvert::Core
     #     add_snippet 'minitest/assert_kind_of'
     #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/minitest/assert_match.rb'
     #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/minitest/assert_nil.rb'
-    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/minitest/assert_silent.rb'
-    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/minitest/assert_truthy.rb'
+    #     add_snippet 'https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/minitest/assert_silent.rb'
+    #     add_snippet 'https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/minitest/assert_truthy.rb'
     #   end
     # @param group [String] group of another rewriter, if there's no name parameter, the group can be http url, file path or snippet name.
     # @param name [String] name of another rewriter.
@@ -378,7 +378,7 @@ module Synvert::Core
     #   Synvert::Rewriter.new 'rails', 'upgrade_6_0_to_6_1' do
     #     call_helper 'rails/set_load_defaults', rails_version: '6.1'
     #     add_snippet '/Users/flyerhzm/.synvert-ruby/lib/rails/set_load_defaults.rb', rails_version: '6.1'
-    #     add_snippet 'https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb', rails_version: '6.1'
+    #     add_snippet 'https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb', rails_version: '6.1'
     #   end
     # @param name [String] name of helper.
     # @param options [Hash] options to pass to helper.

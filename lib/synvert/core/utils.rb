@@ -80,7 +80,7 @@ module Synvert::Core
       end
 
       def remote_snippet_url(snippet_name)
-        "https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/#{snippet_name}.rb"
+        "https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/#{snippet_name}.rb"
       end
 
       def format_url(url)
