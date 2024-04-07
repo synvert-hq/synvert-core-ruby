@@ -61,8 +61,9 @@
 
 <p><img src="https://synvert.net/img/logo_96.png" alt="logo" width="32" height="32" /></p>
 
-<p><a href="https://awesomecode.io/repos/xinminlabs/synvert-core-ruby"><img src="https://awesomecode.io/projects/033f7f02-7b22-41c3-a902-fca37f1ec72a/status" alt="AwesomeCode Status for xinminlabs/synvert-core-ruby"></a>
-<img src="https://github.com/xinminlabs/synvert-core-ruby/actions/workflows/main.yml/badge.svg" alt="Main workflow"></p>
+<p><a href="https://awesomecode.io/repos/synvert-hq/synvert-core-ruby"><img src="https://awesomecode.io/projects/033f7f02-7b22-41c3-a902-fca37f1ec72a/status" alt="AwesomeCode Status for synvert-hq/synvert-core-ruby"></a>
+<a href="https://github.com/synvert-hq/synvert-core-ruby/actions/workflows/main.yml"><img src="https://github.com/synvert-hq/synvert-core-ruby/actions/workflows/main.yml/badge.svg" alt="Build Status"></a>
+<a href="https://rubygems.org/gems/synvert-core"><img src="https://img.shields.io/gem/v/synvert-core.svg" alt="Gem Version"></a></p>
 
 <p>Synvert core provides a set of DSLs to rewrite ruby code. e.g.</p>
 
@@ -111,85 +112,84 @@
 <span class='kw'>end</span>
 </code></pre>
 
-<p>Want to see more examples, check out <a href="https://github.com/xinminlabs/synvert-snippets-ruby">synvert-snippets-ruby</a>.</p>
+<p>Want to see more examples, check out <a href="https://github.com/synvert-hq/synvert-snippets-ruby">synvert-snippets-ruby</a>.</p>
 
-<p>Want to use the CLI, check out <a href="https://github.com/xinminlabs/synvert-ruby">synvert-ruby</a>.</p>
+<p>Want to use the CLI, check out <a href="https://github.com/synvert-hq/synvert-ruby">synvert-ruby</a>.</p>
 
 <p>DSLs are as follows</p>
 
 <ul>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#configure-instance_method">configure</a> - configure the rewriter</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#description-instance_method">description</a> - describe what the rewriter does</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#if_ruby-instance_method">if_ruby</a> - check if ruby version is greater than or equal to the specified ruby version</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#if_gem-instance_method">if_gem</a> - compare version of specified gem</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#within_files-instance_method">within_files</a> - find specified files</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#within_file-instance_method">within_file</a> - alias to within_files</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_file-instance_method">add_file</a> - add a new file</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#remove_file-instance_method">remove_file</a> - remove a file</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#helper_method-instance_method">helper_method</a> - define a helper method</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_snippet-instance_method">add_snippet</a> - call another rewriter</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#call_helper-instance_method">call_helper</a> - call a shared rewriter</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#with_configurations-instance_method">with_configurations</a> - execute a block of code with temporary configurations</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#save_data-instance_method">save_data</a> - save data</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#load_data-instance_method">load_data</a> - load data</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#configure-instance_method">configure</a> - configure the rewriter</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#description-instance_method">description</a> - describe what the rewriter does</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#if_ruby-instance_method">if_ruby</a> - check if ruby version is greater than or equal to the specified ruby version</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#if_gem-instance_method">if_gem</a> - compare version of specified gem</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#within_files-instance_method">within_files</a> - find specified files</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#within_file-instance_method">within_file</a> - alias to within_files</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_file-instance_method">add_file</a> - add a new file</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#remove_file-instance_method">remove_file</a> - remove a file</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#helper_method-instance_method">helper_method</a> - define a helper method</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_snippet-instance_method">add_snippet</a> - call another rewriter</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#call_helper-instance_method">call_helper</a> - call a shared rewriter</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#with_configurations-instance_method">with_configurations</a> - execute a block of code with temporary configurations</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#save_data-instance_method">save_data</a> - save data</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#load_data-instance_method">load_data</a> - load data</li>
 </ul>
 
 <p>Scopes:</p>
 
 <ul>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#within_node-instance_method">within_node</a> - recursively find matching ast nodes</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#with_node-instance_method">with_node</a> - alias to within_node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#find_node-instance_method">find_node</a> - alias to within_node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#goto_node-instance_method">goto_node</a> - go to a child node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#within_node-instance_method">within_node</a> - recursively find matching ast nodes</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#with_node-instance_method">with_node</a> - alias to within_node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#find_node-instance_method">find_node</a> - alias to within_node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#goto_node-instance_method">goto_node</a> - go to a child node</li>
 </ul>
 
 <p>Conditions:</p>
 
 <ul>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#if_exist_node-instance_method">if_exist_node</a> - check if matching node exist in the child nodes</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#unless_exist_node-instance_method">unless_exist_node</a> - check if matching node doesn&#39;t exist in the child nodes</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#if_only_exist_node-instance_method">if_only_exist_node</a> - check if current node has only one child node and the child node matches</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#if_exist_node-instance_method">if_exist_node</a> - check if matching node exist in the child nodes</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#unless_exist_node-instance_method">unless_exist_node</a> - check if matching node doesn&#39;t exist in the child nodes</li>
 </ul>
 
 <p>Actions:</p>
 
 <ul>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#append-instance_method">append</a> - append the code to the bottom of current node body</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#prepend-instance_method">prepend</a> - prepend the code to the bottom of current node body</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#indent-instance_method">indent</a> - indent code</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert-instance_method">insert</a> - insert code</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert_after-instance_method">insert_after</a> - insert the code next to the current node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert_before-instance_method">insert_before</a> - insert the code previous to the current node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace-instance_method">replace</a> - replace the code of specified child nodes</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#delete-instance_method">delete</a> - delete the code in specified child nodes</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#remove-instance_method">remove</a> - remove the whole code of current node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap-instance_method">wrap</a> - wrap the current node with prefix and suffix code</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace_with-instance_method">replace_with</a> - replace the whole code of current node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#warn-instance_method">warn</a> - warn message</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method">replace_erb_stmt_with_expr</a> - replace erb stmt code to expr code</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#noop-instance_method">noop</a> - no operation</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#group-instance_method">group</a> - group actions</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method">add_action</a> - add custom action</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#append-instance_method">append</a> - append the code to the bottom of current node body</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#prepend-instance_method">prepend</a> - prepend the code to the bottom of current node body</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#indent-instance_method">indent</a> - indent code</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert-instance_method">insert</a> - insert code</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert_after-instance_method">insert_after</a> - insert the code next to the current node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert_before-instance_method">insert_before</a> - insert the code previous to the current node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace-instance_method">replace</a> - replace the code of specified child nodes</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#delete-instance_method">delete</a> - delete the code in specified child nodes</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#remove-instance_method">remove</a> - remove the whole code of current node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap-instance_method">wrap</a> - wrap the current node with prefix and suffix code</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace_with-instance_method">replace_with</a> - replace the whole code of current node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#warn-instance_method">warn</a> - warn message</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#replace_erb_stmt_with_expr-instance_method">replace_erb_stmt_with_expr</a> - replace erb stmt code to expr code</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#noop-instance_method">noop</a> - no operation</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#group-instance_method">group</a> - group actions</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method">add_action</a> - add custom action</li>
 </ul>
 
 <p>Others:</p>
 
 <ul>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method">wrap_with_quotes</a> - wrap string code with single or doulbe quotes</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_leading_spaces-instance_method">add_leading_spaces</a> - add leading spaces before the string code</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method">wrap_with_quotes</a> - wrap string code with single or doulbe quotes</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_leading_spaces-instance_method">add_leading_spaces</a> - add leading spaces before the string code</li>
 </ul>
 
 <p>Attributes:</p>
 
 <ul>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#file_path-instance_method">file_path</a> - current file path</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#node-instance_method">node</a> - current ast node</li>
-<li><a href="https://xinminlabs.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#mutation_adapter-instance_method">mutation_adapter</a> - <a href="https://xinminlabs.github.io/node-mutation-ruby/NodeMutation/Adapter.html">mutation adapter</a> to get some helper methods</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#file_path-instance_method">file_path</a> - current file path</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#node-instance_method">node</a> - current ast node</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#mutation_adapter-instance_method">mutation_adapter</a> - <a href="https://synvert-hq.github.io/node-mutation-ruby/NodeMutation/Adapter.html">mutation adapter</a> to get some helper methods</li>
 </ul>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Mar  6 07:53:26 2024 by
+  Generated on Sun Apr  7 08:17:11 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.3).
 </div>

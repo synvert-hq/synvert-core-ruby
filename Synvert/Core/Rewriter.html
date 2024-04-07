@@ -120,7 +120,7 @@ which define the behavior what files and what codes to detect and rewrite to wha
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Rewriter/Condition.html" title="Synvert::Core::Rewriter::Condition (class)">Condition</a></span>, <span class='object_link'><a href="Rewriter/GemSpec.html" title="Synvert::Core::Rewriter::GemSpec (class)">GemSpec</a></span>, <span class='object_link'><a href="Rewriter/GotoScope.html" title="Synvert::Core::Rewriter::GotoScope (class)">GotoScope</a></span>, <span class='object_link'><a href="Rewriter/IfExistCondition.html" title="Synvert::Core::Rewriter::IfExistCondition (class)">IfExistCondition</a></span>, <span class='object_link'><a href="Rewriter/IfOnlyExistCondition.html" title="Synvert::Core::Rewriter::IfOnlyExistCondition (class)">IfOnlyExistCondition</a></span>, <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span>, <span class='object_link'><a href="Rewriter/ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span>, <span class='object_link'><a href="Rewriter/RubyVersion.html" title="Synvert::Core::Rewriter::RubyVersion (class)">RubyVersion</a></span>, <span class='object_link'><a href="Rewriter/Scope.html" title="Synvert::Core::Rewriter::Scope (class)">Scope</a></span>, <span class='object_link'><a href="Rewriter/UnlessExistCondition.html" title="Synvert::Core::Rewriter::UnlessExistCondition (class)">UnlessExistCondition</a></span>, <span class='object_link'><a href="Rewriter/Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span>, <span class='object_link'><a href="Rewriter/WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Rewriter/Condition.html" title="Synvert::Core::Rewriter::Condition (class)">Condition</a></span>, <span class='object_link'><a href="Rewriter/GemSpec.html" title="Synvert::Core::Rewriter::GemSpec (class)">GemSpec</a></span>, <span class='object_link'><a href="Rewriter/GotoScope.html" title="Synvert::Core::Rewriter::GotoScope (class)">GotoScope</a></span>, <span class='object_link'><a href="Rewriter/IfExistCondition.html" title="Synvert::Core::Rewriter::IfExistCondition (class)">IfExistCondition</a></span>, <span class='object_link'><a href="Rewriter/Instance.html" title="Synvert::Core::Rewriter::Instance (class)">Instance</a></span>, <span class='object_link'><a href="Rewriter/ReplaceErbStmtWithExprAction.html" title="Synvert::Core::Rewriter::ReplaceErbStmtWithExprAction (class)">ReplaceErbStmtWithExprAction</a></span>, <span class='object_link'><a href="Rewriter/RubyVersion.html" title="Synvert::Core::Rewriter::RubyVersion (class)">RubyVersion</a></span>, <span class='object_link'><a href="Rewriter/Scope.html" title="Synvert::Core::Rewriter::Scope (class)">Scope</a></span>, <span class='object_link'><a href="Rewriter/UnlessExistCondition.html" title="Synvert::Core::Rewriter::UnlessExistCondition (class)">UnlessExistCondition</a></span>, <span class='object_link'><a href="Rewriter/Warning.html" title="Synvert::Core::Rewriter::Warning (class)">Warning</a></span>, <span class='object_link'><a href="Rewriter/WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span>
     
   
 </p>
@@ -1135,6 +1135,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+113
 114
 115
 116
@@ -1143,11 +1144,10 @@ When a rewriter is initialized, it is already registered.</p>
 119
 120
 121
-122
-123</pre>
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@group</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span>
@@ -1213,6 +1213,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1220,11 +1221,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1284,6 +1284,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1291,11 +1292,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1355,12 +1355,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
-98
-99</pre>
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group'>group</span>
   <span class='ivar'>@group</span>
@@ -1414,6 +1414,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1421,11 +1422,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1468,12 +1468,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
-98
-99</pre>
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_helpers'>helpers</span>
   <span class='ivar'>@helpers</span>
@@ -1527,6 +1527,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1534,11 +1535,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1598,6 +1598,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1605,11 +1606,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1669,6 +1669,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1676,11 +1677,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1740,6 +1740,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1747,11 +1748,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1794,6 +1794,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1801,11 +1802,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1865,6 +1865,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+96
 97
 98
 99
@@ -1872,11 +1873,10 @@ When a rewriter is initialized, it is already registered.</p>
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 96</span>
 
 <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:group</span><span class='comma'>,</span>
 <span class='symbol'>:name</span><span class='comma'>,</span>
@@ -1937,12 +1937,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+60
 61
-62
-63</pre>
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_availables'>availables</span>
   <span class='id identifier rubyid_rewriters'>rewriters</span>
@@ -1977,12 +1977,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+65
 66
-67
-68</pre>
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear'>clear</span>
   <span class='id identifier rubyid_rewriters'>rewriters</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
@@ -2068,14 +2068,14 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+51
 52
 53
 54
-55
-56</pre>
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_group'>group</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -2161,15 +2161,15 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+39
 40
 41
 42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_rewriter'>rewriter</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_group'>group</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -2228,12 +2228,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+176
 177
-178
-179</pre>
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_affected_file'>add_affected_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
   <span class='ivar'>@affected_files</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='rparen'>)</span>
@@ -2316,6 +2316,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+289
 290
 291
 292
@@ -2338,11 +2339,10 @@ When a rewriter is initialized, it is already registered.</p>
 309
 310
 311
-312
-313</pre>
+312</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_file'>add_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span>
@@ -2402,8 +2402,8 @@ When a rewriter is initialized, it is already registered.</p>
   <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>minitest/assert_kind_of</span><span class='tstring_end'>&#39;</span></span>
   <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/Users/flyerhzm/.synvert-ruby/lib/minitest/assert_match.rb</span><span class='tstring_end'>&#39;</span></span>
   <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/Users/flyerhzm/.synvert-ruby/lib/minitest/assert_nil.rb</span><span class='tstring_end'>&#39;</span></span>
-  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/minitest/assert_silent.rb</span><span class='tstring_end'>&#39;</span></span>
-  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/minitest/assert_truthy.rb</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/minitest/assert_silent.rb</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/minitest/assert_truthy.rb</span><span class='tstring_end'>&#39;</span></span>
 <span class='kw'>end</span></code></pre>
     
   </div>
@@ -2451,6 +2451,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+353
 354
 355
 356
@@ -2471,11 +2472,10 @@ When a rewriter is initialized, it is already registered.</p>
 371
 372
 373
-374
-375</pre>
+374</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 353</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_snippet'>add_snippet</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rewriter'>rewriter</span> <span class='op'>=</span>
@@ -2544,12 +2544,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+169
 170
-171
-172</pre>
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_warning'>add_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_warning'>warning</span><span class='rparen'>)</span>
   <span class='ivar'>@warnings</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_warning'>warning</span>
@@ -2584,7 +2584,7 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Synvert.html#Rewriter-constant" title="Synvert::Rewriter (constant)">Rewriter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rails</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>upgrade_6_0_to_6_1</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
   <span class='id identifier rubyid_call_helper'>call_helper</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rails/set_load_defaults</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span>
   <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/Users/flyerhzm/.synvert-ruby/lib/rails/set_load_defaults.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span>
-  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/xinminlabs/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_add_snippet'>add_snippet</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/rails/set_load_defaults.rb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>rails_version:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.1</span><span class='tstring_end'>&#39;</span></span>
 <span class='kw'>end</span></code></pre>
     
   </div>
@@ -2632,17 +2632,17 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+385
 386
 387
 388
 389
 390
 391
-392
-393</pre>
+392</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call_helper'>call_helper</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_helper'>helper</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core.html" title="Synvert::Core (module)">Core</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Helper.html" title="Synvert::Core::Helper (class)">Helper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Helper.html#fetch-class_method" title="Synvert::Core::Helper.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Synvert::Core::Utils (class)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_eval_snippet'><span class='object_link'><a href="Utils.html#eval_snippet-class_method" title="Synvert::Core::Utils.eval_snippet (method)">eval_snippet</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -2740,15 +2740,15 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+202
 203
 204
 205
 206
-207
-208</pre>
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2834,16 +2834,16 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+216
 217
 218
 219
 220
 221
-222
-223</pre>
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span><span class='lparen'>(</span><span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_description'>description</span>
@@ -2934,12 +2934,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+407
 408
-409
-410</pre>
+409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 408</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_helper_method'>helper_method</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@helpers</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>block:</span> <span class='id identifier rubyid_block'>block</span> <span class='rbrace'>}</span>
@@ -3018,12 +3018,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+241
 242
-243
-244</pre>
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 241</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_if_gem'>if_gem</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='ivar'>@gem_spec</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rewriter/GemSpec.html" title="Synvert::Core::Rewriter::GemSpec (class)">GemSpec</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rewriter/GemSpec.html#initialize-instance_method" title="Synvert::Core::Rewriter::GemSpec#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
@@ -3087,12 +3087,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+230
 231
-232
-233</pre>
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_if_ruby'>if_ruby</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='ivar'>@ruby_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rewriter/RubyVersion.html" title="Synvert::Core::Rewriter::RubyVersion (class)">RubyVersion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rewriter/RubyVersion.html#initialize-instance_method" title="Synvert::Core::Rewriter::RubyVersion#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
@@ -3163,12 +3163,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+431
 432
-433
-434</pre>
+433</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 431</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_data'>load_data</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core.html" title="Synvert::Core (module)">Core</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -3193,12 +3193,12 @@ When a rewriter is initialized, it is already registered.</p>
       <pre class="lines">
 
 
+180
 181
-182
-183</pre>
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parser'>parser</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:parser</span><span class='rbracket'>]</span>
@@ -3234,13 +3234,13 @@ It will call the block.</p>
       <pre class="lines">
 
 
+126
 127
 128
-129
-130</pre>
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span>
   <span class='ivar'>@affected_files</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3277,13 +3277,13 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
+133
 134
 135
-136
-137</pre>
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process_with_sandbox'>process_with_sandbox</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -3348,6 +3348,7 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
+320
 321
 322
 323
@@ -3364,11 +3365,10 @@ It will call the block but doesn&#39;t change any file.</p>
 334
 335
 336
-337
-338</pre>
+337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 321</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 320</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_file'>remove_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span>
@@ -3418,14 +3418,14 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
+185
 186
 187
 188
-189
-190</pre>
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
   <span class='ivar'>@warnings</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -3496,12 +3496,12 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
+423
 424
-425
-426</pre>
+425</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 424</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 423</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_data'>save_data</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Core.html" title="Synvert::Core (module)">Core</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -3526,6 +3526,7 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
+138
 139
 140
 141
@@ -3551,11 +3552,10 @@ It will call the block but doesn&#39;t change any file.</p>
 161
 162
 163
-164
-165</pre>
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_test'>test</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:write_to_file</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -3650,12 +3650,12 @@ It will call the block but doesn&#39;t change any file.</p>
       <pre class="lines">
 
 
+415
 416
-417
-418</pre>
+417</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 416</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 415</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_with_configurations'>with_configurations</span><span class='lparen'>(</span><span class='id identifier rubyid_configurations'>configurations</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with_temporary_configurations'><span class='object_link'><a href="Configuration.html#with_temporary_configurations-class_method" title="Synvert::Core::Configuration.with_temporary_configurations (method)">with_temporary_configurations</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_configurations'>configurations</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -3740,6 +3740,7 @@ It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="S
       <pre class="lines">
 
 
+254
 255
 256
 257
@@ -3758,11 +3759,10 @@ It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="S
 270
 271
 272
-273
-274</pre>
+273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_within_files'>within_files</span><span class='lparen'>(</span><span class='id identifier rubyid_file_patterns'>file_patterns</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:run_instance</span><span class='rbracket'>]</span>
@@ -3794,7 +3794,7 @@ It creates a <span class='object_link'><a href="Rewriter/Instance.html" title="S
 </div>
 
       <div id="footer">
-  Generated on Wed Mar  6 07:53:27 2024 by
+  Generated on Sun Apr  7 08:17:11 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.3).
 </div>
