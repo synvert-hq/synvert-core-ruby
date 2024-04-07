@@ -91,7 +91,7 @@ GEM
     shellany (0.0.1)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
-    syntax_tree_ext (0.7.2)
+    syntax_tree_ext (0.8.1)
       syntax_tree
     thor (1.2.1)
     tzinfo (2.0.6)
