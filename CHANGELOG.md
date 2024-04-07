@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.35.0 (2024-04-07)
+
+* Update `prism_ext` to 0.3.0
+* Update `syntax_tree_ext` to 0.8.1
+* Update `parser_node_ext` to 1.3.0
+* Update `node_query` to 1.15.2
+* Update `node_mutation` to 1.24.3
+* Remove `if_only_exist_node` dsl
+
 ## 1.34.0 (2024-02-29)
 
 * Add `with_configurations` dsl

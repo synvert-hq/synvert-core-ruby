@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (1.34.0)
+    synvert-core (1.35.0)
       activesupport (< 7.0.0)
       node_mutation (>= 1.24.1)
       node_query (>= 1.15.1)
@@ -43,14 +43,14 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     lumberjack (1.2.8)
     method_source (1.0.0)
-    minitest (5.22.2)
+    minitest (5.22.3)
     nenv (0.3.0)
     node_mutation (1.24.3)
     node_query (1.15.2)
