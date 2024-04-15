@@ -381,7 +381,7 @@ module Synvert::Core
     #   #   end
     #   # end
     #   within_node type: 'class' do
-    #     wrap with: 'module Synvert', and: 'end', newline: true
+    #     wrap prefix: 'module Synvert', suffix: 'end', newline: true
     #   end
     # @param prefix [String] prefix code need to be wrapped with.
     # @param suffix [String] suffix code need to be wrapped with.
