@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.35.1 (2024-04-15)
+
+* Fix `wrap` dsl comments
+* Update `prism_ext` to 0.3.1
+
 ## 1.35.0 (2024-04-07)
 
 * Update `prism_ext` to 0.3.0
