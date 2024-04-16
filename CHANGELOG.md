@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.35.2 (2024-04-16)
+
+* Explicitly read file as UTF-8 encoding
+* Update `node_mutation` to 1.24.4
+
 ## 1.35.1 (2024-04-15)
 
 * Fix `wrap` dsl comments
