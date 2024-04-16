@@ -19,10 +19,10 @@ module Synvert::Core
 
           raise Errors::SnippetNotFound.new("#{snippet_name} not found")
         elsif is_valid_file?(snippet_name)
-          return File.read(snippet_name)
+          return File.read(snippet_name, encoding: 'UTF-8')
         else
           snippet_path = snippet_expand_path(snippet_name)
-          return File.read(snippet_path) if File.exist?(snippet_path)
+          return File.read(snippet_path, encoding: 'UTF-8') if File.exist?(snippet_path)
 
           snippet_uri = URI.parse(format_url(remote_snippet_url(snippet_name)))
           return snippet_uri.open.read if remote_snippet_exists?(snippet_uri)
