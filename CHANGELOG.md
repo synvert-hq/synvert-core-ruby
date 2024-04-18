@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.35.3 (2024-04-18)
+
+* Update `prism_ext` to 0.3.2
+* Update `syntax_tree_ext` to 0.8.2
+* Update `parser_node_ext` to 1.3.2
+* Remove `reject_keys_from_hash` helper method
+
 ## 1.35.2 (2024-04-16)
 
 * Explicitly read file as UTF-8 encoding
