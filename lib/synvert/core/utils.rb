@@ -88,9 +88,15 @@ module Synvert::Core
       end
 
       def convert_to_github_raw_url(url)
-        return url unless url.include?('//github.com/')
+        if url.starts_with?('https://github.com')
+          return url.sub('//github.com/', '//raw.githubusercontent.com/').sub('/blob/', '/')
+        end
 
-        url.sub('//github.com/', '//raw.githubusercontent.com/').sub('/blob/', '/')
+        if url.starts_with?('https://gist.github.com')
+          return url.sub('gist.github.com/', 'gist.githubusercontent.com/') + '/raw'
+        end
+
+        url
       end
 
       # Filter only paths with `Configuration.only_paths`.

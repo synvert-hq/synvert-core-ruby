@@ -12,6 +12,22 @@ module Synvert::Core
           expect(rewriter.name).to eq 'name'
         end
 
+        it 'evals github url' do
+          expect(described_class).to receive(:remote_snippet_exists?).with(URI.parse('https://raw.githubusercontent.com/synvert-hq/synvert-snippets-ruby/main/lib/bundler/use_shortcut_git_source.rb')).and_return(true)
+          expect_any_instance_of(URI::HTTP).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'name' do\nend"))
+          rewriter = described_class.eval_snippet('https://github.com/synvert-hq/synvert-snippets-ruby/blob/main/lib/bundler/use_shortcut_git_source.rb')
+          expect(rewriter.group).to eq 'group'
+          expect(rewriter.name).to eq 'name'
+        end
+
+        it 'evals gist url' do
+          expect(described_class).to receive(:remote_snippet_exists?).with(URI.parse('https://gist.githubusercontent.com/flyerhzm/6b868cf6cceba0e2fa253f1936acf1f6/raw')).and_return(true)
+          expect_any_instance_of(URI::HTTP).to receive(:open).and_return(StringIO.new("Rewriter.new 'group', 'name' do\nend"))
+          rewriter = described_class.eval_snippet('https://gist.github.com/flyerhzm/6b868cf6cceba0e2fa253f1936acf1f6')
+          expect(rewriter.group).to eq 'group'
+          expect(rewriter.name).to eq 'name'
+        end
+
         it 'raises error' do
           expect(described_class).to receive(:remote_snippet_exists?).and_return(false)
           expect do
