@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.35.4 (2024-04-25)
+
+* Eval snippet on gist.github.com
+
 ## 1.35.3 (2024-04-18)
 
 * Update `prism_ext` to 0.3.2
