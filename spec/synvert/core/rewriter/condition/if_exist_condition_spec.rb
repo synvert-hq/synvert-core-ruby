@@ -11,7 +11,7 @@ module Synvert::Core
       end
     EOS
     let(:node) { Parser::CurrentRuby.parse(source) }
-    let(:instance) { double(current_node: node, parser: :parser) }
+    let(:instance) { double(current_node: node, current_parser: :parser) }
 
     describe '#process' do
       it 'call block if match anything' do

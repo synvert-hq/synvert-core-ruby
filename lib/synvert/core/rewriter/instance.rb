@@ -22,6 +22,7 @@ module Synvert::Core
     # @yield block code to find nodes, match conditions and rewrite code.
     def initialize(rewriter, file_path, &block)
       @rewriter = rewriter
+      @current_parser = @rewriter.parser
       @actions = []
       @file_path = file_path
       @block = block
@@ -35,9 +36,11 @@ module Synvert::Core
 
     # @!attribute [r] file_path
     #   @return file path
+    # @!attribute [r] current_parser
+    #   @return current parser
     # @!attribute [rw] current_node
     #   @return current ast node
-    attr_reader :file_path
+    attr_reader :file_path, :current_parser
     attr_accessor :current_node
 
     # Process the instance.
@@ -52,7 +55,7 @@ module Synvert::Core
       5.times do
         source = read_source(absolute_file_path)
         encoded_source = Engine.encode(File.extname(file_path), source)
-        @current_mutation = NodeMutation.new(source, adapter: @rewriter.parser)
+        @current_mutation = NodeMutation.new(source, adapter: @current_parser)
         @current_mutation.transform_proc = Engine.generate_transform_proc(File.extname(file_path), encoded_source)
         begin
           node = parse_code(@file_path, encoded_source)
@@ -83,7 +86,7 @@ module Synvert::Core
     def test
       absolute_file_path = File.join(Configuration.root_path, file_path)
       source = read_source(absolute_file_path)
-      @current_mutation = NodeMutation.new(source, adapter: @rewriter.parser)
+      @current_mutation = NodeMutation.new(source, adapter: @current_parser)
       encoded_source = Engine.encode(File.extname(file_path), source)
       @current_mutation.transform_proc = Engine.generate_transform_proc(File.extname(file_path), encoded_source)
       begin
@@ -109,13 +112,6 @@ module Synvert::Core
     # @return [Parser::AST::Node]
     def node
       @current_node
-    end
-
-    # Get rewriter's parser.
-    #
-    # @return [String] parser
-    def parser
-      @rewriter.parser
     end
 
     # Get current_mutation's adapter.
@@ -482,7 +478,7 @@ module Synvert::Core
     # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
     def parse_code(file_path, encoded_source)
-      case @rewriter.parser
+      case @current_parser
       when Synvert::SYNTAX_TREE_PARSER
         parse_code_by_syntax_tree(file_path, encoded_source)
       when Synvert::PRISM_PARSER
@@ -490,7 +486,7 @@ module Synvert::Core
       when Synvert::PARSER_PARSER
         parse_code_by_parser(file_path, encoded_source)
       else
-        raise Errors::ParserNotSupported.new("Parser #{@rewriter.parser} not supported")
+        raise Errors::ParserNotSupported.new("Parser #{@current_parser} not supported")
       end
     end
 

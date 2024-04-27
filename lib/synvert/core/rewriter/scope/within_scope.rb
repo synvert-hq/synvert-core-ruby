@@ -14,7 +14,7 @@ module Synvert::Core
       super(instance, &block)
 
       @options = { including_self: true, stop_at_first_match: false, recursive: true }.merge(options)
-      @node_query = NodeQuery.new(nql_or_rules, adapter: instance.parser)
+      @node_query = NodeQuery.new(nql_or_rules, adapter: instance.current_parser)
     end
 
     # Find out the matching nodes.

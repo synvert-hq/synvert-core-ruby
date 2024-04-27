@@ -10,7 +10,7 @@ module Synvert::Core
     # @yield run when condition matches
     def initialize(instance, nql_or_rules, &block)
       @instance = instance
-      @node_query = NodeQuery.new(nql_or_rules, adapter: instance.parser)
+      @node_query = NodeQuery.new(nql_or_rules, adapter: instance.current_parser)
       @block = block
     end
 
