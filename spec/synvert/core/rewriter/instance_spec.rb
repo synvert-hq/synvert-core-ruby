@@ -264,6 +264,13 @@ module Synvert::Core
       instance.warn 'foobar'
     end
 
+    it 'parsers add_callback' do
+      instance.instance_variable_set(:@current_visitor, double)
+      block = proc {}
+      expect(instance.instance_variable_get(:@current_visitor)).to receive(:add_callback).with(:class_node, at: 'start', &block)
+      instance.add_callback(:class_node, at: 'start', &block)
+    end
+
     it 'adds action' do
       mutation = NodeMutation.new("", adapter: :parser)
       instance.instance_variable_set(:@current_mutation, mutation)
@@ -413,6 +420,27 @@ module Synvert::Core
         allow(File).to receive(:read).with('./app/views/posts/_form.html.slim', encoding: 'UTF-8').and_return(input)
         expect(File).to receive(:write).with('./app/views/posts/_form.html.slim', output)
         instance.process
+      end
+
+      it 'visits with callbacks' do
+        names = []
+        instance =
+          Rewriter::Instance.new rewriter, 'app/models/synvert/user.rb' do
+            add_callback :module do |node|
+              names << node.name.to_source
+            end
+            add_callback :class do |node|
+              names << node.name.to_source
+            end
+          end
+        expect(File).to receive(:read).with('./app/models/synvert/user.rb', encoding: 'UTF-8').and_return(<<~EOF)
+          module Synvert
+            class User
+            end
+          end
+        EOF
+        instance.process
+        expect(names).to eq ['Synvert', 'User']
       end
     end
 
@@ -566,6 +594,27 @@ module Synvert::Core
             'post'
           ),
         ]
+      end
+
+      it 'visits with callbacks' do
+        names = []
+        instance =
+          Rewriter::Instance.new rewriter, 'app/models/synvert/user.rb' do
+            add_callback :module do |node|
+              names << node.name.to_source
+            end
+            add_callback :class do |node|
+              names << node.name.to_source
+            end
+          end
+        expect(File).to receive(:read).with('./app/models/synvert/user.rb', encoding: 'UTF-8').and_return(<<~EOF)
+          module Synvert
+            class User
+            end
+          end
+        EOF
+        instance.test
+        expect(names).to eq ['Synvert', 'User']
       end
     end
 

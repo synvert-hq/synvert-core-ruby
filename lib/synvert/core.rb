@@ -5,6 +5,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'node_query'
 require 'node_mutation'
+require 'node_visitor'
 
 module Synvert
   module Core

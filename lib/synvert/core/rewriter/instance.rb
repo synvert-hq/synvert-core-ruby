@@ -23,6 +23,7 @@ module Synvert::Core
     def initialize(rewriter, file_path, &block)
       @rewriter = rewriter
       @current_parser = @rewriter.parser
+      @current_visitor = NodeVisitor.new(adapter: @current_parser)
       @actions = []
       @file_path = file_path
       @block = block
@@ -64,6 +65,8 @@ module Synvert::Core
             instance_eval(&@block)
           end
 
+          @current_visitor.visit(node, self)
+
           result = @current_mutation.process
           if result.affected?
             @rewriter.add_affected_file(file_path)
@@ -95,6 +98,8 @@ module Synvert::Core
         process_with_node(node) do
           instance_eval(&@block)
         end
+
+        @current_visitor.visit(node, self)
 
         result = Configuration.test_result == 'new_source' ? @current_mutation.process : @current_mutation.test
         result.file_path = file_path
@@ -432,6 +437,18 @@ module Synvert::Core
     # @param message [String] warning message.
     def warn(message)
       @rewriter.add_warning Rewriter::Warning.new(self, message)
+    end
+
+    # It adds a callback when visiting an ast node.
+    # @example
+    #   add_callback :class, at: 'start' do |node|
+    #     # do something when visiting class node
+    #   end
+    # @param node_type [Symbol] node type
+    # @param at [String] at start or end
+    # @yield block code to run when visiting the node
+    def add_callback(node_type, at: 'start', &block)
+      @current_visitor.add_callback(node_type, at: at, &block)
     end
 
     # Wrap str string with single or doulbe quotes based on Configuration.single_quote.
