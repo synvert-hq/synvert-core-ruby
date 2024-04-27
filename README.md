@@ -106,9 +106,13 @@ Actions:
 * [group](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#group-instance_method) - group actions
 * [add_action](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method) - add custom action
 
+Callbacks:
+
+* [add_callback](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_callback-instance_method) - add callback when visiting ast nodes
+
 Others:
 
-* [wrap_with_quotes](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method) - wrap string code with single or doulbe quotes
+* [wrap_with_quotes](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method) - wrap string code with single or double quotes
 * [add_leading_spaces](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_leading_spaces-instance_method) - add leading spaces before the string code
 
 
