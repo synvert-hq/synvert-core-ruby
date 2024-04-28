@@ -171,7 +171,7 @@
 
 ## 1.26.3 (2023-05-13)
 
-* Fix haml and slim engine to support attribute and ruby evalidation in the same line
+* Fix haml and slim engine to support attribute and ruby evaluation in the same line
 * Fix ruby block in multi lins in haml and slim
 
 ## 1.26.2 (2023-05-10)
@@ -405,12 +405,12 @@
 ## 1.2.1 (2022-05-01)
 
 * Selector always after a node type in NQL
-* Define `pairs` method for `hash` ndoe
+* Define `pairs` method for `hash` node
 
 ## 1.2.0 (2022-04-29)
 
 * Remove comma in NQL array value
-* Parse pseduo class without selector in NQL
+* Parse pseudo class without selector in NQL
 * Parse multiple goto scope in NQL
 * Parse `nil?` in NQL
 
@@ -547,7 +547,7 @@
 
 ## 0.44.0 (2021-07-19)
 
-* Return rewrtier after executing snippet
+* Return rewriter after executing snippet
 * `left_value` and `right_value` support `or_asgn` node
 * `child_node_range` supports send `parentheses`
 
@@ -661,7 +661,7 @@
 
 ## 0.17.0 (2021-01-29)
 
-* Ignore `gem_spec` check if `Gemfile.lock` does not eixst
+* Ignore `gem_spec` check if `Gemfile.lock` does not exist
 
 ## 0.16.0 (2021-01-17)
 
@@ -719,10 +719,10 @@
 ## 0.7.0 (2014-09-29)
 
 * Add debug info for MethodNotSupported error.
-* Add left_value and right_vaue ext to ast node
+* Add left_value and right_value ext to ast node
 * Add arguments for def and defs nodes
 * Add name for arg and blockarg nodes
-* Remove trailing whitespaces in rewritten code
+* Remove trailing whitespace in rewritten code
 * Rewriter.available always returns a hash
 * Support ArgumentsNode in rewritten_source
 
