@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.0 (2024-04-28)
+
+* Add instance variable `Instance#current_parser`
+* Add callback and visit ast nodes
+
 ## 1.35.4 (2024-04-25)
 
 * Eval snippet on gist.github.com
