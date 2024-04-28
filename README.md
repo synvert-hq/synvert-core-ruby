@@ -6,52 +6,58 @@
 [![Build Status](https://github.com/synvert-hq/synvert-core-ruby/actions/workflows/main.yml/badge.svg)](https://github.com/synvert-hq/synvert-core-ruby/actions/workflows/main.yml)
 [![Gem Version](https://img.shields.io/gem/v/synvert-core.svg)](https://rubygems.org/gems/synvert-core)
 
-Synvert core provides a set of DSLs to rewrite ruby code. e.g.
+Synvert core provides a set of DSLs to rewrite (find and replace) ruby code. e.g.
 
 ```ruby
-Synvert::Rewriter.new 'factory_bot', 'convert_factory_girl_to_factory_bot' do
+Synvert::Rewriter.new 'ruby', 'map_and_flatten_to_flat_map' do
+  configure(parser: Synvert::PARSER_PARSER)
+
   description <<~EOS
-    It converts FactoryGirl to FactoryBot
+    It converts `map` and `flatten` to `flat_map`
 
     ```ruby
-    require 'factory_girl'
-    require 'factory_girl_rails'
+    enum.map do
+      # do something
+    end.flatten
     ```
 
     =>
 
     ```ruby
-    require 'factory_bot'
-    require 'factory_bot_rails'
-    ```
-
-    ```ruby
-    FactoryGirl.create(:user)
-    FactoryGirl.build(:user)
-    ```
-
-    =>
-
-    ```ruby
-    FactoryBot.create(:user)
-    FactoryBot.build(:user)
+    enum.flat_map do
+      # do something
+    end
     ```
   EOS
 
-  within_files Synvert::RAILS_TEST_FILES do
-    find_node '.const[name=FactoryGirl]' do
-      replace_with 'FactoryBot'
-    end
-
-    find_node ".send[receiver=nil][message=require][arguments.size=1][arguments.first='factory_girl']" do
-      replace :arguments, with: "'factory_bot'"
-    end
-
-    with_node type: 'send', receiver: nil, message: 'require', arguments: { size: 1, first: "'factory_girl_rails'" } do
-      replace :arguments, with: "'factory_bot_rails'"
+  within_files Synvert::ALL_RUBY_FILES + Synvert::ALL_RAKE_FILES do
+    find_node '.send [receiver=.block [caller=.send[message=map]]] [message=flatten] [arguments.size=0]' do
+      group do
+        delete :message, :dot
+        replace 'receiver.caller.message', with: 'flat_map'
+      end
     end
   end
 end
+```
+
+It also supports to add callbacks to visit ast nodes.
+
+```ruby
+Synvert::Helper.new 'ruby/parse' do |options|
+  configure(parser: Synvert::PRISM_PARSER)
+
+  with_configurations(number_of_workers: 1) do
+    class_names = []
+    within_file Synvert::ALL_RUBY_FILES do
+      add_callback :class_node, at: 'start' do |node|
+        class_names << node.name.to_source
+      end
+    end
+    # class_names is an array of class names
+  end
+end
+
 ```
 
 Want to see more examples, check out [synvert-snippets-ruby](https://github.com/synvert-hq/synvert-snippets-ruby).
