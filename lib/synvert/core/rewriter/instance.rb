@@ -73,7 +73,7 @@ module Synvert::Core
             write_source(absolute_file_path, result.new_source)
           end
           break unless result.conflicted?
-        rescue Parser::SyntaxError => e
+        rescue Parser::SyntaxError, Prism::ParseError, SyntaxTree::Parser::ParseError => e
           if ENV['DEBUG'] == 'true'
             puts "[Warn] file #{file_path} was not parsed correctly."
             puts e.message
@@ -104,7 +104,7 @@ module Synvert::Core
         result = Configuration.test_result == 'new_source' ? @current_mutation.process : @current_mutation.test
         result.file_path = file_path
         result
-      rescue Parser::SyntaxError => e
+      rescue Parser::SyntaxError, Prism::ParseError, SyntaxTree::Parser::ParseError => e
         if ENV['DEBUG'] == 'true'
           puts "[Warn] file #{file_path} was not parsed correctly."
           puts e.message
@@ -114,7 +114,7 @@ module Synvert::Core
 
     # Gets current node, it allows to get current node in block code.
     #
-    # @return [Parser::AST::Node]
+    # @return [Node]
     def node
       @current_node
     end
@@ -128,7 +128,7 @@ module Synvert::Core
 
     # Set current_node to node and process.
     #
-    # @param node [Parser::AST::Node] node set to current_node
+    # @param node [Node] node set to current_node
     # @yield process
     def process_with_node(node)
       self.current_node = node
@@ -138,7 +138,7 @@ module Synvert::Core
 
     # Set current_node properly, process and set current_node back to original current_node.
     #
-    # @param node [Parser::AST::Node] node set to other_node
+    # @param node [Node] node set to other_node
     # @yield process
     def process_with_other_node(node)
       original_node = current_node
@@ -168,7 +168,7 @@ module Synvert::Core
     # @yield run on the matching nodes.
     def within_node(nql_or_rules, options = {}, &block)
       Rewriter::WithinScope.new(self, nql_or_rules, options, &block).process
-    rescue NodeQueryLexer::ScanError, Racc::ParseError => e
+    rescue NodeQueryLexer::ScanError, Racc::ParseError
       raise NodeQuery::Compiler::ParseError, "Invalid query string: #{nql_or_rules}"
     end
 
@@ -536,7 +536,10 @@ module Synvert::Core
     # @param encoded_source [String] encoded source code
     # @return [Node] ast node for file
     def parse_code_by_prism(_file_path, encoded_source)
-      Prism.parse(encoded_source).value.statements
+      result = Prism.parse(encoded_source)
+      return result.value.statements if result.errors.empty?
+
+      raise result.errors.last
     end
   end
 end
