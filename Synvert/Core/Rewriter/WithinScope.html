@@ -298,7 +298,7 @@
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_instance'>instance</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>including_self:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>stop_at_first_match:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>recursive:</span> <span class='kw'>true</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@node_query</span> <span class='op'>=</span> <span class='const'>NodeQuery</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='label'>adapter:</span> <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parser'>parser</span><span class='rparen'>)</span>
+  <span class='ivar'>@node_query</span> <span class='op'>=</span> <span class='const'>NodeQuery</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='label'>adapter:</span> <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_current_parser'>current_parser</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -380,7 +380,7 @@ then run the block code on each matching node.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Apr 25 09:25:21 2024 by
+  Generated on Sun Apr 28 01:24:03 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.4).
 </div>

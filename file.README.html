@@ -65,51 +65,56 @@
 <a href="https://github.com/synvert-hq/synvert-core-ruby/actions/workflows/main.yml"><img src="https://github.com/synvert-hq/synvert-core-ruby/actions/workflows/main.yml/badge.svg" alt="Build Status"></a>
 <a href="https://rubygems.org/gems/synvert-core"><img src="https://img.shields.io/gem/v/synvert-core.svg" alt="Gem Version"></a></p>
 
-<p>Synvert core provides a set of DSLs to rewrite ruby code. e.g.</p>
+<p>Synvert core provides a set of DSLs to rewrite (find and replace) ruby code. e.g.</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#Rewriter-constant" title="Synvert::Rewriter (constant)">Rewriter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>factory_bot</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>convert_factory_girl_to_factory_bot</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#Rewriter-constant" title="Synvert::Rewriter (constant)">Rewriter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>map_and_flatten_to_flat_map</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='label'>parser:</span> <span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#PARSER_PARSER-constant" title="Synvert::PARSER_PARSER (constant)">PARSER_PARSER</a></span></span><span class='rparen'>)</span>
+
   <span class='id identifier rubyid_description'>description</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    It converts FactoryGirl to FactoryBot
+<span class='tstring_content'>    It converts `map` and `flatten` to `flat_map`
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    ```ruby
-</span><span class='tstring_content'>    require &#39;factory_girl&#39;
-</span><span class='tstring_content'>    require &#39;factory_girl_rails&#39;
+</span><span class='tstring_content'>    enum.map do
+</span><span class='tstring_content'>      # do something
+</span><span class='tstring_content'>    end.flatten
 </span><span class='tstring_content'>    ```
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    =&gt;
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    ```ruby
-</span><span class='tstring_content'>    require &#39;factory_bot&#39;
-</span><span class='tstring_content'>    require &#39;factory_bot_rails&#39;
-</span><span class='tstring_content'>    ```
-</span><span class='tstring_content'>
-</span><span class='tstring_content'>    ```ruby
-</span><span class='tstring_content'>    FactoryGirl.create(:user)
-</span><span class='tstring_content'>    FactoryGirl.build(:user)
-</span><span class='tstring_content'>    ```
-</span><span class='tstring_content'>
-</span><span class='tstring_content'>    =&gt;
-</span><span class='tstring_content'>
-</span><span class='tstring_content'>    ```ruby
-</span><span class='tstring_content'>    FactoryBot.create(:user)
-</span><span class='tstring_content'>    FactoryBot.build(:user)
+</span><span class='tstring_content'>    enum.flat_map do
+</span><span class='tstring_content'>      # do something
+</span><span class='tstring_content'>    end
 </span><span class='tstring_content'>    ```
 </span><span class='heredoc_end'>  EOS
 </span>
-  <span class='id identifier rubyid_within_files'>within_files</span> <span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#RAILS_TEST_FILES-constant" title="Synvert::RAILS_TEST_FILES (constant)">RAILS_TEST_FILES</a></span></span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_find_node'>find_node</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.const[name=FactoryGirl]</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_replace_with'>replace_with</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FactoryBot</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_find_node'>find_node</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.send[receiver=nil][message=require][arguments.size=1][arguments.first=&#39;factory_girl&#39;]</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_replace'>replace</span> <span class='symbol'>:arguments</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;factory_bot&#39;</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_with_node'>with_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>send</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>receiver:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>require</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>arguments:</span> <span class='lbrace'>{</span> <span class='label'>size:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>first:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;factory_girl_rails&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_replace'>replace</span> <span class='symbol'>:arguments</span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;factory_bot_rails&#39;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_within_files'>within_files</span> <span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#ALL_RUBY_FILES-constant" title="Synvert::ALL_RUBY_FILES (constant)">ALL_RUBY_FILES</a></span></span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#ALL_RAKE_FILES-constant" title="Synvert::ALL_RAKE_FILES (constant)">ALL_RAKE_FILES</a></span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_find_node'>find_node</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.send [receiver=.block [caller=.send[message=map]]] [message=flatten] [arguments.size=0]</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_group'>group</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_delete'>delete</span> <span class='symbol'>:message</span><span class='comma'>,</span> <span class='symbol'>:dot</span>
+        <span class='id identifier rubyid_replace'>replace</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>receiver.caller.message</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>with:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>flat_map</span><span class='tstring_end'>&#39;</span></span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span>
+</code></pre>
+
+<p>It also supports to add callbacks to visit ast nodes.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#Helper-constant" title="Synvert::Helper (constant)">Helper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ruby/parse</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_options'>options</span><span class='op'>|</span>
+  <span class='id identifier rubyid_configure'>configure</span><span class='lparen'>(</span><span class='label'>parser:</span> <span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#PRISM_PARSER-constant" title="Synvert::PRISM_PARSER (constant)">PRISM_PARSER</a></span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_with_configurations'>with_configurations</span><span class='lparen'>(</span><span class='label'>number_of_workers:</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_class_names'>class_names</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_within_file'>within_file</span> <span class='const'><span class='object_link'><a href="Synvert.html" title="Synvert (module)">Synvert</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Synvert.html#ALL_RUBY_FILES-constant" title="Synvert::ALL_RUBY_FILES (constant)">ALL_RUBY_FILES</a></span></span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_add_callback'>add_callback</span> <span class='symbol'>:class_node</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>start</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+        <span class='id identifier rubyid_class_names'>class_names</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_source'>to_source</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='comment'># class_names is an array of class names
+</span>  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
 </code></pre>
 
 <p>Want to see more examples, check out <a href="https://github.com/synvert-hq/synvert-snippets-ruby">synvert-snippets-ruby</a>.</p>
@@ -172,10 +177,16 @@
 <li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_action-instance_method">add_action</a> - add custom action</li>
 </ul>
 
+<p>Callbacks:</p>
+
+<ul>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_callback-instance_method">add_callback</a> - add callback when visiting ast nodes</li>
+</ul>
+
 <p>Others:</p>
 
 <ul>
-<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method">wrap_with_quotes</a> - wrap string code with single or doulbe quotes</li>
+<li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#wrap_with_quotes-instance_method">wrap_with_quotes</a> - wrap string code with single or double quotes</li>
 <li><a href="https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#add_leading_spaces-instance_method">add_leading_spaces</a> - add leading spaces before the string code</li>
 </ul>
 
@@ -189,7 +200,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Thu Apr 25 09:25:20 2024 by
+  Generated on Sun Apr 28 01:24:03 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.4).
 </div>
