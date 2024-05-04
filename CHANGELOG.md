@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.1 (2024-05-04)
+
+* Rescue Prism and SyntaxTree parser error
+* Unlock activesupport version
+
 ## 2.0.0 (2024-04-28)
 
 * Add instance variable `Instance#current_parser`
