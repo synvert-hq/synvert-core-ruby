@@ -546,7 +546,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#node-instance_method" title="#node (instance method)">#<strong>node</strong>  &#x21d2; Parser::AST::Node </a>
+      <a href="#node-instance_method" title="#node (instance method)">#<strong>node</strong>  &#x21d2; Node </a>
     
 
     
@@ -2321,7 +2321,7 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
       <div class="method_details ">
   <h3 class="signature " id="node-instance_method">
   
-    #<strong>node</strong>  &#x21d2; <tt>Parser::AST::Node</tt> 
+    #<strong>node</strong>  &#x21d2; <tt>Node</tt> 
   
 
   
@@ -2342,7 +2342,7 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
     <li>
       
       
-        <span class='type'>(<tt>Parser::AST::Node</tt>)</span>
+        <span class='type'>(<tt>Node</tt>)</span>
       
       
       
@@ -2580,7 +2580,7 @@ then writes the code back to the original file.</p>
         <span class='id identifier rubyid_write_source'>write_source</span><span class='lparen'>(</span><span class='id identifier rubyid_absolute_file_path'>absolute_file_path</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_new_source'>new_source</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
       <span class='kw'>break</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_conflicted?'>conflicted?</span>
-    <span class='kw'>rescue</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>SyntaxError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='kw'>rescue</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>SyntaxError</span><span class='comma'>,</span> <span class='const'>Prism</span><span class='op'>::</span><span class='const'>ParseError</span><span class='comma'>,</span> <span class='const'>SyntaxTree</span><span class='op'>::</span><span class='const'>Parser</span><span class='op'>::</span><span class='const'>ParseError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
       <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DEBUG</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span>
         <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[Warn] file </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> was not parsed correctly.</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
@@ -2619,7 +2619,7 @@ then writes the code back to the original file.</p>
         <span class='name'>node</span>
       
       
-        <span class='type'>(<tt>Parser::AST::Node</tt>)</span>
+        <span class='type'>(<tt>Node</tt>)</span>
       
       
       
@@ -2699,7 +2699,7 @@ then writes the code back to the original file.</p>
         <span class='name'>node</span>
       
       
-        <span class='type'>(<tt>Parser::AST::Node</tt>)</span>
+        <span class='type'>(<tt>Node</tt>)</span>
       
       
       
@@ -3143,7 +3143,7 @@ then returns the actions.</p>
     <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_test_result'><span class='object_link'><a href="../Configuration.html#test_result-class_method" title="Synvert::Core::Configuration.test_result (method)">test_result</a></span></span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>new_source</span><span class='tstring_end'>&#39;</span></span> <span class='op'>?</span> <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span> <span class='op'>:</span> <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span>
     <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_file_path'>file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_file_path'>file_path</span>
     <span class='id identifier rubyid_result'>result</span>
-  <span class='kw'>rescue</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>SyntaxError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='kw'>rescue</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>SyntaxError</span><span class='comma'>,</span> <span class='const'>Prism</span><span class='op'>::</span><span class='const'>ParseError</span><span class='comma'>,</span> <span class='const'>SyntaxTree</span><span class='op'>::</span><span class='const'>Parser</span><span class='op'>::</span><span class='const'>ParseError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
     <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>DEBUG</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[Warn] file </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_path'>file_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> was not parsed correctly.</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
@@ -3469,7 +3469,7 @@ then continue operating on each matching ast node.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_within_node'>within_node</span><span class='lparen'>(</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Rewriter.html" title="Synvert::Core::Rewriter (class)">Rewriter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="WithinScope.html" title="Synvert::Core::Rewriter::WithinScope (class)">WithinScope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="WithinScope.html#initialize-instance_method" title="Synvert::Core::Rewriter::WithinScope#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_process'><span class='object_link'><a href="WithinScope.html#process-instance_method" title="Synvert::Core::Rewriter::WithinScope#process (method)">process</a></span></span>
-<span class='kw'>rescue</span> <span class='const'>NodeQueryLexer</span><span class='op'>::</span><span class='const'>ScanError</span><span class='comma'>,</span> <span class='const'>Racc</span><span class='op'>::</span><span class='const'>ParseError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+<span class='kw'>rescue</span> <span class='const'>NodeQueryLexer</span><span class='op'>::</span><span class='const'>ScanError</span><span class='comma'>,</span> <span class='const'>Racc</span><span class='op'>::</span><span class='const'>ParseError</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NodeQuery</span><span class='op'>::</span><span class='const'>Compiler</span><span class='op'>::</span><span class='const'>ParseError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid query string: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_nql_or_rules'>nql_or_rules</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3676,7 +3676,7 @@ then continue operating on each matching ast node.</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Apr 28 01:24:03 2024 by
+  Generated on Sat May  4 08:34:00 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.4).
 </div>
