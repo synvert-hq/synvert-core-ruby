@@ -537,9 +537,7 @@ module Synvert::Core
     # @return [Node] ast node for file
     def parse_code_by_prism(_file_path, encoded_source)
       result = Prism.parse(encoded_source)
-      return result.value.statements if result.errors.empty?
-
-      raise result.errors.last
+      result.value.statements
     end
   end
 end
