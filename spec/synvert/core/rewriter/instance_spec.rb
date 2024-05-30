@@ -267,7 +267,11 @@ module Synvert::Core
     it 'parsers add_callback' do
       instance.instance_variable_set(:@current_visitor, double)
       block = proc {}
-      expect(instance.instance_variable_get(:@current_visitor)).to receive(:add_callback).with(:class_node, at: 'start', &block)
+      expect(instance.instance_variable_get(:@current_visitor)).to receive(:add_callback).with(
+        :class_node,
+        at: 'start',
+        &block
+      )
       instance.add_callback(:class_node, at: 'start', &block)
     end
 
