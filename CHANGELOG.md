@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.2 (2024-05-30)
+
+* Do not raise error for prism
+* Update `node_query` to 1.15.3
+
 ## 2.0.1 (2024-05-04)
 
 * Rescue Prism and SyntaxTree parser error
