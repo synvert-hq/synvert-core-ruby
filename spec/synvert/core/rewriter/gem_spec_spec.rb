@@ -16,7 +16,17 @@ module Synvert::Core
           slop (3.4.7)
     EOS
     let(:lock_path) { File.absolute_path('./Gemfile.lock') }
-    before { allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem/specs')).and_return(false) }
+
+    before do
+      Configuration.root_path = File.dirname(lock_path)
+      allow(File).to receive(:exist?).with(File.join(ENV['HOME'])).and_return(true)
+      allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem')).and_return(false)
+      allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem/specs')).and_return(false)
+    end
+
+    after do
+      Configuration.root_path = nil
+    end
 
     it 'returns true if version in Gemfile.lock is greater than definition' do
       expect(File).to receive(:exist?).with(lock_path).and_return(true)
