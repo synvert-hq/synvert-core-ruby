@@ -549,10 +549,6 @@ module Synvert::Core
           = form_for @post do |f|
           = form_for @post do |f|
         EOS
-        output = <<~EOS
-          = form_for post do |f|
-          = form_for post do |f|
-        EOS
         allow(File).to receive(:read).with('./app/views/posts/_form.html.haml', encoding: 'UTF-8').and_return(input)
         result = instance.test
         expect(result.file_path).to eq 'app/views/posts/_form.html.haml'
@@ -577,10 +573,6 @@ module Synvert::Core
         input = <<~EOS
           = form_for @post do |f|
           = form_for @post do |f|
-        EOS
-        output = <<~EOS
-          = form_for post do |f|
-          = form_for post do |f|
         EOS
         allow(File).to receive(:read).with('./app/views/posts/_form.html.slim', encoding: 'UTF-8').and_return(input)
         result = instance.test
