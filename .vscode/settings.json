@@ -1,5 +1,21 @@
 {
   "cSpell.words": [
-    "synvert"
+    "asgn",
+    "autoindent",
+    "blockarg",
+    "casgn",
+    "csend",
+    "cvar",
+    "erange",
+    "fileutils",
+    "haml",
+    "ivar",
+    "lvar",
+    "mlhs",
+    "restarg",
+    "rvmrc",
+    "synvert",
+    "Yardoc",
+    "zsuper"
   ]
 }
