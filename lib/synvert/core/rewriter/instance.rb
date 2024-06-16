@@ -436,7 +436,8 @@ module Synvert::Core
     #   end
     # @param message [String] warning message.
     def warn(message)
-      @rewriter.add_warning Rewriter::Warning.new(self, message)
+      line = @current_mutation.adapter.get_start_loc(@current_node).line
+      @rewriter.add_warning Rewriter::Warning.new(@file_path, line, message)
     end
 
     # It adds a callback when visiting an ast node.

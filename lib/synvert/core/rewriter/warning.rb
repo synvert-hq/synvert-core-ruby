@@ -5,11 +5,12 @@ module Synvert::Core
   class Rewriter::Warning
     # Initialize a Warning.
     #
-    # @param instance [Synvert::Core::Rewriter::Instance]
+    # @param file_path [String] file path.
+    # @param line [Integer] file line.
     # @param message [String] warning message.
-    def initialize(instance, message)
-      @file_path = instance.file_path
-      @line = instance.current_node.loc.expression.line
+    def initialize(file_path, line, message)
+      @file_path = file_path
+      @line = line
       @message = message
     end
 

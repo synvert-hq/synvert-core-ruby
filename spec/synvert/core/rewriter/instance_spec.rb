@@ -260,7 +260,9 @@ module Synvert::Core
     end
 
     it 'parses warn' do
-      expect(Rewriter::Warning).to receive(:new).with(instance, 'foobar')
+      instance.instance_variable_set(:@file_path, 'app/test.rb')
+      expect(@current_mutation).to receive_message_chain(:adapter, :get_start_loc, :line).and_return(2)
+      expect(Rewriter::Warning).to receive(:new).with('app/test.rb', 2, 'foobar')
       instance.warn 'foobar'
     end
 
