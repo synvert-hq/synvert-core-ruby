@@ -77,4 +77,5 @@ module Synvert
   PARSER_PARSER = 'parser'
   SYNTAX_TREE_PARSER = 'syntax_tree'
   PRISM_PARSER = 'prism'
+  ALL_PARSERS = [PARSER_PARSER, SYNTAX_TREE_PARSER, PRISM_PARSER].freeze
 end
