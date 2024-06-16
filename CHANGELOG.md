@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.3 (2024-06-16)
+
+* Fix `gem_spec_spec` test failures
+* Use `NodeMutation` to fetch file line
+
 ## 2.0.2 (2024-05-30)
 
 * Do not raise error for prism
