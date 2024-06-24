@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    synvert-core (2.0.3)
+    synvert-core (2.1.0)
       activesupport
       node_mutation (>= 1.24.4)
       node_query (>= 1.15.3)
@@ -59,7 +59,7 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.10)
     lumberjack (1.2.10)
     method_source (1.1.0)
-    minitest (5.23.1)
+    minitest (5.24.0)
     mutex_m (0.2.0)
     nenv (0.3.0)
     node_mutation (1.24.4)

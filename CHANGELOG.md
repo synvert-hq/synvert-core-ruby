@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.0 (2024-06-24)
+
+* Remove `add_leading_spaces` method
+* Add `indent` and `dedent` helper methods
+
 ## 2.0.3 (2024-06-16)
 
 * Fix `gem_spec_spec` test failures
