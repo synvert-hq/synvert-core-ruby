@@ -466,14 +466,6 @@ module Synvert::Core
       quote + escaped_str + quote
     end
 
-    # Add leading spaces before the str according to Configuration.tab_width.
-    # @param str [String]
-    # @param tab_size [Integer] tab size
-    # @return [String]
-    def add_leading_spaces(str, tab_size: 1)
-      (" " * Configuration.tab_width * tab_size) + str;
-    end
-
     private
 
     # Read file source.
