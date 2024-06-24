@@ -391,20 +391,6 @@ module Synvert::Core
       @current_mutation.wrap(@current_node, prefix: prefix, suffix: suffix, newline: newline)
     end
 
-    # It indent the code of current node.
-    # @example
-    #     # class Foobar
-    #     # end
-    #     # =>
-    #     #   class Foobar
-    #     #   end
-    #     within_node type: 'class' do
-    #       indent
-    #     end
-    def indent(tab_size: 1)
-      @current_mutation.indent(@current_node, tab_size: tab_size)
-    end
-
     # No operation.
     def noop
       @current_mutation.noop(@current_node)
@@ -464,6 +450,24 @@ module Synvert::Core
 
       escaped_str = str.gsub(quote) { |_char| '\\' + quote }
       quote + escaped_str + quote
+    end
+
+    # Indents the given source code by the specified tab size.
+    #
+    # @param source [String] The source code to be indented.
+    # @param tab_size [Integer] The number of spaces per tab.
+    # @return [String] The indented source code.
+    def indent(source, tab_size: 1)
+      source.each_line.map { |line| (' ' * NodeMutation.tab_width * tab_size) + line }.join
+    end
+
+    # Dedents the given source code by removing leading spaces or tabs.
+    #
+    # @param source [String] The source code to dedent.
+    # @param tab_size [Integer] The number of spaces per tab (default is 1).
+    # @return [String] The dedented source code.
+    def dedent(source, tab_size: 1)
+      source.each_line.map { |line| line.sub(/^ {#{NodeMutation.tab_width * tab_size}}/, '') }.join
     end
 
     private

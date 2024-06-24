@@ -97,7 +97,6 @@ Actions:
 
 * [append](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#append-instance_method) - append the code to the bottom of current node body
 * [prepend](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#prepend-instance_method) - prepend the code to the bottom of current node body
-* [indent](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#indent-instance_method) - indent code
 * [insert](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert-instance_method) - insert code
 * [insert_after](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert_after-instance_method) - insert the code next to the current node
 * [insert_before](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter/Instance.html#insert_before-instance_method) - insert the code previous to the current node

@@ -235,16 +235,6 @@ module Synvert::Core
       instance.wrap prefix: 'module Foobar', suffix: 'end', newline: true
     end
 
-    it 'parses indent' do
-      instance.instance_variable_set(:@current_mutation, double)
-      instance.current_node = double
-      expect(instance.instance_variable_get(:@current_mutation)).to receive(:indent).with(
-        instance.current_node,
-        tab_size: 1
-      )
-      instance.indent
-    end
-
     it 'parses noop' do
       instance.instance_variable_set(:@current_mutation, double)
       instance.current_node = double
@@ -672,6 +662,22 @@ module Synvert::Core
         it 'wraps with double quotes and escapes double quote' do
           expect(instance.wrap_with_quotes("foo'\"bar")).to eq '"foo\'\\"bar"'
         end
+      end
+    end
+
+    describe '#indent' do
+      it 'adds white spaces' do
+        old_code = "def foo\n  bar\nend"
+        new_code = instance.indent(old_code, tab_size: 2)
+        expect(new_code).to eq "    def foo\n      bar\n    end"
+      end
+    end
+
+    describe '#dedent' do
+      it 'removes white spaces' do
+        old_code = "    def foo\n      bar\n    end"
+        new_code = instance.dedent(old_code, tab_size: 2)
+        expect(new_code).to eq "def foo\n  bar\nend"
       end
     end
   end
