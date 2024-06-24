@@ -268,29 +268,6 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#add_leading_spaces-instance_method" title="#add_leading_spaces (instance method)">#<strong>add_leading_spaces</strong>(str, tab_size: 1)  &#x21d2; String </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Add leading spaces before the str according to Configuration.tab_width.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#append-instance_method" title="#append (instance method)">#<strong>append</strong>(code)  &#x21d2; Object </a>
     
 
@@ -306,6 +283,29 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
 
   
     <span class="summary_desc"><div class='inline'><p>It appends the code to the bottom of current node body.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dedent-instance_method" title="#dedent (instance method)">#<strong>dedent</strong>(source, tab_size: 1)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Dedents the given source code by removing leading spaces or tabs.</p>
 </div></span>
   
 </li>
@@ -406,7 +406,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#indent-instance_method" title="#indent (instance method)">#<strong>indent</strong>(tab_size: 1)  &#x21d2; Object </a>
+      <a href="#indent-instance_method" title="#indent (instance method)">#<strong>indent</strong>(source, tab_size: 1)  &#x21d2; String </a>
     
 
     
@@ -420,7 +420,7 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>It indent the code of current node.</p>
+    <span class="summary_desc"><div class='inline'><p>Indents the given source code by the specified tab size.</p>
 </div></span>
   
 </li>
@@ -1252,12 +1252,12 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-428
-429
-430</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 428</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_action'>add_action</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_actions'>actions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_action'>action</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span>
@@ -1355,100 +1355,15 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
       <pre class="lines">
 
 
-451
-452
-453</pre>
+437
+438
+439</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 451</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 437</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_callback'>add_callback</span><span class='lparen'>(</span><span class='id identifier rubyid_node_type'>node_type</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>start</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@current_visitor</span><span class='period'>.</span><span class='id identifier rubyid_add_callback'>add_callback</span><span class='lparen'>(</span><span class='id identifier rubyid_node_type'>node_type</span><span class='comma'>,</span> <span class='label'>at:</span> <span class='id identifier rubyid_at'>at</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="add_leading_spaces-instance_method">
-  
-    #<strong>add_leading_spaces</strong>(str, tab_size: 1)  &#x21d2; <tt>String</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Add leading spaces before the str according to Configuration.tab_width.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>str</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>tab_size</span>
-      
-      
-        <span class='type'>(<tt>Integer</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>1</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>tab size</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-473
-474
-475</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 473</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_add_leading_spaces'>add_leading_spaces</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='label'>tab_size:</span> <span class='int'>1</span><span class='rparen'>)</span>
-  <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tab_width'><span class='object_link'><a href="../Configuration.html#tab_width-class_method" title="Synvert::Core::Configuration.tab_width (method)">tab_width</a></span></span> <span class='op'>*</span> <span class='id identifier rubyid_tab_size'>tab_size</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_str'>str</span><span class='semicolon'>;</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1526,6 +1441,99 @@ checks if the nodes match some conditions, then add, replace or remove code.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dedent-instance_method">
+  
+    #<strong>dedent</strong>(source, tab_size: 1)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Dedents the given source code by removing leading spaces or tabs.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The source code to dedent.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tab_size</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>1</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The number of spaces per tab (default is 1).</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The dedented source code.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+469
+470
+471</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 469</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dedent'>dedent</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>tab_size:</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each_line'>each_line</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ {</span><span class='embexpr_beg'>#{</span><span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_tab_width'>tab_width</span> <span class='op'>*</span> <span class='id identifier rubyid_tab_size'>tab_size</span><span class='embexpr_end'>}</span><span class='tstring_content'>}</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1767,12 +1775,12 @@ then continue operating on the child node.</p>
       <pre class="lines">
 
 
-419
-420
-421</pre>
+405
+406
+407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 419</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 405</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group'>group</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -1872,7 +1880,7 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
       <div class="method_details ">
   <h3 class="signature " id="indent-instance_method">
   
-    #<strong>indent</strong>(tab_size: 1)  &#x21d2; <tt>Object</tt> 
+    #<strong>indent</strong>(source, tab_size: 1)  &#x21d2; <tt>String</tt> 
   
 
   
@@ -1880,28 +1888,66 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>It indent the code of current node.</p>
+    <p>Indents the given source code by the specified tab size.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
+    <li>
       
-      <pre class="example code"><code><span class='comment'># class Foobar
-</span><span class='comment'># end
-</span><span class='comment'># =&gt;
-</span><span class='comment'>#   class Foobar
-</span><span class='comment'>#   end
-</span><span class='id identifier rubyid_within_node'>within_node</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>class</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_indent'>indent</span>
-<span class='kw'>end</span></code></pre>
-    
-  </div>
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The source code to be indented.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tab_size</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>1</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The number of spaces per tab.</p>
+</div>
+      
+    </li>
+  
+</ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The indented source code.</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1909,15 +1955,15 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
       <pre class="lines">
 
 
-404
-405
-406</pre>
+460
+461
+462</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 460</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_indent'>indent</span><span class='lparen'>(</span><span class='label'>tab_size:</span> <span class='int'>1</span><span class='rparen'>)</span>
-  <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_indent'>indent</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='comma'>,</span> <span class='label'>tab_size:</span> <span class='id identifier rubyid_tab_size'>tab_size</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_indent'>indent</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>tab_size:</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_each_line'>each_line</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span> <span class='op'>*</span> <span class='const'>NodeMutation</span><span class='period'>.</span><span class='id identifier rubyid_tab_width'>tab_width</span> <span class='op'>*</span> <span class='id identifier rubyid_tab_size'>tab_size</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_line'>line</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2396,12 +2442,12 @@ if matching nodes exist in the child nodes, if so, then continue operating on ea
       <pre class="lines">
 
 
-409
-410
-411</pre>
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_noop'>noop</span>
   <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_noop'>noop</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span>
@@ -3296,13 +3342,13 @@ if matching nodes doesn&#39;t exist in the child nodes, if so, then continue ope
       <pre class="lines">
 
 
-438
-439
-440
-441</pre>
+424
+425
+426
+427</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 424</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='ivar'>@current_mutation</span><span class='period'>.</span><span class='id identifier rubyid_adapter'>adapter</span><span class='period'>.</span><span class='id identifier rubyid_get_start_loc'>get_start_loc</span><span class='lparen'>(</span><span class='ivar'>@current_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_line'>line</span>
@@ -3644,19 +3690,19 @@ then continue operating on each matching ast node.</p>
       <pre class="lines">
 
 
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467</pre>
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 458</span>
+      <pre class="code"><span class="info file"># File 'lib/synvert/core/rewriter/instance.rb', line 444</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wrap_with_quotes'>wrap_with_quotes</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_quote'>quote</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Configuration.html" title="Synvert::Core::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_single_quote'><span class='object_link'><a href="../Configuration.html#single_quote-class_method" title="Synvert::Core::Configuration.single_quote (method)">single_quote</a></span></span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>&#39;</span></span><span class='semicolon'>;</span>
@@ -3678,7 +3724,7 @@ then continue operating on each matching ast node.</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Jun 16 00:55:00 2024 by
+  Generated on Mon Jun 24 13:52:08 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.4).
 </div>
