@@ -458,7 +458,8 @@ module Synvert::Core
     # @param tab_size [Integer] The number of spaces per tab.
     # @return [String] The indented source code.
     def indent(source, tab_size: 1)
-      source.each_line.map { |line| (' ' * NodeMutation.tab_width * tab_size) + line }.join
+      source.each_line.map { |line| (' ' * NodeMutation.tab_width * tab_size) + line }
+            .join
     end
 
     # Dedents the given source code by removing leading spaces or tabs.
@@ -467,7 +468,8 @@ module Synvert::Core
     # @param tab_size [Integer] The number of spaces per tab (default is 1).
     # @return [String] The dedented source code.
     def dedent(source, tab_size: 1)
-      source.each_line.map { |line| line.sub(/^ {#{NodeMutation.tab_width * tab_size}}/, '') }.join
+      source.each_line.map { |line| line.sub(/^ {#{NodeMutation.tab_width * tab_size}}/, '') }
+            .join
     end
 
     private
