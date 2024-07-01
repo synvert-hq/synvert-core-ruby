@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.1 (2024-07-01)
+
+* Allow to parse ruby version `ruby-3.3.0\n`
+* Update `node_visitor` to 1.1.0
+
 ## 2.1.0 (2024-06-24)
 
 * Remove `add_leading_spaces` method
