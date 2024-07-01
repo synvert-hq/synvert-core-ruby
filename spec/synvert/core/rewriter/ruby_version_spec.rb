@@ -25,5 +25,11 @@ module Synvert::Core
       expect(ruby_version).to be_match
       Configuration.strict = true
     end
+
+    it 'returns true if ruby version is ruby-3.0.0\n' do
+      allow(File).to receive(:read).with('./.ruby-version').and_return("ruby-3.0.0\n")
+      ruby_version = Rewriter::RubyVersion.new('1.9')
+      expect(ruby_version).to be_match
+    end
   end
 end

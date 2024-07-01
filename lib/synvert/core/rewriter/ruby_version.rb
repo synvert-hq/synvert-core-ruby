@@ -26,6 +26,7 @@ module Synvert::Core
       return true unless version_file
 
       version = File.read(File.join(Configuration.root_path, version_file))
+      version = version.match(/(\d+\.\d+\.\d+)/)[0]
       Gem::Version.new(version) >= Gem::Version.new(@version)
     end
   end
