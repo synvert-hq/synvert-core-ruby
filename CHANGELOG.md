@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.1.2 (2024-07-17)
+
+* Update `parser_node_ext` to 1.4.2
+* Update `prism_ext` to 0.4.2
+* Update `syntax_tree_ext` to 0.9.2
+* Update `node_query` to 1.15.4
+
 ## 2.1.1 (2024-07-01)
 
 * Allow to parse ruby version `ruby-3.3.0\n`
