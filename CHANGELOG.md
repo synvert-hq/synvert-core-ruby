@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.0 (2024-07-20)
+
+* Remove `save_data` and `load_data` dsls
+
 ## 2.1.2 (2024-07-17)
 
 * Update `parser_node_ext` to 1.4.2
