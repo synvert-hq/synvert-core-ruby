@@ -416,22 +416,6 @@ module Synvert::Core
       Configuration.with_temporary_configurations(configurations, &block)
     end
 
-    # Saves data with a given key and value.
-    #
-    # @param key [Symbol] the key to identify the data
-    # @param value [Object] the value to be saved
-    def save_data(key, value)
-      Synvert::Core.instance_variable_set("@#{key}", value)
-    end
-
-    # Loads data with the given key.
-    #
-    # @param key [Symbol] the key of the data to be loaded
-    # @return [Object] the data loaded
-    def load_data(key)
-      Synvert::Core.instance_variable_get("@#{key}")
-    end
-
     private
 
     # Handle one file.

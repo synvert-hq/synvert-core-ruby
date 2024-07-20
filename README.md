@@ -78,8 +78,6 @@ DSLs are as follows
 * [add_snippet](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#add_snippet-instance_method) - call another rewriter
 * [call_helper](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#call_helper-instance_method) - call a shared rewriter
 * [with_configurations](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#with_configurations-instance_method) - execute a block of code with temporary configurations
-* [save_data](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#save_data-instance_method) - save data
-* [load_data](https://synvert-hq.github.io/synvert-core-ruby/Synvert/Core/Rewriter.html#load_data-instance_method) - load data
 
 Scopes:
 
