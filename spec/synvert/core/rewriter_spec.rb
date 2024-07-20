@@ -346,11 +346,10 @@ module Synvert::Core
       it 'eval helper by name' do
         block_receiver = nil
         block_options = {}
-        helper =
-          Synvert::Helper.new 'helper' do |options|
-            block_receiver = self.class.name
-            block_options = options
-          end
+        Synvert::Helper.new 'helper' do |options|
+          block_receiver = self.class.name
+          block_options = options
+        end
         rewriter =
           Rewriter.new 'group', 'rewriter' do
             call_helper('helper', foo: 'bar')
