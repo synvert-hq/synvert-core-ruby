@@ -416,6 +416,21 @@ module Synvert::Core
       Configuration.with_temporary_configurations(configurations, &block)
     end
 
+    # Raise error to notify user instance method should not be called in Rewriter.
+    (Rewriter::Instance::DSL_METHODS - %i[group]).each do |method|
+      define_method(method) do |**|
+        raise NoMethodError, "#{method} must be called within within_files or within_file block."
+      end
+    end
+
+    def group
+      if block_given?
+        raise NoMethodError, 'group must be called within rewriter block.'
+      else
+        @group
+      end
+    end
+
     private
 
     # Handle one file.

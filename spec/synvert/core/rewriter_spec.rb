@@ -91,6 +91,21 @@ module Synvert::Core
           expect(File.read("code.rb")).to eq output
         end
       end
+
+      it 'does not rewrite the file if within_files is not called' do
+        rewriter =
+          Rewriter.new('group', 'name') do
+            with_node node_type: 'class', name: 'Foobar' do
+              replace :name, with: 'Synvert'
+            end
+          end
+        input = "class Foobar\nend"
+        output = "class Synvert\nend"
+        FakeFS do
+          File.write("code.rb", input)
+          expect { rewriter.process }.to raise_error(NoMethodError, 'with_node must be called within within_files or within_file block.')
+        end
+      end
     end
 
     describe '#test' do

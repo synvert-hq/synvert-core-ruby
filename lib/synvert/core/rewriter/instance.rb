@@ -15,6 +15,15 @@ module Synvert::Core
   class Rewriter::Instance
     include Rewriter::Helper
 
+    DSL_METHODS = %i[
+      within_node with_node find_node goto_node
+      if_exist_node unless_exist_node
+      append prepend insert insert_after insert_before replace delete remove wrap replace_with warn replace_erb_stmt_with_expr noop group add_action
+      add_callback
+      wrap_with_quotes add_leading_spaces
+      file_path node mutation_adapter
+    ].freeze
+
     # Initialize an Instance.
     #
     # @param rewriter [Synvert::Core::Rewriter]
