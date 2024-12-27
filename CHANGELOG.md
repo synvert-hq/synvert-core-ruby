@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.2 (2024-12-27)
+
+* Do not restrict activesupport version
+
 ## 2.2.1 (2024-12-27)
 
 * Raise error to notify user instance method should not be called in rewriter
