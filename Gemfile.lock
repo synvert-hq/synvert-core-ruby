@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     synvert-core (2.2.1)
-      activesupport (= 7.1.3.4)
+      activesupport
       node_mutation (>= 1.24.4)
       node_query (>= 1.15.4)
       node_visitor (>= 1.1.0)
@@ -112,6 +112,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (= 7.1.3.4)
   fakefs
   guard
   guard-rspec
