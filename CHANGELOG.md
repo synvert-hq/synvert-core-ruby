@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.1 (2024-12-27)
+
+* Raise error to notify user instance method should not be called in rewriter
+
 ## 2.2.0 (2024-07-20)
 
 * Remove `save_data` and `load_data` dsls
