@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "activesupport"
+  spec.add_runtime_dependency "activesupport", '7.1.3.4' # to support ruby 2.7
   spec.add_runtime_dependency "node_query", ">= 1.15.4"
   spec.add_runtime_dependency "node_mutation", ">= 1.24.4"
   spec.add_runtime_dependency "node_visitor", ">= 1.1.0"
