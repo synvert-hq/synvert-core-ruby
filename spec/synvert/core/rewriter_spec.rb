@@ -103,7 +103,10 @@ module Synvert::Core
         output = "class Synvert\nend"
         FakeFS do
           File.write("code.rb", input)
-          expect { rewriter.process }.to raise_error(NoMethodError, 'with_node must be called within within_files or within_file block.')
+          expect {
+            rewriter.process
+          }
+.to raise_error(NoMethodError, 'with_node must be called within within_files or within_file block.')
         end
       end
     end

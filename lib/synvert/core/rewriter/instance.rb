@@ -16,12 +16,33 @@ module Synvert::Core
     include Rewriter::Helper
 
     DSL_METHODS = %i[
-      within_node with_node find_node goto_node
-      if_exist_node unless_exist_node
-      append prepend insert insert_after insert_before replace delete remove wrap replace_with warn replace_erb_stmt_with_expr noop group add_action
+      within_node
+      with_node
+      find_node
+      goto_node
+      if_exist_node
+      unless_exist_node
+      append
+      prepend
+      insert
+      insert_after
+      insert_before
+      replace
+      delete
+      remove
+      wrap
+      replace_with
+      warn
+      replace_erb_stmt_with_expr
+      noop
+      group
+      add_action
       add_callback
-      wrap_with_quotes add_leading_spaces
-      file_path node mutation_adapter
+      wrap_with_quotes
+      add_leading_spaces
+      file_path
+      node
+      mutation_adapter
     ].freeze
 
     # Initialize an Instance.
@@ -467,7 +488,8 @@ module Synvert::Core
     # @param tab_size [Integer] The number of spaces per tab.
     # @return [String] The indented source code.
     def indent(source, tab_size: 1)
-      source.each_line.map { |line| (' ' * NodeMutation.tab_width * tab_size) + line }.join
+      source.each_line.map { |line| (' ' * NodeMutation.tab_width * tab_size) + line }
+            .join
     end
 
     # Dedents the given source code by removing leading spaces or tabs.
@@ -476,7 +498,8 @@ module Synvert::Core
     # @param tab_size [Integer] The number of spaces per tab (default is 1).
     # @return [String] The dedented source code.
     def dedent(source, tab_size: 1)
-      source.each_line.map { |line| line.sub(/^ {#{NodeMutation.tab_width * tab_size}}/, '') }.join
+      source.each_line.map { |line| line.sub(/^ {#{NodeMutation.tab_width * tab_size}}/, '') }
+            .join
     end
 
     private
