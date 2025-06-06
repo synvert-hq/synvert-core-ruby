@@ -19,9 +19,6 @@ module Synvert::Core
 
     before do
       Configuration.root_path = File.dirname(lock_path)
-      allow(File).to receive(:exist?).with(File.join(ENV['HOME'])).and_return(true)
-      allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem')).and_return(false)
-      allow(File).to receive(:exist?).with(File.join(ENV['HOME'], '.gem/specs')).and_return(false)
     end
 
     after do
