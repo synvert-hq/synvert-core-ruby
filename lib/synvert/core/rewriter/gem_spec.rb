@@ -26,7 +26,7 @@ module Synvert::Core
     def match?
       return true unless Configuration.strict
 
-      gemfile_lock_path = File.expand_path(File.join(Configuration.root_path, 'Gemfile.lock'))
+      gemfile_lock_path = File.expand_path(File.join(Configuration.root_path, gemfile_lock_name))
 
       # if Gemfile.lock does not exist, just ignore this check
       return true unless File.exist?(gemfile_lock_path)
@@ -34,6 +34,14 @@ module Synvert::Core
       ENV['BUNDLE_GEMFILE'] = Configuration.root_path # make sure bundler reads Gemfile.lock in the correct path
       parser = Bundler::LockfileParser.new(File.read(gemfile_lock_path))
       parser.specs.any? { |spec| Gem::Dependency.new(@name, @version).match?(spec) }
+    end
+
+    private
+
+    def gemfile_lock_name
+      return "#{File.basename(ENV['BUNDLE_GEMFILE'])}.lock" if File.exist?(ENV['BUNDLE_GEMFILE'])
+
+      'Gemfile.lock'
     end
   end
 end
