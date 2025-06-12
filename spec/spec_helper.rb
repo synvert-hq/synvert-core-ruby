@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+require 'simplecov'
+SimpleCov.start do
+  add_filter '/spec/'
+
+  add_group 'Core', 'lib/synvert/core'
+end
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'pp' # rubocop:disable Lint/RedundantRequireStatement

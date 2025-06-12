@@ -30,4 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "prism"
   spec.add_runtime_dependency "prism_ext", ">= 0.4.2"
   spec.add_runtime_dependency "parallel"
+
+  spec.add_development_dependency "simplecov"
 end
