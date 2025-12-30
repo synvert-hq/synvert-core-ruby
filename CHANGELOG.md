@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.3.0 (2025-12-30)
+
+* Support ruby 4.0
+* Drop ruby 2.7, 3.0 and 3.1 support
+* Update `node_query` to 1.17.0
+* Update `node_mutation` to 1.25.0
+
 ## 2.2.2 (2024-12-27)
 
 * Do not restrict activesupport version
