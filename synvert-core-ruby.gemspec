@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "activesupport"
-  spec.add_runtime_dependency "node_query", ">= 1.15.4"
-  spec.add_runtime_dependency "node_mutation", ">= 1.24.4"
+  spec.add_runtime_dependency "node_query", ">= 1.17.0"
+  spec.add_runtime_dependency "node_mutation", ">= 1.25.0"
   spec.add_runtime_dependency "node_visitor", ">= 1.1.0"
   spec.add_runtime_dependency "parser"
   spec.add_runtime_dependency "parser_node_ext", ">= 1.4.2"
