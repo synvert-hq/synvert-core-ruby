@@ -8,6 +8,7 @@ gemspec
 gem "fakefs", require: "fakefs/safe"
 gem "guard"
 gem "guard-rspec"
+gem "irb"
 gem "ostruct"
 gem "rake"
 gem "rspec"
